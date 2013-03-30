@@ -18,8 +18,35 @@ def index():
     if you need a simple wiki simple replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Welcome to web2py!")
-    return dict(message=T('Hello World'))
+    response.flash = T("Welcome to scrumforme!")
+    return dict()
+
+
+def projects():
+    from datetime import datetime
+
+    projetos = db(Project).select()
+
+    form = SQLFORM.factory(
+        Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
+        Field('description', label= T('Description')),
+        Field('url', label= 'Url'),
+        table_name='project',
+        submit_button=T('CREATE'))
+
+    if form.accepts(request.vars):
+        Project.insert(
+                        name=form.vars.name,
+                        description=form.vars.description,
+                        url=form.vars.url,
+                        date_=datetime.now(),
+                        )
+        redirect(URL('projects'))
+        pass
+    elif form.errors:
+        pass
+
+    return dict(form=form, projetos=projetos)
 
 
 def user():

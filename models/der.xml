@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- SQL XML created by WWW SQL Designer, http://code.google.com/p/wwwsqldesigner/ -->
+<!-- Active URL: file:///home/gustavo/arquivos/Programacao/LABS/wwwsqldesigner-2.6/index.html -->
+<sql>
+<datatypes db="web2py">
+	<group label="Numeric" color="rgb(238,238,170)">
+		<type label="Integer" length="1" sql="integer" re="INTEGER" quote=""/>
+		<type label="Double precision" length="1" sql="double" re="DOUBLE" quote=""/>
+	</group>
+	<group label="Character" color="rgb(255,200,200)">
+		<type label="String" length="1" sql="string" quote="'"/>
+		<type label="Text" length="1" sql="text" quote="'"/>
+		<type label="BLOB" length="1" sql="blob" quote="'"/>
+	</group>
+	<group label="Date &amp; Time" color="rgb(200,255,200)">
+		<type label="Time" length="0" sql="time" quote="'"/>
+		<type label="Date" length="0" sql="date" quote="'"/>
+		<type label="Datetime" length="0" sql="datetime" quote="'"/>
+	</group>
+	<group label="Miscellaneous" color="rgb(200,200,255)">
+		<type label="Boolean" length="0" sql="boolean" quote=""/>
+		<type label="Upload" length="0" sql="upload" quote=""/>
+		<type label="Password" length="0" sql="password" quote=""/>
+		<type label="List:reference" length="0" sql="list:reference" quote=""/>
+	</group>
+</datatypes><table x="376" y="332" name="person">
+<row name="id" null="1" autoincrement="1">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="name" null="1" autoincrement="0">
+<datatype>string(128)</datatype>
+<default>""</default>
+</row>
+<row name="_object_name" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>Person</default>
+</row>
+<row name="_format" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>'%(name)s'</default>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="132" y="11" name="project">
+<row name="id" null="1" autoincrement="1">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="created_by" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="person" row="id" />
+</row>
+<row name="name" null="1" autoincrement="0">
+<datatype>string(128)</datatype>
+<default>NULL</default>
+</row>
+<row name="date_" null="1" autoincrement="0">
+<datatype>date</datatype>
+<default>NULL</default>
+</row>
+<row name="description" null="1" autoincrement="0">
+<datatype>string(256)</datatype>
+<default>NULL</default>
+</row>
+<row name="url" null="1" autoincrement="0">
+<datatype>string(128)</datatype>
+<default>NULL</default>
+</row>
+<row name="_object_name" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>Project</default>
+</row>
+<row name="_format" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>'%(name)s'</default>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="22" y="332" name="auth_user">
+<row name="id" null="1" autoincrement="1">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="type_network" null="1" autoincrement="0">
+<datatype>string(128)</datatype>
+<default>""</default>
+</row>
+<row name="token" null="1" autoincrement="0">
+<datatype>string(128)</datatype>
+<default>""</default>
+</row>
+<row name="first_time" null="1" autoincrement="0">
+<datatype>boolean</datatype>
+<default>True</default>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="375" y="89" name="sprint">
+<row name="id" null="1" autoincrement="1">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="project_id" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="project" row="id" />
+</row>
+<row name="name" null="1" autoincrement="0">
+<datatype>string(128)</datatype>
+<default>NULL</default>
+</row>
+<row name="weeks" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="started" null="1" autoincrement="0">
+<datatype>date</datatype>
+<default>NULL</default>
+</row>
+<row name="ended" null="1" autoincrement="0">
+<datatype>date</datatype>
+<default>NULL</default>
+</row>
+<row name="_object_name" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>Sprint</default>
+</row>
+<row name="_format" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>'%(name)s'</default>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="602" y="36" name="story">
+<row name="id" null="1" autoincrement="1">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="project_id" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="project" row="id" />
+</row>
+<row name="sprint_id" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="sprint" row="id" />
+</row>
+<row name="title" null="1" autoincrement="0">
+<datatype>string(128)</datatype>
+<default>NULL</default>
+</row>
+<row name="benefit" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="story_points" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="concluded" null="1" autoincrement="0">
+<datatype>boolean</datatype>
+<default>NULL</default>
+</row>
+<row name="_object_name" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>Story</default>
+</row>
+<row name="_format" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>'%(title)s'</default>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="891" y="61" name="definition_ready">
+<row name="id" null="1" autoincrement="1">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="story_id" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="story" row="id" />
+</row>
+<row name="title" null="1" autoincrement="0">
+<datatype>string</datatype>
+<default>NULL</default>
+</row>
+<row name="concluded" null="1" autoincrement="0">
+<datatype>boolean</datatype>
+<default>NULL</default>
+</row>
+<row name="_object_name" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>Definition_ready</default>
+</row>
+<row name="_format" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>'%(title)s'</default>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="656" y="328" name="card">
+<row name="id" null="1" autoincrement="1">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="definition_ready_id" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="definition_ready" row="id" />
+</row>
+<row name="title" null="1" autoincrement="0">
+<datatype>string(256)</datatype>
+<default>NULL</default>
+</row>
+<row name="started" null="1" autoincrement="0">
+<datatype>datetime</datatype>
+<default>NULL</default>
+</row>
+<row name="ended" null="1" autoincrement="0">
+<datatype>datetime</datatype>
+<default>NULL</default>
+</row>
+<row name="position_dom" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="status" null="1" autoincrement="0">
+<datatype>string(128)</datatype>
+<default>NULL</default>
+</row>
+<row name="owner_card" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="person" row="id" />
+</row>
+<row name="_object_name" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>Card</default>
+</row>
+<row name="_format" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>'%(title)s'</default>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="961" y="369" name="card_comment">
+<row name="id" null="1" autoincrement="1">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="card_id" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="card" row="id" />
+</row>
+<row name="text_" null="1" autoincrement="0">
+<datatype>string(256)</datatype>
+<default>NULL</default>
+</row>
+<row name="date_" null="1" autoincrement="0">
+<datatype>datetime</datatype>
+<default>NULL</default>
+</row>
+<row name="_object_name" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>Card_comment</default>
+</row>
+<row name="_format" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>'%(text)s'</default>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="169" y="475" name="user_relationship">
+<row name="id" null="1" autoincrement="1">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="auth_user_id" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="auth_user" row="id" />
+</row>
+<row name="person_id" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="person" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+</sql>

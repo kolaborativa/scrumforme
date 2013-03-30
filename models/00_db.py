@@ -43,6 +43,13 @@ from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
 auth = Auth(db)
 crud, service, plugins = Crud(db), Service(), PluginManager()
 
+# extra fields
+auth.settings.extra_fields['auth_user']= [
+        Field("type_network", "string", length=128, default=""),
+        Field("token", "string", length=128, default=""),
+        Field("first_time", "boolean", default=True),
+    ]
+
 ## create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
 

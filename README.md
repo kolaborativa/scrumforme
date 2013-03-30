@@ -1,4 +1,4 @@
 scrumforme
 ==========
 
-Open scrum project done with web2py
+Open scrum project made with web2py
