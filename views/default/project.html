@@ -1,4 +1,4 @@
-{{extend 'layout.html'}}
+{{extend 'default/layout.html'}}
 
 <h2>Projeto</h2>
 <table class="table table-hover" data-provides="rowlink">
@@ -24,7 +24,7 @@
 <br>
 
 {{if "stories" in globals():}}
-	<h2>{{=T('Stories')}}</h2>
+	<h2>{{=T('Stories Project')}}</h2>
 	<table class="table table-hover" data-provides="rowlink">
 		<thead>
 			<tr>
@@ -52,3 +52,6 @@
 <h2>{{=T('Create Story')}}</h2>
 
 {{=form_story}}
+
+
+

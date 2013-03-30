@@ -43,9 +43,8 @@ def all_projects():
                         date_=datetime.now(),
                         )
         redirect(URL('all_projects'))
-        pass
     elif form.errors:
-        pass
+        response.flash = T('Formulário contem erros. Por favor, verifique!')
 
     return dict(form=form, all_projects=all_projects)
 
@@ -70,7 +69,7 @@ def project():
         redirect(URL(f='project',args=project_id))
 
     elif form_story.errors:
-        response.flash = "Formulário contem erros. Por favor, verifique!"
+        response.flash = T('Formulário contem erros. Por favor, verifique!')
 
     if stories:
         return dict(project=project, form_story=form_story, stories=stories)

@@ -134,4 +134,5 @@
 'Stories': 'Stories',
 'Create Story': 'Create Story',
 'Choose a value': 'Choose a value',
+'Form contains errors. Please check!': 'Formulário contem erros. Por favor, verifique!',
 }
