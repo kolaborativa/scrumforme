@@ -1,0 +1,54 @@
+{{extend 'layout.html'}}
+
+<h2>Projeto</h2>
+<table class="table table-hover" data-provides="rowlink">
+	<thead>
+		<tr>
+			<th><strong>{{=T('Name')}}</strong></th>
+			<th><strong>{{=T('Description')}}</strong></th>
+			<th><strong>{{=T('Data')}}</strong></th>
+		</tr>
+	</thead>
+	<tbody>
+{{for i in project:}}
+	<tr>
+		<td>{{=i.name}}</td>
+		<td>{{=i.description}}</td>
+		<td>{{=i.date_.strftime("%d/%m/%Y")}}</td>
+	</tr>	
+{{pass}}
+	</tbody>
+</table>
+
+<br>
+<br>
+
+{{if "stories" in globals():}}
+	<h2>{{=T('Stories')}}</h2>
+	<table class="table table-hover" data-provides="rowlink">
+		<thead>
+			<tr>
+				<th><strong>{{=T('Title')}}</strong></th>
+				<th><strong>{{=T('Benefit')}}</strong></th>
+				<th><strong>{{=T('Story points')}}</strong></th>
+			</tr>
+		</thead>
+		<tbody>
+
+	{{for i in stories:}}
+		<tr>
+			<td>{{=i.title}}</td>
+			<td>{{=i.benefit}}</td>
+			<td>{{=i.story_points}}</td>
+		</tr>	
+	{{pass}}
+		</tbody>
+	</table>
+
+	<br>
+	<br>
+{{pass}}
+
+<h2>{{=T('Create Story')}}</h2>
+
+{{=form_story}}

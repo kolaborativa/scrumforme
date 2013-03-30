@@ -22,17 +22,18 @@ def index():
     return dict()
 
 
-def projects():
+def all_projects():
     from datetime import datetime
 
-    projetos = db(Project).select()
+    all_projects = db(Project).select()
 
     form = SQLFORM.factory(
         Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
         Field('description', label= T('Description')),
         Field('url', label= 'Url'),
-        table_name='project',
-        submit_button=T('CREATE'))
+        table_name='all_projects',
+        submit_button=T('CREATE')
+        )
 
     if form.accepts(request.vars):
         Project.insert(
@@ -41,12 +42,40 @@ def projects():
                         url=form.vars.url,
                         date_=datetime.now(),
                         )
-        redirect(URL('projects'))
+        redirect(URL('all_projects'))
         pass
     elif form.errors:
         pass
 
-    return dict(form=form, projetos=projetos)
+    return dict(form=form, all_projects=all_projects)
+
+
+def project():
+    project_id = request.args(0) or redirect(URL('all_projects'))
+    project = db(Project.id == project_id).select()
+
+    stories = db(Story.project_id == project_id).select()
+
+
+    form_story = SQLFORM(
+        Story,
+        fields=['title', 'benefit', 'story_points'],
+        submit_button=T('CREATE')
+    )
+
+    if form_story.process().accepted:
+        db(Story.id == form_story.vars.id).update(
+            project_id=project_id,
+        )
+        redirect(URL(f='project',args=project_id))
+
+    elif form_story.errors:
+        response.flash = "Formulário contem erros. Por favor, verifique!"
+
+    if stories:
+        return dict(project=project, form_story=form_story, stories=stories)
+    else:
+        return dict(project=project, form_story=form_story)
 
 
 def user():
