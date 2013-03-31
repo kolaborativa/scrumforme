@@ -54,21 +54,41 @@ def project():
     project = db(Project.id == project_id).select().first()
 
     stories = db(Story.project_id == project_id).select()
+    sprint = db(Sprint.project_id == project_id).select().first()
+
+    form_sprint = SQLFORM.factory(
+        Field('name', label='Name'),
+        Field('weeks', label='Weeks'),
+        Field('stories', label='Stories'),
+        submit_button=T('CREATE')
+        )
+
+    if form_sprint.process().accepted:
+        name = form_sprint.vars['name']
+        weeks = form_sprint.vars['weeks']
+        stories_id = form_sprint.vars['stories'].split(',')
+
+        sprint_id = Sprint.insert(project_id=project_id,
+            name=name, weeks=weeks)
+
+        for story_id in stories_id:
+            db(Story.id==story_id).update(sprint_id=sprint_id)
+
+        redirect(URL('product_backlog'))
 
     definition_ready = {}
     for story in stories:
         definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
 
     if stories:
-        return dict(project=project, stories=stories, definition_ready=definition_ready)
+        return dict(project=project, stories=stories, definition_ready=definition_ready, form_sprint=form_sprint, sprint=sprint)
     else:
-        return dict(project=project)
+        return dict(project=project, form_sprint=form_sprint, sprint=sprint)
 
 
 def create_story():
     """Function create project story
     """
-
     if request.vars:
         if request.vars.name == "definition_ready":
             definition_ready_id = Definition_ready.insert(
@@ -127,15 +147,18 @@ def update_backlog_itens():
                 benefit=request.vars.benefit,
             )
 
-        # elif request.vars.benefit:
-            # db(Story.id == request.vars.id).update(
-                # benefit=request.vars.benefit,
-            # )
-
         return dict(success="success",msg="gravado com sucesso!")
     else:
         return dict(error="error",msg="erro ao gravar!")
 
+
+def launch_sprint():
+    from datetime import datetime
+    sprint_id = request.args(0) or redirect(URL('index'))
+    sprint = db(Sprint.id==sprint_id).select().first()
+    if not sprint.started:
+        db(Sprint.id==sprint_id).update(started=datetime.today().date())
+    redirect(URL(f='all_projects'))
 
 def user():
     """
