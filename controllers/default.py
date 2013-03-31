@@ -54,6 +54,25 @@ def project():
     project = db(Project.id == project_id).select()
 
     stories = db(Story.project_id == project_id).select()
+    sprint = db(Sprint.project_id == project_id).select().first()
+
+    form_sprint = SQLFORM.factory(
+        Field('name', label='Name'),
+        Field('weeks', label='Weeks'),
+        Field('stories', label='Stories'),
+        submit_button=T('CREATE')
+        )
+
+    if form_sprint.process().accepted:
+        name = form_sprint.vars['name']
+        weeks = form_sprint.vars['weeks']
+        stories_id = form_sprint.vars['stories'].split(',')
+
+        sprint_id = Sprint.insert(project_id=project_id,
+            name=name, weeks=weeks)
+
+        for story_id in stories_id:
+            db(Story.id==story_id).update(sprint_id=sprint_id)
 
 
     form_story = SQLFORM(
@@ -72,10 +91,17 @@ def project():
         response.flash = T('Formulário contem erros. Por favor, verifique!')
 
     if stories:
-        return dict(project=project, form_story=form_story, stories=stories)
+        return dict(project=project, form_story=form_story, stories=stories, form_sprint=form_sprint, sprint=sprint)
     else:
-        return dict(project=project, form_story=form_story)
+        return dict(project=project, form_story=form_story, form_sprint=form_sprint, sprint=sprint)
 
+def launch_sprint():
+    from datetime import datetime
+    sprint_id = request.args(0) or redirect(URL('index'))
+    sprint = db(Sprint.id==sprint_id).select().first()
+    if not sprint.started:
+        db(Sprint.id==sprint_id).update(started=datetime.today().date())
+    redirect(URL(f='all_projects'))
 
 def user():
     """

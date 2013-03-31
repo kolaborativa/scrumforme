@@ -15,7 +15,7 @@
 		<td>{{=i.name}}</td>
 		<td>{{=i.description}}</td>
 		<td>{{=i.date_.strftime("%d/%m/%Y")}}</td>
-	</tr>	
+	</tr>
 {{pass}}
 	</tbody>
 </table>
@@ -40,7 +40,7 @@
 			<td>{{=i.title}}</td>
 			<td>{{=i.benefit}}</td>
 			<td>{{=i.story_points}}</td>
-		</tr>	
+		</tr>
 	{{pass}}
 		</tbody>
 	</table>
@@ -53,5 +53,14 @@
 
 {{=form_story}}
 
+<h2>{{=T('Create Sprint')}}</h2>
 
+{{=form_sprint}}
 
+<h2>{{=T('Sprint')}}</h2>
+{{=sprint.name}}
+{{if not sprint.started:}}
+<a href="{{=URL(c='default',f='launch_sprint',args=[sprint.id],)}}" class='btn btn-success'>{{=T('Launch the sprint')}}</a>
+{{else:}}
+<button class='disabled btn btn-success'>{{=T('Launched')}}</button>
+{{pass}}
