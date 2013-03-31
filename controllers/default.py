@@ -22,7 +22,7 @@ def index():
     return dict()
 
 
-def all_projects():
+def product_backlog():
     from datetime import datetime
 
     all_projects = db(Project).select()
@@ -31,7 +31,7 @@ def all_projects():
         Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
         Field('description', label= T('Description')),
         Field('url', label= 'Url'),
-        table_name='all_projects',
+        table_name='product_backlog',
         submit_button=T('CREATE')
         )
 
@@ -42,7 +42,7 @@ def all_projects():
                         url=form.vars.url,
                         date_=datetime.now(),
                         )
-        redirect(URL('all_projects'))
+        redirect(URL('product_backlog'))
     elif form.errors:
         response.flash = T('Formulário contem erros. Por favor, verifique!')
 
@@ -50,31 +50,48 @@ def all_projects():
 
 
 def project():
-    project_id = request.args(0) or redirect(URL('all_projects'))
-    project = db(Project.id == project_id).select()
+    project_id = request.args(0) or redirect(URL('product_backlog'))
+    project = db(Project.id == project_id).select().first()
 
     stories = db(Story.project_id == project_id).select()
 
 
-    form_story = SQLFORM(
-        Story,
-        fields=['title', 'benefit', 'story_points'],
-        submit_button=T('CREATE')
-    )
 
-    if form_story.process().accepted:
-        db(Story.id == form_story.vars.id).update(
-            project_id=project_id,
-        )
-        redirect(URL(f='project',args=project_id))
+    # FORM DEFINITION OF READY
+    # form_definition_ready = SQLFORM(
+    #     Definition_ready,
+    #     fields=['title'],
+    #     submit_button=T('CREATE')
+    # )
 
-    elif form_story.errors:
-        response.flash = T('Formulário contem erros. Por favor, verifique!')
+    # if form_definition_ready.process().accepted:
+    #     db(Story.id == form_definition_ready.vars.id).update(
+    #         project_id=project_id,
+    #     )
+    #     redirect(URL(f='project',args=project_id))
+
+    # elif form_definition_ready.errors:
+    #     response.flash = T('Formulário contem erros. Por favor, verifique!')
 
     if stories:
-        return dict(project=project, form_story=form_story, stories=stories)
+        return dict(project=project, stories=stories)
     else:
-        return dict(project=project, form_story=form_story)
+        return dict(project=project)
+
+
+def create_story():
+    """Function create project story
+    """
+
+    if request.vars:
+        Story.insert(
+                    project_id=request.vars.pk,
+                    title=request.vars.value
+                    )
+
+        return dict(success="success",msg="gravado com sucesso!")
+    else:
+        return dict(error="error",msg="erro ao gravar!")
 
 
 def user():

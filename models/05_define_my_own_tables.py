@@ -36,7 +36,7 @@ if not "story" in db.tables:
         Field("project_id", db.project, default=None),
         Field("sprint_id", db.sprint, default=None),
         Field("title", "string", length=128, default=None),
-        Field("benefit", "integer", default=None),
+        Field("benefit", "string", default=None),
         Field("story_points", "integer", default=None),
         Field("concluded", "boolean", default=None),
         format='%(title)s',

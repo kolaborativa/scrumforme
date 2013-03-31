@@ -10,15 +10,37 @@
 		</tr>
 	</thead>
 	<tbody>
-{{for i in project:}}
 	<tr>
-		<td>{{=i.name}}</td>
-		<td>{{=i.description}}</td>
-		<td>{{=i.date_.strftime("%d/%m/%Y")}}</td>
+		<td>{{=project.name}}</td>
+		<td>{{=project.description}}</td>
+		<td>{{=project.date_.strftime("%d/%m/%Y")}}</td>
 	</tr>	
-{{pass}}
 	</tbody>
 </table>
+
+<button id="create_story" class="btn btn-primary">{{=T('Create Story')}}</button>
+<div id="stories">
+<!-- 	<ul class="stories_container">
+		<div class="stories_header">
+			<a href="#" class="editable-click editable-empty story_card new_story editable" data-type="text" data-placeholder="Click para escrever" data-pk="1">Click para escrever</a>
+			<button class="btn expand_story pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button>
+			<button class="btn delete_story pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button>
+			<button class="btn comment_story pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button>
+			<select class="span1 pull-right" name="size"  id="size">
+	            <option value="P" selected>P</option>
+	            <option value="M">M</option>
+	            <option value="G">G</option>
+	            <option value="GG">GG</option>
+	        </select>
+			<input class="span1 pull-right" type="text" placeholder="?">
+		</div>
+		<div class="stories_footer">
+			<footer id="story_footer">
+				<button class="btn btn-primary create_definition_ready">{{=T('Create Definition Of Ready')}}</button>
+			</footer>
+		</div>
+	</ul> -->
+</div>
 
 <br>
 <br>
@@ -49,9 +71,10 @@
 	<br>
 {{pass}}
 
-<h2>{{=T('Create Story')}}</h2>
-
-{{=form_story}}
-
+<script>
+	var urlStory = "{{=URL('create_story.json')}}",
+		botonDefinitionReady = '{{=T("DR")}}';
+		projectID = '{{=project.id}}';
+</script>
 
 

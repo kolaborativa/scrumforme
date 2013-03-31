@@ -161,7 +161,7 @@
 <default>NULL</default>
 </row>
 <row name="benefit" null="1" autoincrement="0">
-<datatype>integer</datatype>
+<datatype>string</datatype>
 <default>NULL</default>
 </row>
 <row name="story_points" null="1" autoincrement="0">

@@ -40,7 +40,7 @@ def _():
     ctr = request.controller
     # useful links to internal and external resources
     response.menu += [
-        (SPAN(T('Projects'), _class='highlighted'), False, URL(c='default', f='all_projects'),
+        (SPAN(T('Projects'), _class='highlighted'), False, URL(c='default', f='product_backlog'),
           # [(T('My Sites'), False, URL('admin', 'default', 'site')),]
          )]
 if DEVELOPMENT_MENU: _()

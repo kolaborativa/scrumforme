@@ -45,6 +45,8 @@
   response.files.append(URL('static','css/bootstrap.min.css'))
   response.files.append(URL('static','css/bootstrap-responsive.min.css'))
   response.files.append(URL('static','css/web2py_bootstrap.css'))
+  response.files.append(URL('static','css/bootstrap-editable.css'))
+  response.files.append(URL('static','css/product_backlog.css'))
   }}
 
   {{include 'web2py_ajax.html'}}
@@ -95,29 +97,10 @@
     <br>
 
     <section id="main" class="main row">
-        {{if left_sidebar_enabled:}}
-        <div class="span3 left-sidebar">
-            {{block left_sidebar}}
-            <h3>Left Sidebar</h3>
-            <p></p>
-            {{end}}
-        </div>
-        {{pass}}
 
         <div class="{{=middle_columns}}">
-            {{block center}}
             {{include}}
-            {{end}}
         </div>
-
-        {{if right_sidebar_enabled:}}
-        <div class="span3">
-            {{block right_sidebar}}
-            <h3>Right Sidebar</h3>
-            <p></p>
-            {{end}}
-        </div>
-        {{pass}}
     </section><!--/main-->
 
     <!-- Footer ================================================== -->
@@ -141,6 +124,8 @@
        (Placed at the end of the document so the pages load faster) -->
   <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
   <script src="{{=URL('static','js/web2py_bootstrap.js')}}"></script>
+  <script src="{{=URL('static','js/bootstrap-editable.min.js')}}"></script>
+  <script src="{{=URL('static','js/product_backlog.js')}}"></script>
   <!--[if lt IE 7 ]>
       <script src="{{=URL('static','js/dd_belatedpng.js')}}"></script>
       <script> DD_belatedPNG.fix('img, .png_bg'); //fix any <img> or .png_bg background-images </script>

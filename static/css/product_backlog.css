@@ -1,0 +1,62 @@
+/*
+=======
+ ICONS
+=======
+*/
+
+.icon_forward, .icon_back{
+  background: url(../img/back_forward.png) no-repeat;
+  display: inline-block;
+}
+
+.icon_forward{
+  background-position: 0 0;
+  width: 14px;
+  height: 10px;
+}
+
+.icon_back{
+  background-position: 0 -51px ;
+  width: 14px;
+  height: 10px;
+}
+
+#stories {
+	margin-top: 20px;
+}
+
+.stories_container {
+	margin: 0;
+	margin-bottom: 10px;
+	border: 2px solid #ccc;
+}
+
+.stories_container li {
+	height: 30px;
+	margin-top: 10px;
+	padding: 5px;
+	list-style: none;
+	margin-left: 20px;
+}
+
+.new_definition_ready {
+	position: relative;
+	top: 5px;
+}
+
+.stories_header {
+	height: 30px;
+	padding: 5px;
+	background-color: #ccc;
+}
+
+.story_card {
+	/*padding-top: 10px;*/
+	position: relative;
+	top: 5px;
+}
+
+#story_footer {
+	background-color: #ccc;
+	padding: 10px;
+}
