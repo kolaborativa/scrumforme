@@ -55,26 +55,12 @@ def project():
 
     stories = db(Story.project_id == project_id).select()
 
-
-
-    # FORM DEFINITION OF READY
-    # form_definition_ready = SQLFORM(
-    #     Definition_ready,
-    #     fields=['title'],
-    #     submit_button=T('CREATE')
-    # )
-
-    # if form_definition_ready.process().accepted:
-    #     db(Story.id == form_definition_ready.vars.id).update(
-    #         project_id=project_id,
-    #     )
-    #     redirect(URL(f='project',args=project_id))
-
-    # elif form_definition_ready.errors:
-    #     response.flash = T('Formulário contem erros. Por favor, verifique!')
+    definition_ready = {}
+    for story in stories:
+        definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
 
     if stories:
-        return dict(project=project, stories=stories)
+        return dict(project=project, stories=stories, definition_ready=definition_ready)
     else:
         return dict(project=project)
 
@@ -84,22 +70,54 @@ def create_story():
     """
 
     if request.vars:
-        story_id = Story.insert(
+        if request.vars.name == "definition_ready":
+            definition_ready_id = Definition_ready.insert(
+                        story_id=request.vars.pk,
+                        title=request.vars.value
+                        )
+            return dict(success="success",msg="gravado com sucesso!",definition_ready_id=definition_ready_id)
+        else:
+            story_id = Story.insert(
                     project_id=request.vars.pk,
                     title=request.vars.value
                     )
 
-        return dict(success="success",msg="gravado com sucesso!",story_id=story_id)
+            return dict(success="success",msg="gravado com sucesso!",story_id=story_id)
     else:
         return dict(error="error",msg="erro ao gravar!")
 
 
-def update_story():
+def create_definition_ready():
     """Function create project story
     """
 
     if request.vars:
-        if request.vars.story_points:
+        definition_ready_id = Definition_ready.insert(
+                    story_id=request.vars.pk,
+                    title=request.vars.value
+                    )
+        return dict(success="success",msg="gravado com sucesso!",definition_ready_id=definition_ready_id)
+    else:
+        return dict(error="error",msg="erro ao gravar!")
+
+
+def update_backlog_itens():
+    """Function update project itens
+    """
+
+    if request.vars:
+        print request.vars
+        if request.vars.name == "stories":
+            db(Story.id == request.vars.pk).update(
+                title=request.vars.value,
+            )
+
+        elif request.vars.name == "definition_ready":
+            db(Definition_ready.id == request.vars.pk).update(
+                title=request.vars.value,
+            )
+            
+        elif request.vars.story_points:
             db(Story.id == request.vars.id).update(
                 story_points=request.vars.story_points,
             )
@@ -108,6 +126,11 @@ def update_story():
             db(Story.id == request.vars.id).update(
                 benefit=request.vars.benefit,
             )
+
+        # elif request.vars.benefit:
+            # db(Story.id == request.vars.id).update(
+                # benefit=request.vars.benefit,
+            # )
 
         return dict(success="success",msg="gravado com sucesso!")
     else:
