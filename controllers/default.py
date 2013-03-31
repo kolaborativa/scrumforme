@@ -84,10 +84,30 @@ def create_story():
     """
 
     if request.vars:
-        Story.insert(
+        story_id = Story.insert(
                     project_id=request.vars.pk,
                     title=request.vars.value
                     )
+
+        return dict(success="success",msg="gravado com sucesso!",story_id=story_id)
+    else:
+        return dict(error="error",msg="erro ao gravar!")
+
+
+def update_story():
+    """Function create project story
+    """
+
+    if request.vars:
+        if request.vars.story_points:
+            db(Story.id == request.vars.id).update(
+                story_points=request.vars.story_points,
+            )
+
+        elif request.vars.benefit:
+            db(Story.id == request.vars.id).update(
+                benefit=request.vars.benefit,
+            )
 
         return dict(success="success",msg="gravado com sucesso!")
     else:

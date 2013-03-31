@@ -37,6 +37,7 @@
 'Components and Plugins': 'Components and Plugins',
 'Controller': 'Controlador',
 'Copyright': 'Copyright',
+'CR': 'CR',
 'CREATE': 'CRIAR',
 'Create a Project': 'Criar um Projeto',
 'Create Definition Of Ready': 'Create Definition Of Ready',
