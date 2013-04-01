@@ -131,6 +131,23 @@ def create_update_backlog_itens():
         return dict(error="error",msg="erro ao gravar!")
 
 
+def remove_item_backlog_itens():
+
+    if request.vars:
+        if request.vars.name == "definition_ready":
+            db(Definition_ready.id == request.vars.pk).delete()
+        
+        elif request.vars.name == "stories":
+            db(Story.id == request.vars.pk).delete()
+            definitions_data = db(Definition_ready.story_id == request.vars.pk).select()
+
+            for df in definitions_data:
+                db(Definition_ready.id == df.id).delete()
+
+        return True
+    else:
+        return False
+
 
 def launch_sprint():
     from datetime import datetime

@@ -1,87 +1,110 @@
 {{extend 'default/layout.html'}}
 
 <script>
-	var urlBacklogItens = "{{=URL('create_update_backlog_itens.json')}}",
-		botonDefinitionReady = '{{=T("DR")}}',
-		projectID = '{{=project.id}}';
+    // OBS: other global variables are generated on the page project
+    var urlCreateUpdateBacklogItens = "{{=URL('create_update_backlog_itens.json')}}",
+        urlRemoveBacklogItens = "{{=URL('remove_item_backlog_itens')}}",
+        botonDefinitionReady = '{{=T("DR")}}',
+        projectID = '{{=project.id}}',
+        msg = {
+            field_empty : '{{=T("Click to write")}}',
+            validation_error : '{{=T("Can not be empty")}}',
+            confirm : '{{=T("Are you sure you want to continue?")}}',
+            remove_sucess : '{{=T("Removed Successfully!")}}',
+            remove_error : '{{=T("Error in removal!")}}',
+            type_error : 'error',
+            type_success : 'success',
+        };
 </script>
+
 
 <h2>Projeto</h2>
 <table class="table table-hover" data-provides="rowlink">
-	<thead>
-		<tr>
-			<th><strong>{{=T('Name')}}</strong></th>
-			<th><strong>{{=T('Description')}}</strong></th>
-			<th><strong>{{=T('Data')}}</strong></th>
-		</tr>
-	</thead>
-	<tbody>
-	<tr>
-		<td>{{=project.name}}</td>
-		<td>{{=project.description}}</td>
-		<td>{{=project.date_.strftime("%d/%m/%Y")}}</td>
-	</tr>	
-	</tbody>
+    <thead>
+        <tr>
+            <th><strong>{{=T('Name')}}</strong></th>
+            <th><strong>{{=T('Description')}}</strong></th>
+            <th><strong>{{=T('Data')}}</strong></th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{=project.name}}</td>
+        <td>{{=project.description}}</td>
+        <td>{{=project.date_.strftime("%d/%m/%Y")}}</td>
+    </tr>   
+    </tbody>
 </table>
 
+<div id="target_ajax"></div>
 
 
 {{if sprint:}}
 <div class="container-fluid row">
-	<h2>{{=T('Sprint')}}</h2>
-	{{=sprint.name}}
-	{{if not sprint.started:}}
-	<a href="{{=URL(c='default',f='launch_sprint',args=[sprint.id],)}}" class='btn btn-success'>{{=T('Launch the sprint')}}</a>
-	{{else:}}
-	<button class='disabled btn btn-success'>{{=T('Launched')}}</button>
-	{{pass}}
+    <h2>{{=T('Sprint')}}</h2>
+    {{=sprint.name}}
+    {{if not sprint.started:}}
+    <a href="{{=URL(c='default',f='launch_sprint',args=[sprint.id],)}}" class='btn btn-success'>{{=T('Launch the sprint')}}</a>
+    {{else:}}
+    <button class='disabled btn btn-success'>{{=T('Launched')}}</button>
+    {{pass}}
 </div>
 {{else:}}
-	<h2>{{=T('Create Sprint')}}</h2>
-	{{=form_sprint}}
+    <h2>{{=T('Create Sprint')}}</h2>
+    {{=form_sprint}}
 {{pass}}
 <br>
 <br>
 
 <button id="create_story" class="btn btn-primary">{{=T('Create Story')}}</button>
 <div id="stories">
-	{{if "stories" in globals():}}
-		{{selects="P M G GG".split()}}
-		{{for story in stories:}}
-		<ul class="stories_container">
-			<div class="stories_header">
-				<a href="#" class="editable-click story_card editable" data-type="text" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="stories" data-update="true">{{=story.title}}</a>
-				<button class="btn expand_story pull-right" alt="Expand" title="Expand">
-					<i class="icon-chevron-down"></i></button>
-				<button class="btn delete_story pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button>
-				<select class="span1 pull-right benefit" name="size" id="size">
-				{{for size in selects:}}
-					{{if size == story.benefit:}}
-						<option value="{{=size}}" selected>{{=size}}</option>
-					{{else:}}
-						<option value="{{=size}}">{{=size}}</option>
-					{{pass}}
-				{{pass}}
-				</select>
-				<input class="span1 pull-right story_points" type="number" placeholder="?" min="1" value="{{=story.story_points}}">
-				<button class="btn btn-primary create_definition_ready pull-right">{{=T('DR')}}</button>
-			</div>
-			<div class="stories_footer">
-				{{count = 0}}
-				{{for df in definition_ready[story.id]:}}
-					{{if definition_ready[story.id][count].story_id == story.id:}}
-					<li>
-						<a href="#" class="editable-click new_definition_ready editable" data-type="text" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
-						<button class="btn expand_definition_ready pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button>
-						<button class="btn delete_definition_ready pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button>
-						<button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button>
-						<button class="btn plus_card pull-right" alt="Create Card" title="Create Card"><i class="icon-plus-sign"></i></button>
-					</li>
-					{{count += 1}}
-					{{pass}}
-				{{pass}}
-			</div>
-		</ul>
-		{{pass}}
-	{{pass}}
+    {{if "stories" in globals():}}
+        {{for story in stories:}}
+        <ul class="stories_container">
+            <div class="stories">
+                <a href="#" class="editable-click story_card editable" data-type="text" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="stories" data-update="true">{{=story.title}}</a>
+                <button class="btn expand_story pull-right" alt="Expand" title="Expand">
+                    <i class="icon-chevron-down"></i></button>
+                <button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button>
+                <select class="span1 pull-right benefit" name="size" id="size">
+                {{selects="P M G GG".split()}}
+                {{if story.benefit:}}
+                    {{for size in selects:}}
+                        {{if size == story.benefit:}}
+                            <option value="{{=size}}" selected>{{=size}}</option>
+                        {{else:}}
+                            <option value="{{=size}}">{{=size}}</option>
+                        {{pass}}
+                    {{pass}}
+                {{else:}}
+                    {{selects.insert(0,"?")}}
+                    {{for size in selects:}}
+                        {{if size == "?":}}
+                            <option value="" disabled selected>?</option>
+                        {{else:}}
+                            <option value="{{=size}}">{{=size}}</option>
+                        {{pass}}
+                    {{pass}}                    
+                {{pass}}
+                </select>
+                <input class="span1 pull-right story_points" type="number" placeholder="?" min="1" value="{{=story.story_points}}">
+                <button class="btn btn-primary create_definition_ready pull-right">{{=T('DR')}}</button>
+            </div>
+            {{count = 0}}
+            {{for df in definition_ready[story.id]:}}
+                {{if definition_ready[story.id][count].story_id == story.id:}}
+                <li class="definition_ready">
+                    <a href="#" class="editable-click editable" data-type="text" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
+                    <button class="btn expand_definition_ready pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button>
+                    <button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button>
+                    <button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button>
+                    <button class="btn plus_card pull-right" alt="Create Card" title="Create Card"><i class="icon-plus-sign"></i></button>
+                </li>
+                {{count += 1}}
+                {{pass}}
+            {{pass}}
+        </ul>
+        {{pass}}
+    {{pass}}
+    <div class="clearfix"></div>
 </div>
