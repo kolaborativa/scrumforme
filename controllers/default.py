@@ -22,7 +22,7 @@ def index():
     return dict()
 
 
-def product_backlog():
+def projects():
     from datetime import datetime
 
     all_projects = db(Project).select()
@@ -49,7 +49,7 @@ def product_backlog():
     return dict(form=form, all_projects=all_projects)
 
 
-def project():
+def product_backlog():
     project_id = request.args(0) or redirect(URL('product_backlog'))
     project = db(Project.id == project_id).select().first()
 
@@ -158,7 +158,8 @@ def launch_sprint():
     sprint = db(Sprint.id==sprint_id).select().first()
     if not sprint.started:
         db(Sprint.id==sprint_id).update(started=datetime.today().date())
-    redirect(URL(f='all_projects'))
+    redirect(URL(f='product_backlog'))
+
 
 def user():
     """

@@ -125,7 +125,9 @@
   <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
   <script src="{{=URL('static','js/web2py_bootstrap.js')}}"></script>
   <script src="{{=URL('static','js/bootstrap-editable.min.js')}}"></script>
+  {{ if request.function == "product_backlog": }}
   <script src="{{=URL('static','js/product_backlog.js')}}"></script>
+  {{ pass }}
   <!--[if lt IE 7 ]>
       <script src="{{=URL('static','js/dd_belatedpng.js')}}"></script>
       <script> DD_belatedPNG.fix('img, .png_bg'); //fix any <img> or .png_bg background-images </script>
