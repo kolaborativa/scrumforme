@@ -1,9 +1,7 @@
 {{extend 'default/layout.html'}}
 
 <script>
-	var urlStory = "{{=URL('create_story.json')}}",
-		urlDefinitionReady = "{{=URL('create_definition_ready.json')}}",
-		urlUpdateBacklogItens = "{{=URL('update_backlog_itens.json')}}",
+	var urlBacklogItens = "{{=URL('create_update_backlog_itens.json')}}",
 		botonDefinitionReady = '{{=T("DR")}}',
 		projectID = '{{=project.id}}';
 </script>
@@ -38,12 +36,10 @@
 	<button class='disabled btn btn-success'>{{=T('Launched')}}</button>
 	{{pass}}
 </div>
+{{else:}}
+	<h2>{{=T('Create Sprint')}}</h2>
+	{{=form_sprint}}
 {{pass}}
-<br>
-<br>
-
-<h2>{{=T('Create Sprint')}}</h2>
-{{=form_sprint}}
 <br>
 <br>
 
@@ -54,7 +50,7 @@
 		{{for story in stories:}}
 		<ul class="stories_container">
 			<div class="stories_header">
-				<a href="#" class="editable-click story_card editable" data-type="text" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('update_backlog_itens.json')}}" data-name="stories">{{=story.title}}</a>
+				<a href="#" class="editable-click story_card editable" data-type="text" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="stories" data-update="true">{{=story.title}}</a>
 				<button class="btn expand_story pull-right" alt="Expand" title="Expand">
 					<i class="icon-chevron-down"></i></button>
 				<button class="btn delete_story pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button>
@@ -75,7 +71,7 @@
 				{{for df in definition_ready[story.id]:}}
 					{{if definition_ready[story.id][count].story_id == story.id:}}
 					<li>
-						<a href="#" class="editable-click new_definition_ready editable" data-type="text" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('update_backlog_itens.json')}}" data-name="definition_ready">{{=definition_ready[story.id][count].title}}</a>
+						<a href="#" class="editable-click new_definition_ready editable" data-type="text" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
 						<button class="btn expand_definition_ready pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button>
 						<button class="btn delete_definition_ready pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button>
 						<button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button>

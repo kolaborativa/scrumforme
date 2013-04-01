@@ -31,7 +31,7 @@ def projects():
         Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
         Field('description', label= T('Description')),
         Field('url', label= 'Url'),
-        table_name='product_backlog',
+        table_name='projects',
         submit_button=T('CREATE')
         )
 
@@ -42,7 +42,7 @@ def projects():
                         url=form.vars.url,
                         date_=datetime.now(),
                         )
-        redirect(URL('product_backlog'))
+        redirect(URL('projects'))
     elif form.errors:
         response.flash = T('Formulário contem erros. Por favor, verifique!')
 
@@ -50,7 +50,7 @@ def projects():
 
 
 def product_backlog():
-    project_id = request.args(0) or redirect(URL('product_backlog'))
+    project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first()
 
     stories = db(Story.project_id == project_id).select()
@@ -74,7 +74,7 @@ def product_backlog():
         for story_id in stories_id:
             db(Story.id==story_id).update(sprint_id=sprint_id)
 
-        redirect(URL('product_backlog'))
+        redirect(URL(f='product_backlog', args=[project_id]))
 
     definition_ready = {}
     for story in stories:
@@ -86,70 +86,50 @@ def product_backlog():
         return dict(project=project, form_sprint=form_sprint, sprint=sprint)
 
 
-def create_story():
-    """Function create project story
+def create_update_backlog_itens():
+    """Function that creates or updates items. Receive updates if request.vars.dbUpdate and takes the ID to be updated with request.vars.dbID
     """
+
     if request.vars:
-        if request.vars.name == "definition_ready":
-            definition_ready_id = Definition_ready.insert(
-                        story_id=request.vars.pk,
+        if request.vars.dbUpdate == "true":
+            if request.vars.name == "stories":
+                db(Story.id == request.vars.dbID).update(
+                    title=request.vars.value,
+                )
+            elif request.vars.name == "definition_ready":
+                db(Definition_ready.id == request.vars.dbID).update(
+                    title=request.vars.value,
+                )
+
+            return dict(success="success",msg="gravado com sucesso!")
+
+        elif request.vars.dbUpdate == "false":
+            if request.vars.name == "stories":
+                database_id = Story.insert(
+                        project_id=request.vars.pk,
                         title=request.vars.value
                         )
-            return dict(success="success",msg="gravado com sucesso!",definition_ready_id=definition_ready_id)
+            elif request.vars.name == "definition_ready":
+                database_id = Definition_ready.insert(
+                            story_id=request.vars.pk,
+                            title=request.vars.value
+                            )
+
+            return dict(success="success",msg="gravado com sucesso!",database_id=database_id)
         else:
-            story_id = Story.insert(
-                    project_id=request.vars.pk,
-                    title=request.vars.value
-                    )
+            if request.vars.story_points:
+                db(Story.id == request.vars.id).update(
+                    story_points=request.vars.story_points,
+                )
+            elif request.vars.benefit:
+                db(Story.id == request.vars.id).update(
+                    benefit=request.vars.benefit,
+                )
 
-            return dict(success="success",msg="gravado com sucesso!",story_id=story_id)
+            return dict(success="success",msg="gravado com sucesso!")
     else:
         return dict(error="error",msg="erro ao gravar!")
 
-
-def create_definition_ready():
-    """Function create project story
-    """
-
-    if request.vars:
-        definition_ready_id = Definition_ready.insert(
-                    story_id=request.vars.pk,
-                    title=request.vars.value
-                    )
-        return dict(success="success",msg="gravado com sucesso!",definition_ready_id=definition_ready_id)
-    else:
-        return dict(error="error",msg="erro ao gravar!")
-
-
-def update_backlog_itens():
-    """Function update project itens
-    """
-
-    if request.vars:
-        print request.vars
-        if request.vars.name == "stories":
-            db(Story.id == request.vars.pk).update(
-                title=request.vars.value,
-            )
-
-        elif request.vars.name == "definition_ready":
-            db(Definition_ready.id == request.vars.pk).update(
-                title=request.vars.value,
-            )
-            
-        elif request.vars.story_points:
-            db(Story.id == request.vars.id).update(
-                story_points=request.vars.story_points,
-            )
-
-        elif request.vars.benefit:
-            db(Story.id == request.vars.id).update(
-                benefit=request.vars.benefit,
-            )
-
-        return dict(success="success",msg="gravado com sucesso!")
-    else:
-        return dict(error="error",msg="erro ao gravar!")
 
 
 def launch_sprint():
@@ -158,7 +138,7 @@ def launch_sprint():
     sprint = db(Sprint.id==sprint_id).select().first()
     if not sprint.started:
         db(Sprint.id==sprint_id).update(started=datetime.today().date())
-    redirect(URL(f='product_backlog'))
+    redirect(URL(f='projects'))
 
 
 def user():
