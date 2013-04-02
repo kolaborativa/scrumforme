@@ -30,12 +30,12 @@ a {
 }
 
 .text_container {
-    width: 70%;
+    width: 50%;
     float: left;
 }
 
 .buttons_container {
-    width: 30%;
+    width: 50%;
     float: left;
 }
 
@@ -64,6 +64,12 @@ a {
 .buttons_container button, .buttons_container select, .buttons_container input {
     margin-right: 7px;
 }
+.buttons_container select {
+    width: 60px;
+}
+.buttons_container input {
+    width: 40px;
+}
 
 .stories {
     min-height: 30px;
@@ -71,6 +77,7 @@ a {
 
 .stories ul {
     margin: 0px;
+    background-color: #fff;
 }
 
 .stories a {
