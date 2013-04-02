@@ -11,15 +11,10 @@
 
 
 def index():
-    """
-    example action using the internationalization operator T and flash
-    rendered by views/default/index.html or views/generic.html
+    all_projects = db(Project).select()
 
-    if you need a simple wiki simple replace the two lines below with:
-    return auth.wiki()
-    """
     response.flash = T("Welcome to scrumforme!")
-    return dict()
+    return dict(all_projects=all_projects)
 
 
 def projects():
@@ -50,6 +45,7 @@ def projects():
 
 
 def product_backlog():
+    all_projects = db(Project).select()
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first()
 
@@ -86,9 +82,9 @@ def product_backlog():
             tasks[df.id] = db(Task.definition_ready_id == df.id).select()
 
     if stories:
-        return dict(project=project, stories=stories, definition_ready=definition_ready, tasks=tasks, form_sprint=form_sprint, sprint=sprint)
+        return dict(project=project, all_projects=all_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, form_sprint=form_sprint, sprint=sprint)
     else:
-        return dict(project=project, form_sprint=form_sprint, sprint=sprint)
+        return dict(project=project, all_projects=all_projects, form_sprint=form_sprint, sprint=sprint)
 
 
 def create_update_backlog_itens():

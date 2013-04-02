@@ -10,29 +10,4 @@
 <div class="container-fluid">
     <h1>{{=T('Create a Project')}}</h1>
     {{=form}}
-
-    <h2>{{=T('Your Projects')}}</h2>
-    <table class="table table-hover" data-provides="rowlink">
-    <thead>
-      <tr>
-        <th><strong>#</strong></th>
-        <th><strong>{{=T('Name')}}</strong></th>
-        <th><strong>{{=T('Description')}}</strong></th>
-        <th><strong>{{=T('Data')}}</strong></th>
-      </tr>
-    </thead>
-    <tbody>
-    {{ contador=1 }}
-    {{for i in all_projects:}}
-    <tr>
-      <td>{{=contador}}</td>
-      <td><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}' >{{=i.name}}</a></td>
-      <td>{{=i.description}}</td>
-      <td>{{=i.date_.strftime("%d/%m/%Y")}}</td>
-    </tr>
-
-    {{contador +=1}}
-    {{pass}}
-    </tbody>
-    </table>
 </div>

@@ -1,3 +1,11 @@
-{{extend 'layout.html'}}
+{{extend 'default/layout_base.html'}}
 
-<a href='{{=URL("projects")}}'>{{=T('Projects')}}</a>
+<div id="breadcrumb">
+    <a href='{{=URL("index")}}' class="current" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+</div>
+<div id="content-header">
+    <h1>{{=T('Dashboard')}}</h1>
+</div>
+<div class="container-fluid">
+	<h4>{{=T('Welcome to Scrumforme and enjoy!')}}</h4>
+</div>

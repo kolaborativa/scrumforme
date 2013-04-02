@@ -75,16 +75,32 @@
         <div id="sidebar">
             <a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
             <ul>
-                <li class="active"><a href="#"><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
-                <li><a href="{{=URL('projects')}}"><i class="icon icon-tint"></i> <span>Projects</span></a></li>
-                <!-- <li class="submenu">
-                    <a href="#"><i class="icon icon-th-list"></i> <span>Form elements</span> <span class="label">3</span></a>
+                <li class='{{=g_pagina_atual("default/index","active")}}'><a href='{{=URL("index")}}'><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
+                <li class='{{=g_pagina_atual("default/projects","active")}}'><a href="{{=URL('projects')}}"><i class="icon icon-plus-sign"></i> <span>{{=T('New Project')}}</span></a></li>
+                {{if "all_projects" in globals():}}
+                <li class='submenu'>
+                    <a href="#"><i class="icon icon-th-list"></i> <span>{{=T('My Projects')}}</span> <span class="label">{{=len(all_projects)}}</span></a>
                     <ul>
-                        <li><a href="form-common.html">Common elements</a></li>
-                        <li><a href="form-validation.html">Validation</a></li>
-                        <li><a href="form-wizard.html">Wizard</a></li>
+                        {{for i in all_projects:}}
+                            <li class='{{=g_pagina_atual("default/product_backlog/%s" %i.id,"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}'>{{=i.name}}</a></li>
+                        {{pass}}
+                    </ul>
+                </li>                
+                {{pass}}
+                {{if request.function == "product_backlog":}}
+                <li class="submenu active open">
+                    <a href="#"><i class="icon icon-cog"></i> <span>{{=T('Project')}}</span> <span class="label">4</span></a>
+                    <ul>
+                        <li><a href="#">Board</a></li>
+                        <li class="active"><a href='{{=URL(c="default",f="product_backlog",args=[request.args(0)])}}'>Backlog</a></li>
+                        <li><a href="#">Sprints</a></li>
+                        <li><a href="#">{{=T('Archives')}}</a></li>
+                        <li><a href="#">{{=T('Team')}}</a></li>
+                        <li><a href="#">{{=T('Invite')}}</a></li>
                     </ul>
                 </li>
+                {{pass}}
+                <!--
                 <li><a href="interface.html"><i class="icon icon-pencil"></i> <span>Interface elements</span></a></li>
                 <li><a href="tables.html"><i class="icon icon-th"></i> <span>Tables</span></a></li>
                 <li><a href="grid.html"><i class="icon icon-th-list"></i> <span>Grid Layout</span></a></li>
@@ -104,13 +120,13 @@
                     <a href="widgets.html"><i class="icon icon-inbox"></i> <span>Widgets</span></a>
                 </li> -->
             </ul>
-        
+
         </div>
         
         <div id="content">
 
             {{include}}
-            
+
             <br>
             <br>
             <div class="row-fluid">
