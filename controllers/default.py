@@ -31,13 +31,13 @@ def projects():
         )
 
     if form.accepts(request.vars):
-        Project.insert(
+        project_id = Project.insert(
                         name=form.vars.name,
                         description=form.vars.description,
                         url=form.vars.url,
                         date_=datetime.now(),
                         )
-        redirect(URL('projects'))
+        redirect(URL(f="product_backlog",args=[project_id]))
     elif form.errors:
         response.flash = T('Formulário contem erros. Por favor, verifique!')
 

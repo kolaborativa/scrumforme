@@ -94,7 +94,7 @@ $(document).on("click", ".create_task", function(){
 
 // to expand story content
 $(document).on("click", ".expand_story", function(){
-    $(this).closest(".story").find(".definition_ready_container").toggle();
+    $(this).closest(".story").find(".definition_ready_container").slideToggle("slow");
 });
 
 // to expand definition_ready content

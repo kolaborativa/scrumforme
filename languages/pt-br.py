@@ -228,6 +228,7 @@
 'Twitter': 'Twitter',
 'unable to parse csv file': 'não foi possível analisar arquivo csv',
 'Update:': 'Atualizar:',
+'URL': 'URL',
 'Use (...)&(...) for AND, (...)|(...) for OR, and ~(...)  for NOT to build more complex queries.': 'Use (...)&(...) para AND, (...)|(...) para OR, e ~(...)  para NOT para construir consultas mais complexas.',
 'User %(id)s Logged-in': 'User %(id)s Logged-in',
 'User %(id)s Logged-out': 'User %(id)s Logged-out',

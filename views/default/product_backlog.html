@@ -32,23 +32,10 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span7">
-            <h2>{{=T("Project")}}</h2>
-            <table class="table table-hover" data-provides="rowlink">
-                <thead>
-                    <tr>
-                        <th><strong>{{=T('Name')}}</strong></th>
-                        <th><strong>{{=T('Description')}}</strong></th>
-                        <th><strong>{{=T('Data')}}</strong></th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>{{=project.name}}</td>
-                    <td>{{=project.description}}</td>
-                    <td>{{=project.date_.strftime("%d/%m/%Y")}}</td>
-                </tr>   
-                </tbody>
-            </table>
+            <h3>{{=T("Name")}}: {{=project.name}}</h3>
+            <h4>{{=T("Date")}}: {{=project.date_.strftime("%d/%m/%Y")}}</h4>
+            <h6>{{=T("Description")}}: {{=project.description}}</h6>
+            <h6>{{=T("URL")}}: <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></h6>
 
             <button id="create_story" class="btn btn-primary">{{=T('Create Story')}}</button>
             <div id="stories">
