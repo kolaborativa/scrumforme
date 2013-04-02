@@ -50,25 +50,25 @@ if not "definition_ready" in db.tables:
         format='%(title)s',
         migrate="definition_ready.table")
 
-if not "card" in db.tables:
-    Card = db.define_table("card",
+if not "task" in db.tables:
+    Task = db.define_table("task",
         Field("definition_ready_id", db.definition_ready, default=None),
         Field("title", "string", length=256, default=None),
         Field("started", "datetime", default=None),
         Field("ended", "datetime", default=None),
         Field("position_dom", "integer", default=None),
         Field("status", "string", length=128, default=None),
-        Field("owner_card", db.person, default=None),
+        Field("owner_task", db.person, default=None),
         format='%(title)s',
-        migrate="card.table")
+        migrate="task.table")
 
-if not "card_comment" in db.tables:
-    Card_comment = db.define_table("card_comment",
-        Field("card_id", db.card, default=None),
+if not "task_comment" in db.tables:
+    Task_comment = db.define_table("task_comment",
+        Field("task_id", db.task, default=None),
         Field("text_", "string", length=256, default=None),
         Field("date_", "datetime", default=None),
         format='%(text)s',
-        migrate="card_comment.table")
+        migrate="task_comment.table")
 
 if not "user_relationship" in db.tables:
     db.define_table("user_relationship",
@@ -82,8 +82,8 @@ db.sprint.project_id.requires = IS_IN_DB(db, 'project.id', db.project._format)
 db.story.project_id.requires = IS_IN_DB(db, 'project.id', db.project._format)
 db.story.sprint_id.requires = IS_IN_DB(db, 'sprint.id', db.sprint._format)
 db.definition_ready.story_id.requires = IS_IN_DB(db, 'story.id', db.story._format)
-db.card.definition_ready_id.requires = IS_IN_DB(db, 'definition_ready.id', db.definition_ready._format)
-db.card.owner_card.requires = IS_IN_DB(db, 'person.id', db.person._format)
-db.card_comment.card_id.requires = IS_IN_DB(db, 'card.id', db.card._format)
+db.task.definition_ready_id.requires = IS_IN_DB(db, 'definition_ready.id', db.definition_ready._format)
+db.task.owner_task.requires = IS_IN_DB(db, 'person.id', db.person._format)
+db.task_comment.task_id.requires = IS_IN_DB(db, 'task.id', db.task._format)
 db.user_relationship.auth_user_id.requires = IS_IN_DB(db, 'auth_user.id', db.auth_user._format)
 db.user_relationship.person_id.requires = IS_IN_DB(db, 'person.id', db.person._format)

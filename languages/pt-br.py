@@ -188,6 +188,7 @@
 'Sure you want to delete this object?': 'Está certo(a) que deseja apagar esse objeto ?',
 'Table': 'tabela',
 'Table name': 'Table name',
+'Task': 'Tarefa',
 'The "query" is a condition like "db.table1.field1==\'value\'". Something like "db.table1.field1==db.table2.field2" results in a SQL JOIN.': 'Uma "consulta" é uma condição como "db.tabela1.campo1==\'valor\'". Expressões como "db.tabela1.campo1==db.tabela2.campo2" resultam em um JOIN SQL.',
 'The Core': 'The Core',
 'The field name can not be empty!': 'O campo nome não pode ser vazio!',

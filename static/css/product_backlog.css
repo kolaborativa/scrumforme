@@ -1,3 +1,7 @@
+a {
+    color: #000;
+}
+
 /*
 =======
  ICONS
@@ -22,41 +26,101 @@
 }
 
 #stories {
-	margin-top: 20px;
+    margin-top: 20px;
+}
+
+.text_container {
+    width: 75%;
+    float: left;
+}
+
+.buttons_container {
+    width: 25%;
+    float: left;
 }
 
 .stories_container {
-	margin: 0;
-	margin-bottom: 10px;
-	border: 2px solid #ccc;
+    list-style: none;
+    margin: 0;
+    margin-bottom: 20px;
+    border: 2px solid #ccc;
 }
 
-.stories_container li {
-	height: 30px;
-	margin-top: 10px;
-	padding: 5px;
-	list-style: none;
-	margin-left: 20px;
-}
-
-.new_definition_ready {
-	position: relative;
-	top: 5px;
+.stories_header {
+    padding-left: 20px;
 }
 
 .stories {
-	height: 30px;
-	padding: 5px;
-	background-color: #ccc;
+    min-height: 30px;
+    background-color: rgb(235, 233, 233);
+    padding: 5px 0px 5px 0px;
 }
 
-.story_card {
-	/*padding-top: 10px;*/
-	position: relative;
-	top: 5px;
+.stories ul {
+    margin: 0px;
 }
 
-#story_footer {
-	background-color: #ccc;
-	padding: 10px;
+.stories a {
+    /*padding-top: 10px;*/
+    position: relative;
+    top: 5px;
+}
+
+.definition_ready_container {
+    list-style: none;
+}
+
+.definition_ready {
+    height: 30px;
+    background-color: rgb(165, 205, 221);
+    padding: 5px 5px 5px 20px;
+    list-style: none;
+}
+
+.definition_ready a {
+    /*padding-top: 10px;*/
+    position: relative;
+    top: 5px;
+}
+
+.new_definition_ready {
+    position: relative;
+    top: 5px;
+}
+
+.task {
+    height: 30px;
+    list-style: none;
+    padding: 5px 5px 5px 20px;
+}
+
+.task a {
+    /*padding-top: 10px;*/
+    position: relative;
+    top: 5px;
+}
+
+
+/*
+==============
+ PLUGIN HACKS
+==============
+*/
+
+.editable-click, a.editable-click, a.editable-click:hover {
+    text-decoration: none;
+    border-bottom: none;
+}
+
+.editable-container.editable-inline {
+    width: 100%;
+}
+.editable-input {
+    width: 90%;
+}
+.editable-input input[type="text"] {
+    width: 95%;
+}
+.editable-clear-x {
+    right: 13.5px!important;
 }

@@ -80,8 +80,13 @@ def product_backlog():
     for story in stories:
         definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
 
+    tasks = {}
+    for row in definition_ready:
+        for df in definition_ready[row]:
+            tasks[df.id] = db(Task.definition_ready_id == df.id).select()
+
     if stories:
-        return dict(project=project, stories=stories, definition_ready=definition_ready, form_sprint=form_sprint, sprint=sprint)
+        return dict(project=project, stories=stories, definition_ready=definition_ready, tasks=tasks, form_sprint=form_sprint, sprint=sprint)
     else:
         return dict(project=project, form_sprint=form_sprint, sprint=sprint)
 
@@ -91,6 +96,7 @@ def create_update_backlog_itens():
     """
 
     if request.vars:
+        print request.vars
         if request.vars.dbUpdate == "true":
             if request.vars.name == "stories":
                 db(Story.id == request.vars.dbID).update(
@@ -98,6 +104,10 @@ def create_update_backlog_itens():
                 )
             elif request.vars.name == "definition_ready":
                 db(Definition_ready.id == request.vars.dbID).update(
+                    title=request.vars.value,
+                )
+            elif request.vars.name == "task":
+                db(Task.id == request.vars.dbID).update(
                     title=request.vars.value,
                 )
 
@@ -112,6 +122,11 @@ def create_update_backlog_itens():
             elif request.vars.name == "definition_ready":
                 database_id = Definition_ready.insert(
                             story_id=request.vars.pk,
+                            title=request.vars.value
+                            )
+            elif request.vars.name == "task":
+                database_id = Task.insert(
+                            definition_ready_id=request.vars.pk,
                             title=request.vars.value
                             )
 
