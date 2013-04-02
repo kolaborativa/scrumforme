@@ -37,10 +37,10 @@ $('#stories').editable({
   },
   success: function(value,response) {
     // enables the buttons
-  	$(this).closest(".stories").find(".create_definition_ready").removeAttr("disabled");
-  	$(this).closest(".stories").find(".story_points").removeAttr("disabled");
-    $(this).closest(".stories").find(".benefit").removeAttr("disabled");
-  	$(this).closest(".stories").find(".create_task").removeAttr("disabled");
+  	$(this).closest(".story").find(".create_definition_ready").removeAttr("disabled");
+  	$(this).closest(".story").find(".story_points").removeAttr("disabled");
+    $(this).closest(".story").find(".benefit").removeAttr("disabled");
+  	$(this).closest(".story").find(".create_task").removeAttr("disabled");
     // get the coming new database ID and update in DOM
     $(this).attr("data-pk", value.database_id);
   	// changes the status of the created item for item update
@@ -52,7 +52,7 @@ $('#stories').editable({
 $('#create_story').click(function(){
 	var indiceItem = 1;
 
-    var html = '<ul class="stories_container"><li class="stories"><div class="stories_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="text" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn expand_story pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><select class="pull-right benefit" name="size" id="size" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points" type="number" placeholder="?" min="1" disabled="disabled"><button class="btn create_definition_ready pull-right" disabled="disabled">+ '+botonDefinitionReady+'</button></div><div class="clearfix"></div></div></li></ul>';
+    var html = '<ul class="story_container item_container"><li class="story"><div class="story_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="text" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn expand_story pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><select class="pull-right benefit" name="size" id="size" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points" type="number" placeholder="?" min="1" disabled="disabled"><button class="btn create_definition_ready pull-right" disabled="disabled">+ '+botonDefinitionReady+'</button></div><div class="clearfix"></div></div></li></ul>';
 
     $("#stories").append(html);
 
@@ -65,11 +65,11 @@ $('#create_story').click(function(){
 // by clicking the button to add Definition of Ready
 $(document).on("click", ".create_definition_ready", function(){
 
-    var story_id = $(this).closest(".stories").find(".story_card").attr("data-pk");
+    var story_id = $(this).closest(".story").find(".story_card").attr("data-pk");
 
-    var html = '<ul><li class="definition_ready_container"><div class="definition_ready"><div class="text_container"><a href="#" class="editable-click editable-empty definition_ready_card editable new_definition_ready" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="definition_ready">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn expand_definition_ready pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><button class="btn create_task pull-right" alt="Create Task" title="Create Task" disabled="disabled">+ '+botonTask+'</button></div></div></li></ul>';
+    var html = '<ul class="item_container"><li class="definition_ready_container"><div class="definition_ready"><div class="text_container"><a href="#" class="editable-click editable-empty definition_ready_card editable new_definition_ready" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="definition_ready">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn expand_definition_ready pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><button class="btn create_task pull-right" alt="Create Task" title="Create Task" disabled="disabled">+ '+botonTask+'</button></div></div></li></ul>';
 
-    var newItem = $(this).closest(".stories").append(html);
+    var newItem = $(this).closest(".story").append(html);
 
     setTimeout(function () {
        newItem.find(".new_definition_ready:last").trigger('click')
@@ -94,7 +94,7 @@ $(document).on("click", ".create_task", function(){
 
 // to expand story content
 $(document).on("click", ".expand_story", function(){
-    $(this).closest(".stories").find(".definition_ready_container").toggle();
+    $(this).closest(".story").find(".definition_ready_container").toggle();
 });
 
 // to expand definition_ready content
@@ -110,13 +110,13 @@ $(document).on("keydown", ".story_points", function(event){
 
 // update Story Points
 $(document).on("change", ".story_points", function(){
-	var storyID = $(this).closest(".stories").find(".story_card").attr("data-pk");
+	var storyID = $(this).closest(".story").find(".story_card").attr("data-pk");
 	ajax(urlCreateUpdateBacklogItens+'?story_points='+this.value+'&id='+storyID, [''], 'target_ajax');
 });
 
 // update Benefit
 $(document).on("change", ".benefit", function(){
-	var storyID = $(this).closest(".stories").find(".story_card").attr("data-pk");
+	var storyID = $(this).closest(".story").find(".story_card").attr("data-pk");
 	ajax(urlCreateUpdateBacklogItens+'?benefit='+this.value+'&id='+storyID, [''], 'target_ajax');
 });
 

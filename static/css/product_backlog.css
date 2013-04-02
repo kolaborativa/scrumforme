@@ -32,6 +32,7 @@ a {
 .text_container {
     width: 50%;
     float: left;
+    padding: 10px 0px;
 }
 
 .buttons_container {
@@ -39,24 +40,24 @@ a {
     float: left;
 }
 
-.stories_container {
+.story_container {
     list-style: none;
     margin: 0;
     margin-bottom: 20px;
     border: 2px solid #ccc;
 }
 
-.stories_header {
+.story_header {
     padding-left: 20px;
     background-color: rgb(235, 233, 233);
 }
 
-.stories_header .text_container {
-    position: relative;
-    top: 6px;
+.story_header .text_container {
+    /*position: relative;*/
+    /*top: 6px;*/
 }
 
-.stories_header .buttons_container {
+.buttons_container {
     position: relative;
     top: 4px;
 }
@@ -71,18 +72,18 @@ a {
     width: 40px;
 }
 
-.stories {
-    min-height: 30px;
+.story {
+    /*min-height: 30px;*/
 }
 
-.stories ul {
+.story ul {
     margin: 0px;
     background-color: #fff;
 }
 
-.stories a {
-    position: relative;
-    top: 5px;
+.story a {
+    /*position: relative;*/
+    /*top: 5px;*/
 }
 
 .definition_ready_container {
@@ -90,31 +91,31 @@ a {
 }
 
 .definition_ready {
-    height: 30px;
+    min-height: 40px;
     background-color: rgb(165, 205, 221);
-    padding: 5px 0px 5px 20px;
+    padding-left: 20px;
     list-style: none;
 }
 
 .definition_ready a {
-    position: relative;
-    top: 5px;
+    /*position: relative;*/
+    /*top: 5px;*/
 }
 
 .new_definition_ready {
-    position: relative;
-    top: 5px;
+    /*position: relative;*/
+    /*top: 5px;*/
 }
 
 .task {
-    height: 30px;
+    min-height: 40px;
     list-style: none;
-    padding: 5px 0px 5px 20px;
+    padding-left: 20px;
 }
 
 .task a {
-    position: relative;
-    top: 5px;
+    /*position: relative;*/
+    /*top: 5px;*/
 }
 
 /*zebra rows*/
@@ -136,11 +137,12 @@ background-color:#ccc;
     width: 100%;
 }
 .editable-input {
-    width: 90%;
+    width: 80%;
+    /*top: 5px;*/
 }
 .editable-input input[type="text"] {
-    width: 95%;
+    width: 80%;
 }
 .editable-clear-x {
-    right: 13.5px!important;
+    right: 20px!important;
 }

@@ -108,42 +108,22 @@
         </div>
         
         <div id="content">
-<!--            <div id="content-header">
-                <h1>Dashboard</h1>
-            </div> -->
-            <div id="breadcrumb">
-                <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
-                <a href="#" class="current">Dashboard</a>
-            </div>
-            <div class="container-fluid">
-<!--                 <div class="row-fluid">
-                    <div class="span12 center" style="text-align: center;">
-                    </div>  
-                </div>
-                <div class="row-fluid">
-                    <div class="span12">                
-                    </div>
-                </div>
-                <div class="row-fluid">
-                    <div class="span6">
-                    </div>
-                    <div class="span6">
-                    </div>
-                </div> -->
-                {{include}}
 
-                <div class="row-fluid">
-                    <div id="footer" class="span12">
-                        <div class="copyright pull-left">{{=T('Copyleft')}} <!--[if lte IE 8]><span style="filter: FlipH; -ms-filter: "FlipH"; display: inline-block;"><![endif]-->
-                        <span style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">
-                            &copy;
-                        </span>
-                        <!--[if lte IE 8]></span><![endif]--> {{=request.now.year}}</div>
+            {{include}}
+            
+            <br>
+            <br>
+            <div class="row-fluid">
+                <div id="footer" class="span12">
+                    <div class="copyright pull-left">{{=T('Copyleft')}} <!--[if lte IE 8]><span style="filter: FlipH; -ms-filter: "FlipH"; display: inline-block;"><![endif]-->
+                    <span style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">
+                        &copy;
+                    </span>
+                    <!--[if lte IE 8]></span><![endif]--> {{=request.now.year}}</div>
 
-                        <div id="poweredBy" class="pull-right">
-                            {{=T('Powered by')}}
-                            <a href="http://www.web2py.com/">web2py</a>
-                        </div>
+                    <div id="poweredBy" class="pull-right">
+                        {{=T('Powered by')}}
+                        <a href="http://www.web2py.com/">web2py</a>
                     </div>
                 </div>
             </div>

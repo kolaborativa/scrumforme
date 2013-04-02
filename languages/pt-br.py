@@ -153,6 +153,7 @@
 'Powered by': 'Powered by',
 'Preface': 'Preface',
 'previous 100 rows': '100 linhas anteriores',
+'Product Backlog': 'Product Backlog',
 'Profile': 'Profile',
 'Project': 'Projeto',
 'Projects': 'Projetos',

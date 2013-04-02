@@ -1,69 +1,38 @@
-{{extend 'default/layout.html'}}
+{{extend 'default/layout_base.html'}}
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li class="active"><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9">
-          <div class="hero-unit">
-            <h1>{{=T('Create a Project')}}</h1>
-            {{=form}}
-          </div>
-          <div class="row-fluid">
+<div id="breadcrumb">
+    <a href='{{=URL("index")}}' title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+    <a href="#" class="current">{{=T('Projects')}}</a>
+</div>
+<div id="content-header">
+    <h1>{{=T('Projects')}}</h1>
+</div>
+<div class="container-fluid">
+    <h1>{{=T('Create a Project')}}</h1>
+    {{=form}}
 
-			<h2>{{=T('Your Projects')}}</h2>
-			<table class="table table-hover" data-provides="rowlink">
-				<thead>
-					<tr>
-						<th><strong>#</strong></th>
-						<th><strong>{{=T('Name')}}</strong></th>
-						<th><strong>{{=T('Description')}}</strong></th>
-						<th><strong>{{=T('Data')}}</strong></th>
-					</tr>
-				</thead>
-				<tbody>
-			{{ contador=1 }}
-			{{for i in all_projects:}}
-				<tr>
-					<td>{{=contador}}</td>
-					<td><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}' >{{=i.name}}</a></td>
-					<td>{{=i.description}}</td>
-					<td>{{=i.date_.strftime("%d/%m/%Y")}}</td>
-				</tr>
-				
-			{{contador +=1}}
-			{{pass}}
-				</tbody>
-			</table>
+    <h2>{{=T('Your Projects')}}</h2>
+    <table class="table table-hover" data-provides="rowlink">
+    <thead>
+      <tr>
+        <th><strong>#</strong></th>
+        <th><strong>{{=T('Name')}}</strong></th>
+        <th><strong>{{=T('Description')}}</strong></th>
+        <th><strong>{{=T('Data')}}</strong></th>
+      </tr>
+    </thead>
+    <tbody>
+    {{ contador=1 }}
+    {{for i in all_projects:}}
+    <tr>
+      <td>{{=contador}}</td>
+      <td><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}' >{{=i.name}}</a></td>
+      <td>{{=i.description}}</td>
+      <td>{{=i.date_.strftime("%d/%m/%Y")}}</td>
+    </tr>
 
-          </div><!--/row-->
-        </div><!--/span-->
-      </div><!--/row-->
-
-      <hr>
-
-      <footer>
-        <p>&copy; Company 2013</p>
-      </footer>
-
-    </div><!--/.fluid-container-->
+    {{contador +=1}}
+    {{pass}}
+    </tbody>
+    </table>
+</div>

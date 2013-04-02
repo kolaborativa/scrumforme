@@ -243,7 +243,7 @@ a:hover {
  
 /* FIX: The following two items were reordered to allow .btn-group to override margin top! */
 #content-header h1, #content-header .btn-group {
-    margin-top: 20px;
+    margin-top: 30px;
 }
  
 #content-header .btn-group {
