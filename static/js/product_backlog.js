@@ -39,7 +39,8 @@ $('#stories').editable({
     // enables the buttons
   	$(this).closest(".stories").find(".create_definition_ready").removeAttr("disabled");
   	$(this).closest(".stories").find(".story_points").removeAttr("disabled");
-  	$(this).closest(".stories").find(".benefit").removeAttr("disabled");
+    $(this).closest(".stories").find(".benefit").removeAttr("disabled");
+  	$(this).closest(".stories").find(".create_task").removeAttr("disabled");
     // get the coming new database ID and update in DOM
     $(this).attr("data-pk", value.database_id);
   	// changes the status of the created item for item update
@@ -51,7 +52,7 @@ $('#stories').editable({
 $('#create_story').click(function(){
 	var indiceItem = 1;
 
-    var html = '<ul class="stories_container"><li class="stories"><div class="stories_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="text" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn expand_story pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><select class="span1 pull-right benefit" name="size" id="size" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="span1 pull-right story_points" type="number" placeholder="?" min="1" disabled="disabled"><button class="btn btn-primary create_definition_ready pull-right" disabled="disabled">'+botonDefinitionReady+'</button></div><div class="clearfix"></div></div></li></ul>';
+    var html = '<ul class="stories_container"><li class="stories"><div class="stories_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="text" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn expand_story pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><select class="span1 pull-right benefit" name="size" id="size" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="span1 pull-right story_points" type="number" placeholder="?" min="1" disabled="disabled"><button class="btn create_definition_ready pull-right" disabled="disabled">+ '+botonDefinitionReady+'</button></div><div class="clearfix"></div></div></li></ul>';
 
     $("#stories").append(html);
 
@@ -66,7 +67,7 @@ $(document).on("click", ".create_definition_ready", function(){
 
     var story_id = $(this).closest(".stories").find(".story_card").attr("data-pk");
 
-    var html = '<ul><li class="definition_ready_container"><div class="definition_ready"><div class="text_container"><a href="#" class="editable-click editable-empty definition_ready_card editable new_definition_ready" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="definition_ready">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn expand_definition_ready pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><button class="btn create_task pull-right" alt="Create Task" title="Create Task">+ '+botonTask+'</button></div></div></li></ul>';
+    var html = '<ul><li class="definition_ready_container"><div class="definition_ready"><div class="text_container"><a href="#" class="editable-click editable-empty definition_ready_card editable new_definition_ready" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="definition_ready">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn expand_definition_ready pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><button class="btn create_task pull-right" alt="Create Task" title="Create Task" disabled="disabled">+ '+botonTask+'</button></div></div></li></ul>';
 
     var newItem = $(this).closest(".stories").append(html);
 
@@ -81,7 +82,7 @@ $(document).on("click", ".create_task", function(){
 
     var story_id = $(this).closest(".definition_ready_container").find(".definition_ready_card").attr("data-pk");
 
-    var html = '<ul class="item_container"><li class="task"><div class="text_container"><a href="#" class="editable-click editable-empty editable new_task" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="task">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button></div></li></ul>';
+    var html = '<ul class="item_container zebra_row"><li class="task"><div class="text_container"><a href="#" class="editable-click editable-empty editable new_task" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="task">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button></div></li></ul>';
 
     var newItem = $(this).closest(".definition_ready_container").append(html);
 

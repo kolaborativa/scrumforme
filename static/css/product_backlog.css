@@ -30,12 +30,12 @@ a {
 }
 
 .text_container {
-    width: 75%;
+    width: 70%;
     float: left;
 }
 
 .buttons_container {
-    width: 25%;
+    width: 30%;
     float: left;
 }
 
@@ -48,12 +48,25 @@ a {
 
 .stories_header {
     padding-left: 20px;
+    background-color: rgb(235, 233, 233);
+}
+
+.stories_header .text_container {
+    position: relative;
+    top: 6px;
+}
+
+.stories_header .buttons_container {
+    position: relative;
+    top: 4px;
+}
+
+.buttons_container button, .buttons_container select, .buttons_container input {
+    margin-right: 7px;
 }
 
 .stories {
     min-height: 30px;
-    background-color: rgb(235, 233, 233);
-    padding: 5px 0px 5px 0px;
 }
 
 .stories ul {
@@ -61,7 +74,6 @@ a {
 }
 
 .stories a {
-    /*padding-top: 10px;*/
     position: relative;
     top: 5px;
 }
@@ -73,12 +85,11 @@ a {
 .definition_ready {
     height: 30px;
     background-color: rgb(165, 205, 221);
-    padding: 5px 5px 5px 20px;
+    padding: 5px 0px 5px 20px;
     list-style: none;
 }
 
 .definition_ready a {
-    /*padding-top: 10px;*/
     position: relative;
     top: 5px;
 }
@@ -91,16 +102,18 @@ a {
 .task {
     height: 30px;
     list-style: none;
-    padding: 5px 5px 5px 20px;
+    padding: 5px 0px 5px 20px;
 }
 
 .task a {
-    /*padding-top: 10px;*/
     position: relative;
     top: 5px;
 }
 
-
+/*zebra rows*/
+ul.zebra_row:nth-child(odd) {
+background-color:#ccc;
+}
 /*
 ==============
  PLUGIN HACKS
