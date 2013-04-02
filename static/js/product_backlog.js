@@ -51,7 +51,7 @@ $('#stories').editable({
 $('#create_story').click(function(){
 	var indiceItem = 1;
 
-    var html = '<ul class="stories_container"><li class="stories"><div class="stories_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="text" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-name="stories">Click para escrever</a></div><div class="buttons_container"><button class="btn expand_story pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><select class="span1 pull-right benefit" name="size" id="size" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="span1 pull-right story_points" type="number" placeholder="?" min="1" disabled="disabled"><button class="btn btn-primary create_definition_ready pull-right" disabled="disabled">'+botonDefinitionReady+'</button></div><div class="clearfix"></div></div></li></ul>';
+    var html = '<ul class="stories_container"><li class="stories"><div class="stories_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="text" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn expand_story pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><select class="span1 pull-right benefit" name="size" id="size" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="span1 pull-right story_points" type="number" placeholder="?" min="1" disabled="disabled"><button class="btn btn-primary create_definition_ready pull-right" disabled="disabled">'+botonDefinitionReady+'</button></div><div class="clearfix"></div></div></li></ul>';
 
     $("#stories").append(html);
 
@@ -93,13 +93,11 @@ $(document).on("click", ".create_task", function(){
 
 // to expand story content
 $(document).on("click", ".expand_story", function(){
-    // $(this).parent().next(".definition_ready").toggle();
     $(this).closest(".stories").find(".definition_ready_container").toggle();
 });
 
 // to expand definition_ready content
 $(document).on("click", ".expand_definition_ready", function(){
-    // $(this).parent().next(".definition_ready").toggle();
     $(this).closest(".definition_ready_container").find(".task").toggle();
 });
 
@@ -154,11 +152,7 @@ function statusItem(pk,name,item,remove) {
       
       if(remove===true) {
         // find element to be deleted
-        if(name === "stories") {
-            $(item).closest(".item_container").fadeOut("slow", function() { $(this).remove() })
-        } else if(name === "definition_ready") {
-            $(item).closest(".item_container").fadeOut("slow", function() { $(this).remove() })
-        }
+        $(item).closest(".item_container").fadeOut("slow", function() { $(this).remove() });
 
       } else if(remove===false) {
         msg_text = "Movido com Sucesso!";

@@ -96,9 +96,8 @@ def create_update_backlog_itens():
     """
 
     if request.vars:
-        print request.vars
         if request.vars.dbUpdate == "true":
-            if request.vars.name == "stories":
+            if request.vars.name == "story":
                 db(Story.id == request.vars.dbID).update(
                     title=request.vars.value,
                 )
@@ -114,7 +113,7 @@ def create_update_backlog_itens():
             return dict(success="success",msg="gravado com sucesso!")
 
         elif request.vars.dbUpdate == "false":
-            if request.vars.name == "stories":
+            if request.vars.name == "story":
                 database_id = Story.insert(
                         project_id=request.vars.pk,
                         title=request.vars.value
@@ -149,15 +148,23 @@ def create_update_backlog_itens():
 def remove_item_backlog_itens():
 
     if request.vars:
+        if request.vars.name == "task":
+            db(Task.id == request.vars.pk).delete()
+
         if request.vars.name == "definition_ready":
             db(Definition_ready.id == request.vars.pk).delete()
+            definitions_ready_data = db(Definition_ready.id == request.vars.pk).select()
+            
+            for df in definitions_ready_data:
+                db(Task.definition_ready_id == df.id).delete()
         
-        elif request.vars.name == "stories":
+        elif request.vars.name == "story":
             db(Story.id == request.vars.pk).delete()
-            definitions_data = db(Definition_ready.story_id == request.vars.pk).select()
-
-            for df in definitions_data:
+            definitions_ready_data = db(Definition_ready.story_id == request.vars.pk).select()
+            
+            for df in definitions_ready_data:
                 db(Definition_ready.id == df.id).delete()
+                db(Task.definition_ready_id == df.id).delete()
 
         return True
     else:
