@@ -2,6 +2,9 @@ a {
     color: #000;
 }
 
+#target_ajax {
+    display: none;
+}
 /*
 =======
  ICONS
@@ -52,18 +55,14 @@ a {
 =======
 */
 
-#stories {
-    margin-top: 20px;
-}
-
 .text_container {
-    width: 50%;
+    width: 40%;
     float: left;
     padding: 10px 0px;
 }
 
 .buttons_container {
-    width: 50%;
+    width: 60%;
     float: left;
 }
 
@@ -123,6 +122,13 @@ a {
     padding-left: 20px;
 }
 
+/*
+================
+ SPRINT CONTENT
+================
+*/
+
+
 /*zebra rows*/
 ul.zebra_row:nth-child(odd) {
     background-color:rgb(235, 233, 233);
@@ -142,11 +148,11 @@ ul.zebra_row:nth-child(odd) {
     width: 100%;
 }
 .editable-input {
-    width: 80%;
+    width: 70%;
     /*top: 5px;*/
 }
 .editable-input input[type="text"] {
-    width: 80%;
+    width: 70%;
 }
 .editable-clear-x {
     right: 20px!important;

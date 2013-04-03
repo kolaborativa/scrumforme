@@ -122,17 +122,7 @@ def create_update_backlog_itens():
                             )
 
             return dict(success="success",msg="gravado com sucesso!",database_id=database_id)
-        else:
-            if request.vars.story_points:
-                db(Story.id == request.vars.id).update(
-                    story_points=request.vars.story_points,
-                )
-            elif request.vars.benefit:
-                db(Story.id == request.vars.id).update(
-                    benefit=request.vars.benefit,
-                )
 
-            return dict(success="success",msg="gravado com sucesso!")
     else:
         return dict(error="error",msg="erro ao gravar!")
 
@@ -163,20 +153,26 @@ def remove_item_backlog_itens():
         return False
 
 
-def add_to_sprint():
+def change_ajax_itens():
+
     if request.vars:
-        if request.vars.dbUpdate == "true":
-            if request.vars.name == "story":
-                db(Story.id == request.vars.dbID).update(
-                    title=request.vars.value,
-                )
-        # for story_id in stories_id:
-            # db(Story.id==story_id).update(sprint_id=sprint_id)
+        if request.vars.story_points:
+            db(Story.id == request.vars.story_id).update(
+                story_points=request.vars.story_points,
+            )
+        elif request.vars.benefit:
+            db(Story.id == request.vars.story_id).update(
+                benefit=request.vars.benefit,
+            )
+        elif request.vars.sprint_id:
+            db(Story.id == request.vars.story_id).update(
+                sprint_id=request.vars.sprint_id,
+            )
 
-
-        return dict(success="success",msg="gravado com sucesso!")
+        return True
     else:
-        return dict(error="error",msg="erro ao gravar!")
+        return False
+
 
 def launch_sprint():
     from datetime import datetime

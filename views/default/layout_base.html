@@ -64,12 +64,16 @@
                         <li><a class="sTrash" title="" href="#">trash</a></li>
                     </ul>
                 </li> -->
-        <li>
-        <div id="search">
-            <input type="text" placeholder="Search here..."/><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
-        </div>
-        </li>
-                <li class="btn btn-inverse"><a title="" href='{{=URL(f="user",args="profile",vars={"_next":"index"})}}'><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
+                <li>
+                    <div id="search">
+                        <input type="text" placeholder="Search here..."/><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
+                    </div>
+                </li>
+                {{ if not auth.is_logged_in(): }}
+                    <li class="btn btn-inverse"><a title="" href='{{=URL(f="user",args="profile",vars={"_next":"index"})}}'><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
+                {{ else: }}
+                    <li class="btn btn-inverse"><a title="" href="{{=URL(f='user',args='profile',vars={'_next':'index'})}}"><i class="icon icon-cog"></i> <span class="text">{{=auth.user.first_name}}</span></a></li>
+                {{ pass }}
                 <li class="btn btn-inverse"><a title="" href='{{=URL(f="user",args="logout",vars={"_next":"index"})}}'><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
             </ul>
         </div>
@@ -103,25 +107,6 @@
                 </li>
                 {{pass}}
                 <li><a href="#"><i class="icon  icon-user"></i> <span>{{=T('Contacts')}}</span></a></li>
-                <!--
-                <li><a href="interface.html"><i class="icon icon-pencil"></i> <span>Interface elements</span></a></li>
-                <li><a href="tables.html"><i class="icon icon-th"></i> <span>Tables</span></a></li>
-                <li><a href="grid.html"><i class="icon icon-th-list"></i> <span>Grid Layout</span></a></li>
-                <li class="submenu">
-                    <a href="#"><i class="icon icon-file"></i> <span>Sample pages</span> <span class="label">4</span></a>
-                    <ul>
-                        <li><a href="invoice.html">Invoice</a></li>
-                        <li><a href="chat.html">Support chat</a></li>
-                        <li><a href="calendar.html">Calendar</a></li>
-                        <li><a href="gallery.html">Gallery</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="charts.html"><i class="icon icon-signal"></i> <span>Charts &amp; graphs</span></a>
-                </li>
-                <li>
-                    <a href="widgets.html"><i class="icon icon-inbox"></i> <span>Widgets</span></a>
-                </li> -->
             </ul>
 
         </div>
