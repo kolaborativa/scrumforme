@@ -37,6 +37,7 @@ $('.content').editable({
   },
   success: function(value,response) {
     // enables the buttons
+    $(this).closest(".story").find(".new_story").removeClass("new_story");
     $(this).closest(".story").find(".create_definition_ready").removeAttr("disabled");
     $(this).closest(".story").find(".story_points").removeAttr("disabled");
     $(this).closest(".story").find(".benefit").removeAttr("disabled");
