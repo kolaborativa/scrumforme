@@ -40,6 +40,8 @@
         <link rel="stylesheet" href='{{=URL("static","css/unicorn.main.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/unicorn.grey.css")}}' class="skin-color" />
         <link rel="stylesheet" href='{{=URL("static","css/bootstrap-editable.css")}}' />
+        <link rel="stylesheet" href='{{=URL("static","css/nanoscroller.css")}}' />
+        
         <link rel="stylesheet" href='{{=URL("static","css/product_backlog.css")}}' />
         {{include 'web2py_ajax.html'}}
     </head>
@@ -89,7 +91,7 @@
                 {{pass}}
                 {{if request.function == "product_backlog":}}
                 <li class="submenu active open">
-                    <a href="#"><i class="icon icon-cog"></i> <span>{{=T('Project')}}</span> <span class="label">4</span></a>
+                    <a href="#"><i class="icon icon-cog"></i> <span>{{=T('Project')}}</span></a>
                     <ul>
                         <li><a href="#">Board</a></li>
                         <li class="active"><a href='{{=URL(c="default",f="product_backlog",args=[request.args(0)])}}'>Backlog</a></li>
@@ -100,6 +102,7 @@
                     </ul>
                 </li>
                 {{pass}}
+                <li><a href="#"><i class="icon  icon-user"></i> <span>{{=T('Contacts')}}</span></a></li>
                 <!--
                 <li><a href="interface.html"><i class="icon icon-pencil"></i> <span>Interface elements</span></a></li>
                 <li><a href="tables.html"><i class="icon icon-th"></i> <span>Tables</span></a></li>
@@ -151,6 +154,8 @@
             {{ if request.function == "product_backlog": }}
             <script src="{{=URL('static','js/bootstrap-editable.min.js')}}"></script>
             <script src="{{=URL('static','js/product_backlog.js')}}"></script>
+            <script src="{{=URL('static','js/jquery.nanoscroller.min.js')}}"></script>
+            <script>$(".window").nanoScroller({ sliderMaxHeight: 100, preventPageScrolling: true });</script>
             {{ pass }}
     </body>
 </html>

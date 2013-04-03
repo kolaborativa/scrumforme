@@ -40,7 +40,8 @@ $('#stories').editable({
   	$(this).closest(".story").find(".create_definition_ready").removeAttr("disabled");
   	$(this).closest(".story").find(".story_points").removeAttr("disabled");
     $(this).closest(".story").find(".benefit").removeAttr("disabled");
-  	$(this).closest(".story").find(".create_task").removeAttr("disabled");
+    $(this).closest(".story").find(".create_task").removeAttr("disabled");
+  	$(this).closest(".story_container").find(".send_story_sprint").removeAttr("disabled");
     // get the coming new database ID and update in DOM
     $(this).attr("data-pk", value.database_id);
   	// changes the status of the created item for item update
@@ -52,7 +53,7 @@ $('#stories').editable({
 $('#create_story').click(function(){
 	var indiceItem = 1;
 
-    var html = '<ul class="story_container item_container"><li class="story"><div class="story_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="text" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn expand_story pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><select class="pull-right benefit" name="size" id="size" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points" type="number" placeholder="?" min="1" disabled="disabled"><button class="btn create_definition_ready pull-right" disabled="disabled">+ '+botonDefinitionReady+'</button></div><div class="clearfix"></div></div></li></ul>';
+    var html = '<ul class="story_container item_container"><li class="story"><div class="story_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="text" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn expand_story pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><select class="pull-right benefit" name="size" id="size" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" disabled="disabled"><button class="btn create_definition_ready pull-right" disabled="disabled">+ '+botonDefinitionReady+'</button></div><div class="clearfix"></div></div></li><div class="buttons_footer"><button class="btn btn-primary pull-right send_story_sprint" disabled="disabled">'+botonSendSprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div></div></ul>';
 
     $("#stories").append(html);
 
@@ -95,15 +96,16 @@ $(document).on("click", ".create_task", function(){
 // to expand story content
 $(document).on("click", ".expand_story", function(){
     $(this).closest(".story").find(".definition_ready_container").slideToggle("slow");
+    $(this).closest(".story_container").find(".buttons_footer").fadeToggle("fast", "linear");
 });
 
 // to expand definition_ready content
 $(document).on("click", ".expand_definition_ready", function(){
-    $(this).closest(".definition_ready_container").find(".task").toggle();
+    $(this).closest(".definition_ready_container").find(".task").fadeToggle("slow", "linear");
 });
 
 // clean values ​​that are not numbers
-$(document).on("keydown", ".story_points", function(event){
+$(document).on("keydown", ".only_numbers", function(event){
 	var key = window.event.keyCode || event.keyCode;
 	return ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key == 8) || (key == 9) || (key == 13));
 });

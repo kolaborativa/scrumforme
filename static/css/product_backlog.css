@@ -25,6 +25,33 @@ a {
   height: 10px;
 }
 
+/*
+========
+ SCROLL
+========
+*/
+
+.window {
+    background: rgb(247, 247, 247);
+    height: 500px;
+}
+.window .content {
+    padding: 10px;
+}
+.window .pane {
+    background: rgba(216, 216, 216, 0.7);
+}
+.window .slider {
+    background: rgba(95, 95, 95, 0.42)!important;
+    /*height: 100px!important;*/
+}
+
+/*
+=======
+ ITENS
+=======
+*/
+
 #stories {
     margin-top: 20px;
 }
@@ -40,21 +67,23 @@ a {
     float: left;
 }
 
+.buttons_footer {
+    background-color:rgb(235, 233, 233);
+    padding: 10px 10px 10px 0px;
+    border-top: 1px solid #ccc;
+}
+
 .story_container {
     list-style: none;
     margin: 0;
     margin-bottom: 20px;
     border: 2px solid #ccc;
+    border-radius: 5px;
 }
 
 .story_header {
     padding-left: 20px;
     background-color: rgb(235, 233, 233);
-}
-
-.story_header .text_container {
-    /*position: relative;*/
-    /*top: 6px;*/
 }
 
 .buttons_container {
@@ -72,18 +101,9 @@ a {
     width: 40px;
 }
 
-.story {
-    /*min-height: 30px;*/
-}
-
 .story ul {
     margin: 0px;
     background-color: #fff;
-}
-
-.story a {
-    /*position: relative;*/
-    /*top: 5px;*/
 }
 
 .definition_ready_container {
@@ -97,30 +117,15 @@ a {
     list-style: none;
 }
 
-.definition_ready a {
-    /*position: relative;*/
-    /*top: 5px;*/
-}
-
-.new_definition_ready {
-    /*position: relative;*/
-    /*top: 5px;*/
-}
-
 .task {
     min-height: 40px;
     list-style: none;
     padding-left: 20px;
 }
 
-.task a {
-    /*position: relative;*/
-    /*top: 5px;*/
-}
-
 /*zebra rows*/
 ul.zebra_row:nth-child(odd) {
-background-color:#ccc;
+    background-color:rgb(235, 233, 233);
 }
 /*
 ==============

@@ -53,22 +53,18 @@ def product_backlog():
     sprint = db(Sprint.project_id == project_id).select().first()
 
     form_sprint = SQLFORM.factory(
-        Field('name', label='Name'),
-        Field('weeks', label='Weeks'),
-        Field('stories', label='Stories'),
+        Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
+        Field('weeks', label=T('Weeks'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
+        table_name='sprint',
         submit_button=T('CREATE')
         )
 
     if form_sprint.process().accepted:
         name = form_sprint.vars['name']
         weeks = form_sprint.vars['weeks']
-        stories_id = form_sprint.vars['stories'].split(',')
 
         sprint_id = Sprint.insert(project_id=project_id,
             name=name, weeks=weeks)
-
-        for story_id in stories_id:
-            db(Story.id==story_id).update(sprint_id=sprint_id)
 
         redirect(URL(f='product_backlog', args=[project_id]))
 
@@ -166,6 +162,21 @@ def remove_item_backlog_itens():
     else:
         return False
 
+
+def add_to_sprint():
+    if request.vars:
+        if request.vars.dbUpdate == "true":
+            if request.vars.name == "story":
+                db(Story.id == request.vars.dbID).update(
+                    title=request.vars.value,
+                )
+        # for story_id in stories_id:
+            # db(Story.id==story_id).update(sprint_id=sprint_id)
+
+
+        return dict(success="success",msg="gravado com sucesso!")
+    else:
+        return dict(error="error",msg="erro ao gravar!")
 
 def launch_sprint():
     from datetime import datetime

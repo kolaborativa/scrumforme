@@ -341,6 +341,7 @@ a:hover {
 #footer {
 	text-align: center;
 	color: #777777;
+	padding: 0 30px;
 }
 /* Stat boxes and quick actions */
 .stat-boxes, .quick-actions, .quick-actions-horizontal, .stats-plain {
@@ -1401,6 +1402,18 @@ form {
     font-size: 11px;
     color: #777777;
 }
+
+/*
+==================
+ MY MODIFICATIONS
+==================
+*/
+
+.error {
+	color: red;
+}
+
+
 /* Responsive design */
 @media (max-width: 480px) {
 	#header h1 {
