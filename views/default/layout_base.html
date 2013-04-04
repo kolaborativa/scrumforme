@@ -43,7 +43,6 @@
         <link rel="stylesheet" href='{{=URL("static","css/nanoscroller.css")}}' />
         
         <link rel="stylesheet" href='{{=URL("static","css/product_backlog.css")}}' />
-        {{include 'web2py_ajax.html'}}
     </head>
     <body>
         <div class="flash">{{=response.flash or ''}}</div>
@@ -135,12 +134,15 @@
 
             <script src='{{=URL("static","js/jquery.min.js")}}'></script>
             <script src='{{=URL("static","js/bootstrap.min.js")}}'></script>
+            <script src="{{=URL('static','js/web2py.js')}}"></script>
             <script src='{{=URL("static","js/unicorn.js")}}'></script>
             {{ if request.function == "product_backlog": }}
             <script src="{{=URL('static','js/bootstrap-editable.min.js')}}"></script>
             <script src="{{=URL('static','js/product_backlog.js')}}"></script>
             <script src="{{=URL('static','js/jquery.nanoscroller.min.js')}}"></script>
-            <script>$(".window").nanoScroller({ sliderMaxHeight: 100, preventPageScrolling: true });</script>
+            <script>
+                $(".window").nanoScroller({ sliderMaxHeight: 100, preventPageScrolling: true });
+            </script>
             {{ pass }}
     </body>
 </html>

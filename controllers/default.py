@@ -156,6 +156,7 @@ def remove_item_backlog_itens():
 def change_ajax_itens():
 
     if request.vars:
+        print request.vars
         if request.vars.story_points:
             db(Story.id == request.vars.story_id).update(
                 story_points=request.vars.story_points,
@@ -165,8 +166,13 @@ def change_ajax_itens():
                 benefit=request.vars.benefit,
             )
         elif request.vars.sprint_id:
-            db(Story.id == request.vars.story_id).update(
-                sprint_id=request.vars.sprint_id,
+            if request.vars.name == "sprint":
+                db(Story.id == request.vars.story_id).update(
+                    sprint_id=request.vars.sprint_id,
+                )
+            elif request.vars.name == "backlog":
+                db(Story.id == request.vars.story_id).update(
+                sprint_id=None,
             )
 
         return True

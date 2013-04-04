@@ -37,11 +37,13 @@ $('.content').editable({
   },
   success: function(value,response) {
     // enables the buttons
-    $(this).closest(".story").find(".new_story").removeClass("new_story");
-    $(this).closest(".story").find(".create_definition_ready").removeAttr("disabled");
-    $(this).closest(".story").find(".story_points").removeAttr("disabled");
-    $(this).closest(".story").find(".benefit").removeAttr("disabled");
-    $(this).closest(".story").find(".create_task").removeAttr("disabled");
+    var story = $(this).closest(".story");
+    story.find(".new_story").removeClass("new_story");
+    story.find(".create_definition_ready").removeAttr("disabled");
+    story.find(".story_points").removeAttr("disabled");
+    story.find(".benefit").removeAttr("disabled");
+    story.find(".create_task").removeAttr("disabled");
+
     $(this).closest(".story_container").find(".send_story_sprint").removeAttr("disabled");
     // get the coming new database ID and update in DOM
     $(this).attr("data-pk", value.database_id);
@@ -113,26 +115,48 @@ $(document).on("keydown", ".only_numbers", function(event){
 
 // update Story Points
 $(document).on("change", ".story_points", function(){
-    var storyID = $(this).closest(".story").find(".story_card").attr("data-pk");
+    var story = $(this).closest(".story"),
+        storyID = story.find(".story_card").attr("data-pk");
     ajax(urlChangeAjaxItens+'?story_points='+this.value+'&story_id='+storyID, [''], 'target_ajax');
-    statusItem("",false);
+    statusItem("","",false);
 });
 
 // update Benefit
 $(document).on("change", ".benefit", function(){
-    var storyID = $(this).closest(".story").find(".story_card").attr("data-pk");
+    var story = $(this).closest(".story"),
+        storyID = story.find(".story_card").attr("data-pk");
     ajax(urlChangeAjaxItens+'?benefit='+this.value+'&story_id='+storyID, [''], 'target_ajax');
-    statusItem("",false);
+    var status = statusItem("","",false);
+
+    if(status) {
+        var initialValue = story.find('.benefit option:first-child').text(),
+            options = story.find(":selected").text();
+        if(initialValue === "?") {
+            story.find('.benefit option:first-child').removeAttr("selected");
+        }
+        story.find('.benefit option[value='+options+']').attr('selected', 'selected');
+    }
+
 });
 
-// send tory to sprint
+// send story to sprint
 $(document).on("click", ".send_story_sprint", function(){
     var item = $(this).closest(".story_container"),
         storyID = item.find(".story_card").attr("data-pk"),
     sprintID = $(".sprint").attr("data-sprint");
     
-    ajax(urlChangeAjaxItens+'?sprint_id='+sprintID+'&story_id='+storyID, [''], 'target_ajax');
-    statusItem(item,false);
+    ajax(urlChangeAjaxItens+'?name=sprint&sprint_id='+sprintID+'&story_id='+storyID, [''], 'target_ajax');
+    statusItem(item,"sprint",false);
+});
+
+// back story to backlog
+$(document).on("click", ".back_backlog", function(){
+    var item = $(this).closest(".story_container"),
+        storyID = item.find(".story_card").attr("data-pk"),
+    sprintID = $(".sprint").attr("data-sprint");
+    
+    ajax(urlChangeAjaxItens+'?name=backlog&sprint_id='+storyID+'&story_id='+storyID, [''], 'target_ajax');
+    statusItem(item,"backlog",false);
 });
 
 // remove item
@@ -149,12 +173,12 @@ $(document).on("click", ".delete_item", function(){
 // for remove itens
 function removeItem(pk,name,item,remove) {
   ajax(urlRemoveBacklogItens+'?pk='+pk+'&name='+name+'', [''], 'target_ajax');
-  statusItem(item,remove);
+  statusItem(item,"",remove);
 }
 
-function statusItem(item,remove) {
+function statusItem(item,move,remove) {
   // The fourth parameter tells whether the element will be deleted in the DOM
-  var message = $("#target_ajax").text();
+    var message = $("#target_ajax").text();
     console.log(message)
 
   if (message.length > 0) {
@@ -167,12 +191,20 @@ function statusItem(item,remove) {
         $(item).closest(".item_container").fadeOut("slow", function() { $(this).remove() });
 
       } else if(remove===false) {
-        // move story to sprint
         msg_text = "Movido com Sucesso!";
-        var button = '<button class="btn btn-danger pull-right send_story_backlog"><i class="icon-circle-arrow-left icon-white"></i> '+buttonSendStory+'</button><div class="clearfix"></div></div>',
-            story = $(item).clone().appendTo('.sprint').find(".buttons_footer").empty().fadeIn("slow", function() { $(this).append(button) });
-            
-        $(item).fadeOut("slow", function() { $(this).remove() });
+        if(move==="sprint") {
+        // move story to sprint
+            var button = '<button class="btn btn-danger pull-right back_backlog"><i class="icon-circle-arrow-left icon-white"></i> '+buttonBackBacklog+'</button><div class="clearfix"></div></div>',
+                story = $(item).clone().appendTo('.sprint').find(".buttons_footer").empty().fadeIn("slow", function() { $(this).append(button) });
+            $(item).fadeOut("slow", function() { $(this).remove() });
+
+        } else if(move==="backlog") {
+        // move story to backlog
+            var button = '<button class="btn btn-primary pull-right send_story_sprint">'+buttonSendSprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div>',
+                story = $(item).clone().appendTo('.story_block').find(".buttons_footer").empty().fadeIn("slow", function() { $(this).append(button) });
+            $(item).fadeOut("slow", function() { $(this).remove() });
+
+        }
       }
 
     } else if(message === "False") {
@@ -191,7 +223,7 @@ function statusItem(item,remove) {
   } else {
     console.log("waiting for reply...")
     setTimeout(function() {
-        statusItem(item,remove)
+        statusItem(item,move,remove)
     }, 300);
   }
   // Clean the return of ajax call
