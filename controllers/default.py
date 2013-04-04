@@ -155,7 +155,6 @@ def remove_item_backlog_itens():
 def change_ajax_itens():
 
     if request.vars:
-        print request.vars
         if request.vars.story_points:
             db(Story.id == request.vars.story_id).update(
                 story_points=request.vars.story_points,

@@ -9,6 +9,23 @@ span {
 #target_ajax {
     display: none;
 }
+
+#project_info {
+    padding: 10px;
+}
+
+#project_info:first-letter {
+    text-transform: capitalize;
+}
+
+#content {
+    padding-bottom: 5px;
+}
+
+.container-fluid .row-fluid:first-child {
+margin-top: 0px;
+}
+
 /*
 =======
  ICONS
@@ -40,7 +57,7 @@ span {
 
 .window {
     background: rgb(247, 247, 247);
-    height: 390px;
+    height: 450px;
 }
 .window .content {
     padding: 10px;
@@ -61,6 +78,10 @@ span {
 .buttons_container {
     width: 60%;
     float: left;
+}
+
+.text_container:first-letter {
+    text-transform: capitalize;
 }
 
 .definition_ready .text_container, .task .text_container {
@@ -94,7 +115,6 @@ span {
 }
 
 .story_header {
-    padding: 10px 0px;
     padding-left: 20px;
     font-size: 13px;
     text-transform: uppercase;
@@ -136,13 +156,14 @@ span {
     padding-left: 20px;
     list-style: none;
     background-color: rgb(151, 220, 247);
+    border-bottom: 1px solid #fff;
 }
 
 .task {
     min-height: 40px;
     list-style: none;
-    padding-left: 40px;
-    border-top: 1px solid #d5d5d5;
+    padding-left: 49px;
+    border-bottom: 1px solid #d5d5d5;
 }
 
 /*
@@ -178,8 +199,8 @@ ul.zebra_row:nth-child(odd) {
     width: 70%;
 }
 .editable-clear-x {
-    right: 10px!important;
+    right: 10%!important;
 }
 .definition_ready .editable-clear-x, .task .editable-clear-x {
-    right: 30px!important;
+    right: 18%!important;
 }

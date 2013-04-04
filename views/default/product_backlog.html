@@ -27,25 +27,29 @@
     <a href="#" class="current">{{=T('Product Backlog')}}</a>
 </div>
 <div id="content-header">
-    <h1>{{=project.name}} - {{=project.date_.strftime("%d/%m/%Y")}}</h1>
+    <div class="pull-left">
+        <h1>{{=project.name}}</h1>
+    </div>
+    <div id="project_info" class="span5 offset1">
+        <p>{{=project.description}}</p>
+        <p>{{=project.date_.strftime("%d/%m/%Y")}} <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
+        
+    </div>
+    <div class="clearfix"></div>
 </div>
 
 <div id="target_ajax"></div>
 
 <div class="row-fluid">
-    <div class="span6 offset1">
-        <h5>{{=project.description}} <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></h5>
-        
+    <div class="span5 offset1">
         <br>
         <button id="create_story" class="btn btn-primary">{{=T('Create Story')}}</button>
     </div>
-    <div class="span5">
+    <div class="span6">
         {{if sprint:}}
-            <h4>{{=T('Current Sprint')}} - {{=sprint.name}}
+            <h4>{{=sprint.name}} - {{=sprint.weeks}} {{=T('Weeks')}}
             {{if not sprint.started:}}
             <a href="{{=URL(c='default',f='launch_sprint',args=[sprint.id],)}}" class='btn btn-success'>{{=T('Launch the sprint')}}</a>
-            <hr>
-            <h4>{{=sprint.weeks}} semanas</h4>
             {{else:}}
             <button class='disabled btn btn-success'>{{=T('Launched')}}</button>
             {{pass}}
@@ -106,7 +110,7 @@
                                             <li class="definition_ready_container">
                                                 <div class="definition_ready">
                                                     <div class="text_container">
-                                                        <span>{{=T('DR')}}:</span>
+                                                        <span class="label">{{=T('DR')}}</span>
                                                         <a href="#" class="editable-click editable definition_ready_card" data-type="text" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
                                                     </div>
                                                     <div class="buttons_container">
@@ -200,7 +204,8 @@
                                             <li class="definition_ready_container">
                                                 <div class="definition_ready">
                                                     <div class="text_container">
-                                                        <a href="#" class="editable-click editable definition_ready_card" data-type="text" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=T('DR')}}: {{=definition_ready[story.id][count].title}}</a>
+                                                        <span class="label">{{=T('DR')}}</span>
+                                                        <a href="#" class="editable-click editable definition_ready_card" data-type="text" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
                                                     </div>
                                                     <div class="buttons_container">
                                                         <button class="btn expand_definition_ready pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button>

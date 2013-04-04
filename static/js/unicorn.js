@@ -131,4 +131,14 @@ $(document).ready(function(){
 		$(this).siblings('a').css({'border-color':'transparent'});
 		$(this).css({'border-color':'#aaaaaa'});
 	});
+
+	// === My modifications === //
+	$("#toogle_sidebar").click(function(){
+		$("body").toggleClass("close_sidebar");
+		$("#toogle_sidebar")
+							.find("i")
+							.toggleClass("icon-chevron-left")
+							.toggleClass("icon-chevron-right");
+		$("#sidebar").find(".active").toggleClass("open");
+	});
 });

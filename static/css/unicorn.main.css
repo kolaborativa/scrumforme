@@ -15,6 +15,7 @@ a:hover {
 	text-decoration: none;
 }
 
+
 /* Header */
 #header {
     height: 57px;
@@ -23,16 +24,11 @@ a:hover {
 }
 
 #header h1 {
-    /*background: url("../img/logo.png") no-repeat scroll 0 0 transparent;*/
-    /*height: 31px;*/
-    /*left: 15px;*/
-    /*line-height: 600px;*/
-    /*overflow: hidden;*/
-    /*position: relative;*/
-    /*top: 24px;*/
-    /*width: 191px;*/
+    font-family: 'Playball', cursive;
+    color: #F1F1F1;
+    text-shadow: 0px 1px 1px #4d4d4d;
     position: relative;
-    top: 27px;
+    top: 15px;
     left: 10px;
     font-size: 30px;
 }
@@ -40,6 +36,10 @@ a:hover {
 #header h1 a {
     /*display: block;*/
     color: #fff;
+}
+
+.color-logo{
+    color: #00A0B1;
 }
 
 /* Search input */
@@ -239,6 +239,10 @@ a:hover {
     text-shadow: 0 1px 0 #ffffff;
     margin-left: 20px;
     /*position: absolute; FIX: Allow h1 to flow correctly with width changes, keep in DOM flow*/
+}
+
+#content-header h1:first-letter {
+    text-transform: capitalize;
 }
  
 /* FIX: The following two items were reordered to allow .btn-group to override margin top! */
@@ -1413,6 +1417,38 @@ form {
 	color: red;
 }
 
+#toogle_sidebar {
+	position: relative;
+	/*margin-left: 200px;*/
+	top: 10px;
+	left: 8px;
+	background-color: #444444;
+	border:none;
+}
+
+#toogle_sidebar i {
+	opacity: .5;
+}
+
+.close_sidebar #sidebar, .close_sidebar #sidebar > ul {
+    width: 43px;
+}
+.close_sidebar #sidebar > ul ul {
+    display: none;
+    position: absolute;
+    left:50px;
+    top: 0;
+    min-width: 150px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.7);
+    border-radius: 5px;     
+    list-style: none;
+}
+.close_sidebar #sidebar > ul > li > a > span {
+    display: none;
+}
+.close_sidebar #content {
+    margin-left: 43px;
+}
 
 /* Responsive design */
 @media (max-width: 480px) {
