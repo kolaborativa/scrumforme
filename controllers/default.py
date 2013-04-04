@@ -66,7 +66,7 @@ def product_backlog():
         sprint_id = Sprint.insert(project_id=project_id,
             name=name, weeks=weeks)
 
-        redirect(URL(f='product_backlog', args=[project_id]))
+        redirect(URL(f='board', args=[project_id]))
 
     definition_ready = {}
     for story in stories:
@@ -190,7 +190,9 @@ def launch_sprint():
 
 
 def board():
-    return dict()
+    all_projects = db(Project).select()
+
+    return dict(all_projects=all_projects)
 
 
 def user():
