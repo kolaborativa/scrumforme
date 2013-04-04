@@ -113,7 +113,8 @@
         <div id="content">
 
             {{include}}
-
+            
+            {{if request.function == "index":}}
             <br>
             <br>
             <div class="row-fluid">
@@ -130,6 +131,7 @@
                     </div>
                 </div>
             </div>
+            {{pass}}
         </div>
 
             <script src='{{=URL("static","js/jquery.min.js")}}'></script>

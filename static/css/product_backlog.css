@@ -2,6 +2,10 @@ a {
     color: #000;
 }
 
+span {
+    color: #ccc;
+}
+
 #target_ajax {
     display: none;
 }
@@ -36,7 +40,7 @@ a {
 
 .window {
     background: rgb(247, 247, 247);
-    height: 500px;
+    height: 390px;
 }
 .window .content {
     padding: 10px;
@@ -57,6 +61,14 @@ a {
 .buttons_container {
     width: 60%;
     float: left;
+}
+
+.definition_ready .text_container, .task .text_container {
+    width: 60%;
+}
+
+.definition_ready .buttons_container, .task .buttons_container {
+    width: 40%;
 }
 
 .buttons_footer {
@@ -123,22 +135,14 @@ a {
     min-height: 40px;
     padding-left: 20px;
     list-style: none;
-    background-image: -webkit-linear-gradient(to bottom, rgb(151, 220, 247), rgb(122, 192, 209));
-    background-image: -moz-linear-gradient(to bottom, rgb(151, 220, 247), rgb(122, 192, 209));
-    background-image: -o-linear-gradient(to bottom, rgb(151, 220, 247), rgb(122, 192, 209));
-    background-image: linear-gradient(to bottom, rgb(151, 220, 247), rgb(122, 192, 209));
-    background-image: linear-gradient(to bottom, rgb(151, 220, 247), rgb(122, 192, 209));
+    background-color: rgb(151, 220, 247);
 }
 
 .task {
     min-height: 40px;
     list-style: none;
-    padding-left: 20px;
+    padding-left: 40px;
     border-top: 1px solid #d5d5d5;
-    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05));
-    background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05));
-    background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05));
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05));
 }
 
 /*
@@ -150,10 +154,7 @@ a {
 
 /*zebra rows*/
 ul.zebra_row:nth-child(odd) {
-    background-image: -webkit-linear-gradient(to bottom, rgb(243, 242, 242), #e1e1e1);
-    background-image: -moz-linear-gradient(to bottom, rgb(243, 242, 242), #e1e1e1);
-    background-image: -o-linear-gradient(to bottom, rgb(243, 242, 242), #e1e1e1);
-    background-image: linear-gradient(to bottom, rgb(243, 242, 242), #e1e1e1);
+    background-color: rgb(243, 242, 242);
 }
 /*
 ==============
@@ -167,7 +168,7 @@ ul.zebra_row:nth-child(odd) {
 }
 
 .editable-container.editable-inline {
-    width: 100%;
+    width: 90%;
 }
 .editable-input {
     width: 70%;
@@ -177,5 +178,8 @@ ul.zebra_row:nth-child(odd) {
     width: 70%;
 }
 .editable-clear-x {
-    right: 20px!important;
+    right: 10px!important;
+}
+.definition_ready .editable-clear-x, .task .editable-clear-x {
+    right: 30px!important;
 }

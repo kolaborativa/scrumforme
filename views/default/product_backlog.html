@@ -106,6 +106,7 @@
                                             <li class="definition_ready_container">
                                                 <div class="definition_ready">
                                                     <div class="text_container">
+                                                        <span>{{=T('DR')}}:</span>
                                                         <a href="#" class="editable-click editable definition_ready_card" data-type="text" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
                                                     </div>
                                                     <div class="buttons_container">
@@ -199,7 +200,7 @@
                                             <li class="definition_ready_container">
                                                 <div class="definition_ready">
                                                     <div class="text_container">
-                                                        <a href="#" class="editable-click editable definition_ready_card" data-type="text" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
+                                                        <a href="#" class="editable-click editable definition_ready_card" data-type="text" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=T('DR')}}: {{=definition_ready[story.id][count].title}}</a>
                                                     </div>
                                                     <div class="buttons_container">
                                                         <button class="btn expand_definition_ready pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button>
