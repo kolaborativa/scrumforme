@@ -92,13 +92,13 @@
                     </ul>
                 </li>                
                 {{pass}}
-                {{if request.function == "product_backlog":}}
+                {{if request.function == "product_backlog" or request.function == "board":}}
                 <li class="submenu active open">
                     <a href="#"><i class="icon icon-cog"></i> <span>{{=T('Project')}}</span></a>
                     <ul>
-                        <li><a href="#">Board</a></li>
-                        <li class="active"><a href='{{=URL(c="default",f="product_backlog",args=[request.args(0)])}}'>Backlog</a></li>
-                        <li><a href="#">Sprints</a></li>
+                        <li class='{{=g_pagina_atual("default/board/%s" %request.args(0),"active")}}'><a href='{{=URL(f="board",args=[request.args(0)])}}'>Board</a></li>
+                        <li class='{{=g_pagina_atual("default/product_backlog/%s" %request.args(0),"active")}}'><a href='{{=URL(f="product_backlog",args=[request.args(0)])}}'>{{=T('Backlog')}}</a></li>
+                        <li><a href="#">{{=T('Sprints')}}</a></li>
                         <li><a href="#">{{=T('Archives')}}</a></li>
                         <li><a href="#">{{=T('Team')}}</a></li>
                         <li><a href="#">{{=T('Invite')}}</a></li>
@@ -134,13 +134,13 @@
 
             <script src='{{=URL("static","js/jquery.min.js")}}'></script>
             <script src='{{=URL("static","js/bootstrap.min.js")}}'></script>
-            <script src="{{=URL('static','js/web2py.js')}}"></script>
-            <script src='{{=URL("static","js/unicorn.js")}}'></script>
+            <script async defer src="{{=URL('static','js/web2py.js')}}"></script>
+            <script async defer src='{{=URL("static","js/unicorn.js")}}'></script>
             {{ if request.function == "product_backlog": }}
             <script src="{{=URL('static','js/bootstrap-editable.min.js')}}"></script>
-            <script src="{{=URL('static','js/product_backlog.js')}}"></script>
+            <script async defer src="{{=URL('static','js/product_backlog.js')}}"></script>
             <script src="{{=URL('static','js/jquery.nanoscroller.min.js')}}"></script>
-            <script>
+            <script async defer>
                 $(".window").nanoScroller({ sliderMaxHeight: 100, preventPageScrolling: true });
             </script>
             {{ pass }}

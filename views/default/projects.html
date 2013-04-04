@@ -1,7 +1,7 @@
 {{extend 'default/layout_base.html'}}
 
 <div id="breadcrumb">
-    <a href='{{=URL("index")}}' title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+    <a href='{{=URL("index")}}' title="Go to Home" class="tip-bottom"><i class="icon-home"></i> "{{=T('Home')}}"</a>
     <a href="#" class="current">{{=T('Projects')}}</a>
 </div>
 <div id="content-header">
@@ -22,5 +22,15 @@
         <br>
         <button type="submit" class="btn btn-primary">{{=T('Create Project')}}</button>
     {{=form.custom.end}}
+    </div>
+    <div class="span7">
+        {{if "all_projects" in globals():}}
+            <h3>{{=T('My Projects')}} <span class="label">{{=len(all_projects)}}</span></a></h3>
+            <ul>
+            {{for i in all_projects:}}
+                <li class='{{=g_pagina_atual("default/product_backlog/%s" %i.id,"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}'>{{=i.name}}</a></li>
+            {{pass}}
+            </ul>
+        {{pass}}
     </div>
 </div>

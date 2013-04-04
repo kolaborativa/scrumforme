@@ -1,0 +1,35 @@
+{{extend 'default/layout_base.html'}}
+
+<div id="breadcrumb">
+    <a href='{{=URL("index")}}' title="{{=T('Go to Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
+    <a href="#" class="current">{{=T('Board')}}</a>
+</div>
+<div id="content-header">
+    <h1>{{=T('Board')}}</h1>
+</div>
+<div class="container-fluid">
+
+    <div class="row-fluid">
+        <div class="span3">
+          <h2>{{=T('To DO')}}</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div><!--/span-->
+        <div class="span3">
+          <h2>{{=T('In Progress')}}</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div><!--/span-->
+        <div class="span3">
+          <h2>{{=T('Veryfication')}}</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div><!--/span-->
+        <div class="span3">
+          <h2>{{=T('Done')}}</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div><!--/span-->
+    </div><!--/row-->
+
+</div>

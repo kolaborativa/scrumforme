@@ -189,6 +189,10 @@ def launch_sprint():
     redirect(URL(f='projects'))
 
 
+def board():
+    return dict()
+
+
 def user():
     """
     exposes:

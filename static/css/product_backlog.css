@@ -41,13 +41,6 @@ a {
 .window .content {
     padding: 10px;
 }
-.window .pane {
-    background: rgba(216, 216, 216, 0.7);
-}
-.window .slider {
-    background: rgba(95, 95, 95, 0.42)!important;
-    /*height: 100px!important;*/
-}
 
 /*
 =======
