@@ -71,7 +71,7 @@ $(document).on("click", ".create_definition_ready", function(){
 
     var story_id = $(this).closest(".story").find(".story_card").attr("data-pk");
 
-    var html = '<ul class="item_container"><li class="definition_ready_container"><div class="definition_ready"><div class="text_container"><a href="#" class="editable-click editable-empty definition_ready_card editable new_definition_ready" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="definition_ready">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn expand_definition_ready pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><button class="btn create_task pull-right" alt="Create Task" title="Create Task" disabled="disabled">+ '+buttonTask+'</button></div></div></li></ul>';
+    var html = '<ul class="item_container"><li class="definition_ready_container"><div class="definition_ready"><div class="text_container"><a href="#" class="editable-click editable-empty definition_ready_card editable new_definition_ready" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="definition_ready">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn expand_definition_ready pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><button class="btn create_task pull-right" alt="Create Task" title="Create Task" disabled="disabled">+ '+buttonTask+'</button></div><div class="clearfix"></div></div></li></ul>';
 
     var newItem = $(this).closest(".story").append(html);
 
@@ -86,7 +86,7 @@ $(document).on("click", ".create_task", function(){
 
     var story_id = $(this).closest(".definition_ready_container").find(".definition_ready_card").attr("data-pk");
 
-    var html = '<ul class="item_container zebra_row"><li class="task"><div class="text_container"><a href="#" class="editable-click editable-empty editable new_task" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="task">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button></div></li></ul>';
+    var html = '<ul class="item_container zebra_row"><li class="task"><div class="text_container"><a href="#" class="editable-click editable-empty editable new_task" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="task">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button></div><div class="clearfix"></div></li></ul>';
 
     var newItem = $(this).closest(".definition_ready_container").append(html);
 

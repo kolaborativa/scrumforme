@@ -13,7 +13,6 @@
 def index():
     all_projects = db(Project).select()
 
-    response.flash = T("Welcome to scrumforme!")
     return dict(all_projects=all_projects)
 
 
@@ -39,7 +38,7 @@ def projects():
                         )
         redirect(URL(f="product_backlog",args=[project_id]))
     elif form.errors:
-        response.flash = T('Formulário contem erros. Por favor, verifique!')
+        pass
 
     return dict(form=form, all_projects=all_projects)
 
