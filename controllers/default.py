@@ -15,7 +15,7 @@ def index():
 
     return dict(all_projects=all_projects)
 
-
+@auth.requires_login()
 def projects():
     from datetime import datetime
 
@@ -43,6 +43,7 @@ def projects():
     return dict(form=form, all_projects=all_projects)
 
 
+@auth.requires_login()
 def product_backlog():
     all_projects = db(Project).select()
     project_id = request.args(0) or redirect(URL('projects'))
@@ -82,6 +83,7 @@ def product_backlog():
         return dict(project=project, all_projects=all_projects, form_sprint=form_sprint, sprint=sprint)
 
 
+@auth.requires_login()
 def create_update_backlog_itens():
     """Function that creates or updates items. Receive updates if request.vars.dbUpdate and takes the ID to be updated with request.vars.dbID
     """
@@ -126,6 +128,7 @@ def create_update_backlog_itens():
         return dict(error="error",msg="erro ao gravar!")
 
 
+@auth.requires_login()
 def remove_item_backlog_itens():
 
     if request.vars:
@@ -135,14 +138,14 @@ def remove_item_backlog_itens():
         if request.vars.name == "definition_ready":
             db(Definition_ready.id == request.vars.pk).delete()
             definitions_ready_data = db(Definition_ready.id == request.vars.pk).select()
-            
+
             for df in definitions_ready_data:
                 db(Task.definition_ready_id == df.id).delete()
-        
+
         elif request.vars.name == "story":
             db(Story.id == request.vars.pk).delete()
             definitions_ready_data = db(Definition_ready.story_id == request.vars.pk).select()
-            
+
             for df in definitions_ready_data:
                 db(Definition_ready.id == df.id).delete()
                 db(Task.definition_ready_id == df.id).delete()
@@ -152,6 +155,7 @@ def remove_item_backlog_itens():
         return False
 
 
+@auth.requires_login()
 def change_ajax_itens():
 
     if request.vars:
@@ -178,6 +182,7 @@ def change_ajax_itens():
         return False
 
 
+@auth.requires_login()
 def launch_sprint():
     from datetime import datetime
     sprint_id = request.args(0) or redirect(URL('index'))
@@ -187,6 +192,7 @@ def launch_sprint():
     redirect(URL(f='projects'))
 
 
+@auth.requires_login()
 def board():
     all_projects = db(Project).select()
 
@@ -208,6 +214,16 @@ def user():
     to decorate functions that need access control
     """
     return dict(form=auth())
+
+
+@auth.requires_login()
+def _create_person():
+    """Function that creates a person
+    """
+    name = '%s %s' % (auth.user.first_name, auth.user.last_name)
+    person_id = Person.insert(name=name)
+    db.user_relationship.insert(auth_user_id=auth.user.id, person_id=person_id)
+    redirect(URL('index'))
 
 
 def download():
