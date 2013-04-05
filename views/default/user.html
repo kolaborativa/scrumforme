@@ -1,4 +1,5 @@
-{{extend 'layout.html'}}
+{{extend 'default/layout_base.html'}}
+<div class="span11 offset1">
 <h2>{{=T( request.args(0).replace('_',' ').capitalize() )}}</h2>
 <div id="web2py_user_form">
 {{
@@ -12,6 +13,7 @@ if request.args(0)=='login':
 pass
 =form
 }}
+</div>
 </div>
 <script language="javascript"><!--
 jQuery("#web2py_user_form input:visible:enabled:first").focus();

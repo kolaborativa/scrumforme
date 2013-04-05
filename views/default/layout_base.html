@@ -60,17 +60,17 @@
 
         <div id="user-nav" class="navbar navbar-inverse">
             <ul class="nav btn-group">
-                <li>
-                    <div id="search">
-                        <input type="text" placeholder="Search here..."/><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
-                    </div>
-                </li>
-                {{ if not auth.is_logged_in(): }}
-                    <li class="btn btn-inverse"><a title="" href='{{=URL(f="user",args="profile",vars={"_next":"index"})}}'><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
-                {{ else: }}
-                    <li class="btn btn-inverse"><a title="" href="{{=URL(f='user',args='profile',vars={'_next':'index'})}}"><i class="icon icon-cog"></i> <span class="text">{{=auth.user.first_name}}</span></a></li>
+                {{ if auth.is_logged_in(): }}
+                    <li>
+                        <form action="">
+                            <div id="search">
+                                <input type="text" placeholder='{{=T("Search here")}}'/><button type="submit" class="tip-right" title='{{=T("Search")}}'><i class="icon-search"></i></button>
+                            </div>
+                        </form>
+                    </li>
+                    <li><a title="" href='{{=URL(f="user",args="profile",vars={"_next":"index"})}}'><i class="icon-config"></i></a></li>
+                    <li><a title="" href='{{=URL(f="user",args="logout",vars={"_next":"index"})}}'><i class="icon-logout"></i></a></li>
                 {{ pass }}
-                <li class="btn btn-inverse"><a title="" href='{{=URL(f="user",args="logout",vars={"_next":"index"})}}'><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
             </ul>
         </div>
             

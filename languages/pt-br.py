@@ -212,6 +212,8 @@
 'Rows selected': 'Linhas selecionadas',
 'Save model as...': 'Save model as...',
 'Save profile': 'Save profile',
+'Search': 'Buscar',
+'Search here': 'Busque aqui',
 'Semantic': 'Semantic',
 'Send to Sprint': 'Enviar para Sprint',
 'Services': 'Services',

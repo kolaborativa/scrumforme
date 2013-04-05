@@ -48,7 +48,8 @@ a:hover {
 	/*z-index: 25;*/
 	/*top: 6px;*/
 	/*left: 230px;*/
-	margin-right: 20px;
+	margin-right: 10px;
+	margin-top: 5px;
 }
 #search input[type=text] {
 	font-size: 12px;
@@ -56,7 +57,7 @@ a:hover {
 	border-radius: 4px 0 0 4px;
 	padding: 5px 10px 4px;
 	border: 0;
-	box-shadow: 2px 2px 3px rgba(0,0,0,0.7) inset, 0 1px 0 rgba(255,255,255,0.2); 
+	/*box-shadow: 2px 2px 3px rgba(0,0,0,0.7) inset, 0 1px 0 rgba(255,255,255,0.2); */
 	width: 100px;
 }
 
@@ -65,10 +66,14 @@ a:hover {
 	margin-top: -10px;
 	padding: 5px 10px 4px;
 	border-radius: 0 4px 4px 0;
-	box-shadow: -2px 2px 3px rgba(0,0,0,0.7) inset, 0 1px 0 rgba(255,255,255,0.2); 
+	/*box-shadow: -2px 2px 3px rgba(0,0,0,0.7) inset, 0 1px 0 rgba(255,255,255,0.2);*/
+	background-color: #fff;
+	height: 29px;
 }
 #search button i {
-	opacity: 0.5;
+	/*opacity: 0.5;*/
+	position: relative;
+	bottom: 2px;
 }
 #search button:hover i, #search button:active i {
 	opacity: 0.9;
@@ -104,7 +109,8 @@ a:hover {
 #user-nav > ul > li > a:hover, #user-nav > ul > li.open > a {
 	color: #ffffff;
 }
-#user-nav > ul > li > a > i, #sidebar li a i {
+/*#user-nav > ul > li > a > i, #sidebar li a i {*/
+#sidebar li a i {
 	vertical-align: top;
 	background-image: url('../img/glyphicons-halflings-white.png');
 	opacity: .5;
@@ -124,7 +130,7 @@ a:hover {
 
 #user-nav > ul ul > li > a {
 	text-align: left;
-	text-shadow: 0 1px 0 #ffffff;
+	/*text-shadow: 0 1px 0 #ffffff;*/
 }
 #user-nav > ul ul > li > a:hover {
 	text-shadow: 0 1px 0 rgba(0,0,0,0.5);
@@ -1412,6 +1418,20 @@ form {
  MY MODIFICATIONS
 ==================
 */
+
+.icon-arrow-down,.icon-arrow-right,.icon-arrow-up,.icon-comment,.icon-config,
+.icon-logout,.icon-search,.icon-trash{
+  background: url(../img/images1.png) no-repeat top left;
+}
+
+.icon-arrow-down{ background-position: 0 0; width: 12px; height: 12px; } 
+.icon-arrow-right{ background-position: 0 -62px; width: 12px; height: 12px; } 
+.icon-arrow-up{ background-position: 0 -124px; width: 12px; height: 12px; } 
+.icon-comment{ background-position: 0 -186px; width: 19px; height: 17px; } 
+.icon-config{ background-position: 0 -253px; width: 19px; height: 20px; } 
+.icon-logout{ background-position: 0 -323px; width: 20px; height: 21px; } 
+.icon-search{ background-position: 0 -394px; width: 19px; height: 19px; } 
+.icon-trash{ background-position: 0 -463px; width: 11px; height: 13px; } 
 
 .error {
 	color: red;

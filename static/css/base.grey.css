@@ -3,7 +3,7 @@ body {
 }
 
 #search input[type=text], #search button {
-	background-color: #222222;
+	/*background-color: #222222;*/
 }
 #search input[type=text]:focus {
 	color: #777777;

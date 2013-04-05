@@ -5,7 +5,9 @@
 */
 
 // modify style buttons
-$.fn.editableform.buttons = '<button type="submit" class="btn btn-mini btn-success editable-submit pull-right"><i class="icon-ok icon-white"></i></button>';
+$.fn.editableform.buttons = 
+ '<button type="button" class="btn editable-cancel pull-left"><i class="icon_back"></i></button>'+
+  '<button type="submit" class="btn btn-success editable-submit pull-right"><i class="icon-ok icon-white"></i></button>';
 $.fn.editable.defaults.mode = 'inline';
 
 /*
@@ -67,7 +69,7 @@ $('#create_story').click(function(){
     // $(this).closest(".story_container").find(".buttons_footer").fadeToggle("fast", "linear");
     var indiceItem = 1;
 
-    var html = '<ul class="story_container item_container"><li class="story"><div class="story_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="text" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn btn-mini expand_story pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-chevron-down"></i></button><button class="btn btn-mini delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-remove"></i></button><select class="pull-right benefit" alt="'+title.benefit+'" title="'+title.benefit+'" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" alt="'+title.points+'" title="'+title.points+'" disabled="disabled"><button class="btn btn-mini create_definition_ready pull-right" alt="'+title.create_DR+'" title="'+title.create_DR+'" disabled="disabled">+ '+buttons.DR+'</button><span class="label qtd_definition_ready pull-right tip-bottom" alt="'+title.label_DR+'" title="'+title.label_DR+'">0</span></div><div class="clearfix"></div></div></li><div class="buttons_footer new_buttons_footer"><button class="btn btn-mini btn-primary pull-right send_story_sprint" disabled="disabled">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div></div></ul>';
+    var html = '<ul class="story_container item_container"><li class="story"><div class="story_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="textarea" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn expand_story pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-arrow-down"></i></button><button class="btn delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-trash"></i></button><select class="pull-right benefit" alt="'+title.benefit+'" title="'+title.benefit+'" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" alt="'+title.points+'" title="'+title.points+'" disabled="disabled"><button class="btn create_definition_ready pull-right" alt="'+title.create_DR+'" title="'+title.create_DR+'" disabled="disabled">+ '+buttons.DR+'</button><span class="label qtd_definition_ready pull-right tip-bottom" alt="'+title.label_DR+'" title="'+title.label_DR+'">0</span></div><div class="clearfix"></div></div></li><div class="buttons_footer new_buttons_footer"><button class="btn btn-primary pull-right send_story_sprint" disabled="disabled">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div></div></ul>';
 
     $(".story_block").append(html);
 
@@ -83,7 +85,7 @@ $(document).on("click", ".create_definition_ready", function(){
     $(this).closest(".story_container").find(".buttons_footer").fadeIn("fast", "linear");
     var story_id = $(this).closest(".story").find(".story_card").attr("data-pk");
 
-    var html = '<ul class="item_container"><li class="definition_ready_container new_definition_ready_container"><div class="definition_ready"><div class="text_container"><span class="label" style="margin-right: 4px;" alt="'+title.label_DR+'" title="'+title.label_DR+'">'+buttons.DR+' </span><a href="#" class="editable-click editable-empty definition_ready_card editable new_definition_ready" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="definition_ready">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn btn-mini expand_definition_ready pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-chevron-down"></i></button><button class="btn btn-mini delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-remove"></i></button><button class="btn btn-mini create_task pull-right" alt="'+title.task+'" title="'+title.task+'" disabled="disabled">+ '+buttons.task+'</button></div><div class="clearfix"></div></div></li></ul>';
+    var html = '<ul class="item_container"><li class="definition_ready_container new_definition_ready_container"><div class="definition_ready"><div class="text_container"><span class="label" style="margin-right: 4px;" alt="'+title.label_DR+'" title="'+title.label_DR+'">'+buttons.DR+' </span><a href="#" class="editable-click editable-empty definition_ready_card editable new_definition_ready" data-type="textarea" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="definition_ready">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn expand_definition_ready pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-arrow-down"></i></button><button class="btn delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-trash"></i></button><button class="btn create_task pull-right" alt="'+title.task+'" title="'+title.task+'" disabled="disabled">+ '+buttons.task+'</button></div><div class="clearfix"></div></div></li></ul>';
 
     var newItem = $(this).closest(".story").append(html);
 
@@ -98,7 +100,7 @@ $(document).on("click", ".create_task", function(){
 
     var story_id = $(this).closest(".definition_ready_container").find(".definition_ready_card").attr("data-pk");
 
-    var html = '<ul class="item_container zebra_row"><li class="task"><div class="text_container"><a href="#" class="editable-click editable-empty editable new_task" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="task">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn btn-mini delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><button class="btn btn-mini comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button></div><div class="clearfix"></div></li></ul>';
+    var html = '<ul class="item_container zebra_row"><li class="task"><div class="text_container"><a href="#" class="editable-click editable-empty editable new_task" data-type="textarea" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="task">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-trash"></i></button><button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button></div><div class="clearfix"></div></li></ul>';
 
     var newItem = $(this).closest(".definition_ready_container").append(html);
 
@@ -116,7 +118,7 @@ $(document).on("click", ".expand_story", function(){
 
 // to expand definition_ready content
 $(document).on("click", ".expand_definition_ready", function(){
-    $(this).closest(".definition_ready_container").find(".task").fadeToggle("slow", "linear");
+    $(this).closest(".definition_ready_container").find(".task").fadeToggle("fast", "linear");
 });
 
 // clean values ​​that are not numbers
@@ -214,13 +216,13 @@ function statusItem(object,item,remove) {
         msg_text = "Movido com Sucesso!";
         if(item==="sprint") {
         // move story to sprint
-            var button = '<button class="btn btn-mini btn-danger pull-right back_backlog"><i class="icon-circle-arrow-left icon-white"></i> '+buttons.back_backlog+'</button><div class="clearfix"></div></div>',
+            var button = '<button class="btn btn-danger pull-right back_backlog"><i class="icon-circle-arrow-left icon-white"></i> '+buttons.back_backlog+'</button><div class="clearfix"></div></div>',
                 story = $(object).clone().appendTo('.sprint').find(".buttons_footer").empty().fadeIn("fast", function() { $(this).append(button) });
             $(object).fadeOut("fast", function() { $(this).remove() });
 
         } else if(item==="backlog") {
         // move story to backlog
-            var button = '<button class="btn btn-mini btn-primary pull-right send_story_sprint">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div>',
+            var button = '<button class="btn btn-primary pull-right send_story_sprint">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div>',
                 story = $(object).clone().appendTo('.story_block').find(".buttons_footer").empty().fadeIn("fast", function() { $(this).append(button) });
             $(object).fadeOut("fast", function() { $(this).remove() });
 
