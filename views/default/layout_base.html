@@ -37,16 +37,21 @@
         
         <link rel="stylesheet" href='{{=URL("static","css/bootstrap.min.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/bootstrap-responsive.min.css")}}' />
-        <link rel="stylesheet" href='{{=URL("static","css/unicorn.main.css")}}' />
-        <link rel="stylesheet" href='{{=URL("static","css/unicorn.grey.css")}}' class="skin-color" />
+        <link rel="stylesheet" href='{{=URL("static","css/base.css")}}' />
+        <link rel="stylesheet" href='{{=URL("static","css/base.grey.css")}}' class="skin-color" />
         <link rel="stylesheet" href='{{=URL("static","css/bootstrap-editable.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/nanoscroller.css")}}' />
         
+        {{ if request.function == "product_backlog": }}
         <link rel="stylesheet" href='{{=URL("static","css/product_backlog.css")}}' />
+        {{ elif request.function == "board": }}
+        <link rel="stylesheet" href='{{=URL("static","css/board.css")}}' />
+        {{pass}}
+        
         <!-- google font -->
         <link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>
     </head>
-    <body>
+    <body class='{{=g_pagina_atual("default/board/%s" %request.args(0),"close_sidebar")}}'>
         
         <div id="header">
             <h1><a href="{{=URL('projects')}}"><span class="color-logo">Scrumfor</span>.me</a></a></h1>       
@@ -55,15 +60,6 @@
 
         <div id="user-nav" class="navbar navbar-inverse">
             <ul class="nav btn-group">
-<!--                 <li class="btn btn-inverse" ><a title="" href="#"><i class="icon icon-user"></i> <span class="text">Profile</span></a></li>
-                <li class="btn btn-inverse dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">5</span> <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a class="sAdd" title="" href="#">new message</a></li>
-                        <li><a class="sInbox" title="" href="#">inbox</a></li>
-                        <li><a class="sOutbox" title="" href="#">outbox</a></li>
-                        <li><a class="sTrash" title="" href="#">trash</a></li>
-                    </ul>
-                </li> -->
                 <li>
                     <div id="search">
                         <input type="text" placeholder="Search here..."/><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
@@ -88,13 +84,17 @@
                     <a href="#"><i class="icon icon-th-list"></i> <span>{{=T('My Projects')}}</span> <span class="label">{{=len(all_projects)}}</span></a>
                     <ul>
                         {{for i in all_projects:}}
-                            <li class='{{=g_pagina_atual("default/product_backlog/%s" %i.id,"active")}} {{=g_pagina_atual("default/board/%s" %i.id,"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}'>{{=i.name}}</a></li>
+                            <li class='{{=g_pagina_atual("default/product_backlog/%s" %request.args(0),"active")}} {{=g_pagina_atual("default/board/%s" %i.id,"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}'>{{=i.name}}</a></li>
                         {{pass}}
                     </ul>
                 </li>                
                 {{pass}}
                 {{if request.function == "product_backlog" or request.function == "board":}}
-                <li class="submenu active open">
+                {{if request.function == "board":}}
+                <li class='submenu active'>
+                {{else:}}
+                <li class='submenu active open'>
+                {{pass}}
                     <a href="#"><i class="icon icon-cog"></i> <span>{{=T('Project')}}</span></a>
                     <ul>
                         <li class='{{=g_pagina_atual("default/board/%s" %request.args(0),"active")}}'><a href='{{=URL(f="board",args=[request.args(0)])}}'>Board</a></li>
@@ -138,7 +138,7 @@
             <script src='{{=URL("static","js/jquery.min.js")}}'></script>
             <script src='{{=URL("static","js/bootstrap.min.js")}}'></script>
             <script async defer src="{{=URL('static','js/web2py.js')}}"></script>
-            <script async defer src='{{=URL("static","js/unicorn.js")}}'></script>
+            <script async defer src='{{=URL("static","js/base.js")}}'></script>
             {{ if request.function == "product_backlog": }}
             <script src="{{=URL('static','js/bootstrap-editable.min.js')}}"></script>
             <script async defer src="{{=URL('static','js/product_backlog.js')}}"></script>
