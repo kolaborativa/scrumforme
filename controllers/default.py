@@ -210,6 +210,15 @@ def user():
     return dict(form=auth())
 
 
+def _create_person():
+    """Function that creates a person
+    """
+    name = '%s %s' % (auth.user.first_name, auth.user.last_name)
+    person_id = Person.insert(name=name)
+    db.user_relationship.insert(auth_user_id=auth.user.id, person_id=person_id)
+    redirect(URL('index'))
+
+
 def download():
     """
     allows downloading of uploaded files
