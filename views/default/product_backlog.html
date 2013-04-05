@@ -2,14 +2,7 @@
 
 <script>
     // OBS: other global variables are generated on the page project
-    var urlCreateUpdateBacklogItens = "{{=URL('create_update_backlog_itens.json')}}",
-        urlRemoveBacklogItens = "{{=URL('remove_item_backlog_itens')}}",
-        urlChangeAjaxItens = "{{=URL('change_ajax_itens')}}",
-        buttonDefinitionReady = '{{=T("DR")}}',
-        buttonSendSprint = '{{=T("Send to Sprint")}}',
-        buttonBackBacklog = '{{=T("Back to Backlog")}}',
-        buttonTask = '{{=T("Task")}}',
-        projectID = '{{=project.id}}',
+    var projectID = '{{=project.id}}',
         msg = {
             field_empty : '{{=T("Click to write")}}',
             validation_error : '{{=T("Can not be empty")}}',
@@ -18,6 +11,27 @@
             remove_error : '{{=T("Error in removal!")}}',
             type_error : 'error',
             type_success : 'success',
+        },
+        url = {
+            createUpdateBacklogItens : '{{=URL("create_update_backlog_itens.json")}}',
+            removeBacklogItens : '{{=URL("remove_item_backlog_itens")}}',
+            changeAjaxItens : '{{=URL("change_ajax_itens")}}',
+        },
+        buttons = {
+            DR : '{{=T("DR")}}',
+            send_sprint : '{{=T("Send to Sprint")}}',
+            back_backlog : '{{=T("Back to Backlog")}}',
+            task : '{{=T("Task")}}',
+        },
+        title = {
+            create_DR : '{{=T("Create Definition of Ready")}}',
+            label_DR : '{{=T("Definition of Ready")}}',
+            number_DR : '{{=T("Number of Definitions of Ready")}}',
+            points : '{{=T("Story Points")}}',
+            benefit : '{{=T("Benefit")}}',
+            remove : '{{=T("Remove")}}',
+            expand : '{{=T("Expand")}}',
+            task : '{{=T("Task")}}',
         };
 </script>
 
@@ -49,7 +63,7 @@
         {{if sprint:}}
             <h4>{{=sprint.name}} - {{=sprint.weeks}} {{=T('Weeks')}}
             {{if not sprint.started:}}
-            <a href="{{=URL(c='default',f='launch_sprint',args=[sprint.id],)}}" class='btn btn-success'>{{=T('Launch the sprint')}}</a>
+            <a href="{{=URL(c='default',f='launch_sprint',args=[sprint.id],)}}" class='btn btn-mini btn-success'>{{=T('Launch the sprint')}}</a>
             {{else:}}
             <button class='disabled btn btn-success'>{{=T('Launched')}}</button>
             {{pass}}
@@ -74,10 +88,10 @@
                                             <a href="#" class="editable-click story_card editable" data-type="text" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
                                         </div>
                                         <div class="buttons_container">
-                                            <button class="btn expand_story pull-right" alt="Expand" title="Expand">
+                                            <button class="btn btn-mini expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
                                                 <i class="icon-chevron-down"></i></button>
-                                            <button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button>
-                                            <select class="pull-right benefit" name="size" id="size">
+                                            <button class="btn btn-mini delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-remove"></i></button>
+                                            <select class="pull-right benefit" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>
                                             {{selects="P M G GG".split()}}
                                             {{if story.benefit:}}
                                                 {{for size in selects:}}
@@ -98,8 +112,9 @@
                                                 {{pass}}                    
                                             {{pass}}
                                             </select>
-                                            <input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" value="{{=story.story_points}}">
-                                            <button class="btn create_definition_ready pull-right">+ {{=T('DR')}}</button>
+                                            <input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" value='{{=g_verifica_vazio(story.story_points)}}' alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'>
+                                            <button class="btn btn-mini create_definition_ready pull-right" alt='{{=T("Create Definition of Ready")}}' title='{{=T("Create Definition of Ready")}}'>+ {{=T('DR')}}</button>
+                                            <span class="label qtd_definition_ready pull-right tip-bottom" alt='{{=T("Number of Definitions of Ready")}}' title='{{=T("Number of Definitions of Ready")}}'>{{=len(definition_ready[story.id])}}</span>
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
@@ -110,13 +125,13 @@
                                             <li class="definition_ready_container">
                                                 <div class="definition_ready">
                                                     <div class="text_container">
-                                                        <span class="label">{{=T('DR')}}</span>
+                                                        <span class="label tip-right" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>{{=T('DR')}}</span>
                                                         <a href="#" class="editable-click editable definition_ready_card" data-type="text" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
                                                     </div>
                                                     <div class="buttons_container">
-                                                        <button class="btn expand_definition_ready pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button>
-                                                        <button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button>
-                                                        <button class="btn create_task pull-right" alt="Create Task" title="Create Task">+ {{=T("Task")}}</button>
+                                                        <button class="btn btn-mini expand_definition_ready pull-right" alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'><i class="icon-chevron-down"></i></button>
+                                                        <button class="btn btn-mini delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-remove"></i></button>
+                                                        <button class="btn btn-mini create_task pull-right" alt='{{=T("Create Tast")}}' title='{{=T("Create Task")}}'>+ {{=T("Task")}}</button>
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 </div><!-- definition_ready -->
@@ -127,8 +142,8 @@
                                                                 <a href="#" class="editable-click editable" data-type="text" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                                             </div>
                                                             <div class="buttons_container">
-                                                                <button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button>
-                                                                <button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button>
+                                                                <button class="btn btn-mini delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button>
+                                                                <button class="btn btn-mini comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button>
                                                             </div>
                                                             <div class="clearfix"></div>
                                                         </li><!-- task -->
@@ -141,7 +156,7 @@
                                     {{pass}}
                                 </li><!-- story -->
                                 <div class="buttons_footer">
-                                    <button class="btn btn-primary pull-right send_story_sprint">{{=T("Send to Sprint")}} <i class="icon-circle-arrow-right icon-white"></i></button>
+                                    <button class="btn btn-mini btn-primary pull-right send_story_sprint">{{=T("Send to Sprint")}} <i class="icon-circle-arrow-right icon-white"></i></button>
                                     <div class="clearfix"></div>
                                 </div>
                             </ul>
@@ -168,10 +183,10 @@
                                             <a href="#" class="editable-click story_card editable" data-type="text" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
                                         </div>
                                         <div class="buttons_container">
-                                            <button class="btn expand_story pull-right" alt="Expand" title="Expand">
+                                            <button class="btn btn-mini expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
                                                 <i class="icon-chevron-down"></i></button>
-                                            <button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button>
-                                            <select class="pull-right benefit" name="size" id="size">
+                                            <button class="btn btn-mini delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-remove"></i></button>
+                                            <select class="pull-right benefit" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>
                                             {{selects="P M G GG".split()}}
                                             {{if story.benefit:}}
                                                 {{for size in selects:}}
@@ -192,8 +207,9 @@
                                                 {{pass}}                    
                                             {{pass}}
                                             </select>
-                                            <input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" value="{{=story.story_points}}">
-                                            <button class="btn create_definition_ready pull-right">+ {{=T('DR')}}</button>
+                                            <input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" value='{{=g_verifica_vazio(story.story_points)}}' alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'>
+                                            <button class="btn btn-mini create_definition_ready pull-right" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>+ {{=T('DR')}}</button>
+                                            <span class="label qtd_definition_ready pull-right tip-bottom"  alt='{{=T("Number of Definitions of Ready")}}' title='{{=T("Number of Definitions of Ready")}}'>{{=len(definition_ready[story.id])}}</span>
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
@@ -204,13 +220,13 @@
                                             <li class="definition_ready_container">
                                                 <div class="definition_ready">
                                                     <div class="text_container">
-                                                        <span class="label">{{=T('DR')}}</span>
+                                                        <span class="label tip-right" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>{{=T('DR')}}</span>
                                                         <a href="#" class="editable-click editable definition_ready_card" data-type="text" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
                                                     </div>
                                                     <div class="buttons_container">
-                                                        <button class="btn expand_definition_ready pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button>
-                                                        <button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button>
-                                                        <button class="btn create_task pull-right" alt="Create Task" title="Create Task">+ {{=T("Task")}}</button>
+                                                        <button class="btn btn-mini expand_definition_ready pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'><i class="icon-chevron-down"></i></button>
+                                                        <button class="btn btn-mini delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-remove"></i></button>
+                                                        <button class="btn btn-mini create_task pull-right" alt='{{=T("Create Task")}}' title='{{=T("Create Task")}}'>+ {{=T("Task")}}</button>
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 </div><!-- definition_ready -->
@@ -221,8 +237,8 @@
                                                                 <a href="#" class="editable-click editable" data-type="text" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                                             </div>
                                                             <div class="buttons_container">
-                                                                <button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button>
-                                                                <button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button>
+                                                                <button class="btn btn-mini delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-remove"></i></button>
+                                                                <button class="btn btn-mini comment_definition_ready pull-right" alt='{{=T("Comment")}}' title='{{=T("Comment")}}'><i class="icon-comment"></i></button>
                                                             </div>
                                                             <div class="clearfix"></div>
                                                         </li><!-- task -->
@@ -235,7 +251,7 @@
                                     {{pass}}
                                 </li><!-- story -->
                                 <div class="buttons_footer">
-                                    <button class="btn btn-danger pull-right back_backlog"><i class="icon-circle-arrow-left icon-white"></i> {{=T("Back to Backlog")}}</button>
+                                    <button class="btn btn-mini btn-danger pull-right back_backlog"><i class="icon-circle-arrow-left icon-white"></i> {{=T("Back to Backlog")}}</button>
                                     <div class="clearfix"></div>
                                 </div>
                             </ul>

@@ -75,6 +75,10 @@ margin-top: 0px;
     padding: 10px 0px;
 }
 
+.text_container a {
+    word-wrap: break-word;
+}
+
 .buttons_container {
     width: 60%;
     float: left;
@@ -93,6 +97,7 @@ margin-top: 0px;
 }
 
 .buttons_footer {
+    display: none;
     padding: 5px 5px 5px 0px;
     border-top: 1px solid #ccc;
     background: #b5b5b5;
@@ -117,7 +122,6 @@ margin-top: 0px;
 .story_header {
     padding-left: 20px;
     font-size: 13px;
-    text-transform: uppercase;
     border-radius: 5px 5px 0 0;
     background-image: -webkit-linear-gradient(top, #dadada, #b1b1b1);
     background-image: -moz-linear-gradient(top, #dadada, #b1b1b1);
@@ -129,17 +133,37 @@ margin-top: 0px;
 
 .buttons_container {
     position: relative;
-    top: 4px;
+    top: 9px;
 }
 
 .buttons_container button, .buttons_container select, .buttons_container input {
     margin-right: 7px;
 }
+
 .buttons_container select {
-    width: 60px;
+    width: 45px;
+    padding: 0px;
+    font-size: 13px;
+    height: 22px;
 }
+
 .buttons_container input {
-    width: 40px;
+    width: 15px;
+    padding: 0px 5px;
+    font-size: 13px;
+}
+
+.qtd_definition_ready {
+    position: relative;
+    top: 2px;
+    right: 5px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 .story ul {
@@ -149,6 +173,11 @@ margin-top: 0px;
 
 .definition_ready_container {
     list-style: none;
+    display: none;
+}
+
+.new_definition_ready_container, .new_buttons_footer {
+    display: block;
 }
 
 .definition_ready {

@@ -5,7 +5,7 @@
 */
 
 // modify style buttons
-$.fn.editableform.buttons = '<button type="submit" class="btn btn-success editable-submit pull-right"><i class="icon-ok icon-white"></i></button>';
+$.fn.editableform.buttons = '<button type="submit" class="btn btn-mini btn-success editable-submit pull-right"><i class="icon-ok icon-white"></i></button>';
 $.fn.editable.defaults.mode = 'inline';
 
 /*
@@ -17,7 +17,7 @@ $.fn.editable.defaults.mode = 'inline';
 //apply editable to parent div
 $('.content').editable({
   selector: 'a',
-  url: urlCreateUpdateBacklogItens,
+  url: url.createUpdateBacklogItens,
   emptytext: msg.field_empty,
   params: function(params) {
       // sending parameters indicating whether the item is to upgrade or not
@@ -38,13 +38,23 @@ $('.content').editable({
   success: function(value,response) {
     // enables the buttons
     var story = $(this).closest(".story");
-    story.find(".new_story").removeClass("new_story");
-    story.find(".create_definition_ready").removeAttr("disabled");
-    story.find(".story_points").removeAttr("disabled");
-    story.find(".benefit").removeAttr("disabled");
-    story.find(".create_task").removeAttr("disabled");
 
-    $(this).closest(".story_container").find(".send_story_sprint").removeAttr("disabled");
+    if(value.name === "story") {
+        story.find(".new_story").removeClass("new_story");
+        story.find(".create_definition_ready").removeAttr("disabled");
+        story.find(".story_points").removeAttr("disabled");
+        story.find(".benefit").removeAttr("disabled");
+        story.find(".expand_story").removeAttr("disabled");
+        $(this).closest(".story_container").find(".send_story_sprint").removeAttr("disabled");
+    
+    }else if(value.name === "definition_ready") {
+        var label_DR = story.find(".qtd_definition_ready").text();
+        story.find(".qtd_definition_ready").text(parseInt(label_DR)+1);
+        story.find(".create_task").removeAttr("disabled");
+    }else if(value.name === "task") {
+        $(this).closest(".definition_ready_container").find(".expand_definition_ready").removeAttr("disabled");
+    }
+
     // get the coming new database ID and update in DOM
     $(this).attr("data-pk", value.database_id);
     // changes the status of the created item for item update
@@ -54,9 +64,10 @@ $('.content').editable({
 
 // by clicking the button to add Story
 $('#create_story').click(function(){
+    // $(this).closest(".story_container").find(".buttons_footer").fadeToggle("fast", "linear");
     var indiceItem = 1;
 
-    var html = '<ul class="story_container item_container"><li class="story"><div class="story_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="text" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn expand_story pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><select class="pull-right benefit" name="size" id="size" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" disabled="disabled"><button class="btn create_definition_ready pull-right" disabled="disabled">+ '+buttonDefinitionReady+'</button></div><div class="clearfix"></div></div></li><div class="buttons_footer"><button class="btn btn-primary pull-right send_story_sprint" disabled="disabled">'+buttonSendSprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div></div></ul>';
+    var html = '<ul class="story_container item_container"><li class="story"><div class="story_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="text" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn btn-mini expand_story pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-chevron-down"></i></button><button class="btn btn-mini delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-remove"></i></button><select class="pull-right benefit" alt="'+title.benefit+'" title="'+title.benefit+'" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" alt="'+title.points+'" title="'+title.points+'" disabled="disabled"><button class="btn btn-mini create_definition_ready pull-right" alt="'+title.create_DR+'" title="'+title.create_DR+'" disabled="disabled">+ '+buttons.DR+'</button><span class="label qtd_definition_ready pull-right tip-bottom" alt="'+title.label_DR+'" title="'+title.label_DR+'">0</span></div><div class="clearfix"></div></div></li><div class="buttons_footer new_buttons_footer"><button class="btn btn-mini btn-primary pull-right send_story_sprint" disabled="disabled">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div></div></ul>';
 
     $(".story_block").append(html);
 
@@ -68,10 +79,11 @@ $('#create_story').click(function(){
 
 // by clicking the button to add Definition of Ready
 $(document).on("click", ".create_definition_ready", function(){
-
+    $(this).closest(".story").find(".definition_ready_container").slideDown("slow");
+    $(this).closest(".story_container").find(".buttons_footer").fadeIn("fast", "linear");
     var story_id = $(this).closest(".story").find(".story_card").attr("data-pk");
 
-    var html = '<ul class="item_container"><li class="definition_ready_container"><div class="definition_ready"><div class="text_container"><span class="label" style="margin-right: 4px;">'+buttonDefinitionReady+' </span><a href="#" class="editable-click editable-empty definition_ready_card editable new_definition_ready" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="definition_ready">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn expand_definition_ready pull-right" alt="Expand" title="Expand"><i class="icon-chevron-down"></i></button><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><button class="btn create_task pull-right" alt="Create Task" title="Create Task" disabled="disabled">+ '+buttonTask+'</button></div><div class="clearfix"></div></div></li></ul>';
+    var html = '<ul class="item_container"><li class="definition_ready_container new_definition_ready_container"><div class="definition_ready"><div class="text_container"><span class="label" style="margin-right: 4px;" alt="'+title.label_DR+'" title="'+title.label_DR+'">'+buttons.DR+' </span><a href="#" class="editable-click editable-empty definition_ready_card editable new_definition_ready" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="definition_ready">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn btn-mini expand_definition_ready pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-chevron-down"></i></button><button class="btn btn-mini delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-remove"></i></button><button class="btn btn-mini create_task pull-right" alt="'+title.task+'" title="'+title.task+'" disabled="disabled">+ '+buttons.task+'</button></div><div class="clearfix"></div></div></li></ul>';
 
     var newItem = $(this).closest(".story").append(html);
 
@@ -86,7 +98,7 @@ $(document).on("click", ".create_task", function(){
 
     var story_id = $(this).closest(".definition_ready_container").find(".definition_ready_card").attr("data-pk");
 
-    var html = '<ul class="item_container zebra_row"><li class="task"><div class="text_container"><a href="#" class="editable-click editable-empty editable new_task" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="task">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button></div><div class="clearfix"></div></li></ul>';
+    var html = '<ul class="item_container zebra_row"><li class="task"><div class="text_container"><a href="#" class="editable-click editable-empty editable new_task" data-type="text" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="task">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn btn-mini delete_item pull-right" alt="Delete" title="Delete"><i class="icon-remove"></i></button><button class="btn btn-mini comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button></div><div class="clearfix"></div></li></ul>';
 
     var newItem = $(this).closest(".definition_ready_container").append(html);
 
@@ -117,7 +129,7 @@ $(document).on("keydown", ".only_numbers", function(event){
 $(document).on("change", ".story_points", function(){
     var story = $(this).closest(".story"),
         storyID = story.find(".story_card").attr("data-pk");
-    ajax(urlChangeAjaxItens+'?story_points='+this.value+'&story_id='+storyID, [''], 'target_ajax');
+    ajax(url.changeAjaxItens+'?story_points='+this.value+'&story_id='+storyID, [''], 'target_ajax');
     statusItem("","",false);
 });
 
@@ -125,7 +137,7 @@ $(document).on("change", ".story_points", function(){
 $(document).on("change", ".benefit", function(){
     var story = $(this).closest(".story"),
         storyID = story.find(".story_card").attr("data-pk");
-    ajax(urlChangeAjaxItens+'?benefit='+this.value+'&story_id='+storyID, [''], 'target_ajax');
+    ajax(url.changeAjaxItens+'?benefit='+this.value+'&story_id='+storyID, [''], 'target_ajax');
     var status = statusItem("","",false);
 
     if(status) {
@@ -141,43 +153,51 @@ $(document).on("change", ".benefit", function(){
 
 // send story to sprint
 $(document).on("click", ".send_story_sprint", function(){
-    var item = $(this).closest(".story_container"),
-        storyID = item.find(".story_card").attr("data-pk"),
+    var object = $(this).closest(".story_container"),
+        storyID = object.find(".story_card").attr("data-pk"),
     sprintID = $(".sprint").attr("data-sprint");
     
-    ajax(urlChangeAjaxItens+'?name=sprint&sprint_id='+sprintID+'&story_id='+storyID, [''], 'target_ajax');
-    statusItem(item,"sprint",false);
+    ajax(url.changeAjaxItens+'?name=sprint&sprint_id='+sprintID+'&story_id='+storyID, [''], 'target_ajax');
+    statusItem(object,"sprint",false);
 });
 
 // back story to backlog
 $(document).on("click", ".back_backlog", function(){
-    var item = $(this).closest(".story_container"),
-        storyID = item.find(".story_card").attr("data-pk"),
+    var object = $(this).closest(".story_container"),
+        storyID = object.find(".story_card").attr("data-pk"),
     sprintID = $(".sprint").attr("data-sprint");
     
-    ajax(urlChangeAjaxItens+'?name=backlog&sprint_id='+storyID+'&story_id='+storyID, [''], 'target_ajax');
-    statusItem(item,"backlog",false);
+    ajax(url.changeAjaxItens+'?name=backlog&sprint_id='+storyID+'&story_id='+storyID, [''], 'target_ajax');
+    statusItem(object,"backlog",false);
 });
 
 // remove item
 $(document).on("click", ".delete_item", function(){
   if(confirm(msg.confirm)) {
-    var item = $(this).closest(".item_container").find('a'),
-        pk = item.attr('data-pk'),
-        name = item.attr('data-name');
+    var object = $(this).closest(".item_container").find('a'),
+        pk = object.attr('data-pk'),
+        name = object.attr('data-name');
 
-    removeItem(pk,name,item,true);
+    removeItem(pk,name,object,true);
   }
 });
 
 // for remove itens
-function removeItem(pk,name,item,remove) {
-  ajax(urlRemoveBacklogItens+'?pk='+pk+'&name='+name+'', [''], 'target_ajax');
-  statusItem(item,"",remove);
+function removeItem(pk,name,object,remove) {
+    ajax(url.removeBacklogItens+'?pk='+pk+'&name='+name+'', [''], 'target_ajax');
+    var status = statusItem(object,"",remove);
+    
+    if(status === true) {
+        // get total number of Definitions of Ready and decreases
+        if(name === "definition_ready") {
+            var label_DR = $(object).closest(".story").find(".qtd_definition_ready");
+            label_DR.text(parseInt(label_DR.text())-1);
+        }
+    }
 }
 
-function statusItem(item,move,remove) {
-  // The fourth parameter tells whether the element will be deleted in the DOM
+function statusItem(object,item,remove) {
+  // The first parameter tells whether the element will be deleted in the DOM
     var message = $("#target_ajax").text();
     console.log(message)
 
@@ -188,21 +208,21 @@ function statusItem(item,move,remove) {
       
       if(remove===true) {
         // find element to be deleted
-        $(item).closest(".item_container").fadeOut("slow", function() { $(this).remove() });
+        $(object).closest(".item_container").fadeOut("fast", function() { $(this).remove() });
 
       } else if(remove===false) {
         msg_text = "Movido com Sucesso!";
-        if(move==="sprint") {
+        if(item==="sprint") {
         // move story to sprint
-            var button = '<button class="btn btn-danger pull-right back_backlog"><i class="icon-circle-arrow-left icon-white"></i> '+buttonBackBacklog+'</button><div class="clearfix"></div></div>',
-                story = $(item).clone().appendTo('.sprint').find(".buttons_footer").empty().fadeIn("slow", function() { $(this).append(button) });
-            $(item).fadeOut("slow", function() { $(this).remove() });
+            var button = '<button class="btn btn-mini btn-danger pull-right back_backlog"><i class="icon-circle-arrow-left icon-white"></i> '+buttons.back_backlog+'</button><div class="clearfix"></div></div>',
+                story = $(object).clone().appendTo('.sprint').find(".buttons_footer").empty().fadeIn("fast", function() { $(this).append(button) });
+            $(object).fadeOut("fast", function() { $(this).remove() });
 
-        } else if(move==="backlog") {
+        } else if(item==="backlog") {
         // move story to backlog
-            var button = '<button class="btn btn-primary pull-right send_story_sprint">'+buttonSendSprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div>',
-                story = $(item).clone().appendTo('.story_block').find(".buttons_footer").empty().fadeIn("slow", function() { $(this).append(button) });
-            $(item).fadeOut("slow", function() { $(this).remove() });
+            var button = '<button class="btn btn-mini btn-primary pull-right send_story_sprint">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div>',
+                story = $(object).clone().appendTo('.story_block').find(".buttons_footer").empty().fadeIn("fast", function() { $(this).append(button) });
+            $(object).fadeOut("fast", function() { $(this).remove() });
 
         }
       }
@@ -223,7 +243,7 @@ function statusItem(item,move,remove) {
   } else {
     console.log("waiting for reply...")
     setTimeout(function() {
-        statusItem(item,move,remove)
+        statusItem(object,item,remove)
     }, 300);
   }
   // Clean the return of ajax call

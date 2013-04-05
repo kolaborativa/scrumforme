@@ -12,7 +12,7 @@ Here is their sweet home.
 
 ## Global functions
 
-def g_pagina_atual(url, classe, vazio=''):
+def g_pagina_atual(url, classe, empty=''):
     '''returns to class if you are on url. Otherwise returns empty.'''
 
     if request.args(0):
@@ -23,5 +23,14 @@ def g_pagina_atual(url, classe, vazio=''):
     if url == url_server:
         return classe
     else:
-        return vazio
+        return empty
+
+
+def g_verifica_vazio(item):
+	'''returns a empty string if item is empty.'''
+	if item:
+		return item
+	else:
+		item=""
+		return item
     

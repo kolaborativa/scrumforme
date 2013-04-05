@@ -120,7 +120,7 @@ def create_update_backlog_itens():
                             title=request.vars.value
                             )
 
-            return dict(success="success",msg="gravado com sucesso!",database_id=database_id)
+            return dict(success="success",msg="gravado com sucesso!",name=request.vars.name,database_id=database_id)
 
     else:
         return dict(error="error",msg="erro ao gravar!")
