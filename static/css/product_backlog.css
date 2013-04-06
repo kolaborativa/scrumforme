@@ -145,6 +145,16 @@ margin-top: 0px;
     box-shadow: none;
 }
 
+.expand_story, .expand_definition_ready, .delete_item {
+    margin-right: 0px!important;
+}
+
+.expand_story i, .expand_definition_ready i {
+    font-size: 18px;
+    position: relative;
+    top: 3px;
+}
+
 .story_points {
     width: 15px;
     height: 28px;
@@ -213,6 +223,10 @@ input::-webkit-inner-spin-button {
     list-style: none;
     padding-left: 49px;
     border-bottom: 1px solid #d5d5d5;
+}
+
+.task .delete_item {
+    margin-right: 7px!important;
 }
 
 /*

@@ -61,8 +61,12 @@
             <ul id="projects">
                 <li><a href="{{=URL('projects')}}" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'><i class="icon-plus"></i></a></li>
                 {{if "all_projects" in globals():}}
+                    {{p_count = 1}}
                     {{for i in all_projects:}}
-                        <li class='{{=g_pagina_atual("default/product_backlog/%s" %i.id,"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}' alt='{{=i.name}}' title='{{=i.name}}'>{{=i.id}}</a></li>
+                        {{if p_count <= 8:}}
+                            <li class='{{=g_pagina_atual("default/%s/%s" %(request.function,i.id),"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}' alt='{{=i.name}}' title='{{=i.name}}'>{{=i.id}}</a></li>
+                        {{p_count += 1}}
+                        {{pass}}
                     {{pass}}
                 {{pass}}
             </ul>
