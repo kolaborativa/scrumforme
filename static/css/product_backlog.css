@@ -26,28 +26,6 @@ span {
 margin-top: 0px;
 }
 
-/*
-=======
- ICONS
-=======
-*/
-
-.icon_forward, .icon_back{
-  background: url(../img/back_forward.png) no-repeat;
-  display: inline-block;
-}
-
-.icon_forward{
-  background-position: 0 0;
-  width: 14px;
-  height: 10px;
-}
-
-.icon_back{
-  background-position: 0 -51px ;
-  width: 14px;
-  height: 10px;
-}
 
 /*
 ========
@@ -178,8 +156,13 @@ margin-top: 0px;
     padding: 4px 3px;
 }
 
-.comment_definition_ready .icon-comment {
+.comment_definition_ready .icon-comment-custom {
     font-size: 12px;
+}
+
+.comment_definition_ready .icon-comment-custom span {
+    position: relative;
+    bottom: 2px;
 }
 
 .comment_definition_ready,.comment_definition_ready:hover,.comment_definition_ready:focus,.comment_definition_ready:active,.comment_definition_ready.active,.comment_definition_ready.disabled,.comment_definition_ready[disabled] {

@@ -6,7 +6,7 @@
 
 // modify style buttons
 $.fn.editableform.buttons = 
- '<button type="button" class="btn editable-cancel pull-left"><i class="icon_back"></i></button>'+
+ '<button type="button" class="btn editable-cancel pull-left"><i class="icon-return-key"></i></button>'+
   '<button type="submit" class="btn btn-success editable-submit pull-right"><i class="icon-ok icon-white"></i></button>';
 $.fn.editable.defaults.mode = 'inline';
 
@@ -100,7 +100,7 @@ $(document).on("click", ".create_task", function(){
 
     var story_id = $(this).closest(".definition_ready_container").find(".definition_ready_card").attr("data-pk");
 
-    var html = '<ul class="item_container zebra_row"><li class="task"><div class="text_container"><a href="#" class="editable-click editable-empty editable new_task" data-type="textarea" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="task">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-trash"></i></button><button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment"></i></button></div><div class="clearfix"></div></li></ul>';
+    var html = '<ul class="item_container zebra_row"><li class="task"><div class="text_container"><a href="#" class="editable-click editable-empty editable new_task" data-type="textarea" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="task">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-trash"></i></button><button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment-custom"><span>0</span></i></button></div><div class="clearfix"></div></li></ul>';
 
     var newItem = $(this).closest(".definition_ready_container").append(html);
 
@@ -114,11 +114,13 @@ $(document).on("click", ".create_task", function(){
 $(document).on("click", ".expand_story", function(){
     $(this).closest(".story").find(".definition_ready_container").slideToggle("slow");
     $(this).closest(".story_container").find(".buttons_footer").fadeToggle("fast", "linear");
+    $(this).find(".icon-arrow-down").toggleClass("icon-arrow-up");
 });
 
 // to expand definition_ready content
 $(document).on("click", ".expand_definition_ready", function(){
     $(this).closest(".definition_ready_container").find(".task").fadeToggle("fast", "linear");
+    $(this).find(".icon-arrow-down").toggleClass("icon-arrow-up");
 });
 
 // clean values ​​that are not numbers
