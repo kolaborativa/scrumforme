@@ -43,7 +43,6 @@
         <link rel="stylesheet" href='{{=URL("static","css/base.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/base.grey.css")}}' class="skin-color" />
         <link rel="stylesheet" href='{{=URL("static","css/bootstrap-editable.css")}}' />
-        <link rel="stylesheet" href='{{=URL("static","css/nanoscroller.css")}}' />
         
         {{ if request.function == "product_backlog": }}
         <link rel="stylesheet" href='{{=URL("static","css/product_backlog.css")}}' />
@@ -58,33 +57,33 @@
         
         <div id="header">
             <h1><a href="{{=URL('index')}}" alt='Scrumforme Logo' title='Scrumforme Logo'><span class="color-logo">Scrumfor</span>.me</a></a></h1>
-            <ul id="projects">
-                <li><a href="{{=URL('projects')}}" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'><i class="icon-plus"></i></a></li>
-                {{if "all_projects" in globals():}}
-                    {{p_count = 1}}
-                    {{for i in all_projects:}}
-                        {{if p_count <= 8:}}
-                            <li class='{{=g_pagina_atual("default/%s/%s" %(request.function,i.id),"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}' class="tip-bottom" alt='{{=i.name}}' title='{{=i.name}}'>{{=i.id}}</a></li>
-                        {{p_count += 1}}
+            {{ if auth.is_logged_in(): }}
+                <ul id="projects">
+                    <li><a href="{{=URL('projects')}}" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'><i class="icon-plus"></i></a></li>
+                    {{if "all_projects" in globals():}}
+                        {{p_count = 1}}
+                        {{for i in all_projects:}}
+                            {{if p_count <= 8:}}
+                                <li class='{{=g_pagina_atual("default/%s/%s" %(request.function,i.id),"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}' class="tip-bottom" alt='{{=i.name}}' title='{{=i.name}}'>{{=i.id}}</a></li>
+                            {{p_count += 1}}
+                            {{pass}}
                         {{pass}}
                     {{pass}}
-                {{pass}}
-            </ul>
-            <div id="user-nav" class="navbar navbar-inverse">
-                <ul class="nav">
-                    {{ if auth.is_logged_in(): }}
-                        <li>
-                            <form action="">
-                                <div id="search">
-                                    <input type="text" placeholder='{{=T("Search here")}}'/><button type="submit" class="tip-right" alt='{{=T("Search")}}' title='{{=T("Search")}}'><i class="icon-search-custom"></i></button>
-                                </div>
-                            </form>
-                        </li>
-                        <li><a href='{{=URL(f="user",args="profile",vars={"_next":"index"})}}' alt='{{=T("Profile")}}' title='{{=T("Profile")}}'><i class="icon-config-custom"></i></a></li>
-                        <li><a href='{{=URL(f="user",args="logout",vars={"_next":"index"})}}' alt='{{=T("Logout")}}' title='{{=T("Logout")}}'><i class="icon-logout-custom"></i></a></li>
-                    {{ pass }}
                 </ul>
-            </div>
+                <div id="user-nav" class="navbar navbar-inverse">
+                    <ul class="nav">
+                            <li>
+                                <form action="">
+                                    <div id="search">
+                                        <input type="text" placeholder='{{=T("Search here")}}'/><button type="submit" class="tip-right" alt='{{=T("Search")}}' title='{{=T("Search")}}'><i class="icon-search-custom"></i></button>
+                                    </div>
+                                </form>
+                            </li>
+                            <li><a href='{{=URL(f="user",args="profile",vars={"_next":"index"})}}' alt='{{=T("Profile")}}' title='{{=T("Profile")}}'><i class="icon-config-custom"></i></a></li>
+                            <li><a href='{{=URL(f="user",args="logout",vars={"_next":"index"})}}' alt='{{=T("Logout")}}' title='{{=T("Logout")}}'><i class="icon-logout-custom"></i></a></li>
+                    </ul>
+                </div>
+            {{ pass }}
         </div>
 
             
@@ -141,10 +140,6 @@
             {{ if request.function == "product_backlog": }}
             <script src='{{=URL("static","js/bootstrap-editable.min.js")}}'></script>
             <script async defer src='{{=URL("static","js/product_backlog.js")}}'></script>
-            <script src='{{=URL("static","js/jquery.nanoscroller.min.js")}}'></script>
-            <script async defer>
-                $(".window").nanoScroller({ sliderMaxHeight: 100, preventPageScrolling: true });
-            </script>
             {{ elif request.function == "board": }}
             <script async defer src='{{=URL("static","js/board.js")}}'></script>
             {{ pass }}

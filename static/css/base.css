@@ -285,9 +285,10 @@ float: left;
     border-top-left-radius: 10px;
     min-height: 80px; /*FIX: Use MIN-height... Allow header to get bigger for larger content (such as the h1) */
     /*position: absolute; FIX: This breaks layout significantly when spelled correctly*/
-    padding-top: 5px; /*FIX: Allows h1 to not have to be absolutely positioned and control it's parent's height*/
+    /*padding-top: 5px;*/
+    /*FIX: Allows h1 to not have to be absolutely positioned and control it's parent's height*/
     width: 100%;
-    margin-top: -38px;
+    /*margin-top: -38px;*/
     z-index: 20;
 }
  
@@ -307,7 +308,7 @@ float: left;
  
 /* FIX: The following two items were reordered to allow .btn-group to override margin top! */
 #content-header h1, #content-header .btn-group {
-    margin-top: 30px;
+    /*margin-top: 30px;*/
 }
  
 #content-header .btn-group {
@@ -316,6 +317,19 @@ float: left;
     position: absolute;
     margin-top:-50px; /*FIX: Line up with the header correctly on > tablet size (will be removed below)*/
 }
+ 
+#header-name {
+    line-height: 20px;
+}
+
+#project_info {
+    margin-left: 5%;
+}
+
+#project_info:first-letter {
+    text-transform: capitalize;
+}
+
 
 /******/
 #content-header .btn-group .btn {
@@ -335,10 +349,10 @@ float: left;
 }
 /* Breadcrumb */
 #breadcrumb {
-	background-color: #e5e5e5;
+	/*background-color: #e5e5e5;*/
 	box-shadow: 0 0 1px #ffffff;
-	border-top: 1px solid #d6d6d6;
-	border-bottom: 1px solid #d6d6d6;
+	/*border-top: 1px solid #d6d6d6;*/
+	/*border-bottom: 1px solid #d6d6d6;*/
 	padding-left: 10px;
 	border-top-left-radius: 10px;
 }
@@ -1481,6 +1495,32 @@ html, body, .container, .content {
     height: 100%;
 }
 
+::-webkit-scrollbar{
+    width:10px;
+    height:10px;
+    background-color:#fff;
+    box-shadow: inset 1px 1px 0 rgba(0,0,0,.1),inset -1px -1px 0 rgba(0,0,0,.07);
+}
+::-webkit-scrollbar:hover{
+    background-color:#eee;
+}
+::-webkit-resizer{
+    -webkit-border-radius:4px;
+    background-color:#666;
+}
+::-webkit-scrollbar-thumb{
+    min-height:0.8em;
+    min-width:0.8em;
+    background-color: rgba(0, 0, 0, .2);
+    box-shadow: inset 1px 1px 0 rgba(0,0,0,.1),inset -1px -1px 0 rgba(0,0,0,.07);
+}
+::-webkit-scrollbar-thumb:hover{
+    background-color: #bbb;
+}
+::-webkit-scrollbar-thumb:active{
+    background-color:#888;
+}
+
 .container, .content {
     position: relative;
 }
@@ -1516,14 +1556,6 @@ html, body, .container, .content {
 #sub-header-content {
 	background-color: #444444;
 }
-
-/*.top {
-    top: 0px;
-    background-color: #ccc;
-    position: absolute;
-    top: 60px;
-    z-index: 99999;
-}*/
 
 .icon-comment-custom,.icon-config-custom,
 .icon-logout-custom,.icon-search-custom,.icon-trash-custom{

@@ -10,14 +10,6 @@ span {
     display: none;
 }
 
-#project_info {
-    padding: 10px;
-}
-
-#project_info:first-letter {
-    text-transform: capitalize;
-}
-
 .container-fluid .row-fluid:first-child {
 margin-top: 0px;
 }
@@ -29,20 +21,24 @@ margin-top: 0px;
 ========
 */
 
-.window {
-    background: rgb(247, 247, 247);
-    height: 380px;
-    /*overflow-y: scroll;*/
+#backlog-project {
+    /*height: 390px;*/
+    /*height: 80%;*/
+    padding-right: 20px;
+    overflow-y: scroll;
 }
-.window .content {
-    padding: 10px;
-}
+
 
 /*
 =======
  ITENS
 =======
 */
+
+#create_story {
+    position: relative;
+    bottom: 20px;
+}
 
 .text_container {
     width: 50%;

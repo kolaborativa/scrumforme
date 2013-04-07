@@ -4,6 +4,21 @@
 =================
 */
 
+$("document").ready(function($){
+    
+    // catch size dynamically to increase the size of content
+    var firstHeight = $('#header').outerHeight(),
+        secondHeight = $('#sub-header-content').outerHeight(),
+        thirdHeight = $('#backlog_story_buttons').outerHeight(),
+        fourthHeight = $('.footer-wrapper').outerHeight(),
+        wrapperHeight = $('.wrapper').outerHeight();
+
+    var StoryContentHeight = wrapperHeight - (firstHeight+secondHeight+thirdHeight+(2*fourthHeight))
+
+    $("#backlog-project").height(StoryContentHeight)
+ 
+});
+
 // modify style buttons
 $.fn.editableform.buttons = 
  '<button type="button" class="btn editable-cancel pull-left"><i class="icon-return-key"></i></button>'+
@@ -17,7 +32,7 @@ $.fn.editable.defaults.mode = 'inline';
 */
 
 //apply editable to parent div
-$('.content').editable({
+$('#backlog-project').editable({
   selector: 'a',
   url: url.createUpdateBacklogItens,
   emptytext: msg.field_empty,

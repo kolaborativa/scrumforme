@@ -34,20 +34,20 @@
             task : '{{=T("Task")}}',
         };
 </script>
+
 <div id="sub-header-content">
-    <div id="breadcrumb">
-        <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
-        <a href='{{=URL("projects")}}' title="{{=T('Go to')}} {{=T('Projects')}}" class="tip-bottom"><i class="icon icon-th"></i> {{=T('Projects')}}</a>
-        <a href="#" class="current">{{=T('Product Backlog')}}</a>
-    </div>
     <div id="content-header">
-        <div class="pull-left">
+        <div id="breadcrumb">
+            <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
+            <a href='{{=URL("projects")}}' title="{{=T('Go to')}} {{=T('Projects')}}" class="tip-bottom"><i class="icon icon-th"></i> {{=T('Projects')}}</a>
+            <a href="#" class="current">{{=T('Product Backlog')}}</a>
+        </div>
+        <div id="header-name" class="pull-left">
             <h1>{{=project.name}}</h1>
         </div>
-        <div id="project_info" class="span5 offset1">
+        <div id="project_info" class="pull-left">
             <p>{{=project.description}}</p>
             <p>{{=project.date_.strftime("%d/%m/%Y")}} <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
-            
         </div>
         <div class="clearfix"></div>
     </div>
@@ -55,213 +55,207 @@
 
 <div id="target_ajax"></div>
 
-<div class="row-fluid">
-    <div class="span5 offset1">
-        <br>
-        <button id="create_story" class="btn btn-primary">{{=T('Create Story')}}</button>
-    </div>
-    <div class="span6">
-        {{if sprint:}}
-            <h4>{{=sprint.name}} - {{=sprint.weeks}} {{=T('Weeks')}}
-            {{if not sprint.started:}}
-            <a href="{{=URL(c='default',f='launch_sprint',args=[sprint.id],)}}" class='btn btn-success'>{{=T('Launch the sprint')}}</a>
-            {{else:}}
-            <button class='disabled btn btn-success'>{{=T('Launched')}}</button>
-            {{pass}}
-            </h4>
-        {{pass}}
-    </div>
-</div>
             
 <div class="container-fluid">
-    <div class="row-fluid">
+    {{if sprint:}}
+    <div id="backlog_story_buttons" class="row-fluid">
+        <div class="span5 offset1">
+            <br>
+            <button id="create_story" class="btn btn-primary">{{=T('Create Story')}}</button>
+        </div>
+        <div class="span6">
+            {{if sprint:}}
+                <h4>{{=sprint.name}} - {{=sprint.weeks}} {{=T('Weeks')}}
+                {{if not sprint.started:}}
+                <a href="{{=URL(c='default',f='launch_sprint',args=[sprint.id],)}}" class='btn btn-success'>{{=T('Launch the sprint')}}</a>
+                {{else:}}
+                <button class='disabled btn btn-success'>{{=T('Launched')}}</button>
+                {{pass}}
+                </h4>
+            {{pass}}
+        </div>
+    </div>
+    <div id="backlog-project" class="row-fluid">
         <!-- STORY CONTENT -->
         <div class="span6">
-            <div class="window">
-                <div class="story_block content">
-                    {{if "stories" in globals():}}
-                        {{for story in stories:}}
-                            {{if not story.sprint_id == sprint.id: }}
-                            <ul class="story_container item_container">
-                                <li class="story">
-                                    <div class="story_header">
-                                        <div class="text_container">
-                                            <a href="#" class="editable-click story_card editable" data-type="textarea" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
-                                        </div>
-                                        <div class="buttons_container">
-                                            <button class="btn expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
-                                                <i class="icon-circle-arrow-down"></i></button>
-                                            <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
-                                            <select class="pull-right benefit" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>
-                                            {{selects="P M G GG".split()}}
-                                            {{if story.benefit:}}
-                                                {{for size in selects:}}
-                                                    {{if size == story.benefit:}}
-                                                        <option value="{{=size}}" selected>{{=size}}</option>
-                                                    {{else:}}
-                                                        <option value="{{=size}}">{{=size}}</option>
-                                                    {{pass}}
-                                                {{pass}}
-                                            {{else:}}
-                                                {{selects.insert(0,"?")}}
-                                                {{for size in selects:}}
-                                                    {{if size == "?":}}
-                                                        <option value="" disabled selected>?</option>
-                                                    {{else:}}
-                                                        <option value="{{=size}}">{{=size}}</option>
-                                                    {{pass}}
-                                                {{pass}}                    
-                                            {{pass}}
-                                            </select>
-                                            <input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" value='{{=g_verifica_vazio(story.story_points)}}' alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'>
-                                            <button class="btn create_definition_ready pull-right" alt='{{=T("Create Definition of Ready")}}' title='{{=T("Create Definition of Ready")}}'>+ {{=T('DR')}}</button>
-                                            <span class="label qtd_definition_ready pull-right tip-bottom" alt='{{=T("Number of Definitions of Ready")}}' title='{{=T("Number of Definitions of Ready")}}'>{{=len(definition_ready[story.id])}}</span>
-                                        </div>
-                                        <div class="clearfix"></div>
+            <div class="story_block">
+                {{if "stories" in globals():}}
+                    {{for story in stories:}}
+                        {{if not story.sprint_id == sprint.id: }}
+                        <ul class="story_container item_container">
+                            <li class="story">
+                                <div class="story_header">
+                                    <div class="text_container">
+                                        <a href="#" class="editable-click story_card editable" data-type="textarea" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
                                     </div>
-                                    {{count = 0}}
-                                    {{for df in definition_ready[story.id]:}}
-                                        {{if definition_ready[story.id][count].story_id == story.id:}}
-                                        <ul class="item_container">
-                                            <li class="definition_ready_container">
-                                                <div class="definition_ready">
-                                                    <div class="text_container">
-                                                        <span class="label tip-right" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>{{=T('DR')}}</span>
-                                                        <a href="#" class="editable-click editable definition_ready_card" data-type="textarea" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
-                                                    </div>
-                                                    <div class="buttons_container">
-                                                        <button class="btn expand_definition_ready pull-right" alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'><i class="icon-circle-arrow-down"></i></button>
-                                                        <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
-                                                        <button class="btn create_task pull-right" alt='{{=T("Create Tast")}}' title='{{=T("Create Task")}}'>+ {{=T("Task")}}</button>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div><!-- definition_ready -->
-                                                {{for task in tasks[definition_ready[story.id][count].id]:}}
-                                                    <ul class="item_container zebra_row">
-                                                        <li class="task">
-                                                            <div class="text_container">
-                                                                <a href="#" class="editable-click editable" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
-                                                            </div>
-                                                            <div class="buttons_container">
-                                                                <button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-trash"></i></button>
-                                                                <button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment-custom"><span>0</span></i></button>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                        </li><!-- task -->
-                                                    </ul>
+                                    <div class="buttons_container">
+                                        <button class="btn expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
+                                            <i class="icon-circle-arrow-down"></i></button>
+                                        <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
+                                        <select class="pull-right benefit" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>
+                                        {{selects="P M G GG".split()}}
+                                        {{if story.benefit:}}
+                                            {{for size in selects:}}
+                                                {{if size == story.benefit:}}
+                                                    <option value="{{=size}}" selected>{{=size}}</option>
+                                                {{else:}}
+                                                    <option value="{{=size}}">{{=size}}</option>
                                                 {{pass}}
-                                                </li>
-                                            </ul>
-                                            {{count += 1}}
+                                            {{pass}}
+                                        {{else:}}
+                                            {{selects.insert(0,"?")}}
+                                            {{for size in selects:}}
+                                                {{if size == "?":}}
+                                                    <option value="" disabled selected>?</option>
+                                                {{else:}}
+                                                    <option value="{{=size}}">{{=size}}</option>
+                                                {{pass}}
+                                            {{pass}}                    
                                         {{pass}}
-                                    {{pass}}
-                                </li><!-- story -->
-                                <div class="buttons_footer">
-                                    <button class="btn btn-primary pull-right send_story_sprint">{{=T("Send to Sprint")}} <i class="icon-circle-arrow-right icon-white"></i></button>
+                                        </select>
+                                        <input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" value='{{=g_verifica_vazio(story.story_points)}}' alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'>
+                                        <button class="btn create_definition_ready pull-right" alt='{{=T("Create Definition of Ready")}}' title='{{=T("Create Definition of Ready")}}'>+ {{=T('DR')}}</button>
+                                        <span class="label qtd_definition_ready pull-right tip-bottom" alt='{{=T("Number of Definitions of Ready")}}' title='{{=T("Number of Definitions of Ready")}}'>{{=len(definition_ready[story.id])}}</span>
+                                    </div>
                                     <div class="clearfix"></div>
                                 </div>
-                            </ul>
-                            {{pass}}
+                                {{count = 0}}
+                                {{for df in definition_ready[story.id]:}}
+                                    {{if definition_ready[story.id][count].story_id == story.id:}}
+                                    <ul class="item_container">
+                                        <li class="definition_ready_container">
+                                            <div class="definition_ready">
+                                                <div class="text_container">
+                                                    <span class="label tip-right" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>{{=T('DR')}}</span>
+                                                    <a href="#" class="editable-click editable definition_ready_card" data-type="textarea" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
+                                                </div>
+                                                <div class="buttons_container">
+                                                    <button class="btn expand_definition_ready pull-right" alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'><i class="icon-circle-arrow-down"></i></button>
+                                                    <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
+                                                    <button class="btn create_task pull-right" alt='{{=T("Create Tast")}}' title='{{=T("Create Task")}}'>+ {{=T("Task")}}</button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div><!-- definition_ready -->
+                                            {{for task in tasks[definition_ready[story.id][count].id]:}}
+                                                <ul class="item_container zebra_row">
+                                                    <li class="task">
+                                                        <div class="text_container">
+                                                            <a href="#" class="editable-click editable" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                                        </div>
+                                                        <div class="buttons_container">
+                                                            <button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-trash"></i></button>
+                                                            <button class="btn comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment-custom"><span>0</span></i></button>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </li><!-- task -->
+                                                </ul>
+                                            {{pass}}
+                                            </li>
+                                        </ul>
+                                        {{count += 1}}
+                                    {{pass}}
+                                {{pass}}
+                            </li><!-- story -->
+                            <div class="buttons_footer">
+                                <button class="btn btn-primary pull-right send_story_sprint">{{=T("Send to Sprint")}} <i class="icon-circle-arrow-right icon-white"></i></button>
+                                <div class="clearfix"></div>
+                            </div>
+                        </ul>
                         {{pass}}
                     {{pass}}
-                </div><!-- content -->
-            </div>
+                {{pass}}
+            </div><!-- content -->
         </div><!-- span6 -->
 
         <!-- SPRINT CONTENT -->
         <div class="span6">
-            {{if sprint:}}
-            <div class="window">
-                <div class="sprint content" data-sprint="{{=sprint.id}}">
-                    
-                    {{if "stories" in globals():}}
-                        {{for story in stories:}}
-                            {{if story.sprint_id == sprint.id: }}
-                            <ul class="story_container item_container">
-                                <li class="story">
-                                    <div class="story_header">
-                                        <div class="text_container">
-                                            <a href="#" class="editable-click story_card editable" data-type="textarea" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
-                                        </div>
-                                        <div class="buttons_container">
-                                            <button class="btn expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
-                                                <i class="icon-circle-arrow-down"></i></button>
-                                            <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
-                                            <select class="pull-right benefit" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>
-                                            {{selects="P M G GG".split()}}
-                                            {{if story.benefit:}}
-                                                {{for size in selects:}}
-                                                    {{if size == story.benefit:}}
-                                                        <option value="{{=size}}" selected>{{=size}}</option>
-                                                    {{else:}}
-                                                        <option value="{{=size}}">{{=size}}</option>
-                                                    {{pass}}
-                                                {{pass}}
-                                            {{else:}}
-                                                {{selects.insert(0,"?")}}
-                                                {{for size in selects:}}
-                                                    {{if size == "?":}}
-                                                        <option value="" disabled selected>?</option>
-                                                    {{else:}}
-                                                        <option value="{{=size}}">{{=size}}</option>
-                                                    {{pass}}
-                                                {{pass}}                    
-                                            {{pass}}
-                                            </select>
-                                            <input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" value='{{=g_verifica_vazio(story.story_points)}}' alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'>
-                                            <button class="btn create_definition_ready pull-right" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>+ {{=T('DR')}}</button>
-                                            <span class="label qtd_definition_ready pull-right tip-bottom"  alt='{{=T("Number of Definitions of Ready")}}' title='{{=T("Number of Definitions of Ready")}}'>{{=len(definition_ready[story.id])}}</span>
-                                        </div>
-                                        <div class="clearfix"></div>
+            <div class="sprint" data-sprint="{{=sprint.id}}">
+                {{if "stories" in globals():}}
+                    {{for story in stories:}}
+                        {{if story.sprint_id == sprint.id: }}
+                        <ul class="story_container item_container">
+                            <li class="story">
+                                <div class="story_header">
+                                    <div class="text_container">
+                                        <a href="#" class="editable-click story_card editable" data-type="textarea" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
                                     </div>
-                                    {{count = 0}}
-                                    {{for df in definition_ready[story.id]:}}
-                                        {{if definition_ready[story.id][count].story_id == story.id:}}
-                                        <ul class="item_container">
-                                            <li class="definition_ready_container">
-                                                <div class="definition_ready">
-                                                    <div class="text_container">
-                                                        <span class="label tip-right" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>{{=T('DR')}}</span>
-                                                        <a href="#" class="editable-click editable definition_ready_card" data-type="textarea" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
-                                                    </div>
-                                                    <div class="buttons_container">
-                                                        <button class="btn expand_definition_ready pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'><i class="icon-circle-arrow-down"></i></button>
-                                                        <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
-                                                        <button class="btn create_task pull-right" alt='{{=T("Create Task")}}' title='{{=T("Create Task")}}'>+ {{=T("Task")}}</button>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div><!-- definition_ready -->
-                                                {{for task in tasks[definition_ready[story.id][count].id]:}}
-                                                    <ul class="item_container zebra_row">
-                                                        <li class="task">
-                                                            <div class="text_container">
-                                                                <a href="#" class="editable-click editable" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
-                                                            </div>
-                                                            <div class="buttons_container">
-                                                                <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
-                                                                <button class="btn comment_definition_ready pull-right" alt='{{=T("Comment")}}' title='{{=T("Comment")}}'><i class="icon-comment-custom"><span>0</span></i></button>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                        </li><!-- task -->
-                                                    </ul>
+                                    <div class="buttons_container">
+                                        <button class="btn expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
+                                            <i class="icon-circle-arrow-down"></i></button>
+                                        <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
+                                        <select class="pull-right benefit" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>
+                                        {{selects="P M G GG".split()}}
+                                        {{if story.benefit:}}
+                                            {{for size in selects:}}
+                                                {{if size == story.benefit:}}
+                                                    <option value="{{=size}}" selected>{{=size}}</option>
+                                                {{else:}}
+                                                    <option value="{{=size}}">{{=size}}</option>
                                                 {{pass}}
-                                                </li>
-                                            </ul>
-                                            {{count += 1}}
+                                            {{pass}}
+                                        {{else:}}
+                                            {{selects.insert(0,"?")}}
+                                            {{for size in selects:}}
+                                                {{if size == "?":}}
+                                                    <option value="" disabled selected>?</option>
+                                                {{else:}}
+                                                    <option value="{{=size}}">{{=size}}</option>
+                                                {{pass}}
+                                            {{pass}}                    
                                         {{pass}}
-                                    {{pass}}
-                                </li><!-- story -->
-                                <div class="buttons_footer">
-                                    <button class="btn btn-danger pull-right back_backlog"><i class="icon-circle-arrow-left icon-white"></i> {{=T("Back to Backlog")}}</button>
+                                        </select>
+                                        <input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" value='{{=g_verifica_vazio(story.story_points)}}' alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'>
+                                        <button class="btn create_definition_ready pull-right" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>+ {{=T('DR')}}</button>
+                                        <span class="label qtd_definition_ready pull-right tip-bottom"  alt='{{=T("Number of Definitions of Ready")}}' title='{{=T("Number of Definitions of Ready")}}'>{{=len(definition_ready[story.id])}}</span>
+                                    </div>
                                     <div class="clearfix"></div>
                                 </div>
-                            </ul>
-                            {{pass}}
+                                {{count = 0}}
+                                {{for df in definition_ready[story.id]:}}
+                                    {{if definition_ready[story.id][count].story_id == story.id:}}
+                                    <ul class="item_container">
+                                        <li class="definition_ready_container">
+                                            <div class="definition_ready">
+                                                <div class="text_container">
+                                                    <span class="label tip-right" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>{{=T('DR')}}</span>
+                                                    <a href="#" class="editable-click editable definition_ready_card" data-type="textarea" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
+                                                </div>
+                                                <div class="buttons_container">
+                                                    <button class="btn expand_definition_ready pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'><i class="icon-circle-arrow-down"></i></button>
+                                                    <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
+                                                    <button class="btn create_task pull-right" alt='{{=T("Create Task")}}' title='{{=T("Create Task")}}'>+ {{=T("Task")}}</button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div><!-- definition_ready -->
+                                            {{for task in tasks[definition_ready[story.id][count].id]:}}
+                                                <ul class="item_container zebra_row">
+                                                    <li class="task">
+                                                        <div class="text_container">
+                                                            <a href="#" class="editable-click editable" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                                        </div>
+                                                        <div class="buttons_container">
+                                                            <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
+                                                            <button class="btn comment_definition_ready pull-right" alt='{{=T("Comment")}}' title='{{=T("Comment")}}'><i class="icon-comment-custom"><span>0</span></i></button>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </li><!-- task -->
+                                                </ul>
+                                            {{pass}}
+                                            </li>
+                                        </ul>
+                                        {{count += 1}}
+                                    {{pass}}
+                                {{pass}}
+                            </li><!-- story -->
+                            <div class="buttons_footer">
+                                <button class="btn btn-danger pull-right back_backlog"><i class="icon-circle-arrow-left icon-white"></i> {{=T("Back to Backlog")}}</button>
+                                <div class="clearfix"></div>
+                            </div>
+                        </ul>
                         {{pass}}
                     {{pass}}
-
+                {{pass}}
                 </div><!-- content -->
-            </div><!-- window -->
             {{else:}}
                 <h2>{{=T('New Sprint')}}</h2>
                 {{=form_sprint.custom.begin}}
@@ -278,5 +272,5 @@
                 {{=form_sprint.custom.end}}
             {{pass}}
         </div><!-- span6 -->
-    </div><!-- row-fluid -->
+    </div><!-- backlog-project / row-fluid -->
 </div><!-- container-fluid -->

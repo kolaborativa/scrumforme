@@ -1,68 +1,81 @@
 {{extend 'default/layout_base.html'}}
 
 <div id="sub-header-content">
-    <div id="breadcrumb">
-        <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
-        <a href='{{=URL("projects")}}' title="{{=T('Go to')}} {{=T('Board')}}" class="tip-bottom"><i class="icon icon-th"></i> {{=T('Board')}}</a>
-        <a href="#" class="current">{{=T('Product Backlog')}}</a>
-    </div>
     <div id="content-header">
-        <div class="pull-left">
+        <div id="breadcrumb">
+            <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
+            <a href='{{=URL("projects")}}' title="{{=T('Go to')}} {{=T('Board')}}" class="tip-bottom"><i class="icon icon-th"></i> {{=T('Board')}}</a>
+            <a href="#" class="current">{{=T('Board')}}</a>
+        </div>
+        <div id="header-name" class="pull-left">
             <h1>{{=project.name}}</h1>
         </div>
-        <div id="project_info" class="span5 offset1">
+        <div id="project_info" class="pull-left">
             <p>{{=project.description}}</p>
             <p>{{=project.date_.strftime("%d/%m/%Y")}} <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
-            
         </div>
         <div class="clearfix"></div>
     </div>
 </div>
 
 <div class="nav-status">
-    <div id="nav-story" class="span2">
-        <h4>{{=T('Story')}}</h4>
+    <div class="column">
+        <h4>{{=T('Definition of Ready')}}</h4>
     </div>
-    <div id="nav-todo" class="span3">
+    <div class="column">
         <h4>{{=T('To Do')}}</h4>
     </div>
-    <div id="nav-inprogress" class="span3">
+    <div class="column">
         <h4>{{=T('In Progress')}}</h4>
     </div>
-    <div id="nav-verification" class="span2">
+    <div class="column">
         <h4>{{=T('Verification')}}</h4>
     </div>
-    <div id="nav-done" class="span2">
+    <div class="column">
         <h4>{{=T('Done')}}</h4>
     </div>
-    <div class="clearfix"></div>
 </div>
 
-<div class="container-fluid">
     {{if "stories" in globals():}}
         {{for story in stories:}}
             {{if story.sprint_id == sprint.id: }}
                 <div class="row-fluid story_container" data-story='{{=story.id}}'>
-                    <div class="definition_ready_container" data-dr="1">
-                        <div class="status">
-                            <p>{{=story.title}}</p>
-                        </div>
-                        <div class="status">
-                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                        </div>
-                        <div class="status">
-                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                        </div>
-                        <div class="status">
-                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                        </div>
-                        <div class="status">
-                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                        </div>
-                    </div><!--/definition_ready_container-->
+                    <div class="row-fluid story_title">
+                        <h5>{{=story.title}}</h5>
+                    </div>
+                    {{count = 0}}
+                    {{for df in definition_ready[story.id]:}}
+                        {{if definition_ready[story.id][count].story_id == story.id:}}
+                        <div class="definition_ready_container container-fluid">
+
+                            <div class="definition_ready_title column">
+                                <p>{{=definition_ready[story.id][count].title}}</p>    
+                            </div>
+
+                            <div class="column" data-task="todo">
+                                {{for task in tasks[definition_ready[story.id][count].id]:}}
+                                <p>{{=task["title"]}}</p>
+                                {{pass}}
+                            </div>
+
+                            <div class="column" data-task="inprogress">
+
+                            </div>
+
+                            <div class="column" data-task="verification">
+
+                            </div>
+
+                            <div class="column" data-task="done">
+
+                            </div>
+                            
+                        </div><!--/definition_ready_container-->
+                        {{pass}}
+                        {{count += 1}}
+                    {{pass}}
                 </div><!--/story_container-->
             {{pass}}
         {{pass}}
     {{pass}}
 
-</div>
