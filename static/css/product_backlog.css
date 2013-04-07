@@ -7,12 +7,12 @@ span {
 }
 
 #backlog, #sprint {
-    width: 48%;
+    width: 49%;
     margin-left: 0px;
 }
 
 #sprint {
-    margin-left: 3%;
+    margin-left: 1%;
 }
 
 #target_ajax {
@@ -152,18 +152,6 @@ margin-top: 0px;
     font-size: 13px;
 }
 
-.expand_definition_ready,.expand_definition_ready:hover,.expand_definition_ready:focus,.expand_definition_ready:active,.expand_definition_ready.active,.expand_definition_ready.disabled,.expand_definition_ready[disabled] {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-}
-
-.expand_story,.expand_story:hover,.expand_story:focus,.expand_story:active,.expand_story.active,.expand_story.disabled,.expand_story[disabled] {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-}
-
 .expand_story, .expand_definition_ready, .delete_item {
     margin-right: 0px!important;
 }
@@ -192,12 +180,6 @@ margin-top: 0px;
 .comment_definition_ready .icon-comment-custom span {
     position: relative;
     bottom: 2px;
-}
-
-.comment_definition_ready,.comment_definition_ready:hover,.comment_definition_ready:focus,.comment_definition_ready:active,.comment_definition_ready.active,.comment_definition_ready.disabled,.comment_definition_ready[disabled] {
-    background: transparent;
-    border: none;
-    box-shadow: none;
 }
 
 .qtd_definition_ready {

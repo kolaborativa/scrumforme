@@ -14,6 +14,12 @@
             <p>{{=project.description}}</p>
             <p>{{=project.date_.strftime("%d/%m/%Y")}} <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
         </div>
+        <div id="live_search" class="pull-right">
+                <p>
+                    <input type="text" name="livesearch" placeholder='{{=T("Search on Sprint")}}' alt='{{=T("Search on Sprint")}}' title='{{=T("Search on Sprint")}}'>
+
+                <p id="nothingfound">{{=T("No name match your search!")}}</p>
+        </div>
         <div class="clearfix"></div>
     </div>
 </div>
@@ -42,7 +48,9 @@
                 <div class="row-fluid story_container" data-story='{{=story.id}}'>
                     <div class="row-fluid story_title">
                         <h5>{{=story.title}}</h5>
+                        <button type="button" class="btn-minimize" data-toggle="collapse" data-target='#story_{{=story.id}}'><i class="icon-chevron-up"></i></button>
                     </div>
+                        <div id='story_{{=story.id}}' class="collapse in">
                     {{count = 0}}
                     {{for df in definition_ready[story.id]:}}
                         {{if definition_ready[story.id][count].story_id == story.id:}}
@@ -74,6 +82,7 @@
                         {{pass}}
                         {{count += 1}}
                     {{pass}}
+                        </div>
                 </div><!--/story_container-->
             {{pass}}
         {{pass}}

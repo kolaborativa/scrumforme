@@ -118,15 +118,10 @@
                 </div><!-- /.wrapper -->
 
                 <div class="footer-wrapper">
-                    <div class="copyright pull-left">{{=T('Copyleft')}} <!--[if lte IE 8]><span style="filter: FlipH; -ms-filter: "FlipH"; display: inline-block;"><![endif]-->
-                    <span style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">
-                        &copy;
-                    </span>
-                    <!--[if lte IE 8]></span><![endif]--> {{=request.now.year}}</div>
-
-                    <div id="poweredBy" class="pull-right">
-                        {{=T('Powered by')}}
-                        <a href="http://www.web2py.com/">web2py</a>
+                    <div class="row-fluid">
+                        <div id="footer" class="span12">
+                            {{=T('Copyleft')}} <span style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">&copy;</span> {{=request.now.year}} Scrumforme. {{=T('Powered by')}} <a href="http://agenciax4.com.br">AgenciaX4</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -141,7 +136,8 @@
             <script src='{{=URL("static","js/bootstrap-editable.min.js")}}'></script>
             <script async defer src='{{=URL("static","js/product_backlog.js")}}'></script>
             {{ elif request.function == "board": }}
-            <script async defer src='{{=URL("static","js/board.js")}}'></script>
+            <script src='{{=URL("static","js/jquery.livesearch.js")}}'></script>
+            <script src='{{=URL("static","js/board.js")}}'></script>
             {{ pass }}
 
             <!--[if lte IE 7]><script src='{{=URL("static","js/lte-ie7.js")}}'>></script><![endif]-->
