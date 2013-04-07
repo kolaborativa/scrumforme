@@ -35,7 +35,7 @@
                 <h3>{{=T('My Projects')}} <span class="label">{{=len(all_projects)}}</span></a></h3>
                 <ul>
                 {{for i in all_projects:}}
-                    <li class='{{=g_pagina_atual("default/product_backlog/%s" %i.id,"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}'>{{=i.name}}</a></li>
+                    <li class='{{=g_current_page("default/product_backlog/%s" %i.id,"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}'>{{=i.name}}</a></li>
                 {{pass}}
                 </ul>
             {{pass}}
