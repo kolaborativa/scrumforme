@@ -12,8 +12,8 @@ Here is their sweet home.
 
 ## Global functions
 
-def g_pagina_atual(url, classe, empty=''):
-    '''returns to class if you are on url. Otherwise returns empty.'''
+def g_current_page(url, classe, empty=''):
+    '''returns a class if you are on url. Otherwise returns empty.'''
 
     if request.args(0):
         url_server = '%s/%s/%s' % (request.controller, request.function, request.args(0))
@@ -25,8 +25,21 @@ def g_pagina_atual(url, classe, empty=''):
     else:
         return empty
 
+def g_if_in_current_page(url, classe, anotherclass):
+    '''returns a class if you are on the page, else returns another class'''
 
-def g_verifica_vazio(item):
+    if request.args(0):
+        url_server = '%s/%s/%s' % (request.controller, request.function, request.args(0))
+    else:
+        url_server = '%s/%s' % (request.controller, request.function)
+    
+    if url == url_server:
+        return classe
+    else:
+        return anotherclass
+
+
+def g_blank_check(item):
 	'''returns a empty string if item is empty.'''
 	if item:
 		return item

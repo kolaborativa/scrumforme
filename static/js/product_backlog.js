@@ -13,9 +13,11 @@ $("document").ready(function($){
         fourthHeight = $('.footer-wrapper').outerHeight(),
         wrapperHeight = $('.wrapper').outerHeight();
 
-    var StoryContentHeight = wrapperHeight - (firstHeight+secondHeight+thirdHeight+(2*fourthHeight))
+    var StoryContentBacklog = wrapperHeight - (firstHeight+secondHeight+thirdHeight+(2*fourthHeight)),
+        StoryContentSprint = wrapperHeight - (firstHeight+thirdHeight+(2*fourthHeight));
 
-    $("#backlog-project").height(StoryContentHeight)
+    $("#backlog").find(".project-items").height(StoryContentBacklog);
+    $("#sprint").find(".project-items").height(StoryContentSprint);
  
 });
 
@@ -32,7 +34,7 @@ $.fn.editable.defaults.mode = 'inline';
 */
 
 //apply editable to parent div
-$('#backlog-project').editable({
+$('.project-items').editable({
   selector: 'a',
   url: url.createUpdateBacklogItens,
   emptytext: msg.field_empty,
@@ -174,7 +176,7 @@ $(document).on("change", ".benefit", function(){
 $(document).on("click", ".send_story_sprint", function(){
     var object = $(this).closest(".story_container"),
         storyID = object.find(".story_card").attr("data-pk"),
-    sprintID = $(".sprint").attr("data-sprint");
+    sprintID = $("#sprint").attr("data-sprint");
     
     ajax(url.changeAjaxItens+'?name=sprint&sprint_id='+sprintID+'&story_id='+storyID, [''], 'target_ajax');
     statusItem(object,"sprint",false);
@@ -184,7 +186,7 @@ $(document).on("click", ".send_story_sprint", function(){
 $(document).on("click", ".back_backlog", function(){
     var object = $(this).closest(".story_container"),
         storyID = object.find(".story_card").attr("data-pk"),
-    sprintID = $(".sprint").attr("data-sprint");
+    sprintID = $("#sprint").attr("data-sprint");
     
     ajax(url.changeAjaxItens+'?name=backlog&sprint_id='+storyID+'&story_id='+storyID, [''], 'target_ajax');
     statusItem(object,"backlog",false);
@@ -234,7 +236,7 @@ function statusItem(object,item,remove) {
         if(item==="sprint") {
         // move story to sprint
             var button = '<button class="btn btn-danger pull-right back_backlog"><i class="icon-circle-arrow-left icon-white"></i> '+buttons.back_backlog+'</button><div class="clearfix"></div></div>',
-                story = $(object).clone().appendTo('.sprint').find(".buttons_footer").empty().fadeIn("fast", function() { $(this).append(button) });
+                story = $(object).clone().appendTo('#sprint').find(".buttons_footer").empty().fadeIn("fast", function() { $(this).append(button) });
             $(object).fadeOut("fast", function() { $(this).remove() });
 
         } else if(item==="backlog") {

@@ -8,9 +8,9 @@
     display: table;
     width: 100%;
     text-align: center;
-    background-color: rgb(184, 238, 195);
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+    background-color: rgb(105, 218, 230);
+    border-top: 1px solid #00A0B1;
+    border-bottom: 1px solid #00A0B1;
 }
 
 .fixed-nav{
@@ -46,7 +46,7 @@
 
 .story_title {
     text-align: center;
-    background-color: #fff5e3;
+    background-color: rgb(255, 249, 176);
 }
 
 .story_title h5 {
