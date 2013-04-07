@@ -18,10 +18,6 @@ span {
     text-transform: capitalize;
 }
 
-#content {
-    padding-bottom: 5px;
-}
-
 .container-fluid .row-fluid:first-child {
 margin-top: 0px;
 }
@@ -35,7 +31,8 @@ margin-top: 0px;
 
 .window {
     background: rgb(247, 247, 247);
-    height: 450px;
+    height: 380px;
+    /*overflow-y: scroll;*/
 }
 .window .content {
     padding: 10px;

@@ -64,35 +64,33 @@
                     {{p_count = 1}}
                     {{for i in all_projects:}}
                         {{if p_count <= 8:}}
-                            <li class='{{=g_pagina_atual("default/%s/%s" %(request.function,i.id),"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}' alt='{{=i.name}}' title='{{=i.name}}'>{{=i.id}}</a></li>
+                            <li class='{{=g_pagina_atual("default/%s/%s" %(request.function,i.id),"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}' class="tip-bottom" alt='{{=i.name}}' title='{{=i.name}}'>{{=i.id}}</a></li>
                         {{p_count += 1}}
                         {{pass}}
                     {{pass}}
                 {{pass}}
             </ul>
-
+            <div id="user-nav" class="navbar navbar-inverse">
+                <ul class="nav">
+                    {{ if auth.is_logged_in(): }}
+                        <li>
+                            <form action="">
+                                <div id="search">
+                                    <input type="text" placeholder='{{=T("Search here")}}'/><button type="submit" class="tip-right" alt='{{=T("Search")}}' title='{{=T("Search")}}'><i class="icon-search-custom"></i></button>
+                                </div>
+                            </form>
+                        </li>
+                        <li><a href='{{=URL(f="user",args="profile",vars={"_next":"index"})}}' alt='{{=T("Profile")}}' title='{{=T("Profile")}}'><i class="icon-config-custom"></i></a></li>
+                        <li><a href='{{=URL(f="user",args="logout",vars={"_next":"index"})}}' alt='{{=T("Logout")}}' title='{{=T("Logout")}}'><i class="icon-logout-custom"></i></a></li>
+                    {{ pass }}
+                </ul>
+            </div>
         </div>
-            <div class="clearfix"></div>
 
-        <div id="user-nav" class="navbar navbar-inverse">
-            <ul class="nav btn-group">
-                {{ if auth.is_logged_in(): }}
-                    <li>
-                        <form action="">
-                            <div id="search">
-                                <input type="text" placeholder='{{=T("Search here")}}'/><button type="submit" class="tip-right" alt='{{=T("Search")}}' title='{{=T("Search")}}'><i class="icon-search-custom"></i></button>
-                            </div>
-                        </form>
-                    </li>
-                    <li><a href='{{=URL(f="user",args="profile",vars={"_next":"index"})}}' alt='{{=T("Profile")}}' title='{{=T("Profile")}}'><i class="icon-config-custom"></i></a></li>
-                    <li><a href='{{=URL(f="user",args="logout",vars={"_next":"index"})}}' alt='{{=T("Logout")}}' title='{{=T("Logout")}}'><i class="icon-logout-custom"></i></a></li>
-                {{ pass }}
-            </ul>
-        </div>
             
         <div id="sidebar" class="close_sidebar">
             <a href="#" class="visible-phone"><i class="icon-th-list"></i> {{=T('Menu')}}</a>
-            <ul>
+            <ul class="sidebar-fixed">
                 <!-- <li class='{{=g_pagina_atual("default/index","active")}}'><a href='{{=URL("index")}}'><i class="icon-home"></i> <span>Dashboard</span></a></li> -->
                 <li class='{{=g_pagina_atual("default/projects","active")}}'><a href='{{=URL("projects")}}' class="tip-right" alt="{{=T('My Projects')}}" title="{{=T('My Projects')}}"><i class="icon-dashboard"></i> <span>{{=T('My Projects')}}</span></a></li>
                 {{if request.function == "product_backlog" or request.function == "board":}}
@@ -109,16 +107,18 @@
             </ul>
 
         </div>
-        
-        <div id="content">
 
-            {{include}}
-            
-            {{if request.function == "index":}}
-            <br>
-            <br>
-            <div class="row-fluid">
-                <div id="footer" class="span12">
+        <div id="content" class="container">
+            <div class="content">
+                <div class="wrapper">
+                    <div class="proper-content">
+                        {{include}}
+                    </div><!-- /.proper-content -->
+
+                    <div class="push"></div>
+                </div><!-- /.wrapper -->
+
+                <div class="footer-wrapper">
                     <div class="copyright pull-left">{{=T('Copyleft')}} <!--[if lte IE 8]><span style="filter: FlipH; -ms-filter: "FlipH"; display: inline-block;"><![endif]-->
                     <span style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">
                         &copy;
@@ -131,8 +131,8 @@
                     </div>
                 </div>
             </div>
-            {{pass}}
         </div>
+
 
             <script src='{{=URL("static","js/jquery.min.js")}}'></script>
             <script src='{{=URL("static","js/bootstrap.min.js")}}'></script>
@@ -145,6 +145,8 @@
             <script async defer>
                 $(".window").nanoScroller({ sliderMaxHeight: 100, preventPageScrolling: true });
             </script>
+            {{ elif request.function == "board": }}
+            <script async defer src='{{=URL("static","js/board.js")}}'></script>
             {{ pass }}
 
             <!--[if lte IE 7]><script src='{{=URL("static","js/lte-ie7.js")}}'>></script><![endif]-->

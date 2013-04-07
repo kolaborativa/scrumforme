@@ -45,12 +45,12 @@ def projects():
 
 @auth.requires_login()
 def product_backlog():
-    all_projects = db(Project).select()
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first()
+    all_projects = db(Project).select()
 
-    stories = db(Story.project_id == project_id).select()
-    sprint = db(Sprint.project_id == project_id).select().first()
+    stories = db(Story.project_id == project.id).select()
+    sprint = db(Sprint.project_id == project.id).select().first()
 
     form_sprint = SQLFORM.factory(
         Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
@@ -66,7 +66,7 @@ def product_backlog():
         sprint_id = Sprint.insert(project_id=project_id,
             name=name, weeks=weeks)
 
-        redirect(URL(f='board', args=[project_id]))
+        redirect(URL(f='product_backlog', args=[project_id]))
 
     definition_ready = {}
     for story in stories:
@@ -194,9 +194,26 @@ def launch_sprint():
 
 @auth.requires_login()
 def board():
+    project_id = request.args(0) or redirect(URL('projects'))
+    project = db(Project.id == project_id).select().first()
     all_projects = db(Project).select()
 
-    return dict(all_projects=all_projects)
+    stories = db(Story.project_id == project.id).select()
+    sprint = db(Sprint.project_id == project.id).select().first()
+
+    definition_ready = {}
+    for story in stories:
+        definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
+
+    tasks = {}
+    for row in definition_ready:
+        for df in definition_ready[row]:
+            tasks[df.id] = db(Task.definition_ready_id == df.id).select()
+
+    if stories:
+        return dict(project=project, all_projects=all_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, sprint=sprint)
+    else:
+        return dict(project=project, all_projects=all_projects, sprint=sprint)
 
 
 def user():

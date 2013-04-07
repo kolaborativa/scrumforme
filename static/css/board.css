@@ -4,6 +4,32 @@
 ===============
 */
 
+.definition_ready_container {
+    display: table;
+}
+.definition_ready_container .status {
+    display: table-cell;
+    width:20%;
+}
+/*omit width:50% for auto-scaled column widths*/
+
+
+.container-fluid, .container-fluid .row-fluid:first-child {
+    margin-top: 0px;
+}
+
+.story_container {
+    border-bottom: 1px solid #000;
+    padding: 10px 0;
+}
+
+.definition_ready_container {
+}
+
+.definition_ready_container .span2, .definition_ready_container .span3 {
+    /*border-right: 1px solid #000;*/
+    /*margin-right: 1px;*/
+}
 
 /*
 =======
@@ -19,6 +45,40 @@
 ========
 */
 
+.nav-status {
+    /*text-align: left;*/
+    text-align: center;
+    background-color: rgb(241, 241, 241);
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.nav-story {
+    
+}
+
+.nav-todo {
+    
+}
+
+.nav-inprogress {
+    
+}
+
+.nav-verification {
+    
+}
+
+.nav-done {
+
+}
+
+.fixed-nav{
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    width: 100%;
+} /* this make our menu fixed top */
 
 
 

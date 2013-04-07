@@ -1,39 +1,68 @@
 {{extend 'default/layout_base.html'}}
 
-<div id="breadcrumb">
-    <a href='{{=URL("index")}}' title="{{=T('Go to Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
-    <a href="#" class="current">{{=T('Board')}}</a>
+<div id="sub-header-content">
+    <div id="breadcrumb">
+        <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
+        <a href='{{=URL("projects")}}' title="{{=T('Go to')}} {{=T('Board')}}" class="tip-bottom"><i class="icon icon-th"></i> {{=T('Board')}}</a>
+        <a href="#" class="current">{{=T('Product Backlog')}}</a>
+    </div>
+    <div id="content-header">
+        <div class="pull-left">
+            <h1>{{=project.name}}</h1>
+        </div>
+        <div id="project_info" class="span5 offset1">
+            <p>{{=project.description}}</p>
+            <p>{{=project.date_.strftime("%d/%m/%Y")}} <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
+            
+        </div>
+        <div class="clearfix"></div>
+    </div>
 </div>
-<div id="content-header">
-    <h1>{{=T('Board')}}</h1>
-</div>
-<div class="container-fluid">
 
-    <div class="row-fluid">
-        <div class="story_container" data-story="1">
-            <div class="definition_ready_container" data-dr="1">
-                <div class="span2">
-                    <h2>{{=T('Story')}}</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                </div><!--/span-->
-                <div class="span3">
-                    <h2>{{=T('TO DO')}}</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                </div><!--/span-->
-                <div class="span3">
-                    <h2>{{=T('In Progress')}}</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                </div><!--/span-->
-                <div class="span2">
-                    <h2>{{=T('Veryfication')}}</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                </div><!--/span-->
-                <div class="span2">
-                    <h2>{{=T('Done')}}</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                </div><!--/span-->
-            </div><!--/definition_ready_container-->
-        </div><!--/story_container-->
-    </div><!--/row-->
+<div class="nav-status">
+    <div id="nav-story" class="span2">
+        <h4>{{=T('Story')}}</h4>
+    </div>
+    <div id="nav-todo" class="span3">
+        <h4>{{=T('To Do')}}</h4>
+    </div>
+    <div id="nav-inprogress" class="span3">
+        <h4>{{=T('In Progress')}}</h4>
+    </div>
+    <div id="nav-verification" class="span2">
+        <h4>{{=T('Verification')}}</h4>
+    </div>
+    <div id="nav-done" class="span2">
+        <h4>{{=T('Done')}}</h4>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<div class="container-fluid">
+    {{if "stories" in globals():}}
+        {{for story in stories:}}
+            {{if story.sprint_id == sprint.id: }}
+                <div class="row-fluid story_container" data-story='{{=story.id}}'>
+                    <div class="definition_ready_container" data-dr="1">
+                        <div class="status">
+                            <p>{{=story.title}}</p>
+                        </div>
+                        <div class="status">
+                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        </div>
+                        <div class="status">
+                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        </div>
+                        <div class="status">
+                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        </div>
+                        <div class="status">
+                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        </div>
+                    </div><!--/definition_ready_container-->
+                </div><!--/story_container-->
+            {{pass}}
+        {{pass}}
+    {{pass}}
 
 </div>

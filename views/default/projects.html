@@ -1,36 +1,42 @@
 {{extend 'default/layout_base.html'}}
 
-<div id="breadcrumb">
-    <a href='{{=URL("index")}}' title="Go to Home" class="tip-bottom"><i class="icon-home"></i> {{=T('Home')}}</a>
-    <a href="#" class="current">{{=T('Projects')}}</a>
+<div id="sub-header-content">
+    <div id="breadcrumb">
+        <a href='{{=URL("index")}}' title="Go to Home" class="tip-bottom"><i class="icon-home"></i> {{=T('Home')}}</a>
+        <a href="#" class="current">{{=T('Projects')}}</a>
+    </div>
+    <div id="content-header">
+        <h1>{{=T('Create a Project')}}</h1>
+    </div>
 </div>
-<div id="content-header">
-    <h1>{{=T('Create a Project')}}</h1>
-</div>
+
 <div class="container-fluid">
-    <div class="span4">
-    {{=form.custom.begin}}
-        <!-- name -->
-        {{ form.elements('#projects_name')[0] ['_placeholder'] = T('Name') }}
-        {{=form.custom.widget.name}}
-        <!-- description -->
-        {{ form.elements('#projects_description')[0] ['_placeholder'] = T('Description') }}
-        {{=form.custom.widget.description}}
-        <!-- url -->
-        {{ form.elements('#projects_url')[0] ['_placeholder'] = T('Url') }}
-        {{=form.custom.widget.url}}
-        <br>
-        <button type="submit" class="btn btn-primary">{{=T('Create Project')}}</button>
-    {{=form.custom.end}}
-    </div>
-    <div class="span5">
-        {{if "all_projects" in globals():}}
-            <h3>{{=T('My Projects')}} <span class="label">{{=len(all_projects)}}</span></a></h3>
-            <ul>
-            {{for i in all_projects:}}
-                <li class='{{=g_pagina_atual("default/product_backlog/%s" %i.id,"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}'>{{=i.name}}</a></li>
+    <div class="row-fluid">
+        <div class="span4">
+        {{=form.custom.begin}}
+            <!-- name -->
+            {{ form.elements('#projects_name')[0] ['_placeholder'] = T('Name') }}
+            {{=form.custom.widget.name}}
+            <!-- description -->
+            {{ form.elements('#projects_description')[0] ['_placeholder'] = T('Description') }}
+            {{=form.custom.widget.description}}
+            <!-- url -->
+            {{ form.elements('#projects_url')[0] ['_placeholder'] = T('Url') }}
+            {{=form.custom.widget.url}}
+            <br>
+            <button type="submit" class="btn btn-primary">{{=T('Create Project')}}</button>
+        {{=form.custom.end}}
+        </div>
+        <div class="span5">
+            {{if "all_projects" in globals():}}
+                <h3>{{=T('My Projects')}} <span class="label">{{=len(all_projects)}}</span></a></h3>
+                <ul>
+                {{for i in all_projects:}}
+                    <li class='{{=g_pagina_atual("default/product_backlog/%s" %i.id,"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}'>{{=i.name}}</a></li>
+                {{pass}}
+                </ul>
             {{pass}}
-            </ul>
-        {{pass}}
-    </div>
-</div>
+        </div>
+    </div><!--/row-->
+</div><!--/container-fluid-->
+

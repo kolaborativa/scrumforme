@@ -34,22 +34,23 @@
             task : '{{=T("Task")}}',
         };
 </script>
-
-<div id="breadcrumb">
-    <a href='{{=URL("index")}}' title="{{=T('Go to Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
-    <a href='{{=URL("projects")}}' title="{{=T('Go to Projects')}}" class="tip-bottom"><i class="icon icon-th"></i> {{=T('Projects')}}</a>
-    <a href="#" class="current">{{=T('Product Backlog')}}</a>
-</div>
-<div id="content-header">
-    <div class="pull-left">
-        <h1>{{=project.name}}</h1>
+<div id="sub-header-content">
+    <div id="breadcrumb">
+        <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
+        <a href='{{=URL("projects")}}' title="{{=T('Go to')}} {{=T('Projects')}}" class="tip-bottom"><i class="icon icon-th"></i> {{=T('Projects')}}</a>
+        <a href="#" class="current">{{=T('Product Backlog')}}</a>
     </div>
-    <div id="project_info" class="span5 offset1">
-        <p>{{=project.description}}</p>
-        <p>{{=project.date_.strftime("%d/%m/%Y")}} <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
-        
+    <div id="content-header">
+        <div class="pull-left">
+            <h1>{{=project.name}}</h1>
+        </div>
+        <div id="project_info" class="span5 offset1">
+            <p>{{=project.description}}</p>
+            <p>{{=project.date_.strftime("%d/%m/%Y")}} <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
+            
+        </div>
+        <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
 </div>
 
 <div id="target_ajax"></div>
