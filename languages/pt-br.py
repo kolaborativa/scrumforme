@@ -22,6 +22,7 @@
 'Available Databases and Tables': 'Bancos de dados e tabelas disponíveis',
 'Back to Backlog': 'Voltar para Backlog',
 'Backlog': 'Backlog',
+'Before moving a story to sprint, you must create a sprint!': 'Antes de mover uma história para o sprint, você deve criar um sprint!',
 'Benefit': 'Benefício',
 'Board': 'Board',
 'Buy this book': 'Buy this book',

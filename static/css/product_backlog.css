@@ -66,6 +66,10 @@ margin-top: 0px;
     border-radius: 5px;
 }
 
+#sprint-header button[type="submit"] {
+    margin-bottom: 10px;
+}
+
 .text_container {
     width: 50%;
     float: left;

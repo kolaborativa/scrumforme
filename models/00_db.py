@@ -68,6 +68,12 @@ auth.settings.register_fields = ['first_name', 'last_name', 'email', 'password']
 
 auth.settings.login_next = URL('projects')
 
+# import Gravatar
+try:
+    from gravatar import Gravatar
+except ImportError:
+    from gluon.contrib.gravatar import Gravatar
+
 ## if you need to use OpenID, Facebook, MySpace, Twitter, Linkedin, etc.
 ## register with janrain.com, write your domain:api_key in private/janrain.key
 from gluon.contrib.login_methods.rpx_account import use_janrain

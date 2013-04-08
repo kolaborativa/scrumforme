@@ -170,6 +170,7 @@ def change_ajax_itens():
             db(Story.id == request.vars.story_id).update(
                 benefit=request.vars.benefit,
             )
+        # must have created some sprint 
         elif request.vars.sprint_id:
             # send story to sprint
             if request.vars.name == "sprint":
@@ -179,7 +180,43 @@ def change_ajax_itens():
             # send story to backlog
             elif request.vars.name == "backlog":
                 db(Story.id == request.vars.story_id).update(
-                sprint_id=None,
+                    sprint_id=None,
+                )
+
+        return True
+    else:
+        return False
+
+
+@auth.requires_login()
+def board_ajax_itens():
+    # board page
+    if request.vars:
+        from datetime import datetime
+        # update status of task
+        if request.vars.task_status == "inprogress":
+            task = db(Task.id == request.vars.task_id).select().first()
+
+            if task.started:
+                # if has a date
+                db(Task.id == request.vars.task_id).update(
+                    status=request.vars.task_status,
+                )
+            else:
+                # if no has date yet
+                db(Task.id == request.vars.task_id).update(
+                    status=request.vars.task_status,
+                    started=datetime.today().date()
+                )
+
+        elif request.vars.task_status == "done":
+            db(Task.id == request.vars.task_id).update(
+                status=request.vars.task_status,
+                ended=datetime.today().date()
+            )
+        elif request.vars.task_status == "todo" or request.vars.task_status == "verification":
+            db(Task.id == request.vars.task_id).update(
+                status=request.vars.task_status,
             )
 
         return True

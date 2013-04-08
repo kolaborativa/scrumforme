@@ -229,11 +229,11 @@
 <default>NULL</default>
 </row>
 <row name="started" null="1" autoincrement="0">
-<datatype>datetime</datatype>
+<datatype>date</datatype>
 <default>NULL</default>
 </row>
 <row name="ended" null="1" autoincrement="0">
-<datatype>datetime</datatype>
+<datatype>date</datatype>
 <default>NULL</default>
 </row>
 <row name="position_dom" null="1" autoincrement="0">
