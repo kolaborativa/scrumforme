@@ -62,20 +62,34 @@
 
                             <div class="column" data-task="todo">
                                 {{for task in tasks[definition_ready[story.id][count].id]:}}
-                                <p>{{=task["title"]}}</p>
+                                    {{if task["status"] == "todo": }}
+                                    <p>{{=task["title"]}}</p>
+                                    {{pass}}
                                 {{pass}}
                             </div>
 
                             <div class="column" data-task="inprogress">
-
+                                {{for task in tasks[definition_ready[story.id][count].id]:}}
+                                    {{if task["status"] == "inprogress": }}
+                                    <p>{{=task["title"]}}</p>
+                                    {{pass}}
+                                {{pass}}
                             </div>
 
                             <div class="column" data-task="verification">
-
+                                {{for task in tasks[definition_ready[story.id][count].id]:}}
+                                    {{if task["status"] == "verification": }}
+                                    <p>{{=task["title"]}}</p>
+                                    {{pass}}
+                                {{pass}}
                             </div>
 
                             <div class="column" data-task="done">
-
+                                {{for task in tasks[definition_ready[story.id][count].id]:}}
+                                    {{if task["status"] == "done": }}
+                                    <p>{{=task["title"]}}</p>
+                                    {{pass}}
+                                {{pass}}
                             </div>
                             
                         </div><!--/definition_ready_container-->

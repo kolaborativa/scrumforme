@@ -56,7 +56,7 @@
     <body class='{{=g_current_page("default/board/%s" %request.args(0),"close_sidebar")}}'>
         
         <div id="header">
-            <h1><a href="{{=URL('index')}}" alt='Scrumforme Logo' title='Scrumforme Logo'><span class="color-logo">Scrumfor</span>.me</a></a></h1>
+            <a href="{{=URL('index')}}" alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
             {{ if auth.is_logged_in(): }}
                 <ul id="projects">
                     <li><a href="{{=URL('projects')}}" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'><i class="icon-plus"></i></a></li>
@@ -91,18 +91,23 @@
             <a href="#" class="visible-phone"><i class="icon-th-list"></i> {{=T('Menu')}}</a>
             <ul class="sidebar-fixed">
                 <!-- <li class='{{=g_current_page("default/index","active")}}'><a href='{{=URL("index")}}'><i class="icon-home"></i> <span>Dashboard</span></a></li> -->
-                <li class='{{=g_current_page("default/projects","active")}}'><a href='{{=URL("projects")}}' class="tip-right" alt="{{=T('My Projects')}}" title="{{=T('My Projects')}}"><i class="icon-dashboard"></i> <span>{{=T('My Projects')}}</span></a></li>
-                {{if request.function == "product_backlog" or request.function == "board":}}
-                    <li class='{{=g_current_page("default/board/%s" %request.args(0),"active")}}'><a href='{{=URL(f="board",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Board')}}" title="{{=T('Board')}}"><i class="icon-list-alt"></i> <span>{{=T('Board')}}</span></a></li>
-                    <li class='{{=g_current_page("default/product_backlog/%s" %request.args(0),"active")}}'><a href='{{=URL(f="product_backlog",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Backlog')}}" title="{{=T('Backlog')}}"><i class="icon-tasks"></i> <span>{{=T('Backlog')}}</span></a></li>
-                    <li><a href="#" class="tip-right" alt="{{=T('Sprints')}}" title="{{=T('Sprints')}}"><i class="icon-credit-card"></i> <span>{{=T('Sprints')}}</span></a></li>
-                    <li><a href="#" class="tip-right" alt="{{=T('Archives')}}" title="{{=T('Archives')}}"><i class="icon-file"></i> <span>{{=T('Archives')}}</span></a></li>
-                    <li><a href="#" class="tip-right" alt="{{=T('Team')}}" title="{{=T('Team')}}"><i class="icon-group"></i> <span>{{=T('Team')}}</span></a></li>
-                    <li><a href="#" class="tip-right" alt="{{=T('Invite')}}" title="{{=T('Invite')}}"><i class="icon-child"></i> <span>{{=T('Invite')}}</span></a></li>
-                    <li><a href="#" class="tip-right" alt="{{=T('Metrics')}}" title="{{=T('Metrics')}}"><i class="icon-graph "></i> <span>{{=T('Statistics')}}</span></a></li>
-                    <li><a href="#" class="tip-right" alt="{{=T('Contacts')}}" title="{{=T('Contacts')}}"><i class="icon-address-book"></i> <span>{{=T('Contacts')}}</span></a></li>
+                {{ if auth.is_logged_in(): }}
+                    <li class='{{=g_current_page("default/projects","active")}}'><a href='{{=URL("projects")}}' class="tip-right" alt="{{=T('My Projects')}}" title="{{=T('My Projects')}}"><i class="icon-dashboard"></i> <span>{{=T('My Projects')}}</span></a></li>
+                    {{if request.function == "product_backlog" or request.function == "board":}}
+                        <li class='{{=g_current_page("default/board/%s" %request.args(0),"active")}}'><a href='{{=URL(f="board",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Board')}}" title="{{=T('Board')}}"><i class="icon-list-alt"></i> <span>{{=T('Board')}}</span></a></li>
+                        <li class='{{=g_current_page("default/product_backlog/%s" %request.args(0),"active")}}'><a href='{{=URL(f="product_backlog",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Backlog')}}" title="{{=T('Backlog')}}"><i class="icon-tasks"></i> <span>{{=T('Backlog')}}</span></a></li>
+                        <li><a href="#" class="tip-right" alt="{{=T('Sprints')}}" title="{{=T('Sprints')}}"><i class="icon-credit-card"></i> <span>{{=T('Sprints')}}</span></a></li>
+                        <li><a href="#" class="tip-right" alt="{{=T('Archives')}}" title="{{=T('Archives')}}"><i class="icon-file"></i> <span>{{=T('Archives')}}</span></a></li>
+                        <li><a href="#" class="tip-right" alt="{{=T('Team')}}" title="{{=T('Team')}}"><i class="icon-group"></i> <span>{{=T('Team')}}</span></a></li>
+                        <li><a href="#" class="tip-right" alt="{{=T('Invite')}}" title="{{=T('Invite')}}"><i class="icon-child"></i> <span>{{=T('Invite')}}</span></a></li>
+                        <li><a href="#" class="tip-right" alt="{{=T('Metrics')}}" title="{{=T('Metrics')}}"><i class="icon-graph "></i> <span>{{=T('Statistics')}}</span></a></li>
+                        <li><a href="#" class="tip-right" alt="{{=T('Contacts')}}" title="{{=T('Contacts')}}"><i class="icon-address-book"></i> <span>{{=T('Contacts')}}</span></a></li>
+                    {{pass}}
+                    <li><button id="toogle_sidebar" class="tip-right" alt="{{=T('Expand / Collapse Menu')}}" title="{{=T('Expand / Collapse Menu')}}"><i class='{{=g_if_in_current_page("default/board/%s" %request.args(0),"icon-chevron-right", "icon-chevron-left")}} icon-white'></i> <span>{{=T('Collapse Menu')}}</span></button></li>
+                {{else:}}
+                    <li><a href='{{=URL(f="user", args="login")}}' alt='{{=T("Login")}}' title='{{=T("Login")}}'><i class="icon-smiley-alt"></i> <span>{{=T('Login')}}</span></a></li>
+                    <li><a href='{{=URL(f="user", args="register")}}' alt='{{=T("Sign up")}}' title='{{=T("Sign up")}}'><i class="icon-plus-sign"></i> <span>{{=T('Sign up')}}</span></a></li>
                 {{pass}}
-                <li><button id="toogle_sidebar" class="tip-right" alt="{{=T('Expand / Collapse Menu')}}" title="{{=T('Expand / Collapse Menu')}}"><i class='{{=g_if_in_current_page("default/board/%s" %request.args(0),"icon-chevron-right", "icon-chevron-left")}} icon-white'></i> <span>{{=T('Collapse Menu')}}</span></button></li>
             </ul>
 
         </div>
@@ -120,7 +125,7 @@
                 <div class="footer-wrapper">
                     <div class="row-fluid">
                         <div id="footer" class="span12">
-                            {{=T('Copyleft')}} <span style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">&copy;</span> {{=request.now.year}} Scrumforme. {{=T('Powered by')}} <a href="http://agenciax4.com.br">AgenciaX4</a>
+                            {{=T('Copyleft')}} <span style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">&copy;</span> {{=request.now.year}} Scrumforme. {{=T('Developed by')}} <a href="http://agenciax4.com.br">AgenciaX4</a>
                         </div>
                     </div>
                 </div>

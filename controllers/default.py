@@ -119,7 +119,8 @@ def create_update_backlog_itens():
             elif request.vars.name == "task":
                 database_id = Task.insert(
                             definition_ready_id=request.vars.pk,
-                            title=request.vars.value
+                            title=request.vars.value,
+                            status="todo"
                             )
 
             return dict(success="success",msg="gravado com sucesso!",name=request.vars.name,database_id=database_id)
@@ -159,19 +160,23 @@ def remove_item_backlog_itens():
 def change_ajax_itens():
 
     if request.vars:
+        # update Story Points
         if request.vars.story_points:
             db(Story.id == request.vars.story_id).update(
                 story_points=request.vars.story_points,
             )
+        # update Benefit
         elif request.vars.benefit:
             db(Story.id == request.vars.story_id).update(
                 benefit=request.vars.benefit,
             )
         elif request.vars.sprint_id:
+            # send story to sprint
             if request.vars.name == "sprint":
                 db(Story.id == request.vars.story_id).update(
                     sprint_id=request.vars.sprint_id,
                 )
+            # send story to backlog
             elif request.vars.name == "backlog":
                 db(Story.id == request.vars.story_id).update(
                 sprint_id=None,
