@@ -66,6 +66,8 @@ auth.settings.reset_password_requires_verification = True
 auth.settings.register_next= URL('_create_person')
 auth.settings.register_fields = ['first_name', 'last_name', 'email', 'password']
 
+auth.settings.login_next = URL('projects')
+
 ## if you need to use OpenID, Facebook, MySpace, Twitter, Linkedin, etc.
 ## register with janrain.com, write your domain:api_key in private/janrain.key
 from gluon.contrib.login_methods.rpx_account import use_janrain

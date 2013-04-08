@@ -245,7 +245,7 @@ def _create_person():
     name = '%s %s' % (auth.user.first_name, auth.user.last_name)
     person_id = Person.insert(name=name)
     db.user_relationship.insert(auth_user_id=auth.user.id, person_id=person_id)
-    redirect(URL('index'))
+    redirect(URL('projects'))
 
 
 def download():
