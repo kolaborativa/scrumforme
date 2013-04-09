@@ -19,7 +19,10 @@ def index():
 def projects():
     from datetime import datetime
 
-    all_projects = db(Project).select()
+    user_relationship = db(db.user_relationship.auth_user_id==auth.user.id).select().first()
+    person_id = user_relationship.person_id
+
+    all_projects = db(Project.created_by==person_id).select()
 
     form = SQLFORM.factory(
         Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
@@ -31,6 +34,7 @@ def projects():
 
     if form.accepts(request.vars):
         project_id = Project.insert(
+                        created_by=person_id,
                         name=form.vars.name,
                         description=form.vars.description,
                         url=form.vars.url,
