@@ -11,58 +11,85 @@ $("document").ready(function($){
     });
 
     // livesearch
-    $('input[name="livesearch"]').search('.story_container .column', function(on) {
-        on.reset(function() {
+    $('input[name="livesearch"]').search('.task', function(on) {
+        on.reset(function(ui) {
           $('#nothingfound').hide();
-          $('.story_container .column').show();
+          $('.table').show();
         });
 
         on.empty(function() {
           $('#nothingfound').show();
-          $('.story_container .column').hide();
+          $('.table').hide();
         });
 
         on.results(function(results) {
           $('#nothingfound').hide();
-          $('.story_container .column').hide();
-          results.show();
+          $('.table').hide();
+          // results.show();
+          $(results).closest(".table").show();
         });
     });
  
-    $( ".column" ).sortable({
-        connectWith: ".statusboard",
-        placeholder: "placeholder",
-        delay: 100,
-        forcePlaceholderSize: true,
-        start: function( event, ui ) {
-            var placeholder = $(ui.item).clone().css({opacity:"0.6"});
-            ui.placeholder.html(placeholder);
+    // $( ".sortable" ).sortable({
+    //     connectWith: ".sortable",
+    //     forcePlaceholderSize: true,
+    //     items: 'li',
+    //     placeholder: 'placeholder',
+    //     start: function( event, ui ) {
+    //         var placeholder = $(ui.item).clone().css({opacity:"0.6"});
+    //         ui.placeholder.html(placeholder);
 
-            ui.item.addClass( "moving_item" );
-        },
-        stop: function( event, ui ) {
-            ui.item.removeClass( "moving_item" );
-        },
-        receive: function(event, ui) {
-            updateStatus($(ui.item))
-        },
+    //         ui.item.addClass( "moving_item" );
+    //     },
+    //     stop: function( event, ui ) {
+    //         ui.item.removeClass( "moving_item" );
+    //     },
+    //     receive: function(event, ui) {
+    //         updateStatus($(ui.item))
+    //     },
+    // });
+    // $( ".sortable" ).disableSelection();
+
+    $( ".column_task" ).sortable({
+            connectWith: ".column_task",
+            // placeholder: 'placeholder',
+            helper: 'clone',
+            delay:25,
+            revert:true,
+            dropOnEmpty: true,
+            forcePlaceHolderSize: true,
+            // items: 'li',
+            // opacity : 0.6,
+            forceHelperSize: true,
+            start: function( event, ui ) {
+                // var placeholder = $(ui.item).clone().css({opacity:"0.6"});
+                // ui.placeholder.html(placeholder);
+
+                var task_id = $(ui.item).closest('.table').attr('data-storyid');
+                $('body').data('storyid', task_id);
+            },
+            stop: function( event, ui ) {
+                var old_task_id = $('body').data('storyid');
+                    new_task_id = $(ui.item).closest('.table').attr('data-storyid');
+
+                if(new_task_id !== old_task_id) {
+                    return false
+                }
+            },            
+            receive: function(event, ui) {
+                updateStatus($(ui.item))
+            }
     });
 });
 
 
 // update status
 function updateStatus(item){
-    var task_id = $(item).closest('.task').attr('data-taskid'),
-        task_status = $(item).closest('.column').attr('data-taskstatus');
+    var task_id = $(item).closest('.task_container').attr('data-taskid'),
+        task_status = $(item).closest('.column_task').attr('data-status');
     
     ajax(url.changeAjaxItens+'?task_id='+task_id+'&task_status='+task_status, [''], 'target_ajax');
-    var status = statusItem();
-    
-    if(status === true){
-        console.log("status updated!")
-    }else {
-        console.log("status updated ERROR!")
-    }
+    statusItem();
 }
 
 // check status
@@ -72,8 +99,14 @@ function statusItem() {
 
   if (message.length > 0) {
     if(message === 'True') {
+        console.log("status updated!")
    
+    } else if(message === 'False') {
+        console.log("status updated ERROR!")
     }
+    // Clean the return of ajax call
+    $("#target_ajax").empty();
+    // return message
 
   } else {
     console.log("waiting for reply...")
@@ -81,7 +114,4 @@ function statusItem() {
         statusItem()
     }, 300);
   }
-    // Clean the return of ajax call
-    $("#target_ajax").empty();
-    return true
 }

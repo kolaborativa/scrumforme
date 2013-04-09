@@ -242,12 +242,14 @@ def board_ajax_itens():
                 # if has a date
                 db(Task.id == request.vars.task_id).update(
                     status=request.vars.task_status,
+                    ended=None,
                 )
             else:
                 # if no has date yet
                 db(Task.id == request.vars.task_id).update(
                     status=request.vars.task_status,
-                    started=datetime.today().date()
+                    started=datetime.today().date(),
+                    ended=None,
                 )
 
         elif request.vars.task_status == "done":
@@ -258,7 +260,10 @@ def board_ajax_itens():
         elif request.vars.task_status == "todo" or request.vars.task_status == "verification":
             db(Task.id == request.vars.task_id).update(
                 status=request.vars.task_status,
+                ended=None,
             )
+        else:
+            return False
 
         return True
     else:

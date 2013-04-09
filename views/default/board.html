@@ -51,127 +51,99 @@
     </div>
 </div>
 
-    {{if "stories" in globals():}}
-        {{for story in stories:}}
-            {{if story.sprint_id == sprint.id: }}
-                <div class="row-fluid story_container" data-story='{{=story.id}}'>
-                    <div class="row-fluid story_title">
-                        <h5>{{=story.title}}</h5>
-                        <button type="button" class="btn-minimize" data-toggle="collapse" data-target='#story_{{=story.id}}'><i class="icon-chevron-up"></i></button>
-                    </div>
-                        <div id='story_{{=story.id}}' class="collapse in">
-                    {{count = 0}}
-                    {{for df in definition_ready[story.id]:}}
-                        {{if definition_ready[story.id][count].story_id == story.id:}}
-                        <div class="definition_ready_container container-fluid">
 
-                            <div class="definition_ready_title column">
-                                <p>{{=definition_ready[story.id][count].title}}</p>    
+{{if "stories" in globals():}}
+    {{for story in stories:}}
+        {{if story.sprint_id == sprint.id: }}
+        <table class="table" data-storyid='{{=story.id}}'>
+            <tr>
+                <th class="story_title" colspan=5>
+                    <h5>{{=story.title}}</h5>
+                </th>
+            </tr>
+            <tr>
+            {{count = 0}}
+            {{for df in definition_ready[story.id]:}}
+                {{if definition_ready[story.id][count].story_id == story.id:}}
+                <td class="definition_ready_title">
+                    {{=definition_ready[story.id][count].title}}
+                    {{print definition_ready[story.id][count].story_id}}
+                </td>
+                
+                <td class="column_task" data-status="todo">
+                    {{for task in tasks[definition_ready[story.id][count].id]:}}
+                        {{if task["status"] == "todo": }}
+                        <ul class="task_container" data-taskid='{{=task["id"]}}'>
+                          <li class="task">
+                            <a href="#" class="content">{{=task["title"]}}</a>
+                            <img src='{{=Gravatar(auth.user.email).thumb}}' width="30px" height="30px">
+                            <div class="clearfix"></div>
+                            <div>
+                                <span class="icon-comment"></span>
                             </div>
-
-                            <div class="column statusboard" data-taskstatus="todo">
-                                {{for task in tasks[definition_ready[story.id][count].id]:}}
-                                    {{if task["status"] == "todo": }}
-                                    <div class="task" data-taskid='{{=task["id"]}}'>
-                                        <ul class="pull-right">
-                                            <li>
-                                                <span class="task-owner" data-ownerid='{{=task["owner_task"]}}'>
-                                                    <span class="cadre right">
-                                                        <img src='{{=Gravatar(auth.user.email).thumb}}' width="30px" height="30px">
-                                                    </span>
-                                                </span>
-                                            </li>
-                                        </ul>
-                                        <div class="cont">
-                                            <span class="item-value">
-                                                {{=task["title"]}}
-                                            </span>
-                                            <span class="icon-comment"></span>
-                                        </div>
-                                    </div>
-                                    {{pass}}
-                                {{pass}}
-                            </div>
-
-                            <div class="column statusboard" data-taskstatus="inprogress">
-                                {{for task in tasks[definition_ready[story.id][count].id]:}}
-                                    {{if task["status"] == "inprogress": }}
-                                    <div class="task" data-taskid='{{=task["id"]}}'>
-                                        <ul class="pull-right">
-                                            <li>
-                                                <span class="task-owner" data-ownerid='{{=task["owner_task"]}}'>
-                                                    <span class="cadre right">
-                                                        <img src='{{=Gravatar(auth.user.email).thumb}}' width="30px" height="30px">
-                                                    </span>
-                                                </span>
-                                            </li>
-                                        </ul>
-                                        <div class="cont">
-                                            <span class="item-value">
-                                                {{=task["title"]}}
-                                            </span>
-                                            <span class="icon-comment"></span>
-                                        </div>
-                                    </div>
-                                    {{pass}}
-                                {{pass}}
-                            </div>
-
-                            <div class="column statusboard" data-taskstatus="verification">
-                                {{for task in tasks[definition_ready[story.id][count].id]:}}
-                                    {{if task["status"] == "verification": }}
-                                    <div class="task" data-taskid='{{=task["id"]}}'>
-                                        <ul class="pull-right">
-                                            <li>
-                                                <span class="task-owner" data-ownerid='{{=task["owner_task"]}}'>
-                                                    <span class="cadre right">
-                                                        <img src='{{=Gravatar(auth.user.email).thumb}}' width="30px" height="30px">
-                                                    </span>
-                                                </span>
-                                            </li>
-                                        </ul>
-                                        <div class="cont">
-                                            <span class="item-value">
-                                                {{=task["title"]}}
-                                            </span>
-                                            <span class="icon-comment"></span>
-                                        </div>
-                                    </div>
-                                    {{pass}}
-                                {{pass}}
-                            </div>
-
-                            <div class="column statusboard" data-taskstatus="done">
-                                {{for task in tasks[definition_ready[story.id][count].id]:}}
-                                    {{if task["status"] == "done": }}
-                                    <div class="task" data-taskid='{{=task["id"]}}'>
-                                        <ul class="pull-right">
-                                            <li>
-                                                <span class="task-owner" data-ownerid='{{=task["owner_task"]}}'>
-                                                    <span class="cadre right">
-                                                        <img src='{{=Gravatar(auth.user.email).thumb}}' width="30px" height="30px">
-                                                    </span>
-                                                </span>
-                                            </li>
-                                        </ul>
-                                        <div class="cont">
-                                            <span class="item-value">
-                                                {{=task["title"]}}
-                                            </span>
-                                            <span class="icon-comment"></span>
-                                        </div>
-                                    </div>
-                                    {{pass}}
-                                {{pass}}
-                            </div>
-                            
-                        </div><!--/definition_ready_container-->
+                          </li>
+                        </ul>
                         {{pass}}
-                        {{count += 1}}
                     {{pass}}
-                        </div>
-                </div><!--/story_container-->
+                </td>
+                
+                <td class="column_task" data-status="inprogress">
+                    {{for task in tasks[definition_ready[story.id][count].id]:}}
+                        {{if task["status"] == "inprogress": }}
+                        <ul class="task_container" data-taskid='{{=task["id"]}}'>
+                          <li class="task">
+                            <a href="#">{{=task["title"]}}</a>
+                            <img src='{{=Gravatar(auth.user.email).thumb}}' width="30px" height="30px">
+                            <div class="clearfix"></div>
+                            <div>
+                                <span class="icon-comment"></span>
+                            </div>
+                          </li>
+                        </ul>
+                        {{pass}}
+                    {{pass}}
+                </td>
+                
+                <td class="column_task" data-status="verification">
+                    {{for task in tasks[definition_ready[story.id][count].id]:}}
+                        {{if task["status"] == "verification": }}
+                        <ul class="task_container" data-taskid='{{=task["id"]}}'>
+                          <li class="task">
+                            <a href="#">{{=task["title"]}}</a>
+                            <img src='{{=Gravatar(auth.user.email).thumb}}' width="30px" height="30px">
+                            <div class="clearfix"></div>
+                            <div>
+                                <span class="icon-comment"></span>
+                            </div>
+                          </li>
+                        </ul>
+                        {{pass}}
+                    {{pass}}
+                </td>
+                
+                <td class="column_task" data-status="done">
+                    {{for task in tasks[definition_ready[story.id][count].id]:}}
+                        {{if task["status"] == "done": }}
+                        <ul class="task_container" data-taskid='{{=task["id"]}}'>
+                          <li class="task">
+                            <a href="#">{{=task["title"]}}</a>
+                            <img src='{{=Gravatar(auth.user.email).thumb}}' width="30px" height="30px">
+                            <div class="clearfix"></div>
+                            <div>
+                                <span class="icon-comment"></span>
+                            </div>
+                          </li>
+                        </ul>
+                        {{pass}}
+                    {{pass}}
+                </td>
+
+                {{pass}}
+                {{count += 1}}
             {{pass}}
+            </tr>
+        </table>
         {{pass}}
     {{pass}}
+{{pass}}
 

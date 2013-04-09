@@ -1504,10 +1504,10 @@ html, body, .container, .content {
 ::-webkit-scrollbar:hover{
     background-color:#eee;
 }
-::-webkit-resizer{
-    -webkit-border-radius:4px;
-    background-color:#666;
-}
+/*::-webkit-resizer{*/
+    /*-webkit-border-radius:4px;*/
+    /*background-color:#666;*/
+/*}*/
 ::-webkit-scrollbar-thumb{
     min-height:0.8em;
     min-width:0.8em;
