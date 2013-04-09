@@ -88,6 +88,43 @@ def product_backlog():
 
 
 @auth.requires_login()
+def launch_sprint():
+    from datetime import datetime
+    sprint_id = request.args(0) or redirect(URL('index'))
+    sprint = db(Sprint.id==sprint_id).select().first()
+    if not sprint.started:
+        db(Sprint.id==sprint_id).update(started=datetime.today().date())
+    redirect(URL(f='product_backlog', args=sprint_id))
+
+
+@auth.requires_login()
+def board():
+    project_id = request.args(0) or redirect(URL('projects'))
+    project = db(Project.id == project_id).select().first()
+    all_projects = db(Project).select()
+
+    stories = db(Story.project_id == project.id).select()
+    sprint = db(Sprint.project_id == project.id).select().first()
+
+    if sprint:
+        definition_ready = {}
+        for story in stories:
+            definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
+
+        tasks = {}
+        for row in definition_ready:
+            for df in definition_ready[row]:
+                tasks[df.id] = db(Task.definition_ready_id == df.id).select()
+
+        if stories:
+            return dict(project=project, all_projects=all_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, sprint=sprint)
+        else:
+            return dict(project=project, all_projects=all_projects, sprint=sprint)
+    else:
+        redirect(URL(f='product_backlog', args=project_id))
+
+
+@auth.requires_login()
 def create_update_backlog_itens():
     """Function that creates or updates items. Receive updates if request.vars.dbUpdate and takes the ID to be updated with request.vars.dbID
     """
@@ -226,40 +263,6 @@ def board_ajax_itens():
         return True
     else:
         return False
-
-
-@auth.requires_login()
-def launch_sprint():
-    from datetime import datetime
-    sprint_id = request.args(0) or redirect(URL('index'))
-    sprint = db(Sprint.id==sprint_id).select().first()
-    if not sprint.started:
-        db(Sprint.id==sprint_id).update(started=datetime.today().date())
-    redirect(URL(f='projects'))
-
-
-@auth.requires_login()
-def board():
-    project_id = request.args(0) or redirect(URL('projects'))
-    project = db(Project.id == project_id).select().first()
-    all_projects = db(Project).select()
-
-    stories = db(Story.project_id == project.id).select()
-    sprint = db(Sprint.project_id == project.id).select().first()
-
-    definition_ready = {}
-    for story in stories:
-        definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
-
-    tasks = {}
-    for row in definition_ready:
-        for df in definition_ready[row]:
-            tasks[df.id] = db(Task.definition_ready_id == df.id).select()
-
-    if stories:
-        return dict(project=project, all_projects=all_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, sprint=sprint)
-    else:
-        return dict(project=project, all_projects=all_projects, sprint=sprint)
 
 
 def user():
