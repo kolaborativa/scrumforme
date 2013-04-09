@@ -248,6 +248,7 @@
 'The Core': 'The Core',
 'The field name can not be empty!': 'O campo nome não pode ser vazio!',
 'The output of the file is a dictionary that was rendered by the view %s': 'The output of the file is a dictionary that was rendered by the view %s',
+'The Scrumforme meant to be easy, organized and accessible.': 'Scrumforme pretende ser fácil, organizado e acessível.',
 'The Views': 'The Views',
 'This App': 'This App',
 'This field can not be empty!': 'Este campo não pode ser vazio!',

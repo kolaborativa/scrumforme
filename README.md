@@ -50,6 +50,7 @@ Changelog
 - Create Definition of ready.
 - Create Tasks.
 - Moving task with drag n drop.
+- Support for language English and Portuguese.
 - System login.
 - Profile photo by Gravatar.
 
@@ -95,4 +96,4 @@ Developed by:
 
 License
 ---------------------
-Scrumforme is under [MIT](http://www.opensource.org/licenses/mit-license.php/ "MIT license")
+Scrumforme is under [MIT](http://www.opensource.org/licenses/mit-license.php/ "MIT license") license.
