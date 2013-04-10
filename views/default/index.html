@@ -63,7 +63,11 @@
 
             <div class="row masthead">
               <a href="{{=URL('index')}}" class="pull-left"  alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
+              {{ if auth.is_logged_in(): }}
+              <a href='{{=URL("projects")}}' id="login" class="btn btn-primary pull-right">{{=T("My Projects")}}</a>
+              {{else:}}
               <a href='{{=URL(c="default", f="user")}}' id="login" class="btn btn-primary pull-right">{{=T("Login")}}</a>
+              {{pass}}
             </div>
             <div class="content-center">
                   <h2>{{=T("Coming Soon")}}</h2>
