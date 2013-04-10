@@ -52,26 +52,27 @@ ul {
     /*display: table;*/
 }
 
+table, th, td {
+    border: 1px solid #ccc;
+}
 
 .table td{
     width: 20%;
 }
 
-.table th {
-    /*background-color: rgb(255, 249, 176);*/
-    /*background-image: none;*/
+.no-th {
+    margin-top: -20px;
 }
 
-table, th, td {
-    border: 1px solid #ccc;
-}
 
 .definition_ready_title {
     height: 200px;
 }
 
 .task_container {
-    list-style-type: none; margin: 0; padding: 0;
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
 }
 .task_container li {
     margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em;

@@ -1,54 +1,39 @@
 $("document").ready(function($){
     
-    var nav = $('.nav-status');
+    // var nav = $('.nav-status');
     
-    $(window).scroll(function () {
-        if ($(this).scrollTop() > 136) {
-            nav.addClass("fixed-nav");
-        } else {
-            nav.removeClass("fixed-nav");
-        }
-    });
+    // $(window).scroll(function () {
+    //     if ($(this).scrollTop() > 136) {
+    //         nav.addClass("fixed-nav");
+    //     } else {
+    //         nav.removeClass("fixed-nav");
+    //     }
+    // });
 
     // livesearch
     $('input[name="livesearch"]').search('.task', function(on) {
         on.reset(function(ui) {
           $('#nothingfound').hide();
-          $('.table').show();
+          $('.table td').show();
+          $('.table ul').show().css("width","100%");
         });
 
         on.empty(function() {
           $('#nothingfound').show();
-          $('.table').hide();
+          $('.table td').hide();
+          $('.table ul').hide().css("width","100%");
         });
 
         on.results(function(results) {
           $('#nothingfound').hide();
-          $('.table').hide();
+          $('.table td').hide();
+          $('.table ul').hide();
           // results.show();
-          $(results).closest(".table").show();
+          $(results).closest("td").show();
+          $(results).closest("ul").show().css("width","240px");
+          // $(".proper-content").append(results);
         });
     });
- 
-    // $( ".sortable" ).sortable({
-    //     connectWith: ".sortable",
-    //     forcePlaceholderSize: true,
-    //     items: 'li',
-    //     placeholder: 'placeholder',
-    //     start: function( event, ui ) {
-    //         var placeholder = $(ui.item).clone().css({opacity:"0.6"});
-    //         ui.placeholder.html(placeholder);
-
-    //         ui.item.addClass( "moving_item" );
-    //     },
-    //     stop: function( event, ui ) {
-    //         ui.item.removeClass( "moving_item" );
-    //     },
-    //     receive: function(event, ui) {
-    //         updateStatus($(ui.item))
-    //     },
-    // });
-    // $( ".sortable" ).disableSelection();
 
     $( ".column_task" ).sortable({
             connectWith: ".column_task",

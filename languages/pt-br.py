@@ -178,7 +178,7 @@
 'Other Recipes': 'Other Recipes',
 'Overview': 'Overview',
 'Password': 'Senha',
-"Password fields don't match": "Password fields don't match",
+"Password fields don't match": 'Campos de senha não correspondem',
 'please input your password again': 'Por favor, digite sua senha novamente',
 'Plugins': 'Plugins',
 'Powered by': 'Powered by',
