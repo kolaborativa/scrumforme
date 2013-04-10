@@ -1563,14 +1563,10 @@ html, body, .container, .content {
   padding: 4px 10px;
 }
 
-/*.icon-arrow-down{ background-position: 0 0; width: 12px; height: 12px; } */
-/*.icon-arrow-right{ background-position: 0 -62px; width: 12px; height: 12px; } */
-/*.icon-arrow-up{ background-position: 0 -124px; width: 12px; height: 12px; } */
 .icon-comment-custom{ background-position: 0 -186px; width: 19px; height: 17px; padding: 1px 6px;} 
 .icon-config-custom{ background-position: 0 -253px; width: 19px; height: 20px; } 
 .icon-logout-custom{ background-position: 0 -323px; width: 20px; height: 21px; } 
-.icon-search-custom{ background-position: 0 -394px; width: 19px; height: 19px; } 
-/*.icon-trash{ background-position: 0 -463px; width: 11px; height: 13px; } */
+.icon-search-custom{ background-position: 0 -394px; width: 19px; height: 19px; }
 
 .error {
 	color: red;
@@ -1607,6 +1603,8 @@ html, body, .container, .content {
     border: none;
     box-shadow: none;
 }
+
+
 
 
 

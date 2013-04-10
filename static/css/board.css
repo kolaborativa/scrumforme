@@ -8,9 +8,7 @@
     display: table;
     width: 100%;
     text-align: center;
-    background-color: rgb(105, 218, 230);
-    border-top: 1px solid #00A0B1;
-    border-bottom: 1px solid #00A0B1;
+    background-color: rgb(231, 231, 231);
 }
 
 .fixed-nav{
@@ -20,9 +18,29 @@
     width: 100%;
 } /* this make our menu fixed top */
 
+.nav-less{
+    width: 86.4%;
+} /* for sidebar expand */
+
+.fixed-nav .column {
+    width: 19.3%;
+}
+
+.nav-status, .definition_ready_container {
+    display: table;
+}
+
+.column {
+    display: table-cell;
+    width:19.9%;
+    float: left;
+    border-left: 1px solid rgb(196, 196, 196);
+}
+
 ul {
     margin: 0px;
 }
+
 
 /*
 ===============
@@ -34,12 +52,57 @@ ul {
     display: none;
 }
 
+#info_content {
+    padding: 20px 0 10px 0px;
+    /*display: table;*/
+}
+
+.info-column {
+    /*display: table-cell;*/
+}
+
+#project_info {
+    margin-left: 22px;
+    /*padding-left: 20px;*/
+    /*width:40%;*/
+}
+
+#time_sprint {
+    /*width:40%;*/
+    position: relative;
+    bottom: 5px;
+}
+
+#clock {
+    width:62%;
+    padding: 10px 0;
+    background-color: #444444;
+    color: #fff;
+}
+
+#clock i {
+    font-size: 40px;
+    position: relative;
+    top: 5px;
+    left: 10px
+}
+
+#clock p {
+    margin: 0px;
+    margin-left: 20px;
+    padding: 0px;
+}
+
+#clock strong {
+    margin-left: 10px;
+}
+
 #live_search {
-    margin-right: 10%;
+    float: right;
 }
 
 #live_search input {
-    margin: 0px;
+    margin: 10px 0px 0px 0px;
 }
 
 #nothingfound {
@@ -77,16 +140,6 @@ table, th, td {
 .task_container li {
     margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em;
     line-height: 1.2em;
-}
-
-.nav-status, .definition_ready_container {
-    display: table;
-}
-
-.column {
-    display: table-cell;
-    width:20%;
-    float: left;
 }
 
 .story_title h5 {
@@ -153,3 +206,42 @@ table, th, td {
 ==============
 */
 
+.editable-click, a.editable-click, a.editable-click:hover {
+    text-decoration: none;
+    border-bottom: none;
+    color: #444444;
+}
+
+.task .editable-buttons {
+    display: block;
+    margin-top: 10px;
+}
+
+.task .editable-submit {
+    position: relative;
+    right: 40px;
+}
+
+.task .editable-cancel {
+    margin-left: 30px;
+}
+
+.story_title .editable-buttons {
+    margin-left: 10%;
+}
+
+.story_title .editable-cancel {
+    display: none;
+}
+
+.story_title .editable-clear-x {
+    right: -3%!important;
+}
+
+.story_title .editable-container.editable-inline {
+    width: 50%;
+}
+
+.story_title .editable-input, .editable-input input[type="text"] {
+    width: 100%;
+}

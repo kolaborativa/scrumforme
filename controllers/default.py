@@ -67,8 +67,11 @@ def product_backlog():
         name = form_sprint.vars['name']
         weeks = form_sprint.vars['weeks']
 
-        sprint_id = Sprint.insert(project_id=project_id,
-            name=name, weeks=weeks)
+        sprint_id = Sprint.insert(
+                                project_id=project_id,
+                                name=name,
+                                weeks=weeks
+                                )
 
         redirect(URL(f='product_backlog', args=[project_id]))
 

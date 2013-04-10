@@ -1,14 +1,14 @@
-$("document").ready(function($){
+$(function() {
     
-    // var nav = $('.nav-status');
+    var nav = $('.nav-status');
     
-    // $(window).scroll(function () {
-    //     if ($(this).scrollTop() > 136) {
-    //         nav.addClass("fixed-nav");
-    //     } else {
-    //         nav.removeClass("fixed-nav");
-    //     }
-    // });
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 236) {
+            nav.addClass("fixed-nav");
+        } else {
+            nav.removeClass("fixed-nav");
+        }
+    });
 
     // livesearch
     $('input[name="livesearch"]').search('.task', function(on) {
@@ -62,9 +62,13 @@ $("document").ready(function($){
                 }
             },            
             receive: function(event, ui) {
-                updateStatus($(ui.item))
+                
+                setTimeout(function () {
+                    updateStatus($(ui.item))
+                }, 1000); // Enable after 1000 ms.
             }
     });
+
 });
 
 
@@ -100,3 +104,35 @@ function statusItem() {
     }, 300);
   }
 }
+
+// modify style buttons
+$.fn.editableform.buttons = 
+ '<button type="button" class="btn editable-cancel pull-left"><i class="icon-return-key"></i></button>'+
+  '<button type="submit" class="btn btn-success editable-submit pull-right"><i class="icon-ok icon-white"></i></button>';
+$.fn.editable.defaults.mode = 'inline';
+
+//apply editable to parent div
+$('.table').editable({
+  selector: 'a',
+  url: url.createUpdateBacklogItens,
+  emptytext: msg.field_empty,
+  params: function(params) {
+      // sending parameters indicating whether the item is to upgrade or not
+      // send the new ID as param
+      var dbUpdate = $(this).attr("data-update"),
+          dbID = $(this).attr("data-pk");
+      if(dbUpdate) {
+        params.dbUpdate = true;
+        params.dbID = dbID;
+      }else {
+        params.dbUpdate = false;
+      }
+      return params;
+  },
+  validate: function(value) {
+      if(value === '') return msg.validation_error;
+  },
+  success: function(value,response) {
+
+  }
+});

@@ -134,15 +134,15 @@
 
 
             <script src='{{=URL("static","js/jquery.min.js")}}'></script>
+            <script src="{{=URL('static','js/jquery-ui.min.js')}}"></script>
             <script src='{{=URL("static","js/bootstrap.min.js")}}'></script>
             <script async defer src='{{=URL("static","js/web2py.js")}}'></script>
             <script async defer src='{{=URL("static","js/base.js")}}'></script>
-            {{ if request.function == "product_backlog": }}
             <script src='{{=URL("static","js/bootstrap-editable.min.js")}}'></script>
+            {{ if request.function == "product_backlog": }}
             <script async defer src='{{=URL("static","js/product_backlog.js")}}'></script>
             {{ elif request.function == "board": }}
             <script src='{{=URL("static","js/jquery.livesearch.js")}}'></script>
-            <script async defer src="{{=URL('static','js/jquery-ui.min.js')}}"></script>
             <script async defer src="{{=URL('static','js/jquery.ui.touch-punch.min.js')}}"></script>
             <script async defer src='{{=URL("static","js/board.js")}}'></script>
             {{ pass }}
