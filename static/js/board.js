@@ -86,26 +86,23 @@ $(function() {
     // datepicker
     var nowTemp = new Date(),
         now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0),
-        sprintdate = new Date(date.sprint_started),
-        date_burndown = new Date(date.sprint_started),
+        sprint_started = new Date(date.sprint_started),
+        sprint_ended = new Date(date.sprint_started),
         burndown = date.weeks*7;
 
-    date_burndown.setDate(date_burndown.getDate()+burndown);
+    sprint_ended.setDate(sprint_ended.getDate()+burndown);
 
     $('.started_time').datepicker({
-      onRender: function(date) {
-        if (date.valueOf() <= sprintdate.valueOf() || date.valueOf() >= date_burndown.valueOf() ){
-          return 'disabled';
-        } else {
-          return '';
-        }
-      }
-    }).on('changeDate', function(ev) {
-        // checkout.hide();
-        // call the function
-        $('.started_time').datepicker('hide')
-        changeDate(this);
-        }).data('datepicker');
+        format: 'dd/mm/yyyy',
+        todayBtn: "linked",
+        todayHighlight: true,
+        autoclose: true,
+        startDate: sprint_started,
+        endDate: sprint_ended,
+        }).on('changeDate', function(ev) {
+            // call the function
+            changeDate(this);
+        });
 
 });
 
