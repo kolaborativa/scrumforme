@@ -18,10 +18,6 @@
     width: 100%;
 } /* this make our menu fixed top */
 
-.nav-less{
-    width: 86.4%;
-} /* for sidebar expand */
-
 .fixed-nav .column {
     width: 19.3%;
 }
@@ -41,6 +37,10 @@ ul {
     margin: 0px;
 }
 
+/*.column_task { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+.column_task li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; }
+  html>body .column_task li { height: 1.5em; line-height: 1.2em; }*/
+  /*.ui-state-highlight { height: 1.5em; line-height: 1.2em; }*/
 
 /*
 ===============
@@ -127,11 +127,6 @@ table, th, td {
     margin-top: -20px;
 }
 
-
-.definition_ready_title {
-    height: 200px;
-}
-
 .task_container {
     list-style-type: none;
     margin: 0 auto;
@@ -141,12 +136,33 @@ table, th, td {
     margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em;
     line-height: 1.2em;
 }
+.task_container li:first-letter {
+    text-transform: capitalize;
+}
 
 .story_title h5 {
     font-size: 16px;
     text-align: left;
 }
 
+.started_time {
+    position: relative;
+    top: 4px;
+}
+
+.started_time input {
+    width: 45%;
+    padding: 0px 5px!important;
+}
+
+.started_time .add-on {
+    padding: 0px;
+}
+
+.started_time .add-on i {
+    position: relative;
+    top: 3px;
+}
 /*
 ============
  MOVE ITEMS
@@ -172,6 +188,10 @@ table, th, td {
   cursor: move;
 }
 
+.task a {
+  font-size: 14px;
+}
+
 .task .content {
     word-wrap: break-word;
     padding: 5px 0px;
@@ -179,7 +199,7 @@ table, th, td {
 .task .icon-comment {
     background-position: -321px -782px;
     border: 3px solid transparent;
-    display: block;
+    /*display: block;*/
     height: 12px;
     vertical-align: middle;
     width: 11px;

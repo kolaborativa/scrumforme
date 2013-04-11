@@ -136,7 +136,5 @@ $(document).ready(function(){
 							.toggleClass("icon-chevron-left")
 							.toggleClass("icon-chevron-right");
 		// $("#sidebar").find(".active").toggleClass("open");
-		$(".nav-status").toggleClass("nav-less");
-
 	});
 });

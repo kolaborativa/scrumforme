@@ -40,9 +40,18 @@ def g_if_in_current_page(url, classe, anotherclass):
 
 
 def g_blank_check(item):
+    '''returns a empty string if item is empty.'''
+    if item:
+        return item
+    else:
+        item=""
+        return item
+
+
+def g_blank_date_check(item):
 	'''returns a empty string if item is empty.'''
 	if item:
-		return item
+		return item.strftime("%d/%m/%Y")
 	else:
 		item=""
 		return item

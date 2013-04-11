@@ -1,7 +1,7 @@
 $(function() {
     
+    // fixed status card
     var nav = $('.nav-status');
-    
     $(window).scroll(function () {
         if ($(this).scrollTop() > 236) {
             nav.addClass("fixed-nav");
@@ -12,43 +12,43 @@ $(function() {
 
     // livesearch
     $('input[name="livesearch"]').search('.task', function(on) {
+        var nofound = $('#nothingfound'),
+            td = $('.table td'),
+            ul = $('.table ul');
+            
         on.reset(function(ui) {
-          $('#nothingfound').hide();
-          $('.table td').show();
-          $('.table ul').show().css("width","100%");
+          nofound.hide();
+          td.show();
+          ul.show();
         });
 
         on.empty(function() {
-          $('#nothingfound').show();
-          $('.table td').hide();
-          $('.table ul').hide().css("width","100%");
+          nofound.show();
+          td.hide();
+          ul.hide();
         });
 
         on.results(function(results) {
-          $('#nothingfound').hide();
-          $('.table td').hide();
-          $('.table ul').hide();
-          // results.show();
+          nofound.hide();
+          td.hide();
+          ul.hide();
           $(results).closest("td").show();
-          $(results).closest("ul").show().css("width","240px");
-          // $(".proper-content").append(results);
+          $(results).closest("ul").show();
+          $(results).closest("tr").find("td").show();
         });
     });
 
+    // drag in drop
     $( ".column_task" ).sortable({
             connectWith: ".column_task",
-            // placeholder: 'placeholder',
-            helper: 'clone',
+            placeholder: 'placeholder_item',
             delay:25,
             revert:true,
             dropOnEmpty: true,
-            forcePlaceHolderSize: true,
-            // items: 'li',
-            // opacity : 0.6,
-            forceHelperSize: true,
             start: function( event, ui ) {
-                // var placeholder = $(ui.item).clone().css({opacity:"0.6"});
-                // ui.placeholder.html(placeholder);
+                var placeholder = $(ui.item).clone().css({opacity:"0.6",zIndex:"1"});
+                $(".placeholder_item").css({height:placeholder.height(),marginBottom:"10px"});
+                ui.placeholder.html(placeholder);
 
                 var task_id = $(ui.item).closest('.table').attr('data-storyid');
                 $('body').data('storyid', task_id);
@@ -68,6 +68,29 @@ $(function() {
                 }, 1000); // Enable after 1000 ms.
             }
     });
+
+    // datepicker
+    var nowTemp = new Date(),
+        now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0),
+        sprintdate = new Date(date.sprint_started),
+        date_burndown = new Date(date.sprint_started),
+        burndown = date.weeks*7;
+
+    date_burndown.setDate(date_burndown.getDate()+burndown);
+
+    var checkout = $('.started_time').datepicker({
+      onRender: function(date) {
+        if (date.valueOf() <= sprintdate.valueOf() || date.valueOf() >= date_burndown.valueOf() ){
+          return 'disabled';
+        } else {
+          return '';
+        }
+      }
+    }).on('changeDate', function(ev) {
+      checkout.hide();
+    }).data('datepicker');
+
+
 
 });
 
