@@ -54,12 +54,26 @@ $(function() {
                 $('body').data('storyid', task_id);
             },
             stop: function( event, ui ) {
-                var old_task_id = $('body').data('storyid');
-                    new_task_id = $(ui.item).closest('.table').attr('data-storyid');
+                var task = $(ui.item),
+                    old_task_id = $('body').data('storyid'),
+                    new_task_id = task.closest('.table').attr('data-storyid');
+                    task_status = task.closest('.column_task').attr('data-status'),
+                    task_date = task.find('input').val();
 
+                // prevents send to a different definition of ready or different story
                 if(new_task_id !== old_task_id) {
                     return false
                 }
+
+                // prevents task undated verification for status or done
+                if(task_date ==="" && task_status==="verification") {
+                    alert(msg.task_undated)
+                    return false
+                }else if(task_date ==="" && task_status==="done") {
+                    alert(msg.task_undated)
+                    return false
+                }
+
             },            
             receive: function(event, ui) {
                 
@@ -78,7 +92,7 @@ $(function() {
 
     date_burndown.setDate(date_burndown.getDate()+burndown);
 
-    var checkout = $('.started_time').datepicker({
+    $('.started_time').datepicker({
       onRender: function(date) {
         if (date.valueOf() <= sprintdate.valueOf() || date.valueOf() >= date_burndown.valueOf() ){
           return 'disabled';
@@ -87,32 +101,55 @@ $(function() {
         }
       }
     }).on('changeDate', function(ev) {
-      checkout.hide();
-    }).data('datepicker');
-
-
+        // checkout.hide();
+        // call the function
+        $('.started_time').datepicker('hide')
+        changeDate(this);
+        }).data('datepicker');
 
 });
 
 
 // update status
-function updateStatus(item){
-    var task_id = $(item).closest('.task_container').attr('data-taskid'),
-        task_status = $(item).closest('.column_task').attr('data-status');
-    
+function updateStatus(task){
+    var task = $(task),
+        task_id = task.closest('.task_container').attr('data-taskid'),
+        task_status = task.closest('.column_task').attr('data-status'),
+        task_date = task.find('input').val();
+
+    // send to server
     ajax(url.changeAjaxItens+'?task_id='+task_id+'&task_status='+task_status, [''], 'target_ajax');
-    statusItem();
+    // test server callback
+    statusItem(task_date, task_status, task);
 }
 
+
+function changeDate(item){
+    var task = $(item),
+    task_id = task.closest('.task_container').attr('data-taskid'),
+    task_date = task.find('input').val();
+
+    // send to server
+    ajax(url.changeAjaxItens+'?task_id='+task_id+'&task_date='+task_date, [''], 'target_ajax');
+    // test server callback
+    statusItem("", "", "");
+}
+
+
 // check status
-function statusItem() {
+function statusItem(task_date, task_status, task) {
     var message = $("#target_ajax").text();
     console.log(message)
 
   if (message.length > 0) {
     if(message === 'True') {
         console.log("status updated!")
-   
+        // for tasks without a set date
+        if(task_date ==="" && task_status==="inprogress") {
+            var today = new Date();
+            $(task).find('input').val(formatDate(today));
+        }
+
     } else if(message === 'False') {
         console.log("status updated ERROR!")
     }
@@ -123,10 +160,18 @@ function statusItem() {
   } else {
     console.log("waiting for reply...")
     setTimeout(function() {
-        statusItem()
+        statusItem(task_date, task_status, task)
     }, 300);
   }
 }
+
+function formatDate(value) {
+   return value.getMonth()+1 + "/" + value.getDate() + "/" + value.getFullYear();
+}
+
+// =============
+// PLUGIN HACKS
+// =============
 
 // modify style buttons
 $.fn.editableform.buttons = 
@@ -159,3 +204,4 @@ $('.table').editable({
 
   }
 });
+

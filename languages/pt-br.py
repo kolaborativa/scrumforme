@@ -294,6 +294,7 @@
 'You are successfully running web2py': 'You are successfully running web2py',
 'You are successfully running web2py.': 'You are successfully running web2py.',
 'You can modify this application and adapt it to your needs': 'You can modify this application and adapt it to your needs',
+'You must first put a start date': 'Você precisa primeiro colocar uma data de início',
 'You visited the url %s': 'You visited the url %s',
 'Your Projects': 'Seus Projetos',
 }

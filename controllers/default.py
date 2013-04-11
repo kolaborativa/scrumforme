@@ -254,6 +254,7 @@ def board_ajax_itens():
                     started=datetime.today().date(),
                     ended=None,
                 )
+                pass
 
         elif request.vars.task_status == "done":
             db(Task.id == request.vars.task_id).update(
@@ -264,6 +265,13 @@ def board_ajax_itens():
             db(Task.id == request.vars.task_id).update(
                 status=request.vars.task_status,
                 ended=None,
+            )
+        elif request.vars.task_date:
+            d = request.vars.task_date.split("/")
+            started_date = "%s-%s-%s" %(d[2], d[1], d[0])
+
+            db(Task.id == request.vars.task_id).update(
+                started=datetime.strptime(started_date,'%Y-%m-%d')
             )
         else:
             return False
