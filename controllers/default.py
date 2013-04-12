@@ -23,12 +23,19 @@ def _person_projects():
 
 
 @auth.requires_login()
-def projects():
-    from datetime import datetime
-
+def _get_person():
+    """Function that get person of the user logged.
+    Returns the person's id.
+    """
     user_relationship = db(db.user_relationship.auth_user_id==auth.user.id).select().first()
     person_id = user_relationship.person_id
+    return person_id
 
+
+@auth.requires_login()
+def projects():
+    from datetime import datetime
+    person_id = _get_person()
     person_projects = _person_projects()
 
     form = SQLFORM.factory(
@@ -57,44 +64,47 @@ def projects():
 @auth.requires_login()
 def product_backlog():
     project_id = request.args(0) or redirect(URL('projects'))
-    project = db(Project.id == project_id).select().first()
+    project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
+    person_id = _get_person()
     person_projects = _person_projects()
 
-    stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
-    sprint = db(Sprint.project_id == project.id).select().first()
+    if project.created_by == person_id:
+        stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
+        sprint = db(Sprint.project_id == project.id).select().first()
 
-    form_sprint = SQLFORM.factory(
-        Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
-        Field('weeks', label=T('Weeks'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
-        table_name='sprint',
-        submit_button=T('CREATE')
-        )
+        form_sprint = SQLFORM.factory(
+            Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
+            Field('weeks', label=T('Weeks'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
+            table_name='sprint',
+            submit_button=T('CREATE')
+            )
 
-    if form_sprint.process().accepted:
-        name = form_sprint.vars['name']
-        weeks = form_sprint.vars['weeks']
+        if form_sprint.process().accepted:
+            name = form_sprint.vars['name']
+            weeks = form_sprint.vars['weeks']
 
-        sprint_id = Sprint.insert(
-                                project_id=project_id,
-                                name=name,
-                                weeks=weeks
-                                )
+            sprint_id = Sprint.insert(
+                                    project_id=project_id,
+                                    name=name,
+                                    weeks=weeks
+                                    )
 
-        redirect(URL(f='product_backlog', args=[project_id]))
+            redirect(URL(f='product_backlog', args=[project_id]))
 
-    if stories:
-        definition_ready = {}
-        for story in stories:
-            definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
+        if stories:
+            definition_ready = {}
+            for story in stories:
+                definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
 
-        tasks = {}
-        for row in definition_ready:
-            for df in definition_ready[row]:
-                tasks[df.id] = db(Task.definition_ready_id == df.id).select()
+            tasks = {}
+            for row in definition_ready:
+                for df in definition_ready[row]:
+                    tasks[df.id] = db(Task.definition_ready_id == df.id).select()
 
-        return dict(project=project, person_projects=person_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, form_sprint=form_sprint, sprint=sprint)
-    else:
-        return dict(project=project, person_projects=person_projects, form_sprint=form_sprint, sprint=sprint)
+            return dict(project=project, person_projects=person_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, form_sprint=form_sprint, sprint=sprint)
+        else:
+            return dict(project=project, person_projects=person_projects, form_sprint=form_sprint, sprint=sprint)
+    redirect(URL('projects'))
 
 
 @auth.requires_login()
@@ -110,28 +120,31 @@ def launch_sprint():
 @auth.requires_login()
 def board():
     project_id = request.args(0) or redirect(URL('projects'))
-    project = db(Project.id == project_id).select().first()
+    project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
+    person_id = _get_person()
     person_projects = _person_projects()
 
-    stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
-    sprint = db(Sprint.project_id == project.id).select().first()
+    if project.created_by == person_id:
+        stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
+        sprint = db(Sprint.project_id == project.id).select().first()
 
-    if sprint:
-        if stories:
-            definition_ready = {}
-            for story in stories:
-                definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
+        if sprint:
+            if stories:
+                definition_ready = {}
+                for story in stories:
+                    definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
 
-            tasks = {}
-            for row in definition_ready:
-                for df in definition_ready[row]:
-                    tasks[df.id] = db(Task.definition_ready_id == df.id).select()
+                tasks = {}
+                for row in definition_ready:
+                    for df in definition_ready[row]:
+                        tasks[df.id] = db(Task.definition_ready_id == df.id).select()
 
-            return dict(project=project, person_projects=person_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, sprint=sprint)
+                return dict(project=project, person_projects=person_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, sprint=sprint)
+            else:
+                return dict(project=project, person_projects=person_projects, sprint=sprint)
         else:
-            return dict(project=project, person_projects=person_projects, sprint=sprint)
-    else:
-        redirect(URL(f='product_backlog', args=project_id))
+            redirect(URL(f='product_backlog', args=project_id))
+    redirect(URL('projects'))
 
 
 @auth.requires_login()
