@@ -39,9 +39,9 @@
       };
     }
 
-    $(this).live('keypress', perform);
-    $(this).live('keydown', perform);
-    $(this).live('keyup', perform);
+    $(this).on('keypress', perform);
+    $(this).on('keydown', perform);
+    $(this).on('keyup', perform);
     $(this).bind('blur', perform);
   }
 })(jQuery);

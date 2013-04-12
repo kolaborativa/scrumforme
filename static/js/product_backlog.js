@@ -4,7 +4,7 @@
 =================
 */
 
-$("document").ready(function($){
+$(function() {
     
     // catch size dynamically to increase the size of content
     var firstHeight = $('#header').outerHeight(),
@@ -18,6 +18,52 @@ $("document").ready(function($){
 
     $("#backlog").find(".project-items").height(StoryContentBacklog);
     $("#sprint").find(".project-items").height(StoryContentSprint);
+
+
+
+    $( "#sprint .project-items" ).sortable({
+            placeholder: 'placeholder_item',
+            delay:25,
+            revert:true,
+            dropOnEmpty: true,
+            start: function( event, ui ) {
+                var placeholder = $(ui.item).clone().css({opacity:"0.6",zIndex:"1"});
+                $(".placeholder_item").css({height:placeholder.height(),margin:"0px 0px 10px 0px"});
+                ui.placeholder.html(placeholder);
+
+                // var task_id = $(ui.item).closest('.table').attr('data-storyid');
+                // $('body').data('storyid', task_id);
+            },
+            stop: function( event, ui ) {
+                // var task = $(ui.item),
+                //     old_task_id = $('body').data('storyid'),
+                //     new_task_id = task.closest('.table').attr('data-storyid');
+                //     task_status = task.closest('.column_task').attr('data-status'),
+                //     task_date = task.find('input').val();
+
+                // // prevents send to a different definition of ready or different story
+                // if(new_task_id !== old_task_id) {
+                //     return false
+                // }
+
+                // // prevents task undated verification for status or done
+                // if(task_date ==="" && task_status==="verification") {
+                //     alert(msg.task_undated)
+                //     return false
+                // }else if(task_date ==="" && task_status==="done") {
+                //     alert(msg.task_undated)
+                //     return false
+                // }
+
+            },            
+            receive: function(event, ui) {
+                
+                setTimeout(function () {
+                    updateStatus($(ui.item))
+                }, 1000); // Enable after 1000 ms.
+            }
+    });
+
  
 });
 
@@ -102,7 +148,7 @@ $(document).on("click", ".create_definition_ready", function(){
     $(this).closest(".story_container").find(".buttons_footer").fadeIn("fast", "linear");
     var story_id = $(this).closest(".story").find(".story_card").attr("data-pk");
 
-    var html = '<ul class="item_container"><li class="definition_ready_container new_definition_ready_container"><div class="definition_ready"><div class="text_container"><span class="label" style="margin-right: 4px;" alt="'+title.label_DR+'" title="'+title.label_DR+'">'+buttons.DR+' </span><a href="#" class="editable-click editable-empty definition_ready_card editable new_definition_ready" data-type="textarea" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="definition_ready">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn btn-minimize expand_definition_ready pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-circle-arrow-down"></i></button><button class="btn delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-trash"></i></button><button class="btn create_task pull-right" alt="'+title.task+'" title="'+title.task+'" disabled="disabled">+ '+buttons.task+'</button></div><div class="clearfix"></div></div></li></ul>';
+    var html = '<ul class="item_container"><li class="definition_ready_container new_definition_ready_container"><div class="definition_ready"><div class="text_container"><span class="label" style="margin-right: 4px;" alt="'+title.label_DR+'" title="'+title.label_DR+'">'+buttons.DR+' </span><a href="#" class="editable-click editable-empty definition_ready_card editable new_definition_ready" data-type="textarea" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="definition_ready">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn btn-minimize expand_definition_ready pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-circle-arrow-up"></i></button><button class="btn delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-trash"></i></button><button class="btn create_task pull-right" alt="'+title.task+'" title="'+title.task+'" disabled="disabled">+ '+buttons.task+'</button></div><div class="clearfix"></div></div></li></ul>';
 
     var newItem = $(this).closest(".story").append(html);
 
@@ -129,15 +175,17 @@ $(document).on("click", ".create_task", function(){
 
 // to expand story content
 $(document).on("click", ".expand_story", function(){
-    $(this).closest(".story").find(".definition_ready_container").slideToggle("slow");
-    $(this).closest(".story_container").find(".buttons_footer").fadeToggle("fast", "linear");
-    $(this).find(".icon-circle-arrow-down").toggleClass("icon-circle-arrow-up");
+    var item = $(this);
+    item.closest(".story").find(".definition_ready_container").slideToggle("slow");
+    item.closest(".story_container").find(".buttons_footer").fadeToggle("fast", "linear");
+    item.find("i").toggleClass("icon-circle-arrow-down").toggleClass("icon-circle-arrow-up");
 });
 
 // to expand definition_ready content
 $(document).on("click", ".expand_definition_ready", function(){
-    $(this).closest(".definition_ready_container").find(".task").fadeToggle("fast", "linear");
-    $(this).find(".icon-circle-arrow-down").toggleClass("icon-circle-arrow-up");
+    var item = $(this);
+    item.closest(".definition_ready_container").find(".task").fadeToggle("fast", "linear");
+    item.find("i").toggleClass("icon-circle-arrow-up").toggleClass("icon-circle-arrow-down");
 });
 
 // clean values ​​that are not numbers
