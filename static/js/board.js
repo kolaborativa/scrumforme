@@ -117,7 +117,7 @@ function updateStatus(task){
     // send to server
     ajax(url.changeAjaxItens+'?task_id='+task_id+'&task_status='+task_status, [''], 'target_ajax');
     // test server callback
-    statusItem(task_date, task_status, task);
+    statusAction(task_date, task_status, task);
 }
 
 
@@ -129,12 +129,12 @@ function changeDate(item){
     // send to server
     ajax(url.changeAjaxItens+'?task_id='+task_id+'&task_date='+task_date, [''], 'target_ajax');
     // test server callback
-    statusItem("", "", "");
+    statusAction("", "", "");
 }
 
 
 // check status
-function statusItem(task_date, task_status, task) {
+function statusAction(task_date, task_status, task) {
     var message = $("#target_ajax").text();
     console.log(message)
 
@@ -157,7 +157,7 @@ function statusItem(task_date, task_status, task) {
   } else {
     console.log("waiting for reply...")
     setTimeout(function() {
-        statusItem(task_date, task_status, task)
+        statusAction(task_date, task_status, task)
     }, 300);
   }
 }

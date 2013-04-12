@@ -75,7 +75,7 @@
                                 <li class="story">
                                     <div class="story_header">
                                         <div class="text_container">
-                                            <a href="#" class="editable-click story_card editable" data-type="textarea" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
+                                            <a href="#" class="editable-click story_card editable" data-type="textarea" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-index="{{=story.position_dom}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
                                         </div>
                                         <div class="buttons_container">
                                             <button class="btn btn-minimize expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
@@ -202,7 +202,7 @@
                         <li class="story">
                             <div class="story_header">
                                 <div class="text_container">
-                                    <a href="#" class="editable-click story_card editable" data-type="textarea" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
+                                    <a href="#" class="editable-click story_card editable" data-type="textarea" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-index="{{=story.position_dom}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
                                 </div>
                                 <div class="buttons_container">
                                     <button class="btn btn-minimize expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>

@@ -53,7 +53,7 @@ def product_backlog():
     project = db(Project.id == project_id).select().first()
     all_projects = db(Project).select()
 
-    stories = db(Story.project_id == project.id).select()
+    stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
     sprint = db(Sprint.project_id == project.id).select().first()
 
     form_sprint = SQLFORM.factory(
@@ -75,19 +75,19 @@ def product_backlog():
 
         redirect(URL(f='product_backlog', args=[project_id]))
 
-    definition_ready = {}
-    for story in stories:
-        definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
-
-    tasks = {}
-    for row in definition_ready:
-        for df in definition_ready[row]:
-            tasks[df.id] = db(Task.definition_ready_id == df.id).select()
-
     if stories:
-        return dict(project=project, all_projects=all_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, form_sprint=form_sprint, sprint=sprint)
+        definition_ready = {}
+        for story in stories:
+            definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
+
+        tasks = {}
+        for row in definition_ready:
+            for df in definition_ready[row]:
+                tasks[df.id] = db(Task.definition_ready_id == df.id).select()
+
+        return dict(project=project, stories=stories, definition_ready=definition_ready, tasks=tasks, form_sprint=form_sprint, sprint=sprint)
     else:
-        return dict(project=project, all_projects=all_projects, form_sprint=form_sprint, sprint=sprint)
+        return dict(project=project, form_sprint=form_sprint, sprint=sprint)
 
 
 @auth.requires_login()
@@ -106,23 +106,23 @@ def board():
     project = db(Project.id == project_id).select().first()
     all_projects = db(Project).select()
 
-    stories = db(Story.project_id == project.id).select()
+    stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
     sprint = db(Sprint.project_id == project.id).select().first()
 
     if sprint:
-        definition_ready = {}
-        for story in stories:
-            definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
-
-        tasks = {}
-        for row in definition_ready:
-            for df in definition_ready[row]:
-                tasks[df.id] = db(Task.definition_ready_id == df.id).select()
-
         if stories:
-            return dict(project=project, all_projects=all_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, sprint=sprint)
+            definition_ready = {}
+            for story in stories:
+                definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
+
+            tasks = {}
+            for row in definition_ready:
+                for df in definition_ready[row]:
+                    tasks[df.id] = db(Task.definition_ready_id == df.id).select()
+
+            return dict(project=project, stories=stories, definition_ready=definition_ready, tasks=tasks, sprint=sprint)
         else:
-            return dict(project=project, all_projects=all_projects, sprint=sprint)
+            return dict(project=project, sprint=sprint)
     else:
         redirect(URL(f='product_backlog', args=project_id))
 
@@ -153,7 +153,8 @@ def create_update_backlog_itens():
             if request.vars.name == "story":
                 database_id = Story.insert(
                         project_id=request.vars.pk,
-                        title=request.vars.value
+                        title=request.vars.value,
+                        position_dom=request.vars.order
                         )
             elif request.vars.name == "definition_ready":
                 database_id = Definition_ready.insert(
@@ -226,6 +227,19 @@ def change_ajax_itens():
                 db(Story.id == request.vars.story_id).update(
                     sprint_id=None,
                 )
+            # update order of a story in DOM
+            elif request.vars.order == "order":
+                import urllib
+                for v in request.vars:
+                    if v != "order" and v != "sprint_id":
+                        parse = urllib.unquote(request.vars[v].encode('ascii')).decode('utf-8')
+                        new_list = parse.split("&")
+                        story_id = new_list[0].split("=")
+                        story_order = new_list[1].split("=")
+
+                        db(Story.id == story_id[1]).update(
+                            position_dom=story_order[1],
+                        )
 
         return True
     else:

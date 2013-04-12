@@ -38,6 +38,7 @@ if not "story" in db.tables:
         Field("title", "string", length=128, default=None),
         Field("benefit", "string", default=None),
         Field("story_points", "integer", default=None),
+        Field("position_dom", "integer", default=None),
         Field("concluded", "boolean", default=None),
         format='%(title)s',
         migrate="story.table")

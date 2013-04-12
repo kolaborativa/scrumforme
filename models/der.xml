@@ -168,6 +168,10 @@
 <datatype>integer</datatype>
 <default>NULL</default>
 </row>
+<row name="position_dom" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
 <row name="concluded" null="1" autoincrement="0">
 <datatype>boolean</datatype>
 <default>NULL</default>

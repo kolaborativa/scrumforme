@@ -28,44 +28,31 @@ $(function() {
             dropOnEmpty: true,
             start: function( event, ui ) {
                 var placeholder = $(ui.item).clone().css({opacity:"0.6",zIndex:"1"});
-                $(".placeholder_item").css({height:placeholder.height(),margin:"0px 0px 10px 0px"});
+                $(".placeholder_item").css({height:placeholder.height(),margin:"0px 0px 20px 0px"});
                 ui.placeholder.html(placeholder);
 
-                // var task_id = $(ui.item).closest('.table').attr('data-storyid');
-                // $('body').data('storyid', task_id);
             },
             stop: function( event, ui ) {
-                // var task = $(ui.item),
-                //     old_task_id = $('body').data('storyid'),
-                //     new_task_id = task.closest('.table').attr('data-storyid');
-                //     task_status = task.closest('.column_task').attr('data-status'),
-                //     task_date = task.find('input').val();
 
-                // // prevents send to a different definition of ready or different story
-                // if(new_task_id !== old_task_id) {
-                //     return false
-                // }
-
-                // // prevents task undated verification for status or done
-                // if(task_date ==="" && task_status==="verification") {
-                //     alert(msg.task_undated)
-                //     return false
-                // }else if(task_date ==="" && task_status==="done") {
-                //     alert(msg.task_undated)
-                //     return false
-                // }
-
-            },            
-            receive: function(event, ui) {
-                
                 setTimeout(function () {
-                    updateStatus($(ui.item))
+                    // call the function
+                    updateStoryOrder()
                 }, 1000); // Enable after 1000 ms.
+
             }
     });
-
- 
 });
+
+// to find the largest index of the array
+Array.max = function( array ){
+  return Math.max.apply( Math, array );
+};
+
+/*
+==============
+ PLUGNS HACKS
+==============
+*/
 
 // modify style buttons
 $.fn.editableform.buttons = 
@@ -88,12 +75,14 @@ $('.project-items').editable({
       // sending parameters indicating whether the item is to upgrade or not
       // send the new ID as param
       var dbUpdate = $(this).attr("data-update"),
-          dbID = $(this).attr("data-pk");
+          dbID = $(this).attr("data-pk"),
+          order = $(this).attr("data-index");
       if(dbUpdate) {
         params.dbUpdate = true;
         params.dbID = dbID;
       }else {
         params.dbUpdate = false;
+        params.order = order;
       }
       return params;
   },
@@ -129,10 +118,22 @@ $('.project-items').editable({
 
 // by clicking the button to add Story
 $('#create_story').click(function(){
-    // $(this).closest(".story_container").find(".buttons_footer").fadeToggle("fast", "linear");
-    var indiceItem = 1;
 
-    var html = '<ul class="story_container item_container"><li class="story"><div class="story_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="textarea" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn btn-minimize expand_story pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-circle-arrow-down"></i></button><button class="btn delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-trash"></i></button><select class="pull-right benefit" alt="'+title.benefit+'" title="'+title.benefit+'" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" alt="'+title.points+'" title="'+title.points+'" disabled="disabled"><button class="btn create_definition_ready pull-right" alt="'+title.create_DR+'" title="'+title.create_DR+'" disabled="disabled">+ '+buttons.DR+'</button><span class="label qtd_definition_ready pull-right tip-bottom" alt="'+title.label_DR+'" title="'+title.label_DR+'">0</span></div><div class="clearfix"></div></div></li><div class="buttons_footer new_buttons_footer"><button class="btn btn-primary pull-right send_story_sprint" disabled="disabled">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div></div></ul>';
+    var keys = [],
+        index = "";
+    $(".project-items").children().each(function(){
+        index = $(this).find(".story_card").attr("data-index");
+        keys.push(parseInt(index))
+    });
+    // finds the highest rate for the new story
+    if(keys.length > 0) {
+      var higherIndex = Array.max(keys),
+          indexItem = higherIndex + 1;
+    } else {
+      var indexItem = 1;
+    }
+
+    var html = '<ul class="story_container item_container"><li class="story"><div class="story_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="textarea" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-index="'+indexItem+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn btn-minimize expand_story pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-circle-arrow-down"></i></button><button class="btn delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-trash"></i></button><select class="pull-right benefit" alt="'+title.benefit+'" title="'+title.benefit+'" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" alt="'+title.points+'" title="'+title.points+'" disabled="disabled"><button class="btn create_definition_ready pull-right" alt="'+title.create_DR+'" title="'+title.create_DR+'" disabled="disabled">+ '+buttons.DR+'</button><span class="label qtd_definition_ready pull-right tip-bottom" alt="'+title.label_DR+'" title="'+title.label_DR+'">0</span></div><div class="clearfix"></div></div></li><div class="buttons_footer new_buttons_footer"><button class="btn btn-primary pull-right send_story_sprint" disabled="disabled">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div></div></ul>';
 
     $("#backlog").find(".project-items").append(html);
 
@@ -173,10 +174,11 @@ $(document).on("click", ".create_task", function(){
     
 });
 
-// to expand story content
+// click expand story
 $(document).on("click", ".expand_story", function(){
     var item = $(this);
-    item.closest(".story").find(".definition_ready_container").slideToggle("slow");
+
+    item.closest(".story_container").find(".definition_ready_container").slideToggle("slow");
     item.closest(".story_container").find(".buttons_footer").fadeToggle("fast", "linear");
     item.find("i").toggleClass("icon-circle-arrow-down").toggleClass("icon-circle-arrow-up");
 });
@@ -199,7 +201,7 @@ $(document).on("change", ".story_points", function(){
     var story = $(this).closest(".story"),
         storyID = story.find(".story_card").attr("data-pk");
     ajax(url.changeAjaxItens+'?story_points='+this.value+'&story_id='+storyID, [''], 'target_ajax');
-    statusItem("","",false);
+    statusAction("","","send");
 });
 
 // update Benefit
@@ -207,7 +209,7 @@ $(document).on("change", ".benefit", function(){
     var story = $(this).closest(".story"),
         storyID = story.find(".story_card").attr("data-pk");
     ajax(url.changeAjaxItens+'?benefit='+this.value+'&story_id='+storyID, [''], 'target_ajax');
-    var status = statusItem("","",false);
+    var status = statusAction("","","send");
 
     if(status) {
         var initialValue = story.find('.benefit option:first-child').text(),
@@ -232,7 +234,12 @@ $(document).on("click", ".send_story_sprint", function(){
     }
     
     ajax(url.changeAjaxItens+'?name=sprint&sprint_id='+sprintID+'&story_id='+storyID, [''], 'target_ajax');
-    statusItem(object,"sprint",false);
+    statusAction(object,"sprint","send");
+
+    // update all story order in sprint
+    setTimeout(function(){
+        updateStoryOrder();
+    },1000); // Enable after 1000 ms.
 });
 
 // back story to backlog
@@ -242,7 +249,7 @@ $(document).on("click", ".back_backlog", function(){
         sprintID = $(".story_container").attr("data-sprint");
     
     ajax(url.changeAjaxItens+'?name=backlog&sprint_id='+storyID+'&story_id='+storyID, [''], 'target_ajax');
-    statusItem(object,"backlog",false);
+    statusAction(object,"backlog","send");
 });
 
 // remove item
@@ -252,14 +259,14 @@ $(document).on("click", ".delete_item", function(){
         pk = object.attr('data-pk'),
         name = object.attr('data-name');
 
-    removeItem(pk,name,object,true);
+    removeItem(pk,name,object,"remove");
   }
 });
 
 // for remove itens
-function removeItem(pk,name,object,remove) {
+function removeItem(pk,name,object,action) {
     ajax(url.removeBacklogItens+'?pk='+pk+'&name='+name+'', [''], 'target_ajax');
-    var status = statusItem(object,"",remove);
+    var status = statusAction(object,"",action);
     
     if(status === true) {
         // get total number of Definitions of Ready and decreases
@@ -270,41 +277,83 @@ function removeItem(pk,name,object,remove) {
     }
 }
 
-function statusItem(object,item,remove) {
+// update order position of dom
+function updateStoryOrder(){
+    var story = $("#sprint"),
+        stories_container = story.find(".project-items"),
+        sprint_id = story.attr("data-sprint"),
+        allValues = {},
+        valuesUrl = "";
+
+    stories_container.children().each(function(index) {
+        index += 1;
+        order = $(this).index();
+        id = $(this).find('.story_card').attr('data-pk');
+
+        allValues[index] = jQuery.param({"id": id, "order": order});
+
+        $(this).find(".story_card").attr('data-index',order);
+
+    });
+
+    valuesUrl = jQuery.param(allValues);
+    // send to server
+    ajax(url.changeAjaxItens+'?sprint_id='+sprint_id+'&order=order'+'&'+valuesUrl, [''], 'target_ajax');
+    // test server callback
+    statusAction("","sprint","order");
+}
+
+function statusAction(object,item,action) {
   // The first parameter tells whether the element will be deleted in the DOM
     var message = $("#target_ajax").text();
     console.log(message)
 
   if (message.length > 0) {
     if(message === 'True') {
-      var msg_text = msg.remove_sucess,
-      msg_type = msg.type_success;
-      
-      if(remove===true) {
-        // find element to be deleted
-        $(object).closest(".item_container").fadeOut("fast", function() { $(this).remove() });
-
-      } else if(remove===false) {
-        msg_text = "Movido com Sucesso!";
+      // var msg_text = msg.remove_sucess,
+      // msg_type = msg.type_success;
         if(item==="sprint") {
-        // move story to sprint
-            var button = '<button class="btn btn-danger pull-right back_backlog"><i class="icon-circle-arrow-left icon-white"></i> '+buttons.back_backlog+'</button><div class="clearfix"></div></div>',
-                story_content = $('#sprint').find(".project-items");
+            // move story to sprint
+            if(action==="send") {
+                // msg_text = "Movido com Sucesso!";
+                var button = '<button class="btn btn-danger pull-right back_backlog"><i class="icon-circle-arrow-left icon-white"></i> '+buttons.back_backlog+'</button><div class="clearfix"></div></div>',
+                    story_content = $('#sprint').find(".project-items");
+                // move and add button
+                $(object).clone().appendTo(story_content).find(".buttons_footer").empty().append(button);
+                $(object).fadeOut("fast", function() { $(this).remove() });
 
-        } else if(item==="backlog") {
+                // collapse story
+                $(".story_container:last").find(".expand_story").trigger('click');
+
+            } else if(action==="order") {
+                console.log("order updated!")
+            }
+
         // move story to backlog
-            var button = '<button class="btn btn-primary pull-right send_story_sprint">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div>',
-                story_content = $('#backlog').find(".project-items");
+        } else if(item==="backlog") {
+            // move story to sprint
+            if(action==="send") {
+                // msg_text = "Movido com Sucesso!";
+                var button = '<button class="btn btn-primary pull-right send_story_sprint">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div>',
+                    story_content = $('#backlog').find(".project-items");
+                // move and add button
+                $(object).clone().appendTo(story_content).find(".buttons_footer").empty().append(button);
+                $(object).fadeOut("fast", function() { $(this).remove() });
 
+            } 
+
+        // for any one
+        } else if(item==="") {
+            // move story to sprint
+            if(action==="remove") {
+                // find element to be deleted
+                $(object).closest(".item_container").fadeOut("fast", function() { $(this).remove() });
+            }            
         }
-        // move and add button
-        $(object).clone().appendTo(story_content).find(".buttons_footer").empty().append(button);
-        $(object).fadeOut("fast", function() { $(this).remove() });
-      }
 
     } else if(message === "False") {
-      msg_text = msg.remove_error;
-      msg_type = msg.type_error;
+      // msg_text = msg.remove_error;
+      // msg_type = msg.type_error;
     }
 
 
@@ -318,7 +367,7 @@ function statusItem(object,item,remove) {
   } else {
     console.log("waiting for reply...")
     setTimeout(function() {
-        statusItem(object,item,remove)
+        statusAction(object,item,action)
     }, 300);
   }
   // Clean the return of ajax call
