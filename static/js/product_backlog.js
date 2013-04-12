@@ -323,7 +323,7 @@ function statusAction(object,item,action) {
                 $(object).fadeOut("fast", function() { $(this).remove() });
 
                 // collapse story
-                $(".story_container:last").find(".expand_story").trigger('click');
+                $("#sprint").find(".story_container:last").find(".expand_story").trigger('click');
 
             } else if(action==="order") {
                 console.log("order updated!")
@@ -339,8 +339,9 @@ function statusAction(object,item,action) {
                 // move and add button
                 $(object).clone().appendTo(story_content).find(".buttons_footer").empty().append(button);
                 $(object).fadeOut("fast", function() { $(this).remove() });
+                $("#backlog").find(".story_container:last").find(".expand_story").trigger('click');
 
-            } 
+            }
 
         // for any one
         } else if(item==="") {

@@ -63,9 +63,7 @@
 
             <div class="row masthead">
               <a href="{{=URL('index')}}" class="pull-left"  alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
-              {{ if auth.is_logged_in(): }}
-              <a href='{{=URL("projects")}}' id="login" class="btn btn-primary pull-right">{{=T("My Projects")}}</a>
-              {{else:}}
+              {{ if not auth.is_logged_in(): }}
               <a href='{{=URL(c="default", f="user")}}' id="login" class="btn btn-primary pull-right">{{=T("Login")}}</a>
               {{pass}}
             </div>
@@ -73,7 +71,11 @@
                   <h2>{{=T("Coming Soon")}}</h2>
                   <p>{{=T("The Scrumforme meant to be easy, organized and accessible.")}}</p>
                   <p>{{=T("Inspired by Agile methodology using Scrum and Kanban simplifying teamwork.")}}</p>
+                  {{ if not auth.is_logged_in(): }}
                   <a href='{{=URL(c="default", f="user", args="register")}}' id="register" class="btn btn-large btn-primary">{{=T("Sign up")}}</a>
+                  {{else:}}
+                  <a href='{{=URL("projects")}}' id="register" class="btn btn-large btn-primary">{{=T("My Projects")}}</a>
+                  {{pass}}
              </div>
 
 
