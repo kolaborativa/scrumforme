@@ -11,9 +11,16 @@
 
 
 def index():
-    all_projects = db(Project).select()
 
-    return dict(all_projects=all_projects)
+    return dict()
+
+@auth.requires_login()
+def _person_projects():
+    user_relationship = db(db.user_relationship.auth_user_id==auth.user.id).select().first()
+    person_id = user_relationship.person_id
+
+    return db(Project.created_by==person_id).select()
+
 
 @auth.requires_login()
 def projects():
@@ -22,7 +29,7 @@ def projects():
     user_relationship = db(db.user_relationship.auth_user_id==auth.user.id).select().first()
     person_id = user_relationship.person_id
 
-    all_projects = db(Project.created_by==person_id).select()
+    person_projects = _person_projects()
 
     form = SQLFORM.factory(
         Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
@@ -44,14 +51,14 @@ def projects():
     elif form.errors:
         pass
 
-    return dict(form=form, all_projects=all_projects)
+    return dict(form=form, person_projects=person_projects)
 
 
 @auth.requires_login()
 def product_backlog():
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first()
-    all_projects = db(Project).select()
+    person_projects = _person_projects()
 
     stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
     sprint = db(Sprint.project_id == project.id).select().first()
@@ -85,9 +92,9 @@ def product_backlog():
             for df in definition_ready[row]:
                 tasks[df.id] = db(Task.definition_ready_id == df.id).select()
 
-        return dict(project=project, stories=stories, definition_ready=definition_ready, tasks=tasks, form_sprint=form_sprint, sprint=sprint)
+        return dict(project=project, person_projects=person_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, form_sprint=form_sprint, sprint=sprint)
     else:
-        return dict(project=project, form_sprint=form_sprint, sprint=sprint)
+        return dict(project=project, person_projects=person_projects, form_sprint=form_sprint, sprint=sprint)
 
 
 @auth.requires_login()
@@ -104,7 +111,7 @@ def launch_sprint():
 def board():
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first()
-    all_projects = db(Project).select()
+    person_projects = _person_projects()
 
     stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
     sprint = db(Sprint.project_id == project.id).select().first()
@@ -120,9 +127,9 @@ def board():
                 for df in definition_ready[row]:
                     tasks[df.id] = db(Task.definition_ready_id == df.id).select()
 
-            return dict(project=project, stories=stories, definition_ready=definition_ready, tasks=tasks, sprint=sprint)
+            return dict(project=project, person_projects=person_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, sprint=sprint)
         else:
-            return dict(project=project, sprint=sprint)
+            return dict(project=project, person_projects=person_projects, sprint=sprint)
     else:
         redirect(URL(f='product_backlog', args=project_id))
 

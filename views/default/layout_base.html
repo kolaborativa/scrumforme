@@ -61,9 +61,9 @@
             {{ if auth.is_logged_in(): }}
                 <ul id="projects">
                     <li><a href="{{=URL('projects')}}" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'><i class="icon-plus"></i></a></li>
-                    {{if "all_projects" in globals():}}
+                    {{if "person_projects" in globals():}}
                         {{p_count = 1}}
-                        {{for i in all_projects:}}
+                        {{for i in person_projects:}}
                             {{if p_count <= 8:}}
                                 <li class='{{=g_current_page("default/%s/%s" %(request.function,i.id),"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}' class="tip-bottom" alt='{{=i.name}}' title='{{=i.name}}'>{{=i.id}}</a></li>
                             {{p_count += 1}}
