@@ -195,7 +195,7 @@ def create_update_backlog_itens():
 
 
 @auth.requires_login()
-def remove_item_backlog_itens():
+def remove_itens():
 
     if request.vars:
         if request.vars.name == "task":
@@ -301,11 +301,9 @@ def board_ajax_itens():
                 ended=None,
             )
         elif request.vars.task_date:
-            d = request.vars.task_date.split("/")
-            started_date = "%s-%s-%s" %(d[2], d[1], d[0])
 
             db(Task.id == request.vars.task_id).update(
-                started=datetime.strptime(started_date,'%Y-%m-%d')
+                started=datetime.strptime(request.vars.task_date,'%Y-%m-%d')
             )
         else:
             return False

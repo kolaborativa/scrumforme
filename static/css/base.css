@@ -154,7 +154,9 @@ float: left;
 #user-nav > ul > li > a {
 	/*padding: 5px 10px;*/
 	display: block;
-	font-size: 10px;
+	font-size: 22px;
+	color: #fff;
+	padding: 10px 10px 10px;
 }
 
 #user-nav > ul > li > a:hover, #user-nav > ul > li.open > a {
@@ -1565,11 +1567,15 @@ html, body, .container, .content {
 
 .icon-comment-custom{ background-position: 0 -186px; width: 19px; height: 17px; padding: 1px 6px;} 
 .icon-config-custom{ background-position: 0 -253px; width: 19px; height: 20px; } 
-.icon-logout-custom{ background-position: 0 -323px; width: 20px; height: 21px; } 
+.icon-logout-custom{ background-position: 0 -323px; width: 20px; height: 21px; position: relative; top: 7px; } 
 .icon-search-custom{ background-position: 0 -394px; width: 19px; height: 19px; }
 
 .error {
 	color: red;
+}
+
+.hide {
+    display: none!important;
 }
 
 #toogle_sidebar {

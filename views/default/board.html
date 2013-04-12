@@ -5,6 +5,7 @@
     var url = {
         createUpdateBacklogItens : '{{=URL("create_update_backlog_itens.json")}}',
         changeAjaxItens : '{{=URL("board_ajax_itens")}}',
+        removeTask : '{{=URL("remove_itens")}}',
     },
     msg = {
         field_empty : '{{=T("Click to write")}}',
@@ -48,8 +49,8 @@
         <div id="clock">
             <i class="icon-time pull-left"></i>
             <div class="pull-left">
-                <p>{{=T('Started in')}}: <strong>{{=g_blank_date_check(sprint.started)}}</strong></p>
-                <p>{{=T('Estimated for')}}: <strong>{{=g_blank_date_check(sprint.ended)}}</strong></p>
+                <p>{{=T('Started in')}}: <strong>{{=g_blank_fulldate_check(sprint.started)}}</strong></p>
+                <p>{{=T('Estimated for')}}: <strong>{{=g_blank_fulldate_check(sprint.ended)}}</strong></p>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -86,17 +87,31 @@
             {{for df in definition_ready[story.id]:}}
                 {{if definition_ready[story.id][count].story_id == story.id:}}
                 {{if not definition_ready[story.id][count].story_id in definition_ids:}}
-                <table class="table" data-storyid='{{=definition_ready[story.id][count].id}}'>
+                <!-- custom class to expand / collapse tables of the same story -->
+                <table class="table story{{=definition_ready[story.id][count].story_id}}" data-storyid='{{=definition_ready[story.id][count].story_id}}'>
                     <tr>
-                        <th class="story_title" colspan=5>
-                            <h5><a href="#" class="editable-click story_card editable" data-type="text" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a></h5>
+                        <th class="story_header" colspan=5>
+                            <div class="text_container">
+                                <h5><a href="#" class="editable-click story_card editable" data-type="text" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a></h5>
+                            </div>
+                            <div class="buttons_container">
+                                <button class="btn btn-minimize expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
+                                    <i class="icon-circle-arrow-up"></i></button>
+                                <input class="pull-right benefit" type="text" placeholder='?' value='{{=g_blank_check(story.benefit)}}' alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}' disabled>
+                                <input class="pull-right story_points" type="text" placeholder="?" value='{{=g_blank_check(story.story_points)}}' alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}' disabled>
+                                <button class="btn create_definition_ready pull-right" alt='{{=T("Create Definition of Ready")}}' title='{{=T("Create Definition of Ready")}}'>+ {{=T("Task")}}</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>                            
                         </th>
                     </tr>
                     {{definition_ids.append(definition_ready[story.id][count].story_id)}}
+                    <tr class="item_container">
                 {{else:}}
-                <table class="table no-th" data-storyid='{{=definition_ready[story.id][count].id}}'>
+                <!-- for Definition of Ready which are part of the same story -->
+                <table class="table no-th story{{=definition_ready[story.id][count].story_id}}" data-storyid='{{=definition_ready[story.id][count].story_id}}'>
+                    <tr class="item_container">
                 {{pass}}
-                    <tr>
                         <td class="definition_ready_title">
                             {{=definition_ready[story.id][count].title}}
                         </td>
@@ -104,18 +119,23 @@
                         <td class="column_task" data-status="todo">
                             {{for task in tasks[definition_ready[story.id][count].id]:}}
                                 {{if task["status"] == "todo": }}
-                                <ul class="task_container" data-taskid='{{=task["id"]}}'>
+                                <ul class="task_container">
                                   <li class="task">
-                                    <a href="#" class="editable-click editable" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
-                                    <img src='{{=Gravatar(auth.user.email).thumb}}' width="30px" height="30px">
-                                    <div class="clearfix"></div>
-                                    <div>
-                                        <span class="icon-comment"></span>
-                                        <div class="input-append date started_time" data-date='{{=g_blank_date_check(task["started"])}}'>
-                                          <input size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
-                                          <span class="add-on"><i class="icon-calendar"></i></span>
+                                    <div class="avatar_container">
+                                        <img class="avatar_card" src='{{=Gravatar(auth.user.email).thumb}}'>
+                                    </div>
+                                    <div class="card_container">
+                                        <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                        <div class="icons_card">
+                                            <div class="date started_calendar" data-date='{{=g_blank_fulldate_check(task["started"])}}'>
+                                                <input class="started_date_text" size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
+                                                <span class="add-on calendar"><i class="icon-calendar"></i></span>
+                                            </div>
+                                            <div class="comment"><i class="icon-comment"></i><span>0</span></div>
+                                            <span class="delete_item" ><i class="icon-trash"></i></span>
                                         </div>
                                     </div>
+                                    <div class="clearfix"></div>
                                   </li>
                                 </ul>
                                 {{pass}}
@@ -125,18 +145,23 @@
                         <td class="column_task" data-status="inprogress">
                             {{for task in tasks[definition_ready[story.id][count].id]:}}
                                 {{if task["status"] == "inprogress": }}
-                                <ul class="task_container" data-taskid='{{=task["id"]}}'>
+                                <ul class="task_container">
                                   <li class="task">
-                                    <a href="#" class="editable-click editable" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
-                                    <img src='{{=Gravatar(auth.user.email).thumb}}' width="30px" height="30px">
-                                    <div class="clearfix"></div>
-                                    <div>
-                                        <span class="icon-comment"></span>
-                                        <div class="input-append date started_time" data-date='{{=g_blank_date_check(task["started"])}}'>
-                                          <input size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
-                                          <span class="add-on"><i class="icon-calendar"></i></span>
+                                    <div class="avatar_container">
+                                        <img class="avatar_card" src='{{=Gravatar(auth.user.email).thumb}}' width="45px" height="45px">
+                                    </div>
+                                    <div class="card_container">
+                                        <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                        <div class="icons_card">
+                                            <div class="date started_calendar" data-date='{{=g_blank_fulldate_check(task["started"])}}'>
+                                                <input class="started_date_text" size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
+                                                <span class="add-on calendar"><i class="icon-calendar"></i></span>
+                                            </div>
+                                            <div class="comment"><i class="icon-comment"></i><span>0</span></div>
+                                            <span class="delete_item" ><i class="icon-trash"></i></span>
                                         </div>
                                     </div>
+                                    <div class="clearfix"></div>
                                   </li>
                                 </ul>
                                 {{pass}}
@@ -146,18 +171,23 @@
                         <td class="column_task" data-status="verification">
                             {{for task in tasks[definition_ready[story.id][count].id]:}}
                                 {{if task["status"] == "verification": }}
-                                <ul class="task_container" data-taskid='{{=task["id"]}}'>
+                                <ul class="task_container">
                                   <li class="task">
-                                    <a href="#" class="editable-click editable" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
-                                    <img src='{{=Gravatar(auth.user.email).thumb}}' width="30px" height="30px">
-                                    <div class="clearfix"></div>
-                                    <div>
-                                        <span class="icon-comment"></span>
-                                        <div class="input-append date started_time" data-date='{{=g_blank_date_check(task["started"])}}'>
-                                          <input size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
-                                          <span class="add-on"><i class="icon-calendar"></i></span>
+                                    <div class="avatar_container">
+                                        <img class="avatar_card" src='{{=Gravatar(auth.user.email).thumb}}' width="45px" height="45px">
+                                    </div>
+                                    <div class="card_container">
+                                        <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                        <div class="icons_card">
+                                            <div class="date started_calendar" data-date='{{=g_blank_fulldate_check(task["started"])}}'>
+                                                <input class="started_date_text" size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
+                                                <span class="add-on calendar"><i class="icon-calendar"></i></span>
+                                            </div>
+                                            <div class="comment"><i class="icon-comment"></i><span>0</span></div>
+                                            <span class="delete_item" ><i class="icon-trash"></i></span>
                                         </div>
                                     </div>
+                                    <div class="clearfix"></div>
                                   </li>
                                 </ul>
                                 {{pass}}
@@ -167,18 +197,23 @@
                         <td class="column_task" data-status="done">
                             {{for task in tasks[definition_ready[story.id][count].id]:}}
                                 {{if task["status"] == "done": }}
-                                <ul class="task_container" data-taskid='{{=task["id"]}}'>
+                                <ul class="task_container">
                                   <li class="task">
-                                    <a href="#" class="editable-click editable" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
-                                    <img src='{{=Gravatar(auth.user.email).thumb}}' width="30px" height="30px">
-                                    <div class="clearfix"></div>
-                                    <div>
-                                        <span class="icon-comment"></span>
-                                        <div class="input-append date started_time" data-date='{{=g_blank_date_check(task["started"])}}'>
-                                          <input size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
-                                          <span class="add-on"><i class="icon-calendar"></i></span>
+                                    <div class="avatar_container">
+                                        <img class="avatar_card" src='{{=Gravatar(auth.user.email).thumb}}' width="45px" height="45px">
+                                    </div>
+                                    <div class="card_container">
+                                        <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                        <div class="icons_card">
+                                            <div class="date started_calendar" data-date='{{=g_blank_fulldate_check(task["started"])}}'>
+                                                <input class="started_date_text" size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
+                                                <span class="add-on calendar"><i class="icon-calendar"></i></span>
+                                            </div>
+                                            <div class="comment"><i class="icon-comment"></i><span>0</span></div>
+                                            <span class="delete_item" ><i class="icon-trash"></i></span>
                                         </div>
                                     </div>
+                                    <div class="clearfix"></div>
                                   </li>
                                 </ul>
                                 {{pass}}

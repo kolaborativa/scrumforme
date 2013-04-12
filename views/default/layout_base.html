@@ -80,7 +80,7 @@
                                     </div>
                                 </form>
                             </li>
-                            <li><a href='{{=URL(f="user",args="profile",vars={"_next":"index"})}}' alt='{{=T("Profile")}}' title='{{=T("Profile")}}'><i class="icon-config-custom"></i></a></li>
+                            <li><a href='{{=URL(f="user",args="profile",vars={"_next":"index"})}}' alt='{{=T("Profile")}}' title='{{=T("Profile")}}'><i class="icon-user"></i></a></li>
                             <li><a href='{{=URL(f="user",args="logout",vars={"_next":"index"})}}' alt='{{=T("Logout")}}' title='{{=T("Logout")}}'><i class="icon-logout-custom"></i></a></li>
                     </ul>
                 </div>
@@ -100,9 +100,7 @@
                         <li><a href="#" class="tip-right" alt="{{=T('Sprints')}}" title="{{=T('Sprints')}}"><i class="icon-credit-card"></i> <span>{{=T('Sprints')}}</span></a></li>
                         <li><a href="#" class="tip-right" alt="{{=T('Archives')}}" title="{{=T('Archives')}}"><i class="icon-file"></i> <span>{{=T('Archives')}}</span></a></li>
                         <li><a href="#" class="tip-right" alt="{{=T('Team')}}" title="{{=T('Team')}}"><i class="icon-group"></i> <span>{{=T('Team')}}</span></a></li>
-                        <li><a href="#" class="tip-right" alt="{{=T('Invite')}}" title="{{=T('Invite')}}"><i class="icon-child"></i> <span>{{=T('Invite')}}</span></a></li>
                         <li><a href="#" class="tip-right" alt="{{=T('Statistics')}}" title="{{=T('Statistics')}}"><i class="icon-graph "></i> <span>{{=T('Statistics')}}</span></a></li>
-                        <li><a href="#" class="tip-right" alt="{{=T('Contacts')}}" title="{{=T('Contacts')}}"><i class="icon-address-book"></i> <span>{{=T('Contacts')}}</span></a></li>
                     {{pass}}
                     <li><button id="toogle_sidebar" class="tip-right" alt="{{=T('Expand / Collapse Menu')}}" title="{{=T('Expand / Collapse Menu')}}"><i class='{{=g_if_in_current_page("default/board/%s" %request.args(0),"icon-chevron-right", "icon-chevron-left")}} icon-white'></i> <span>{{=T('Collapse Menu')}}</span></button></li>
                 {{else:}}
@@ -146,6 +144,7 @@
             <script async defer src='{{=URL("static","js/product_backlog.js")}}'></script>
             {{ elif request.function == "board": }}
             <script src='{{=URL("static","js/jquery.livesearch.js")}}'></script>
+            <script async defer src='{{=URL("static","js/date.format.js")}}'></script>
             <script async defer src='{{=URL("static","js/board.js")}}'></script>
             {{ pass }}
 

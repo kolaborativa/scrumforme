@@ -130,39 +130,83 @@ table, th, td {
 .task_container {
     list-style-type: none;
     margin: 0 auto;
-    padding: 0;
+    padding: 2px 0px;
 }
 .task_container li {
-    margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em;
+    /*margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em;*/
     line-height: 1.2em;
 }
 .task_container li:first-letter {
     text-transform: capitalize;
 }
 
-.story_title h5 {
+.story_header h5 {
     font-size: 16px;
     text-align: left;
 }
 
-.started_time {
-    position: relative;
-    top: 4px;
+.text_container {
+    width: 80%;
+    float: left;
 }
 
-.started_time input {
+.text_container a {
+    word-wrap: break-word;
+}
+
+.text_container:first-letter {
+    text-transform: capitalize;
+}
+
+.buttons_container {
+    width: 20%;
+    float: left;
+}
+
+.buttons_container {
+    position: relative;
+    top: 5px;
+}
+
+.buttons_container button, .buttons_container select, .buttons_container input {
+    margin-right: 7px;
+}
+
+.buttons_container select {
+    width: 45px;
+    height: 30px;
+    padding: 0px;
+    font-size: 13px;
+}
+
+.benefit {
+    width: 8%;
+}
+
+.story_points {
+    width: 8%;
+}
+
+.expand_story {
+    font-size: 20px;
+    position: relative;
+    top: 3px;
+}
+
+
+/*.started_date input {
     width: 45%;
     padding: 0px 5px!important;
 }
 
-.started_time .add-on {
+.started_date .add-on {
     padding: 0px;
 }
 
-.started_time .add-on i {
+.started_date .add-on i {
     position: relative;
     top: 3px;
-}
+}*/
 /*
 ============
  MOVE ITEMS
@@ -170,7 +214,7 @@ table, th, td {
 */
 
 .task {
-    padding: 7px;
+    /*padding: 7px;*/
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff4d8',endColorstr='#fce8c6');
     background-image: -webkit-gradient(linear,center top,center bottom,from(#fff4d8),to(#fce8c6));
     background-image: -moz-linear-gradient(center top,#fff4d8,#fce8c6);
@@ -188,27 +232,102 @@ table, th, td {
   cursor: move;
 }
 
-.task a {
-  font-size: 14px;
-}
-
 .task .content {
     word-wrap: break-word;
     padding: 5px 0px;
 }
-.task .icon-comment {
-    background-position: -321px -782px;
-    border: 3px solid transparent;
-    /*display: block;*/
-    height: 12px;
-    vertical-align: middle;
-    width: 11px;
-    opacity: .6;
-}
-.task img {
-    float: right;
+
+.comment i, .calendar i, .started_date_text, .delete_item i {
+    opacity: .7;
 }
 
+.avatar_container {
+    width: 25%;
+    float: left;
+    padding: 20px 0px;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(224, 202, 146)',endColorstr='#fce8c6');
+    background-image: -webkit-gradient(linear,center top,center bottom,from(rgb(224, 202, 146)),to(#fce8c6));
+    background-image: -moz-linear-gradient(center top,rgb(224, 202, 146),#fce8c6);
+    background-color: rgb(224, 202, 146);
+}
+
+.avatar_card {
+    position: relative;
+    bottom: 10px;
+    margin-left: 10%;
+    border: 1px solid rgb(92, 92, 92);
+    width: 80%;
+    height: auto;
+}
+
+.card_container {
+    float: left;
+    width: 75%;
+}
+
+.task_item {
+    position: relative;
+    left: 5%;
+    top: 5px;
+    font-size: 14px;
+}
+
+.started_calendar {
+    display: inline;
+}
+
+.calendar {
+    font-size: 19px;
+}
+
+.delete_item i {
+    font-size: 18px;
+}
+
+.delete_item i:hover {
+    color: #08b;
+}
+
+.comment {
+    display: inline;
+    position: relative;
+    left: 4px;
+}
+
+.comment i {
+    font-size: 22px;
+    position: relative;
+    top: 5px;
+}
+
+.comment span {
+    font-size: 12px;
+    color: #fff;
+    position: relative;
+    right: 14px;
+    bottom: 2px;
+    font-weight: bold;
+}
+
+.started_date_text {
+    width: 36px;
+    position: relative;
+    top: 1px;
+    left: 2px;
+    font-weight: bold;
+    cursor: pointer!important;
+    background-color: transparent!important; 
+    border-style: solid!important; 
+    border-width: 0px!important;
+    box-shadow: none!important;
+}
+
+.icons_card {
+    text-align: right;
+    position: relative;
+    right: 3%;
+    margin-top: 25px;
+}
 
 /*
 =======
@@ -232,6 +351,15 @@ table, th, td {
     color: #444444;
 }
 
+.task .input-large {
+    width: 100%;
+    margin: 10px 0px 0px 5%;
+}
+
+.task .editable-input {
+    width: 83%;
+}
+
 .task .editable-buttons {
     display: block;
     margin-top: 10px;
@@ -239,29 +367,29 @@ table, th, td {
 
 .task .editable-submit {
     position: relative;
-    right: 40px;
+    right: 12%;
 }
 
 .task .editable-cancel {
-    margin-left: 30px;
+    margin-left: 5%;
 }
 
-.story_title .editable-buttons {
+.story_header .editable-buttons {
     margin-left: 10%;
 }
 
-.story_title .editable-cancel {
+.story_header .editable-cancel {
     display: none;
 }
 
-.story_title .editable-clear-x {
+.story_header .editable-clear-x {
     right: -3%!important;
 }
 
-.story_title .editable-container.editable-inline {
+.story_header .editable-container.editable-inline {
     width: 50%;
 }
 
-.story_title .editable-input, .editable-input input[type="text"] {
+.story_header .editable-input, .editable-input input[type="text"] {
     width: 100%;
 }

@@ -48,10 +48,19 @@ def g_blank_check(item):
         return item
 
 
+def g_blank_fulldate_check(item):
+    '''returns a empty string if item is empty.'''
+    if item:
+        return item.strftime("%d/%m/%Y")
+    else:
+        item=""
+        return item
+
+
 def g_blank_date_check(item):
 	'''returns a empty string if item is empty.'''
 	if item:
-		return item.strftime("%d/%m/%Y")
+		return item.strftime("%d/%m")
 	else:
 		item=""
 		return item

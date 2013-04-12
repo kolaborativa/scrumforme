@@ -187,11 +187,6 @@ margin-top: 0px;
     font-size: 12px;
 }
 
-.comment_definition_ready .icon-comment-custom span {
-    position: relative;
-    bottom: 2px;
-}
-
 .qtd_definition_ready {
     position: relative;
     top: 5px;
