@@ -30,11 +30,13 @@
     <div id="content-header">
         <div id="breadcrumb">
             <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
-            <a href='{{=URL("projects")}}' title="{{=T('Go to')}} {{=T('Board')}}" class="tip-bottom"><i class="icon icon-th"></i> {{=T('Board')}}</a>
             <a href="#" class="current">{{=T('Board')}}</a>
         </div>
         <div id="header-name" class="pull-left">
             <h1>{{=project.name}}</h1>
+        </div>
+        <div id="sprint-name" class="span5 pull-right">
+            <h4><span>{{=sprint.name}}</span> - {{=sprint.weeks}} {{=T('Weeks')}}</h5>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -104,8 +106,8 @@
                         </div>                            
                         </th>
                     </tr>
-                    {{definition_ids.append(definition_ready[story.id][count].story_id)}}
                     <tr class="item_container" data-definitionready='{{=definition_ready[story.id][count].id}}'>
+                    {{definition_ids.append(definition_ready[story.id][count].story_id)}}
                 {{else:}}
                 <!-- for Definition of Ready which are part of the same story -->
                 <table class="table no-th story{{=definition_ready[story.id][count].story_id}}" data-storyid='{{=definition_ready[story.id][count].story_id}}'>

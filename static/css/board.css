@@ -1,3 +1,18 @@
+.proper-content {
+    background-color: #444444;
+}
+
+#sprint-name span {
+    color: #ccc;
+    font-style: italic;
+    font-size: 20px;
+}
+
+#sprint-name:first-letter {
+    text-transform: capitalize;
+}
+
+
 /*
 ============
  NAV SCROLL
@@ -49,7 +64,7 @@ ul {
 
 #info_content {
     padding: 20px 0 10px 0px;
-    /*display: table;*/
+    background-color: #fff;
 }
 
 .info-column {
@@ -114,12 +129,21 @@ table, th, td {
     border: 1px solid #ccc;
 }
 
+.table{
+    background-color: #fff;
+}
+
 .table td{
     width: 20%;
 }
 
 .no-th {
     margin-top: -20px;
+}
+
+/*zebra rows*/
+.no-th:nth-child(odd) {
+    background-color: rgb(243, 242, 242);
 }
 
 .task_container {
