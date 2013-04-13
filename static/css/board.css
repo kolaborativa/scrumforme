@@ -37,11 +37,6 @@ ul {
     margin: 0px;
 }
 
-/*.column_task { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-.column_task li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; }
-  html>body .column_task li { height: 1.5em; line-height: 1.2em; }*/
-  /*.ui-state-highlight { height: 1.5em; line-height: 1.2em; }*/
-
 /*
 ===============
  BOARD CONTENT
@@ -193,20 +188,27 @@ table, th, td {
     top: 3px;
 }
 
-
-/*.started_date input {
-    width: 45%;
-    padding: 0px 5px!important;
+.definition_ready_title {
+    width: 90%;
 }
 
-.started_date .add-on {
-    padding: 0px;
-}
-
-.started_date .add-on i {
+.vertical {
+    float: right; 
     position: relative;
-    top: 3px;
-}*/
+    left: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px 0px;
+    -moz-transform: rotate(270deg);  /* FF3.5+ */        
+    -o-transform: rotate(270deg);  /* Opera 10.5 */   
+    -webkit-transform: rotate(270deg);  /* Saf3.1+, Chrome */              
+    filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=3);  /* IE6,IE7 */          
+    -ms-filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); /* IE8 */   
+}
+
+.vertical:hover {
+    color: #08b;
+}
 /*
 ============
  MOVE ITEMS

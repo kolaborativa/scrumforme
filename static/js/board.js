@@ -50,36 +50,47 @@ $(function() {
                 $(".placeholder_item").css({height:placeholder.height(),marginBottom:"10px"});
                 ui.placeholder.html(placeholder);
 
-                var task_id = $(ui.item).closest('.table').attr('data-storyid');
-                $('body').data('storyid', task_id);
+                var definition_ready_id = $(ui.item).closest('.item_container').attr('data-definitionready');
+                $('body').data('definitionreadyid', definition_ready_id);
             },
             stop: function( event, ui ) {
                 var task = $(ui.item),
-                    old_task_id = $('body').data('storyid'),
-                    new_task_id = task.closest('.table').attr('data-storyid');
+                    old_definition_ready_id = $('body').data('definitionreadyid'),
+                    new_definition_ready_id = task.closest('.item_container').attr('data-definitionready');
                     task_status = task.closest('.column_task').attr('data-status'),
-                    task_date = task.find('input').val();
+                    task_date = task.find('input').val(),
+                    task_value = task.find('.task_item').text(),
+                    pass = false;
 
+                $('body').data('pass', pass);
                 // prevents send to a different definition of ready or different story
-                if(new_task_id !== old_task_id) {
+                if(new_definition_ready_id !== old_definition_ready_id) {
+                    alert(msg.task_no_belong)
                     return false
-                }
+                
+                }else if((task_date ==="" && task_status==="verification") || (task_date ==="" && task_status==="done")) {
+                    // prevents task undated verification for status or done
+                    alert(msg.task_undated)
+                    return false
 
-                // prevents task undated verification for status or done
-                if(task_date ==="" && task_status==="verification") {
-                    alert(msg.task_undated)
+                }else if(task_value ===msg.field_empty) {
+                    alert(msg.validation_error)
                     return false
-                }else if(task_date ==="" && task_status==="done") {
-                    alert(msg.task_undated)
-                    return false
+
+                }else {
+                    pass = true;
+                    $('body').data('pass', pass);
                 }
 
             },            
             receive: function(event, ui) {
+                var pass = $('body').data('pass');
                 
-                setTimeout(function () {
-                    updateStatusColumn($(ui.item))
-                }, 1000); // Enable after 1000 ms.
+                if(pass === true) {
+                    setTimeout(function () {
+                        updateStatusColumn($(ui.item))
+                    }, 1000); // Enable after 1000 ms.
+                }
             }
     });
 
@@ -92,7 +103,8 @@ $(function() {
 
     sprint_ended.setDate(sprint_ended.getDate()+burndown);
 
-    $('.started_calendar').datepicker({
+    $(document).on('focus click',".started_calendar", function(){
+        $(this).datepicker({
         format: 'dd/mm/yyyy',
         todayBtn: "linked",
         todayHighlight: true,
@@ -104,6 +116,7 @@ $(function() {
             // call the function
             changeDate(this, ev.date);
         });
+    })
 
 });
 
@@ -125,12 +138,20 @@ function updateStatusColumn(task){
 function changeDate(item, date){
     var task = $(item),
     task_id = task.closest('.task_container').find(".task_item").attr('data-pk');
-    date_server = date.format("UTC:yyyy-mm-dd");
+    date_server = date.format("UTC:yyyy-mm-dd"),
+    task_value = task.closest('.task_container').find('.task_item').text();
 
-    // send to server
-    ajax(url.changeAjaxItens+'?task_id='+task_id+'&task_date='+date_server, [''], 'target_ajax');
-    // test server callback
-    statusAction("date", "", "");
+    if(task_value ===msg.field_empty) {
+        alert(msg.validation_error)
+        return false
+
+    } else {
+        // send to server
+        ajax(url.changeAjaxItens+'?task_id='+task_id+'&task_date='+date_server, [''], 'target_ajax');
+        // test server callback
+        statusAction("date", "", "");
+    }
+
 }
 
 // remove item
@@ -164,7 +185,7 @@ function statusAction(action, task_status, task) {
             console.log("date status updated!")
 
         }else if(action ==="remove") {
-            $(task).closest(".task_container").remove();
+            $(task).closest(".task_container").fadeOut("fast", function(){ $(this).remove()});
             console.log("remove OK!")
         }
 
@@ -190,24 +211,24 @@ $(document).on("click", ".expand_story", function(){
         story_id = item.closest(".table").attr("data-storyid");
         
         console.log(story_id)
-    $(".story"+story_id).find(".item_container").slideToggle("fast");
+    $(".story"+story_id).find(".item_container").fadeToggle("slow");
     item.find("i").toggleClass("icon-circle-arrow-down").toggleClass("icon-circle-arrow-up");
 });
 
 // by clicking the button to add Task
-// $(document).on("click", ".create_task", function(){
+$(document).on("click", ".create_task", function(){
 
-//     var story_id = $(this).closest(".table").attr("data-pk");
+    var definition_ready_id = $(this).closest(".item_container").attr("data-definitionready");
 
-//     var html = '<ul class="item_container zebra_row"><li class="task"><div class="text_container"><a href="#" class="editable-click editable-empty editable new_task" data-type="textarea" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="task">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-trash"></i></button><button class="btn btn-minimize comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment-custom"><span>0</span></i></button></div><div class="clearfix"></div></li></ul>';
+    var html = '<ul class="task_container"><li class="task"><div class="avatar_container"><img class="avatar_card" src="http://lorempixel.com/50/50/"></div><div class="card_container"><a href="#" class="editable-click editable-empty editable task_item new_task" data-type="textarea" data-placeholder="'+msg.field_empty+'" data-pk="'+definition_ready_id+'" data-name="task">'+msg.field_empty+'</a><div class="icons_card"><div class="date started_calendar" data-date=""><input class="started_date_text" size="16" type="text" value="" readonly><span class="add-on calendar"><i class="icon-calendar"></i></span></div><div class="comment"><i class="icon-comment"></i><span>0</span></div><span class="delete_item" ><i class="icon-trash"></i></span></div></div><div class="clearfix"></div></li></ul>';
 
-//     var newItem = $(this).closest(".definition_ready_container").append(html);
+    var newItem = $(this).closest(".item_container").find(".todo").append(html);
 
-//     setTimeout(function () {
-//        newItem.find(".new_task:last").trigger('click')
-//     }, 100);
+    setTimeout(function () {
+       newItem.find(".new_task:last").trigger('click');
+    }, 100);
     
-// });
+});
 
 // =============
 // PLUGIN HACKS
@@ -241,7 +262,10 @@ $('.table').editable({
       if(value === '') return msg.validation_error;
   },
   success: function(value,response) {
-
+  // get the coming new database ID and update in DOM
+  $(this).attr("data-pk", value.database_id);
+  // changes the status of the created item for item update
+  $(this).attr("data-update", true);
   }
 });
 

@@ -12,13 +12,13 @@
         validation_error : '{{=T("Can not be empty")}}',
         confirm : '{{=T("Are you sure you want to continue?")}}',
         task_undated : '{{=T("You must first put a start date")}}',
+        task_no_belong : '{{=T("This task does not belong to another definition of ready")}}',
         remove_sucess : '{{=T("Removed Successfully!")}}',
         remove_error : '{{=T("Error in removal!")}}',
         type_error : 'error',
         type_success : 'success',
     },
     date = {
-        // sprint_started : '{{=g_blank_date_check(sprint.started)}}',
         sprint_started : '{{=sprint.started}}',
         weeks : '{{=sprint.weeks}}',
     }
@@ -99,24 +99,24 @@
                                     <i class="icon-circle-arrow-up"></i></button>
                                 <input class="pull-right benefit" type="text" placeholder='?' value='{{=g_blank_check(story.benefit)}}' alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}' disabled>
                                 <input class="pull-right story_points" type="text" placeholder="?" value='{{=g_blank_check(story.story_points)}}' alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}' disabled>
-                                <button class="btn create_definition_ready pull-right" alt='{{=T("Create Definition of Ready")}}' title='{{=T("Create Definition of Ready")}}'>+ {{=T("Task")}}</button>
                             </div>
                             <div class="clearfix"></div>
                         </div>                            
                         </th>
                     </tr>
                     {{definition_ids.append(definition_ready[story.id][count].story_id)}}
-                    <tr class="item_container">
+                    <tr class="item_container" data-definitionready='{{=definition_ready[story.id][count].id}}'>
                 {{else:}}
                 <!-- for Definition of Ready which are part of the same story -->
                 <table class="table no-th story{{=definition_ready[story.id][count].story_id}}" data-storyid='{{=definition_ready[story.id][count].story_id}}'>
-                    <tr class="item_container">
+                    <tr class="item_container" data-definitionready='{{=definition_ready[story.id][count].id}}'>
                 {{pass}}
-                        <td class="definition_ready_title">
-                            {{=definition_ready[story.id][count].title}}
+                        <td>
+                            <p class="definition_ready_title">{{=definition_ready[story.id][count].title}}</p>
+                            <p class="vertical create_task" alt='{{=T("Create Task")}}' title='{{=T("Create Task")}}'><i class="icon-plus"></i> {{=T("task")}}</p>
                         </td>
                         
-                        <td class="column_task" data-status="todo">
+                        <td class="column_task todo" data-status="todo">
                             {{for task in tasks[definition_ready[story.id][count].id]:}}
                                 {{if task["status"] == "todo": }}
                                 <ul class="task_container">
