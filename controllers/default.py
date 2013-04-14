@@ -15,28 +15,25 @@ def index():
     return dict()
 
 @auth.requires_login()
-def _person_projects():
-    user_relationship = db(db.user_relationship.auth_user_id==auth.user.id).select().first()
-    person_id = user_relationship.person_id
-
-    return db(Project.created_by==person_id).select()
-
-
-@auth.requires_login()
 def _get_person():
-    """Function that get person of the user logged.
-    Returns the person's id.
+    """Function that get data of relationship person of the user logged. Projects and person_id.
     """
     user_relationship = db(db.user_relationship.auth_user_id==auth.user.id).select().first()
     person_id = user_relationship.person_id
-    return person_id
+
+    projects = db(Project.created_by==person_id).select()
+    person_id = user_relationship.person_id
+
+    return dict(person_id=person_id, projects=projects)
 
 
 @auth.requires_login()
 def projects():
     from datetime import datetime
-    person_id = _get_person()
-    person_projects = _person_projects()
+    
+    person = _get_person()
+    person_id = person["person_id"]
+    person_projects = person["projects"]
 
     form = SQLFORM.factory(
         Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
@@ -65,8 +62,10 @@ def projects():
 def product_backlog():
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
-    person_id = _get_person()
-    person_projects = _person_projects()
+    
+    person = _get_person()
+    person_id = person["person_id"]
+    person_projects = person["projects"]
 
     if project.created_by == person_id:
         stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
@@ -121,12 +120,14 @@ def launch_sprint():
 def board():
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
-    person_id = _get_person()
-    person_projects = _person_projects()
+    
+    person = _get_person()
+    person_id = person["person_id"]
+    person_projects = person["projects"]
 
     if project.created_by == person_id:
-        stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
         sprint = db(Sprint.project_id == project.id).select().first()
+        stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
 
         if sprint:
             if stories:
@@ -147,12 +148,40 @@ def board():
     redirect(URL('projects'))
 
 
+def statistics():
+    project_id = request.args(0) or redirect(URL('projects'))
+    project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
+    
+    person = _get_person()
+    person_id = person["person_id"]
+    person_projects = person["projects"]
+
+    if project.created_by == person_id:
+        sprint = db(Sprint.project_id == project.id).select().first()
+        stories = db(Story.project_id == project.id).select()
+
+        if sprint:
+            if stories:
+                return dict(project=project, person_projects=person_projects, sprint=sprint, stories=stories)
+
+            else:
+                redirect(URL(f='product_backlog', args=project_id))
+
+        else:
+            redirect(URL(f='product_backlog', args=project_id))
+
+    else:
+        redirect(URL('projects'))
+
+
 @auth.requires_login()
-def create_update_backlog_itens():
-    """Function that creates or updates items. Receive updates if request.vars.dbUpdate and takes the ID to be updated with request.vars.dbID
+def create_update_itens():
+    """Function that creates or updates items. Receive updates if request.vars.dbUpdate
+    and takes the ID to be updated with request.vars.dbID
     """
 
     if request.vars:
+         # updating tasks
         if request.vars.dbUpdate == "true":
             if request.vars.name == "story":
                 db(Story.id == request.vars.dbID).update(
@@ -169,6 +198,7 @@ def create_update_backlog_itens():
 
             return dict(success="success",msg="gravado com sucesso!")
 
+        # creating tasks
         elif request.vars.dbUpdate == "false":
             if request.vars.name == "story":
                 database_id = Story.insert(
@@ -187,6 +217,8 @@ def create_update_backlog_itens():
                             title=request.vars.value,
                             status="todo"
                             )
+                # updates the status of story
+                _test_story_completed(request.vars.definitionready)
 
             return dict(success="success",msg="gravado com sucesso!",name=request.vars.name,database_id=database_id)
 
@@ -200,19 +232,21 @@ def remove_itens():
     if request.vars:
         if request.vars.name == "task":
             db(Task.id == request.vars.pk).delete()
+            # updates the status of story
+            _test_story_completed(request.vars.definitionready)
 
         if request.vars.name == "definition_ready":
             db(Definition_ready.id == request.vars.pk).delete()
-            definitions_ready_data = db(Definition_ready.id == request.vars.pk).select()
+            all_definitions_data = db(Definition_ready.id == request.vars.pk).select()
 
-            for df in definitions_ready_data:
+            for df in all_definitions_data:
                 db(Task.definition_ready_id == df.id).delete()
 
         elif request.vars.name == "story":
             db(Story.id == request.vars.pk).delete()
-            definitions_ready_data = db(Definition_ready.story_id == request.vars.pk).select()
+            all_definitions_data = db(Definition_ready.story_id == request.vars.pk).select()
 
-            for df in definitions_ready_data:
+            for df in all_definitions_data:
                 db(Definition_ready.id == df.id).delete()
                 db(Task.definition_ready_id == df.id).delete()
 
@@ -267,11 +301,11 @@ def change_ajax_itens():
 
 
 @auth.requires_login()
-def board_ajax_itens():
+def board_ajax_tasks():
     # board page
     if request.vars:
         from datetime import datetime
-        # update status of task
+        # update status of task if in progress
         if request.vars.task_status == "inprogress":
             task = db(Task.id == request.vars.task_id).select().first()
 
@@ -290,27 +324,90 @@ def board_ajax_itens():
                 )
                 pass
 
-        elif request.vars.task_status == "done":
-            db(Task.id == request.vars.task_id).update(
-                status=request.vars.task_status,
-                ended=datetime.today().date()
-            )
+        # update status of task if in todo or verification
         elif request.vars.task_status == "todo" or request.vars.task_status == "verification":
             db(Task.id == request.vars.task_id).update(
                 status=request.vars.task_status,
                 ended=None,
             )
-        elif request.vars.task_date:
 
+        # update status of task if in done
+        elif request.vars.task_status == "done":
+            db(Task.id == request.vars.task_id).update(
+                status=request.vars.task_status,
+                ended=datetime.today().date()
+            )
+
+        elif request.vars.task_date:
             db(Task.id == request.vars.task_id).update(
                 started=datetime.strptime(request.vars.task_date,'%Y-%m-%d')
             )
+
         else:
             return False
 
+        # updates the status of story
+        _test_story_completed(request.vars.definitionready)
         return True
     else:
         return False
+
+
+@auth.requires_login()
+def _test_story_completed(definition_ready_id):
+
+    all_tasks = db(Task.definition_ready_id == definition_ready_id).select()
+    len_tasks = len(all_tasks)
+    ended_tasks = 0
+    
+    for t in all_tasks:
+        if t.ended:
+            ended_tasks += 1
+
+    if ended_tasks == len_tasks:
+        # updates the status of definition of ready to concluded
+        db(Definition_ready.id == definition_ready_id).update(
+            concluded=True,
+        )
+
+        definition = db(Definition_ready.id == definition_ready_id).select().first()
+        all_definitions = db(Definition_ready.story_id == definition.story_id).select()
+        len_definitions = len(all_definitions)
+        concluded_definitions = 0
+
+        for d in all_definitions:
+            if d.concluded:
+                concluded_definitions += 1
+
+        if len_definitions == concluded_definitions:
+            # updates the status of story to concluded
+            db(Story.id == definition.story_id).update(
+                concluded=True,
+            )
+
+        return True
+
+    else:
+        db(Definition_ready.id == definition_ready_id).update(
+            concluded=False,
+        )
+
+        definition = db(Definition_ready.id == definition_ready_id).select().first()
+        db(Story.id == definition.story_id).update(
+            concluded=False,
+        )
+
+        return False
+
+
+@auth.requires_login()
+def _create_person():
+    """Function that creates a person
+    """
+    name = '%s %s' % (auth.user.first_name, auth.user.last_name)
+    person_id = Person.insert(name=name)
+    db.user_relationship.insert(auth_user_id=auth.user.id, person_id=person_id)
+    redirect(URL('projects'))
 
 
 def user():
@@ -328,16 +425,6 @@ def user():
     to decorate functions that need access control
     """
     return dict(form=auth())
-
-
-@auth.requires_login()
-def _create_person():
-    """Function that creates a person
-    """
-    name = '%s %s' % (auth.user.first_name, auth.user.last_name)
-    person_id = Person.insert(name=name)
-    db.user_relationship.insert(auth_user_id=auth.user.id, person_id=person_id)
-    redirect(URL('projects'))
 
 
 def download():

@@ -1,0 +1,53 @@
+{{extend 'default/layout_base.html'}}
+
+<script>
+    // OBS: other global variables are generated on the page project
+    var txt = {
+        stories : '{{=T("Stories")}}',
+        burndow_chart : '{{=T("Burndown Chart")}}',
+        day : '{{=T("Day")}}',
+        points : '{{=T("Points")}}',
+        estimated : '{{=T("Estimated")}}',
+        actual : '{{=T("Actual")}}',
+        weeks : '{{=T("Weeks")}}',
+    },
+    data = {
+        sprint_started : '{{=g_blank_fulldate_check(sprint.started)}}',
+        sprint_weeks : '{{=sprint.weeks}}',
+        sprint_name : '{{=sprint.name}}',
+        stories_len : '{{=len(stories)}}',
+    }
+</script>
+{{concluded_stories = 0}}
+{{for i in stories:}}
+    {{if i.concluded == True:}}
+    {{concluded_stories += 1}}
+    {{pass}}
+{{pass}}
+
+<script>
+     data["concluded_stories"] = '{{=concluded_stories}}';
+</script>
+
+<div id="sub-header-content">
+    <div id="content-header">
+        <div id="breadcrumb">
+            <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
+            <a href="#" class="current" title="{{=T('Statistics')}}" >{{=T('Statistics')}}</a>
+        </div>
+        <div id="header-name" class="pull-left">
+            <h1>{{=T('Statistics')}}</h1>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span8">
+            <div id="container" style="min-width: 350px; height: 350px; margin: 0 auto"></div>
+        </div>
+    </div><!--/row-->
+</div><!--/container-fluid-->
+<br>
+

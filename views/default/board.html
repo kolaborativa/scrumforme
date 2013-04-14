@@ -3,15 +3,15 @@
 <script>
     // OBS: other global variables are generated on the page project
     var url = {
-        createUpdateBacklogItens : '{{=URL("create_update_backlog_itens.json")}}',
-        changeAjaxItens : '{{=URL("board_ajax_itens")}}',
+        createUpdateBacklogItens : '{{=URL("create_update_itens.json")}}',
+        changeAjaxItens : '{{=URL("board_ajax_tasks")}}',
         removeTask : '{{=URL("remove_itens")}}',
     },
     msg = {
         field_empty : '{{=T("Click to write")}}',
         validation_error : '{{=T("Can not be empty")}}',
         confirm : '{{=T("Are you sure you want to continue?")}}',
-        task_undated : '{{=T("You must first put a start date")}}',
+        task_undated : '{{=T("You must first put a start date or move to IN PROGRESS column")}}',
         task_no_belong : '{{=T("This task does not belong to another definition of ready")}}',
         remove_sucess : '{{=T("Removed Successfully!")}}',
         remove_error : '{{=T("Error in removal!")}}',
@@ -45,14 +45,16 @@
 <div id="info_content" class="row-fluid">
     <div id="project_info" class="span4">
         <p>{{=project.description}}</p>
-        <p>{{=project.date_.strftime("%d/%m/%Y")}} <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
+        <p>{{=g_blank_fulldate_check(project.date_)}} <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
     </div>
     <div id="time_sprint" class="span4">
         <div id="clock">
             <i class="icon-time pull-left"></i>
             <div class="pull-left">
+                {{from datetime import timedelta}}
+                {{estimated_date = sprint.started + timedelta(days=7*sprint.weeks)}}
                 <p>{{=T('Started in')}}: <strong>{{=g_blank_fulldate_check(sprint.started)}}</strong></p>
-                <p>{{=T('Estimated for')}}: <strong>{{=g_blank_fulldate_check(sprint.ended)}}</strong></p>
+                <p>{{=T('Estimated for')}}: <strong>{{=g_blank_fulldate_check(estimated_date)}}</strong></p>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -94,7 +96,7 @@
                     <tr>
                         <th class="story_header" colspan=5>
                             <div class="text_container">
-                                <h5><a href="#" class="editable-click story_card editable" data-type="text" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a></h5>
+                                <h5><a href="#" class="editable-click story_card editable" data-type="text" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a></h5>
                             </div>
                             <div class="buttons_container">
                                 <button class="btn btn-minimize expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
@@ -127,7 +129,7 @@
                                         <img class="avatar_card" src='{{=Gravatar(auth.user.email).thumb}}'>
                                     </div>
                                     <div class="card_container">
-                                        <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                        <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                         <div class="icons_card">
                                             <div class="date started_calendar" data-date='{{=g_blank_fulldate_check(task["started"])}}'>
                                                 <input class="started_date_text" size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
@@ -153,7 +155,7 @@
                                         <img class="avatar_card" src='{{=Gravatar(auth.user.email).thumb}}' width="45px" height="45px">
                                     </div>
                                     <div class="card_container">
-                                        <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                        <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                         <div class="icons_card">
                                             <div class="date started_calendar" data-date='{{=g_blank_fulldate_check(task["started"])}}'>
                                                 <input class="started_date_text" size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
@@ -179,7 +181,7 @@
                                         <img class="avatar_card" src='{{=Gravatar(auth.user.email).thumb}}' width="45px" height="45px">
                                     </div>
                                     <div class="card_container">
-                                        <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                        <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                         <div class="icons_card">
                                             <div class="date started_calendar" data-date='{{=g_blank_fulldate_check(task["started"])}}'>
                                                 <input class="started_date_text" size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
@@ -205,7 +207,7 @@
                                         <img class="avatar_card" src='{{=Gravatar(auth.user.email).thumb}}' width="45px" height="45px">
                                     </div>
                                     <div class="card_container">
-                                        <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_backlog_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                        <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                         <div class="icons_card">
                                             <div class="date started_calendar" data-date='{{=g_blank_fulldate_check(task["started"])}}'>
                                                 <input class="started_date_text" size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>

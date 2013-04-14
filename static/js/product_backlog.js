@@ -19,8 +19,7 @@ $(function() {
     $("#backlog").find(".project-items").height(StoryContentBacklog);
     $("#sprint").find(".project-items").height(StoryContentSprint);
 
-
-
+    // sprint stories itens
     $( "#sprint .project-items" ).sortable({
             placeholder: 'placeholder_item',
             delay:25,
@@ -42,11 +41,6 @@ $(function() {
             }
     });
 });
-
-// to find the largest index of the array
-Array.max = function( array ){
-  return Math.max.apply( Math, array );
-};
 
 /*
 ==============
@@ -76,12 +70,17 @@ $('.project-items').editable({
       // send the new ID as param
       var dbUpdate = $(this).attr("data-update"),
           dbID = $(this).attr("data-pk"),
-          order = $(this).attr("data-index");
+          order = $(this).attr("data-index"),
+          definitionready = $(this).closest('.definition_ready_container').find(".definition_ready_card").attr('data-pk');
+
       if(dbUpdate) {
+        // updating tasks
         params.dbUpdate = true;
         params.dbID = dbID;
       }else {
+        // creating tasks
         params.dbUpdate = false;
+        params.definitionready = definitionready;
         params.order = order;
       }
       return params;
@@ -265,11 +264,20 @@ $(document).on("click", ".delete_item", function(){
 
 // for remove itens
 function removeItem(pk,name,object,action) {
-    ajax(url.removeBacklogItens+'?pk='+pk+'&name='+name+'', [''], 'target_ajax');
+    
+    if(name === "task") {
+        var definitionready = $(object).closest('.definition_ready_container').find(".definition_ready_card").attr('data-pk');
+        ajax(url.removeBacklogItens+'?pk='+pk+'&name='+name+'&definitionready='+definitionready+'', [''], 'target_ajax');
+
+    }else{
+        ajax(url.removeBacklogItens+'?pk='+pk+'&name='+name+'', [''], 'target_ajax');
+    }
+
     var status = statusAction(object,"",action);
     
     if(status === true) {
         // get total number of Definitions of Ready and decreases
+        console.log(status)
         if(name === "definition_ready") {
             var label_DR = $(object).closest(".story").find(".qtd_definition_ready");
             label_DR.text(parseInt(label_DR.text())-1);

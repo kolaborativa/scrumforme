@@ -55,38 +55,35 @@ $(function() {
             },
             stop: function( event, ui ) {
                 var task = $(ui.item),
-                    old_definition_ready_id = $('body').data('definitionreadyid'),
-                    new_definition_ready_id = task.closest('.item_container').attr('data-definitionready');
-                    task_status = task.closest('.column_task').attr('data-status'),
-                    task_date = task.find('input').val(),
-                    task_value = task.find('.task_item').text(),
-                    pass = false;
+                    old_df_id = $('body').data('definitionreadyid'),
+                    new_df_id = task.closest('.item_container').attr('data-definitionready');
+                    status = task.closest('.column_task').attr('data-status'),
+                    date = task.find('input').val(),
+                    value = task.find('.task_item').text();
 
-                $('body').data('pass', pass);
-                // prevents send to a different definition of ready or different story
-                if(new_definition_ready_id !== old_definition_ready_id) {
-                    alert(msg.task_no_belong)
-                    return false
-                
-                }else if((task_date ==="" && task_status==="verification") || (task_date ==="" && task_status==="done")) {
-                    // prevents task undated verification for status or done
-                    alert(msg.task_undated)
-                    return false
+                var result_task = verifyTask("stop",old_df_id, new_df_id, date, status, value)
 
-                }else if(task_value ===msg.field_empty) {
-                    alert(msg.validation_error)
+                if(result_task === false) {
+                  // prevents send to a different definition of ready or different story
                     return false
-
-                }else {
-                    pass = true;
-                    $('body').data('pass', pass);
                 }
 
             },            
             receive: function(event, ui) {
-                var pass = $('body').data('pass');
-                
-                if(pass === true) {
+                var task = $(ui.item),
+                    old_df_id = $('body').data('definitionreadyid'),
+                    new_df_id = task.closest('.item_container').attr('data-definitionready');
+                    status = task.closest('.column_task').attr('data-status'),
+                    date = task.find('input').val(),
+                    value = task.find('.task_item').text();
+
+                var result_task = verifyTask("",old_df_id, new_df_id, date, status, value)
+
+                if(result_task === false) {
+                  // prevents send to a different definition of ready or different story
+                    return false
+
+                }else if(result_task === true) {
                     setTimeout(function () {
                         updateStatusColumn($(ui.item))
                     }, 1000); // Enable after 1000 ms.
@@ -121,16 +118,48 @@ $(function() {
 });
 
 
-// change task status block and verify if date exist
+// change task status block
+function verifyTask(action, old_df_id, new_df_id, date, status, value){
+
+    if(old_df_id !== new_df_id) {
+        // prevents send to a different definition of ready or different story
+        if(action==="stop"){
+            alert(msg.task_no_belong)
+        }
+        return false
+    
+    }else if((date ==="" && status==="verification") || (date ==="" && status==="done")) {
+        // prevents change status of undated tasks for "verification" or "done" status
+        if(action==="stop"){
+            alert(msg.task_undated)
+        }
+        return false
+
+    }else if(value === msg.field_empty) {
+        // verify if task value is empty
+        if(action==="stop"){
+            alert(msg.validation_error)
+        }
+        return false
+
+    } else {
+        return true
+    }
+
+}
+
+
+// change task status block
 function updateStatusColumn(task){
     var task = $(task),
         task_id = task.find('.task_item').attr('data-pk'),
-        task_status = task.closest('.column_task').attr('data-status');
+        task_status = task.closest('.column_task').attr('data-status'),
+        definitionready = task.closest('.item_container').attr('data-definitionready');
 
     // send to server
-    ajax(url.changeAjaxItens+'?task_id='+task_id+'&task_status='+task_status, [''], 'target_ajax');
+    ajax(url.changeAjaxItens+'?task_id='+task_id+'&task_status='+task_status+'&definitionready='+definitionready, [''], 'target_ajax');
     // test server callback
-    statusAction("date", task_status, task);
+    statusAction("status", task_status, task);
 }
 
 
@@ -159,9 +188,10 @@ $(document).on("click", ".delete_item", function(){
   if(confirm(msg.confirm)) {
     var task = $(this).closest(".card_container").find('.task_item'),
         pk = task.attr('data-pk'),
-        name = task.attr('data-name');
+        name = task.attr('data-name'),
+        definitionready = task.closest('.item_container').attr('data-definitionready');
 
-    ajax(url.removeTask+'?pk='+pk+'&name='+name+'', [''], 'target_ajax');
+    ajax(url.removeTask+'?pk='+pk+'&name='+name+''+'&definitionready='+definitionready+'', [''], 'target_ajax');
     statusAction("remove", "", task);
   }
 });
@@ -175,6 +205,7 @@ function statusAction(action, task_status, task) {
   if (message.length > 0) {
     if(message === 'True') {
         // for tasks without a set date
+        var console_msg = "";
         if(action ==="date") {
             var task_date = $(task).find('input').val();
             if(task_date ==="" && task_status==="inprogress") {
@@ -182,12 +213,17 @@ function statusAction(action, task_status, task) {
                 $(task).find('.started_date_text').val(today.format("UTC:dd/mm"));
             
             }
-            console.log("date status updated!")
+            console_msg = "date status updated!"
 
         }else if(action ==="remove") {
             $(task).closest(".task_container").fadeOut("fast", function(){ $(this).remove()});
-            console.log("remove OK!")
+            console_msg = "remove OK!"
+
+        }else if(action ==="status") {
+            console_msg = "move status updated!";
         }
+
+        console.log(console_msg)
 
     } else if(message === 'False') {
         console.log("status updated ERROR!")
@@ -249,12 +285,15 @@ $('.table').editable({
       // sending parameters indicating whether the item is to upgrade or not
       // send the new ID as param
       var dbUpdate = $(this).attr("data-update"),
-          dbID = $(this).attr("data-pk");
+          dbID = $(this).attr("data-pk"),
+          definitionready = $(this).closest('.item_container').attr('data-definitionready');
+
       if(dbUpdate) {
         params.dbUpdate = true;
         params.dbID = dbID;
       }else {
         params.dbUpdate = false;
+        params.definitionready = definitionready;
       }
       return params;
   },
