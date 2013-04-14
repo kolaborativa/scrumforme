@@ -44,8 +44,8 @@ $(function () {
         $('#container').highcharts({
             chart: {
                 type: 'line',
-                marginRight: 130,
-                marginBottom: 45
+                // marginRight: 130,
+                // marginBottom: 45
             },
             title: {
                 text: txt.burndow_chart,

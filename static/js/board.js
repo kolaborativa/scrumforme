@@ -100,7 +100,21 @@ $(function() {
 
     sprint_ended.setDate(sprint_ended.getDate()+burndown);
 
-    $(document).on('focus click',".started_calendar", function(){
+    $(".started_calendar").datepicker({
+        format: 'dd/mm/yyyy',
+        todayBtn: "linked",
+        todayHighlight: true,
+        autoclose: true,
+        startDate: sprint_started,
+        endDate: sprint_ended,
+        pickerPosition: "top-left",
+        }).on('changeDate', function(ev) {
+            // call the function
+            changeDate(this, ev.date);
+    });
+
+    // for elements dynamically added
+    $(document).on('focus',".new_calendar", function(){
         $(this).datepicker({
         format: 'dd/mm/yyyy',
         todayBtn: "linked",
@@ -256,7 +270,7 @@ $(document).on("click", ".create_task", function(){
 
     var definition_ready_id = $(this).closest(".item_container").attr("data-definitionready");
 
-    var html = '<ul class="task_container"><li class="task"><div class="avatar_container"><img class="avatar_card" src="http://lorempixel.com/50/50/"></div><div class="card_container"><a href="#" class="editable-click editable-empty editable task_item new_task" data-type="textarea" data-placeholder="'+msg.field_empty+'" data-pk="'+definition_ready_id+'" data-name="task">'+msg.field_empty+'</a><div class="icons_card"><div class="date started_calendar" data-date=""><input class="started_date_text" size="16" type="text" value="" readonly><span class="add-on calendar"><i class="icon-calendar"></i></span></div><div class="comment"><i class="icon-comment"></i><span>0</span></div><span class="delete_item" ><i class="icon-trash"></i></span></div></div><div class="clearfix"></div></li></ul>';
+    var html = '<ul class="task_container"><li class="task"><div class="avatar_container"><img class="avatar_card" src="http://lorempixel.com/50/50/"></div><div class="card_container"><a href="#" class="editable-click editable-empty editable task_item new_task" data-type="textarea" data-placeholder="'+msg.field_empty+'" data-pk="'+definition_ready_id+'" data-name="task">'+msg.field_empty+'</a><div class="icons_card"><div class="date started_calendar new_calendar" data-date=""><input class="started_date_text" size="16" type="text" value="" readonly><span class="add-on calendar"><i class="icon-calendar"></i></span></div><div class="comment"><i class="icon-comment"></i><span>0</span></div><span class="delete_item" ><i class="icon-trash"></i></span></div></div><div class="clearfix"></div></li></ul>';
 
     var newItem = $(this).closest(".item_container").find(".todo").append(html);
 

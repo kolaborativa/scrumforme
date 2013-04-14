@@ -100,20 +100,20 @@ def product_backlog():
                 for df in definition_ready[row]:
                     tasks[df.id] = db(Task.definition_ready_id == df.id).select()
 
-            return dict(project=project, person_projects=person_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, form_sprint=form_sprint, sprint=sprint)
+            return dict(
+                        project=project,
+                        person_projects=person_projects,
+                        stories=stories,
+                        definition_ready=definition_ready,
+                        tasks=tasks,
+                        form_sprint=form_sprint,
+                        sprint=sprint
+                        )
         else:
             return dict(project=project, person_projects=person_projects, form_sprint=form_sprint, sprint=sprint)
-    redirect(URL('projects'))
-
-
-@auth.requires_login()
-def launch_sprint():
-    from datetime import datetime
-    sprint_id = request.args(0) or redirect(URL('index'))
-    sprint = db(Sprint.id==sprint_id).select().first()
-    if not sprint.started:
-        db(Sprint.id==sprint_id).update(started=datetime.today().date())
-    redirect(URL(f='product_backlog', args=sprint_id))
+    
+    else:
+        redirect(URL('projects'))
 
 
 @auth.requires_login()
@@ -129,7 +129,7 @@ def board():
         sprint = db(Sprint.project_id == project.id).select().first()
         stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
 
-        if sprint:
+        if sprint != None and sprint.started:
             if stories:
                 definition_ready = {}
                 for story in stories:
@@ -145,7 +145,19 @@ def board():
                 return dict(project=project, person_projects=person_projects, sprint=sprint)
         else:
             redirect(URL(f='product_backlog', args=project_id))
-    redirect(URL('projects'))
+
+    else:
+        redirect(URL('projects'))
+
+
+@auth.requires_login()
+def launch_sprint():
+    from datetime import datetime
+    sprint_id = request.args(0) or redirect(URL('index'))
+    sprint = db(Sprint.id==sprint_id).select().first()
+    if not sprint.started:
+        db(Sprint.id==sprint_id).update(started=datetime.today().date())
+    redirect(URL(f='product_backlog', args=sprint_id))
 
 
 def statistics():
@@ -160,7 +172,7 @@ def statistics():
         sprint = db(Sprint.project_id == project.id).select().first()
         stories = db(Story.project_id == project.id).select()
 
-        if sprint:
+        if sprint != None and sprint.started:
             if stories:
                 return dict(project=project, person_projects=person_projects, sprint=sprint, stories=stories)
 
