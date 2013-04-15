@@ -173,7 +173,7 @@
             <div class="span7">
                 <h5 class='pull-left'><span>{{=sprint.weeks}}</span> {{=T('Weeks')}}</h5>
                 {{if not sprint.started:}}
-                <a href="{{=URL(c='default',f='launch_sprint',args=[sprint.id],)}}" class='btn btn-success pull-right'>{{=T('Launch the sprint')}}</a>
+                <a href="{{=URL(c='default',f='launch_sprint',args=[request.args(0),sprint.id],)}}" class='btn btn-success pull-right'>{{=T('Launch the sprint')}}</a>
                 {{else:}}
                 <button class='disabled btn btn-success pull-right'>{{=T('Launched')}}</button>
                 {{pass}}

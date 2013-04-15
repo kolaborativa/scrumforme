@@ -153,11 +153,15 @@ def board():
 @auth.requires_login()
 def launch_sprint():
     from datetime import datetime
-    sprint_id = request.args(0) or redirect(URL('index'))
+
+    project_id = request.args(0) or redirect(URL('index'))
+    sprint_id = request.args(1) or redirect(URL('index'))
     sprint = db(Sprint.id==sprint_id).select().first()
+
     if not sprint.started:
         db(Sprint.id==sprint_id).update(started=datetime.today().date())
-    redirect(URL(f='product_backlog', args=sprint_id))
+    
+    redirect(URL(f='product_backlog', args=project_id))
 
 
 def statistics():

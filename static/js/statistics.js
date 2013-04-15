@@ -56,7 +56,14 @@ $(function () {
                 x: -20
             },
             xAxis: {
-                categories: list_days
+                categories: list_days,
+                labels: {
+                    style: {
+                        color: '#000',
+                        fontSize: '9px',
+                        transform: 'rotate(270deg)',
+                    }
+                },
             },
             yAxis: {
                 title: {

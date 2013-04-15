@@ -49,6 +49,8 @@
         {{ elif request.function == "board": }}
         <link rel="stylesheet" href='{{=URL("static","css/datepicker.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/board.css")}}' />
+        {{ elif request.function == "statistics": }}
+        <link rel="stylesheet" href='{{=URL("static","css/statistics.css")}}' />
         {{pass}}
         
         <!-- google font -->
