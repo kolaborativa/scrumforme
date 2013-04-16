@@ -10,8 +10,15 @@
 #########################################################################
 
 
-def index():
+def get_persons_add():
+    term=request.vars.q
+    rows = db(Person.name.lower().like(term+'%')).select()
+    persons = [{"id": person.id, "title": person.name} for person in rows ]
 
+    return dict(total= len(persons), movies=persons)
+
+
+def index():
     return dict()
 
 @auth.requires_login()
@@ -30,7 +37,7 @@ def _get_person():
 @auth.requires_login()
 def projects():
     from datetime import datetime
-    
+
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
@@ -62,7 +69,7 @@ def projects():
 def product_backlog():
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
-    
+
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
@@ -111,7 +118,7 @@ def product_backlog():
                         )
         else:
             return dict(project=project, person_projects=person_projects, form_sprint=form_sprint, sprint=sprint)
-    
+
     else:
         redirect(URL('projects'))
 
@@ -120,7 +127,7 @@ def product_backlog():
 def board():
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
-    
+
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
@@ -160,14 +167,14 @@ def launch_sprint():
 
     if not sprint.started:
         db(Sprint.id==sprint_id).update(started=datetime.today().date())
-    
+
     redirect(URL(f='product_backlog', args=project_id))
 
 
 def statistics():
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
-    
+
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
@@ -375,7 +382,7 @@ def _test_story_completed(definition_ready_id):
     all_tasks = db(Task.definition_ready_id == definition_ready_id).select()
     len_tasks = len(all_tasks)
     ended_tasks = 0
-    
+
     for t in all_tasks:
         if t.ended:
             ended_tasks += 1
@@ -424,6 +431,10 @@ def _create_person():
     person_id = Person.insert(name=name)
     db.user_relationship.insert(auth_user_id=auth.user.id, person_id=person_id)
     redirect(URL('projects'))
+
+
+def team():
+    return dict()
 
 
 def user():

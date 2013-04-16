@@ -1,0 +1,26 @@
+{{extend 'default/layout_base.html'}}
+
+<div id="sub-header-content">
+    <div id="content-header">
+        <div id="breadcrumb">
+            <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
+            <a href="#" class="current" title="{{=T('Projects')}}" >{{=T('Projects')}}</a>
+        </div>
+        <div id="header-name" class="pull-left">
+            <h1>{{=T('Add new team member')}} - nome do projeto</h1>
+        </div>
+        <div class="clearfix"></div>
+        <!-- <div multiple id="e1"> -->
+        <!-- </div> -->
+
+        <input type='hidden' id="e6" style="width: 500px;"  />
+        <br /> <button id="add">{{=T('Add')}}</button>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span5">
+        </div>
+    </div><!--/row-->
+</div><!--/container-fluid-->
