@@ -63,11 +63,16 @@ def projects():
 def product_backlog():
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
+    # response message for view
+    response.flash = session.message
+    try:
+        del session.message
+    except:
+        pass
     
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
-
     if project.created_by == person_id:
         stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
         sprint = db(Sprint.project_id == project.id).select().first()
@@ -130,10 +135,14 @@ def board():
         sprint = db(Sprint.project_id == project.id).select().first()
         stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
 
-        if sprint != None and sprint.started:
+        if sprint.started:
             if stories:
                 definition_ready = {}
                 for story in stories:
+                    if not story.story_points:
+                        session.message = T("Put all the story points before going to the Board")
+                        redirect(URL(f='product_backlog', args=project_id))
+
                     definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
 
                 tasks = {}
@@ -143,8 +152,10 @@ def board():
 
                 return dict(project=project, person_projects=person_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, sprint=sprint)
             else:
-                return dict(project=project, person_projects=person_projects, sprint=sprint)
+                session.message = T("You must create stories for your project")
+                redirect(URL(f='product_backlog', args=project_id))
         else:
+            session.message = T("You must create and start the sprint before accessing the Board")
             redirect(URL(f='product_backlog', args=project_id))
 
     else:
@@ -179,16 +190,13 @@ def statistics():
 
         if sprint != None and sprint.started:
             if stories:
+                for story in stories:
+                    if not story.story_points:
+                        session.message = T("Put all the story points before going to the Statistics")
+                        redirect(URL(f='product_backlog', args=project_id))
+
                 burndown_chart = db(Burndown.sprint_id == sprint.id).select(orderby=Burndown.date_)
-                # data = "{"
-                # data = {}
-                # for item in burndown_chart:
-                    # data["%s" %item.date_] = item.points
-                # data += '"%s":"%s",' %(g_blank_fulldate_check(item.date_), item.points)
-                # data = data[:-1] + '}'
-                # print type(data)
-                # burndown_chart = data
-                # print burndown_chart
+
                 return dict(project=project,
                             person_projects=person_projects,
                             sprint=sprint,
@@ -197,9 +205,11 @@ def statistics():
                             )
 
             else:
+                session.message = T("You must create stories for your project")
                 redirect(URL(f='product_backlog', args=project_id))
 
         else:
+            session.message = T("You must create and start the sprint before accessing the Statistics")
             redirect(URL(f='product_backlog', args=project_id))
 
     else:
@@ -238,6 +248,7 @@ def create_update_itens():
                         title=request.vars.value,
                         position_dom=request.vars.order
                         )
+
             elif request.vars.name == "definition_ready":
                 database_id = Definition_ready.insert(
                             story_id=request.vars.pk,
@@ -250,7 +261,7 @@ def create_update_itens():
                             status="todo"
                             )
                 # updates the status of story
-                _test_story_completed(request.vars.definitionready)
+                _test_story_completed(request.vars.definitionready, "todo")
 
             return dict(success="success",msg="gravado com sucesso!",name=request.vars.name,database_id=database_id)
 
@@ -265,7 +276,7 @@ def remove_itens():
         if request.vars.name == "task":
             db(Task.id == request.vars.pk).delete()
             # updates the status of story
-            _test_story_completed(request.vars.definitionready)
+            _test_story_completed(request.vars.definitionready, "remove")
 
         if request.vars.name == "definition_ready":
             db(Definition_ready.id == request.vars.pk).delete()
@@ -372,7 +383,7 @@ def board_ajax_tasks():
 
 
         # updates the status of story
-        _test_story_completed(request.vars.definitionready)
+        _test_story_completed(request.vars.definitionready, request.vars.task_status)
             
         return True
 
@@ -387,46 +398,47 @@ def board_ajax_tasks():
 
 
 @auth.requires_login()
-def _test_story_completed(definition_ready_id):
+def _test_story_completed(definition_ready_id, status):
 
-    tasks_definition_ready = db(Task.definition_ready_id == definition_ready_id).select()
-    tasks_len = len(tasks_definition_ready)
-    tasks_ended = 0
-    
-    for t in tasks_definition_ready:
-        if t.ended:
-            tasks_ended += 1
+    if status == "done" or status == "remove":
+        tasks_definition_ready = db(Task.definition_ready_id == definition_ready_id).select()
+        tasks_len = len(tasks_definition_ready)
+        tasks_ended = 0
+        
+        for t in tasks_definition_ready:
+            if t.ended:
+                tasks_ended += 1
 
-    # updates the status of definition of ready to concluded
-    if tasks_ended == tasks_len:
-        db(Definition_ready.id == definition_ready_id).update(
-            concluded=True,
-        )
-
-        definition = db(Definition_ready.id == definition_ready_id).select().first()
-        definition_ready_story = db(Definition_ready.story_id == definition.story_id).select()
-        definitions_len = len(definition_ready_story)
-        definitions_concluded = 0
-
-        for d in definition_ready_story:
-            if d.concluded:
-                definitions_concluded += 1
-
-        # updates the status of story to concluded
-        if definitions_len == definitions_concluded:
-            db(Story.id == definition.story_id).update(
+        # updates the status of definition of ready to concluded
+        if tasks_ended == tasks_len:
+            db(Definition_ready.id == definition_ready_id).update(
                 concluded=True,
             )
 
-            # add points in the date of sprint
-            burndown_chart(definition.story_id, definition_ready_story)
+            definition = db(Definition_ready.id == definition_ready_id).select().first()
+            definition_ready_story = db(Definition_ready.story_id == definition.story_id).select()
+            definitions_len = len(definition_ready_story)
+            definitions_concluded = 0
 
-            return True
+            for d in definition_ready_story:
+                if d.concluded:
+                    definitions_concluded += 1
 
-        else:
-            return False
+            # updates the status of story to concluded
+            if definitions_len == definitions_concluded:
+                db(Story.id == definition.story_id).update(
+                    concluded=True,
+                )
 
-    else:        
+                # add points in the date of sprint
+                burndown_chart_test(definition.story_id, definition_ready_story)
+
+                return True
+
+            else:
+                return False
+
+    elif status == "todo" or status == "inprogress":        
         # changes the Definition of Ready status for uncompleted
         db(Definition_ready.id == definition_ready_id).update(
             concluded=False,
@@ -438,28 +450,28 @@ def _test_story_completed(definition_ready_id):
         )
 
         # add points in the date of sprint
-        burndown_chart(definition.story_id)
+        burndown_chart_test(definition.story_id, False)
 
         return False
 
 
 @auth.requires_login()
-def burndown_chart(story_id, definition_ready_story):
+def burndown_chart_test(story_id, definition_ready_story):
 
     # if story is completed
     if definition_ready_story:
 
         tasks_date = {}
         for d in definition_ready_story:
+            # get the biggest date of each definition of ready
             tasks_date[d.id] = db(d.id == Task.definition_ready_id ) \
                                         .select(Task.ended.max()) \
                                         .first()['_extra']['MAX(task.ended)'] 
 
-        # get bigger task date
+        # get the biggest task date of all definition of ready of this story
         bigger_date = max([tasks_date[x] for x in tasks_date])
-        story = db(Story.id == story_id).select().first()
-        stories = db(Story.sprint_id == story.sprint_id).select()
-        db_burndow = db(Burndown.date_ == bigger_date).select().first()
+        stories = db(Story.id == story_id).select()
+        db_burndown = db(Burndown.date_ == bigger_date).select().first()
 
         concluded_stories = 0
         for i in stories:
@@ -467,8 +479,8 @@ def burndown_chart(story_id, definition_ready_story):
                 concluded_stories += 1
 
         stories_left = len(stories) - concluded_stories
-        if db_burndow:
-            db(Burndown.sprint_id == story.sprint_id).update(
+        if db_burndown:
+            db(Burndown.id == db_burndown.id).update(
                 date_=bigger_date,
                 points=stories_left,
             )
@@ -484,9 +496,8 @@ def burndown_chart(story_id, definition_ready_story):
     else:
         from datetime import datetime
 
-        story = db(Story.id == story_id).select().first()
-        stories = db(Story.sprint_id == story.sprint_id).select()
-        db_burndow = db(Burndown.date_ == datetime.now()).select().first()
+        stories = db(Story.id == story_id).select()
+        db_burndown = db(Burndown.date_ == datetime.now()).select().first()
 
         concluded_stories = 0
         for i in stories:
@@ -494,8 +505,8 @@ def burndown_chart(story_id, definition_ready_story):
                 concluded_stories += 1
 
         stories_left = len(stories) - concluded_stories
-        if db_burndow:
-            db(Burndown.id == db_burndow.id).update(
+        if db_burndown:
+            db(Burndown.id == db_burndown.id).update(
                 points=stories_left,
             )
         else:
