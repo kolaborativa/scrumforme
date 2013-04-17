@@ -13,6 +13,7 @@
 def index():
     return dict()
 
+
 @auth.requires_login()
 def _get_person():
     """Function that get data of relationship person of the user logged. Projects and person_id.
@@ -433,6 +434,16 @@ def get_persons_add():
 
     return dict(total= len(persons), persons=persons)
 
+
+def add_member():
+    project_id = request.vars['project_id']
+    person_id = request.vars['person_id']
+
+    Sharing.insert(project_id=project_id,
+                   person_id=person_id,
+                   )
+
+    redirect(URL(f='team', args=[project_id]))
 
 @auth.requires_login()
 def team():

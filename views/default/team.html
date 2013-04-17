@@ -1,6 +1,10 @@
 {{extend 'default/layout_base.html'}}
 <script>
     // OBS: other global variables are generated on the page project
+    var url = {
+        get_persons : '{{=URL("get_persons_add.json")}}',
+        add_member : '{{=URL(f="add_member", vars={"project_id": request.args(0)})}}',
+    },
     msg = {
         placeholder: '{{=T("Find by peoples")}}',
         noMatches: '{{=T("No matches found")}}',

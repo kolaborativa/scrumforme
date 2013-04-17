@@ -19,7 +19,6 @@ function MultiAjaxAutoComplete(element, url) {
                 };
             },
             results: function(data, page) {
-                console.log(data);
                 return {
                     results: data.persons
                 };
@@ -49,9 +48,10 @@ function formatSelection(data) {
     return data.title;
 };
 
-MultiAjaxAutoComplete('#e6', "http://localhost:8000/scrumforme/default/get_persons_add.json");
+MultiAjaxAutoComplete('#e6', url.get_persons);
 
 $('#add').click(function() {
-    alert($('#e6').val());
+    var person_id = $('#e6').val()[0];
+    window.location = url.add_member + '&person_id=' + person_id;
 });
 
