@@ -201,6 +201,7 @@
 'Profile': 'Perfil',
 'Project': 'Projeto',
 'Projects': 'Projetos',
+'Projects that I am part': 'Projetos que faço parte',
 'pygraphviz library not found': 'pygraphviz library not found',
 'Python': 'Python',
 'Query:': 'Consulta:',

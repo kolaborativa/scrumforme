@@ -40,6 +40,16 @@
                 </ul>
             {{pass}}
         </div>
+        <div class="span5">
+            {{if projects_member:}}
+                <h3>{{=T('Projects that I am part')}} <span class="label">{{=len(projects_member)}}</span></a></h3>
+                <ul>
+                {{for i in projects_member:}}
+                    <li class='{{=g_current_page("default/product_backlog/%s" %i.project_id,"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.project_id])}}'>{{=i.project_id.name}}</a></li>
+                {{pass}}
+                </ul>
+            {{pass}}
+        </div>
     </div><!--/row-->
 </div><!--/container-fluid-->
 

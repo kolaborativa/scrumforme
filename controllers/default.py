@@ -23,8 +23,9 @@ def _get_person():
 
     projects = db(Project.created_by==person_id).select()
     person_id = user_relationship.person_id
+    projects_member = db(Sharing.person_id==person_id).select()
 
-    return dict(person_id=person_id, projects=projects)
+    return dict(person_id=person_id, projects=projects, projects_member=projects_member)
 
 
 @auth.requires_login()
@@ -34,6 +35,7 @@ def projects():
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
+    projects_member = person['projects_member']
 
     form = SQLFORM.factory(
         Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
@@ -55,7 +57,7 @@ def projects():
     elif form.errors:
         pass
 
-    return dict(form=form, person_projects=person_projects)
+    return dict(form=form, person_projects=person_projects, projects_member=projects_member)
 
 
 @auth.requires_login()
