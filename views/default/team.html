@@ -29,10 +29,18 @@
         <br /> <button id="add">{{=T('Add')}}</button>
     </div>
 </div>
-
+<hr />
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span5">
+        <h2>{{=T('Members')}}:</h2>
+        <ul>
+            {{if team_members:}}
+                {{ for member in team_members: }}
+                <li>{{=member.person_id.name}} {{if member.role_id:}} - {{=member.role_id.name}}{{pass}}</li>
+                {{ pass }}
+            {{pass}}
+        </ul>
         </div>
     </div><!--/row-->
 </div><!--/container-fluid-->

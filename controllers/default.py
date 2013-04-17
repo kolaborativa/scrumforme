@@ -449,7 +449,9 @@ def add_member():
 
 @auth.requires_login()
 def team():
-    return dict()
+    project_id=request.args(0) or redirect(URL('projects'))
+    team_members = db(Sharing.project_id).select()
+    return dict(team_members=team_members)
 
 
 def user():

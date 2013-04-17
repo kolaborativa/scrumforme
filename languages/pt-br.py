@@ -163,6 +163,7 @@
 'lost password?': 'esqueceu sua senha?',
 'Main Menu': 'Menu Principal',
 'Manage Cache': 'Manage Cache',
+'Members': 'Membros do time',
 'Menu': 'Menu',
 'Menu Model': 'Modelo de Menu',
 'Metrics': 'Metrics',
