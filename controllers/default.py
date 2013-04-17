@@ -441,6 +441,7 @@ def get_persons_add():
     return dict(total= len(persons), persons=persons)
 
 
+@auth.requires_login()
 def add_member():
     project_id = request.vars['project_id']
     persons_id = request.vars['persons_id'].split(',')
@@ -455,6 +456,21 @@ def add_member():
                            )
 
     redirect(URL(f='team', args=[project_id]))
+
+
+@auth.requires_login()
+def remove_member():
+    project_id = request.vars['project_id']
+    person_id = request.vars['person_id']
+    person = _get_person()
+    my_person_id = person["person_id"]
+    project = db(Project.id==project_id).select().first()
+
+    if project.created_by == my_person_id:
+        db((Sharing.project_id==project_id) & (Sharing.person_id==person_id)).delete()
+    redirect(URL(f='team', args=[project_id]))
+
+
 
 @auth.requires_login()
 def _edit_role(project_id, person_id, role_id):

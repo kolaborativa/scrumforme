@@ -60,7 +60,15 @@ $('#add').click(function() {
 });
 
 // Edit role
-
 $('.edit_role').click(function(){
     $(this).parent().next().toggle('normal');
+});
+
+// Remove member
+$('.remove_member').click(function(){
+    var person_id = $(this)[0].dataset['member'];
+    var remove = confirm(msg.confirmRemove);
+    if (remove){
+        window.location = url.remove_member + '&person_id=' + person_id;
+    }
 });

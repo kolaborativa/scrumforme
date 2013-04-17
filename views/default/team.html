@@ -4,12 +4,14 @@
     var url = {
         get_persons : '{{=URL("get_persons_add.json", vars={"project_id": request.args(0)})}}',
         add_member : '{{=URL(f="add_member", vars={"project_id": request.args(0)})}}',
+        remove_member : '{{=URL(f="remove_member", vars={"project_id": request.args(0)})}}',
     },
     msg = {
         placeholder: '{{=T("Find by peoples")}}',
         noMatches: '{{=T("No matches found")}}',
         searching: '{{=T("Searching")}}',
         inputTooShort: '{{=T("Please enter 1 more character")}}',
+        confirmRemove: '{{=T("Are you sure you want to remove this user?")}}',
     }
 </script>
 <div id="sub-header-content">
@@ -43,7 +45,8 @@
         <ul>
             {{if team_members:}}
                 {{ for member in team_members: }}
-                <li>{{=member.person_id.name}} - <span {{if owner_project:}}class="edit_role"{{pass}}>{{if member.role_id:}}{{=member.role_id.name}}{{else:}}{{=T("Define role")}}{{pass}}</span></li>
+                <li>{{=member.person_id.name}} - <span {{if owner_project:}} style="cursor:pointer" class="edit_role"{{pass}}>{{if member.role_id:}}{{=member.role_id.name}}{{else:}}{{=T("Define role")}}{{pass}}</span> {{if owner_project:}}<button data-member="{{=member.person_id}}" class=" remove_member btn btn-danger btn-mini">{{=T("remove")}}</button>{{pass}}
+                </li>
                 <form style="display:none; background-color:#ccc; border-radius:5px;">
                     <label>
                         <strong>{{=T("Manage User")}}</strong><br />
