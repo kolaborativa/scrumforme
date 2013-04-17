@@ -443,11 +443,12 @@ def get_persons_add():
 
 def add_member():
     project_id = request.vars['project_id']
-    person_id = request.vars['person_id']
+    persons_id = request.vars['persons_id'].split(',')
 
-    Sharing.insert(project_id=project_id,
-                   person_id=person_id,
-                   )
+    for person_id in persons_id:
+        Sharing.insert(project_id=project_id,
+                       person_id=int(person_id),
+                       )
 
     redirect(URL(f='team', args=[project_id]))
 

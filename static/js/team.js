@@ -51,8 +51,12 @@ function formatSelection(data) {
 MultiAjaxAutoComplete('#e6', url.get_persons);
 
 $('#add').click(function() {
-    var person_id = $('#e6').val()[0];
-    window.location = url.add_member + '&person_id=' + person_id;
+    var persons_id = $('#e6').val().split(',');
+    var array_persons = [];
+    for (i=0; i<persons_id.length; i++){
+        array_persons.push(persons_id[i][0]);
+    };
+    window.location = url.add_member + '&persons_id=' + array_persons;
 });
 
 // Edit role
