@@ -186,7 +186,7 @@
                             results: function(data, page) {
                                 console.log(data);
                                 return {
-                                    results: data.movies
+                                    results: data.persons
                                 };
                             }
                         },
@@ -206,8 +206,8 @@
                     });
                 };
 
-                function formatResult(movie) {
-                    return '<div>' + movie.title + '</div>';
+                function formatResult(person) {
+                    return '<div>' + person.title + '</div>';
                 };
 
                 function formatSelection(data) {

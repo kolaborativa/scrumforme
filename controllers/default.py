@@ -10,12 +10,6 @@
 #########################################################################
 
 
-def get_persons_add():
-    term=request.vars.q
-    rows = db(Person.name.lower().like(term+'%')).select()
-    persons = [{"id": person.id, "title": person.name} for person in rows ]
-
-    return dict(total= len(persons), movies=persons)
 
 
 def index():
@@ -433,6 +427,16 @@ def _create_person():
     redirect(URL('projects'))
 
 
+@auth.requires_login()
+def get_persons_add():
+    term=request.vars.q
+    rows = db(Person.name.lower().like(term+'%')).select()
+    persons = [{"id": person.id, "title": person.name} for person in rows ]
+
+    return dict(total= len(persons), persons=persons)
+
+
+@auth.requires_login()
 def team():
     return dict()
 
