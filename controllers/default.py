@@ -444,11 +444,15 @@ def get_persons_add():
 def add_member():
     project_id = request.vars['project_id']
     persons_id = request.vars['persons_id'].split(',')
+    person = _get_person()
+    person_id = person["person_id"]
+    project = db(Project.id==project_id).select().first()
 
-    for person_id in persons_id:
-        Sharing.insert(project_id=project_id,
-                       person_id=int(person_id),
-                       )
+    if project.created_by == person_id:
+        for person in persons_id:
+            Sharing.insert(project_id=project_id,
+                           person_id=int(person),
+                           )
 
     redirect(URL(f='team', args=[project_id]))
 
@@ -466,13 +470,19 @@ def _edit_role(project_id, person_id, role_id):
 def team():
     project_id=request.args(0) or redirect(URL('projects'))
     team_members = db(Sharing.project_id).select()
-
+    person = _get_person()
+    person_id = person["person_id"]
+    project = db(Project.id==project_id).select().first()
     roles = db(Role).select()
-    if request.vars:
-        person_id, role_id = (request.vars.keys()[0], request.vars.values()[0])
-        _edit_role(project_id, person_id, role_id)
-        redirect(URL(f='team', args=[project_id]))
-    return dict(team_members=team_members, roles=roles)
+    members_project = [i.person_id for i in db(Sharing.project_id==project_id).select()]
+
+    if project.created_by == person_id or person_id in members_project:
+       if request.vars:
+           person_id, role_id = (request.vars.keys()[0], request.vars.values()[0])
+           _edit_role(project_id, person_id, role_id)
+           redirect(URL(f='team', args=[project_id]))
+       return dict(team_members=team_members, roles=roles)
+    redirect(URL('projects'))
 
 
 def user():
