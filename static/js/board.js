@@ -221,12 +221,6 @@ function statusAction(action, task_status, task) {
         // for tasks without a set date
         var console_msg = "";
         if(action ==="date") {
-            var task_date = $(task).find('input').val();
-            if(task_date ==="" && task_status==="inprogress") {
-                var today = new Date();
-                $(task).find('.started_date_text').val(today.format("UTC:dd/mm"));
-            
-            }
             console_msg = "date status updated!"
 
         }else if(action ==="remove") {
@@ -234,6 +228,12 @@ function statusAction(action, task_status, task) {
             console_msg = "remove OK!"
 
         }else if(action ==="status") {
+            var task_date = $(task).find('input').val();
+            if(task_date ==="" && task_status==="inprogress") {
+                var today = new Date();
+                $(task).find('.started_date_text').val(today.format("UTC:dd/mm"));
+            
+            }
             console_msg = "move status updated!";
         }
 

@@ -6,7 +6,22 @@ $(function () {
         
     dateEnd.setDate(dateEnd.getDate() + daysSprint);
     
-    // console.log(data.concluded_stories)
+
+        var points = []
+        for (i in stories) {
+            points.push(parseInt(stories[i]["points"]))
+            // parseDate(stories[i]["date"])
+
+        }
+            console.log(points)
+            // console.log(stories)
+
+        function parseDate(date) {
+            var dateString = date.split("/"),
+                dateParsed = new Date(date[2], (date[1]-1), date[0])
+
+            return dateParsed
+        }
 
         function storiesConcluded(dateInitial) {
             var current_date = new Date(),
@@ -61,7 +76,6 @@ $(function () {
                     style: {
                         color: '#000',
                         fontSize: '9px',
-                        transform: 'rotate(270deg)',
                     }
                 },
             },
@@ -96,7 +110,7 @@ $(function () {
                 // enableMouseTracking: false
             }, {
                 name: txt.actual,
-                data: concluded_stories
+                data: points
             }]
         });
     });

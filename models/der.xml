@@ -23,7 +23,7 @@
 		<type label="Password" length="0" sql="password" quote=""/>
 		<type label="List:reference" length="0" sql="list:reference" quote=""/>
 	</group>
-</datatypes><table x="376" y="332" name="person">
+</datatypes><table x="209" y="439" name="person">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -44,7 +44,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="132" y="11" name="project">
+<table x="45" y="36" name="project">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -82,7 +82,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="22" y="332" name="auth_user">
+<table x="25" y="433" name="auth_user">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -103,7 +103,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="375" y="89" name="sprint">
+<table x="585" y="14" name="sprint">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -141,7 +141,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="602" y="36" name="story">
+<table x="240" y="96" name="story">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -188,7 +188,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="891" y="61" name="definition_ready">
+<table x="398" y="258" name="definition_ready">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -218,7 +218,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="656" y="328" name="task">
+<table x="635" y="283" name="task">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -265,7 +265,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="961" y="369" name="task_comment">
+<table x="848" y="341" name="task_comment">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -280,7 +280,7 @@
 <default>NULL</default>
 </row>
 <row name="date_" null="1" autoincrement="0">
-<datatype>datetime</datatype>
+<datatype>date</datatype>
 <default>NULL</default>
 </row>
 <row name="_object_name" null="1" autoincrement="0">
@@ -295,7 +295,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="169" y="475" name="user_relationship">
+<table x="61" y="595" name="user_relationship">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -309,6 +309,36 @@
 <datatype>integer</datatype>
 <default>NULL</default>
 <relation table="person" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="792" y="47" name="burndown">
+<row name="id" null="1" autoincrement="1">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="sprint_id" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="sprint" row="id" />
+</row>
+<row name="date_" null="1" autoincrement="0">
+<datatype>date</datatype>
+<default>NULL</default>
+</row>
+<row name="points" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="_object_name" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>Burndown</default>
+</row>
+<row name="_format" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>'%(name)s'</default>
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>

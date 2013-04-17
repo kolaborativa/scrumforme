@@ -14,6 +14,7 @@ def index():
 
     return dict()
 
+
 @auth.requires_login()
 def _get_person():
     """Function that get data of relationship person of the user logged. Projects and person_id.
@@ -178,7 +179,22 @@ def statistics():
 
         if sprint != None and sprint.started:
             if stories:
-                return dict(project=project, person_projects=person_projects, sprint=sprint, stories=stories)
+                burndown_chart = db(Burndown.sprint_id == sprint.id).select(orderby=Burndown.date_)
+                # data = "{"
+                # data = {}
+                # for item in burndown_chart:
+                    # data["%s" %item.date_] = item.points
+                # data += '"%s":"%s",' %(g_blank_fulldate_check(item.date_), item.points)
+                # data = data[:-1] + '}'
+                # print type(data)
+                # burndown_chart = data
+                # print burndown_chart
+                return dict(project=project,
+                            person_projects=person_projects,
+                            sprint=sprint,
+                            stories=stories,
+                            burndown_chart=burndown_chart
+                            )
 
             else:
                 redirect(URL(f='product_backlog', args=project_id))
@@ -319,12 +335,12 @@ def change_ajax_itens():
 @auth.requires_login()
 def board_ajax_tasks():
     # board page
-    if request.vars:
-        from datetime import datetime
+    from datetime import datetime
+
+    if request.vars.task_status and request.vars.definitionready:
         # update status of task if in progress
         if request.vars.task_status == "inprogress":
             task = db(Task.id == request.vars.task_id).select().first()
-
             if task.started:
                 # if has a date
                 db(Task.id == request.vars.task_id).update(
@@ -338,33 +354,34 @@ def board_ajax_tasks():
                     started=datetime.today().date(),
                     ended=None,
                 )
-                pass
-
         # update status of task if in todo or verification
         elif request.vars.task_status == "todo" or request.vars.task_status == "verification":
             db(Task.id == request.vars.task_id).update(
                 status=request.vars.task_status,
                 ended=None,
             )
-
         # update status of task if in done
         elif request.vars.task_status == "done":
             db(Task.id == request.vars.task_id).update(
                 status=request.vars.task_status,
                 ended=datetime.today().date()
             )
-
-        elif request.vars.task_date:
-            db(Task.id == request.vars.task_id).update(
-                started=datetime.strptime(request.vars.task_date,'%Y-%m-%d')
-            )
-
+        # if the request.vars.task does not meet the requirements
         else:
             return False
 
+
         # updates the status of story
         _test_story_completed(request.vars.definitionready)
+            
         return True
+
+    # if the request is to update the date
+    elif request.vars.task_date:
+        db(Task.id == request.vars.task_id).update(
+            started=datetime.strptime(request.vars.task_date,'%Y-%m-%d')
+        )
+
     else:
         return False
 
@@ -372,46 +389,121 @@ def board_ajax_tasks():
 @auth.requires_login()
 def _test_story_completed(definition_ready_id):
 
-    all_tasks = db(Task.definition_ready_id == definition_ready_id).select()
-    len_tasks = len(all_tasks)
-    ended_tasks = 0
+    tasks_definition_ready = db(Task.definition_ready_id == definition_ready_id).select()
+    tasks_len = len(tasks_definition_ready)
+    tasks_ended = 0
     
-    for t in all_tasks:
+    for t in tasks_definition_ready:
         if t.ended:
-            ended_tasks += 1
+            tasks_ended += 1
 
-    if ended_tasks == len_tasks:
-        # updates the status of definition of ready to concluded
+    # updates the status of definition of ready to concluded
+    if tasks_ended == tasks_len:
         db(Definition_ready.id == definition_ready_id).update(
             concluded=True,
         )
 
         definition = db(Definition_ready.id == definition_ready_id).select().first()
-        all_definitions = db(Definition_ready.story_id == definition.story_id).select()
-        len_definitions = len(all_definitions)
-        concluded_definitions = 0
+        definition_ready_story = db(Definition_ready.story_id == definition.story_id).select()
+        definitions_len = len(definition_ready_story)
+        definitions_concluded = 0
 
-        for d in all_definitions:
+        for d in definition_ready_story:
             if d.concluded:
-                concluded_definitions += 1
+                definitions_concluded += 1
 
-        if len_definitions == concluded_definitions:
-            # updates the status of story to concluded
+        # updates the status of story to concluded
+        if definitions_len == definitions_concluded:
             db(Story.id == definition.story_id).update(
                 concluded=True,
+            )
+
+            # add points in the date of sprint
+            burndown_chart(definition.story_id, definition_ready_story)
+
+            return True
+
+        else:
+            return False
+
+    else:        
+        # changes the Definition of Ready status for uncompleted
+        db(Definition_ready.id == definition_ready_id).update(
+            concluded=False,
+        )
+        # changes the Story status for uncompleted
+        definition = db(Definition_ready.id == definition_ready_id).select().first()
+        db(Story.id == definition.story_id).update(
+            concluded=False,
+        )
+
+        # add points in the date of sprint
+        burndown_chart(definition.story_id)
+
+        return False
+
+
+@auth.requires_login()
+def burndown_chart(story_id, definition_ready_story):
+
+    # if story is completed
+    if definition_ready_story:
+
+        tasks_date = {}
+        for d in definition_ready_story:
+            tasks_date[d.id] = db(d.id == Task.definition_ready_id ) \
+                                        .select(Task.ended.max()) \
+                                        .first()['_extra']['MAX(task.ended)'] 
+
+        # get bigger task date
+        bigger_date = max([tasks_date[x] for x in tasks_date])
+        story = db(Story.id == story_id).select().first()
+        stories = db(Story.sprint_id == story.sprint_id).select()
+        db_burndow = db(Burndown.date_ == bigger_date).select().first()
+
+        concluded_stories = 0
+        for i in stories:
+            if i.concluded == True:
+                concluded_stories += 1
+
+        stories_left = len(stories) - concluded_stories
+        if db_burndow:
+            db(Burndown.sprint_id == story.sprint_id).update(
+                date_=bigger_date,
+                points=stories_left,
+            )
+        else:
+            Burndown.insert(
+                sprint_id=story.sprint_id,
+                date_=bigger_date,
+                points=stories_left,
             )
 
         return True
 
     else:
-        db(Definition_ready.id == definition_ready_id).update(
-            concluded=False,
-        )
+        from datetime import datetime
 
-        definition = db(Definition_ready.id == definition_ready_id).select().first()
-        db(Story.id == definition.story_id).update(
-            concluded=False,
-        )
+        story = db(Story.id == story_id).select().first()
+        stories = db(Story.sprint_id == story.sprint_id).select()
+        db_burndow = db(Burndown.date_ == datetime.now()).select().first()
+
+        concluded_stories = 0
+        for i in stories:
+            if i.concluded == True:
+                concluded_stories += 1
+
+        stories_left = len(stories) - concluded_stories
+        if db_burndow:
+            db(Burndown.id == db_burndow.id).update(
+                points=stories_left,
+            )
+        else:
+            Burndown.insert(
+                sprint_id=story.sprint_id,
+                date_=datetime.now(),
+                points=stories_left,
+            )
 
         return False
 
