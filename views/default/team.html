@@ -1,0 +1,73 @@
+{{extend 'default/layout_base.html'}}
+<script>
+    // OBS: other global variables are generated on the page project
+    var url = {
+        get_persons : '{{=URL("get_persons_add.json", vars={"project_id": request.args(0)})}}',
+        add_member : '{{=URL(f="add_member", vars={"project_id": request.args(0)})}}',
+        remove_member : '{{=URL(f="remove_member", vars={"project_id": request.args(0)})}}',
+    },
+    msg = {
+        placeholder: '{{=T("Find by peoples")}}',
+        noMatches: '{{=T("No matches found")}}',
+        searching: '{{=T("Searching")}}',
+        inputTooShort: '{{=T("Please enter 1 more character")}}',
+        confirmRemove: '{{=T("Are you sure you want to remove this user?")}}',
+    }
+</script>
+<div id="sub-header-content">
+    <div id="content-header">
+        <div id="breadcrumb">
+            <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
+            <a href="#" class="current" title="{{=T('Projects')}}" >{{=T('Projects')}}</a>
+        </div>
+        <div id="header-name" class="pull-left">
+            {{ if owner_project: }}
+                <h1>{{=T('Add new team member')}} - {{=project.name}}</h1>
+            {{ else: }}
+                <h1>{{=project.name}}</h1>
+            {{pass}}
+        </div>
+        <div class="clearfix"></div>
+        <!-- <div multiple id="e1"> -->
+        <!-- </div> -->
+
+        {{ if owner_project: }}
+            <input type='hidden' id="e6" style="width: 500px;"  />
+            <br /> <button id="add">{{=T('Add')}}</button>
+        {{pass}}
+    </div>
+</div>
+<hr />
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span5">
+        <h2>{{=T('Members')}}:</h2>
+        <ul>
+            {{if team_members:}}
+                {{ for member in team_members: }}
+                <li>{{=member.person_id.name}} - <span {{if owner_project:}} style="cursor:pointer" class="edit_role"{{pass}}>{{if member.role_id:}}{{=member.role_id.name}}{{else:}}{{=T("Define role")}}{{pass}}</span> {{if owner_project:}}<button data-member="{{=member.person_id}}" class=" remove_member btn btn-danger btn-mini">{{=T("remove")}}</button>{{pass}}
+                </li>
+                <form style="display:none; background-color:#ccc; border-radius:5px;">
+                    <label>
+                        <strong>{{=T("Manage User")}}</strong><br />
+                        {{=T("What role this person will perform in the project?")}}
+                    </label>
+                    {{ for role in roles: }}
+                        {{ if member.role_id:}}
+                            <input type="radio" name="{{=member.person_id}}" value="{{=role.id}}"
+                                {{if member.role_id.name == role.name:}}checked="checked"{{pass}}    
+                            >{{=role.name}}<br />
+                        {{else:}}
+                            <input type="radio" name="{{=member.person_id}}" value="{{=role.id}}" >{{=role.name}}<br />
+                        {{ pass }}
+                    {{ pass }}
+                    <input type="submit" value="OK" class="btn">
+                    <button id="cancel" class="btn">{{=T("Cancel")}}</button>
+                </form>
+
+                {{ pass }}
+            {{pass}}
+        </ul>
+        </div>
+    </div><!--/row-->
+</div><!--/container-fluid-->

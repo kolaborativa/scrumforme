@@ -11,6 +11,12 @@ if not "auth_user" in db.tables:
         Field("first_time", "boolean", default=True),
         migrate="auth_user.table")
 
+if not "role" in db.tables:
+    Role = db.define_table("role",
+        Field("name", "string", length=100, default=None),
+        format='%(name)s',
+        migrate="role.table")
+
 if not "project" in db.tables:
     Project = db.define_table("project",
         Field("created_by", db.person, default=None),
@@ -67,7 +73,7 @@ if not "task_comment" in db.tables:
     Task_comment = db.define_table("task_comment",
         Field("task_id", db.task, default=None),
         Field("text_", "string", length=256, default=None),
-        Field("date_", "date", default=None),
+        Field("date_", "datetime", default=None),
         format='%(text)s',
         migrate="task_comment.table")
 
@@ -77,12 +83,18 @@ if not "user_relationship" in db.tables:
         Field("person_id", db.person, default=None),
         migrate="user_relationship.table")
 
+if not "sharing" in db.tables:
+    Sharing = db.define_table("sharing",
+        Field("project_id", db.project, default=None),
+        Field("person_id", db.person, default=None),
+        Field("role_id", db.role, default=None),
+        migrate="sharing.table")
+
 if not "burndown" in db.tables:
     Burndown = db.define_table("burndown",
         Field("sprint_id", db.sprint, default=None),
         Field("date_", "date", default=None),
-        Field("points", "integer", default=None),
-        format='%(name)s',
+        Field("points", "integer", length=128, default=None),
         migrate="burndown.table")
 
 """ Relations between tables (remove fields you don't need from requires) """
@@ -96,4 +108,8 @@ db.task.owner_task.requires = IS_IN_DB(db, 'person.id', db.person._format)
 db.task_comment.task_id.requires = IS_IN_DB(db, 'task.id', db.task._format)
 db.user_relationship.auth_user_id.requires = IS_IN_DB(db, 'auth_user.id', db.auth_user._format)
 db.user_relationship.person_id.requires = IS_IN_DB(db, 'person.id', db.person._format)
+db.sharing.project_id.requires = IS_IN_DB(db, 'project.id', db.project._format)
+db.sharing.person_id.requires = IS_IN_DB(db, 'person.id', db.person._format)
+db.sharing.role_id.requires = IS_IN_DB(db, 'role.id', db.role._format)
 db.burndown.sprint_id.requires = IS_IN_DB(db, 'sprint.id', db.sprint._format)
+

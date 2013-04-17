@@ -53,6 +53,7 @@ Changelog
 - Support for language English and Portuguese.
 - System login.
 - Profile photo by Gravatar.
+- Share project with other users.
 
 ---------------------------------------
 
@@ -66,7 +67,6 @@ TODOLIST
 - Send email to new registered users.
 - When adding a User send email to him.
 - Can including images in tasks.
-- Share project with other users.
 - Delete project.
 - Reset user password.
 - Login with Facebook and Google.
