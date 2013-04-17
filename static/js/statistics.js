@@ -1,27 +1,57 @@
 $(function () {
-    var dateString = data.sprint_started.split("/"),
-        dateInitial = new Date(dateString[2], (dateString[1]-1), dateString[0]),
-        dateEnd = new Date(dateInitial),
-        daysSprint = data.sprint_weeks*7;
-        
-    dateEnd.setDate(dateEnd.getDate() + daysSprint);
+        var dateString = data.sprint_started.split("/"),
+            dateInitial = new Date(dateString[2], (dateString[1]-1), dateString[0]),
+            dateEnd = new Date(dateInitial),
+            daysSprint = data.sprint_weeks*7;
+            
+        dateEnd.setDate(dateEnd.getDate() + daysSprint);
     
-    // console.log(data.concluded_stories)
+        function GetDaysDiff() {
+            var storyPoints = [],
+                daysDiff = [],
+                c = 0,
+                stories_len = Object.keys(stories).length - 1;
+         
+            for (var i=0; i<=stories_len; i++) {
 
-        function storiesConcluded(dateInitial) {
-            var current_date = new Date(),
-                stories_todo = parseInt(data.stories_len) - parseInt(data.concluded_stories),
-                listDays = [],
-                mil = 86400000; //24h
+                storyPoints.push(parseInt(stories[i]["points"]))
 
-            // make array with all days
-            for (var i=dateInitial.getTime(); i<=current_date.getTime();i=i+mil) {
-              listDays.push(stories_todo)
+                c = i+1
+                if( c < (stories_len+1) ){
+                    diff = GetDaysLeft( parseDate(stories[i]["date"]), stories[i]["points"], parseDate(stories[c]["date"]) )
+
+                    for(x in diff){
+                            
+                        if(parseDate(stories[i]["date"]) < diff[x]["date"]) {
+                            storyPoints.push(parseInt(diff[x]["points"]))
+                        }
+                    }
+                }
             }
-
-            return listDays
+            return storyPoints
         }
 
+        function GetDaysLeft(date1, points1, date2) {
+            var daysLeft = {},
+                count = 0,
+                mil = 86400000; //24h
+
+            date1.setDate(date1.getDate() + 1);
+            date2.setDate(date2.getDate() - 1);
+
+            for (var i=date1.getTime(); i<=date2.getTime();i=i+mil) {
+              daysLeft[count] = { "date" : new Date(i), "points" : points1}
+              count += 1
+            }
+
+            return daysLeft
+        }
+        function parseDate(date) {
+            var dateString = date.split("/"),
+                dateParsed = new Date(dateString[2], (dateString[1]-1), dateString[0])
+
+            return dateParsed
+        }
         function listDays(dateInitial, dateEnd) {
             var listDays = [],
                 mil = 86400000; //24h
@@ -38,8 +68,8 @@ $(function () {
             return listDays
         }
 
-        var list_days = listDays(dateInitial, dateEnd);
-        var concluded_stories = storiesConcluded(dateInitial);
+        var list_days = listDays(dateInitial, dateEnd),
+            storyPoints = GetDaysDiff();
 
         $('#container').highcharts({
             chart: {
@@ -61,7 +91,6 @@ $(function () {
                     style: {
                         color: '#000',
                         fontSize: '9px',
-                        transform: 'rotate(270deg)',
                     }
                 },
             },
@@ -96,7 +125,7 @@ $(function () {
                 // enableMouseTracking: false
             }, {
                 name: txt.actual,
-                data: concluded_stories
+                data: storyPoints
             }]
         });
     });

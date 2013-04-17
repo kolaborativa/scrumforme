@@ -25,6 +25,19 @@
     {{pass}}
 {{pass}}
 
+
+
+<script>
+    var stories = {
+        {{count = 0 }}
+        {{ for item in burndown_chart: }}
+        {{=count}}:{date:"{{=g_blank_fulldate_check(item.date_)}}", points: "{{=item.points}}"},
+        {{count += 1}}
+        {{pass}}
+    }
+    // console.log(stories)
+</script>
+
 <script>
      data["concluded_stories"] = '{{=concluded_stories}}';
 </script>

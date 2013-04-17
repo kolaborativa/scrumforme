@@ -90,6 +90,13 @@ if not "sharing" in db.tables:
         Field("role_id", db.role, default=None),
         migrate="sharing.table")
 
+if not "burndown" in db.tables:
+    Burndown = db.define_table("burndown",
+        Field("sprint_id", db.sprint, default=None),
+        Field("date_", "date", default=None),
+        Field("points", "integer", length=128, default=None),
+        migrate="burndown.table")
+
 """ Relations between tables (remove fields you don't need from requires) """
 db.project.created_by.requires = IS_IN_DB(db, 'person.id', db.person._format)
 db.sprint.project_id.requires = IS_IN_DB(db, 'project.id', db.project._format)
@@ -104,4 +111,5 @@ db.user_relationship.person_id.requires = IS_IN_DB(db, 'person.id', db.person._f
 db.sharing.project_id.requires = IS_IN_DB(db, 'project.id', db.project._format)
 db.sharing.person_id.requires = IS_IN_DB(db, 'person.id', db.person._format)
 db.sharing.role_id.requires = IS_IN_DB(db, 'role.id', db.role._format)
+db.burndown.sprint_id.requires = IS_IN_DB(db, 'sprint.id', db.sprint._format)
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- SQL XML created by WWW SQL Designer, http://code.google.com/p/wwwsqldesigner/ -->
-
+<!-- Active URL: file:///media/Terinha/r4bugento/Documentos/Bagulhos/Trampo/Programa%C3%A7%C3%A3o/wwwsqldesigner-2.6/index.html -->
 <sql>
 <datatypes db="web2py">
 	<group label="Numeric" color="rgb(238,238,170)">
@@ -358,6 +358,32 @@
 <row name="_format" null="1" autoincrement="0">
 <datatype>integer</datatype>
 <default>'%(name)s'</default>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="512" y="304" name="burndown">
+<row name="id" null="1" autoincrement="1">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="sprint_id" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="sprint" row="id" />
+</row>
+<row name="date_" null="1" autoincrement="0">
+<datatype>date</datatype>
+<default>NULL</default>
+</row>
+<row name="points" null="1" autoincrement="0">
+<datatype>integer(128)</datatype>
+<default>NULL</default>
+</row>
+<row name="_object_name" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>Burndown</default>
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>
