@@ -19,14 +19,20 @@
             <a href="#" class="current" title="{{=T('Projects')}}" >{{=T('Projects')}}</a>
         </div>
         <div id="header-name" class="pull-left">
-            <h1>{{=T('Add new team member')}} - nome do projeto</h1>
+            {{ if owner_project: }}
+                <h1>{{=T('Add new team member')}} - {{=project.name}}</h1>
+            {{ else: }}
+                <h1>{{=project.name}}</h1>
+            {{pass}}
         </div>
         <div class="clearfix"></div>
         <!-- <div multiple id="e1"> -->
         <!-- </div> -->
 
-        <input type='hidden' id="e6" style="width: 500px;"  />
-        <br /> <button id="add">{{=T('Add')}}</button>
+        {{ if owner_project: }}
+            <input type='hidden' id="e6" style="width: 500px;"  />
+            <br /> <button id="add">{{=T('Add')}}</button>
+        {{pass}}
     </div>
 </div>
 <hr />
@@ -37,7 +43,7 @@
         <ul>
             {{if team_members:}}
                 {{ for member in team_members: }}
-                <li>{{=member.person_id.name}} - <span class="edit_role">{{if member.role_id:}}{{=member.role_id.name}}{{else:}}{{=T("Define role")}}{{pass}}</span></li>
+                <li>{{=member.person_id.name}} - <span {{if owner_project:}}class="edit_role"{{pass}}>{{if member.role_id:}}{{=member.role_id.name}}{{else:}}{{=T("Define role")}}{{pass}}</span></li>
                 <form style="display:none; background-color:#ccc; border-radius:5px;">
                     <label>
                         <strong>{{=T("Manage User")}}</strong><br />

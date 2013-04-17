@@ -481,7 +481,7 @@ def team():
            person_id, role_id = (request.vars.keys()[0], request.vars.values()[0])
            _edit_role(project_id, person_id, role_id)
            redirect(URL(f='team', args=[project_id]))
-       return dict(team_members=team_members, roles=roles)
+       return dict(project=project, team_members=team_members, roles=roles, owner_project=project.created_by == person_id)
     redirect(URL('projects'))
 
 
