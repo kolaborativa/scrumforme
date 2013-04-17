@@ -11,7 +11,6 @@
 
 
 def index():
-
     return dict()
 
 
@@ -24,17 +23,19 @@ def _get_person():
 
     projects = db(Project.created_by==person_id).select()
     person_id = user_relationship.person_id
+    projects_member = db(Sharing.person_id==person_id).select()
 
-    return dict(person_id=person_id, projects=projects)
+    return dict(person_id=person_id, projects=projects, projects_member=projects_member)
 
 
 @auth.requires_login()
 def projects():
     from datetime import datetime
-    
+
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
+    projects_member = person['projects_member']
 
     form = SQLFORM.factory(
         Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
@@ -56,24 +57,25 @@ def projects():
     elif form.errors:
         pass
 
-    return dict(form=form, person_projects=person_projects)
+    return dict(form=form, person_projects=person_projects, projects_member=projects_member)
 
 
 @auth.requires_login()
 def product_backlog():
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
-    # response message for view
-    response.flash = session.message
-    try:
-        del session.message
-    except:
-        pass
-    
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
-    if project.created_by == person_id:
+    members_project = [i.person_id for i in db(Sharing.project_id==project_id).select()]
+
+    if project.created_by == person_id or person_id in members_project:
+        # response message for view
+        response.flash = session.message
+        try:
+            del session.message
+        except:
+            pass
         stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
         sprint = db(Sprint.project_id == project.id).select().first()
 
@@ -117,7 +119,7 @@ def product_backlog():
                         )
         else:
             return dict(project=project, person_projects=person_projects, form_sprint=form_sprint, sprint=sprint)
-    
+
     else:
         redirect(URL('projects'))
 
@@ -126,12 +128,13 @@ def product_backlog():
 def board():
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
-    
+
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
+    members_project = [i.person_id for i in db(Sharing.project_id==project_id).select()]
 
-    if project.created_by == person_id:
+    if project.created_by == person_id or person_id in members_project:
         sprint = db(Sprint.project_id == project.id).select().first()
         stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
 
@@ -186,14 +189,14 @@ def launch_sprint():
 
     if not sprint.started:
         db(Sprint.id==sprint_id).update(started=datetime.today().date())
-    
+
     redirect(URL(f='product_backlog', args=project_id))
 
 
 def statistics():
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
-    
+
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
@@ -398,7 +401,7 @@ def board_ajax_tasks():
 
         # updates the status of story
         _test_story_completed(request.vars.definitionready, request.vars.task_status)
-            
+
         return True
 
     # if the request is to update the date
@@ -413,12 +416,11 @@ def board_ajax_tasks():
 
 @auth.requires_login()
 def _test_story_completed(definition_ready_id, status):
-
     if status == "done" or status == "remove":
         tasks_definition_ready = db(Task.definition_ready_id == definition_ready_id).select()
         tasks_len = len(tasks_definition_ready)
         tasks_ended = 0
-        
+
         for t in tasks_definition_ready:
             if t.ended:
                 tasks_ended += 1
@@ -452,7 +454,7 @@ def _test_story_completed(definition_ready_id, status):
             else:
                 return False
 
-    elif status == "todo" or status == "inprogress":        
+    elif status == "todo" or status == "inprogress":
         # changes the Definition of Ready status for uncompleted
         db(Definition_ready.id == definition_ready_id).update(
             concluded=False,
@@ -480,7 +482,7 @@ def burndown_chart_test(story_id, definition_ready_story):
             # get the biggest date of each definition of ready
             tasks_date[d.id] = db(d.id == Task.definition_ready_id ) \
                                         .select(Task.ended.max()) \
-                                        .first()['_extra']['MAX(task.ended)'] 
+                                        .first()['_extra']['MAX(task.ended)']
 
         # get the biggest task date of all definition of ready of this story
         bigger_date = max([tasks_date[x] for x in tasks_date])
@@ -540,6 +542,77 @@ def _create_person():
     name = '%s %s' % (auth.user.first_name, auth.user.last_name)
     person_id = Person.insert(name=name)
     db.user_relationship.insert(auth_user_id=auth.user.id, person_id=person_id)
+    redirect(URL('projects'))
+
+
+@auth.requires_login()
+def get_persons_add():
+    project_id = request.vars['project_id']
+    team = [i.person_id for i in db(Sharing.project_id==project_id).select()]
+    term=request.vars.q
+    rows = db(Person.name.lower().like(term+'%')).select()
+    persons = [{"id": person.id, "title": person.name} for person in rows if not person.id in team ]
+
+    return dict(total= len(persons), persons=persons)
+
+
+@auth.requires_login()
+def add_member():
+    project_id = request.vars['project_id']
+    persons_id = request.vars['persons_id'].split(',')
+    person = _get_person()
+    person_id = person["person_id"]
+    project = db(Project.id==project_id).select().first()
+
+    if project.created_by == person_id:
+        for person in persons_id:
+            Sharing.insert(project_id=project_id,
+                           person_id=int(person),
+                           )
+
+    redirect(URL(f='team', args=[project_id]))
+
+
+@auth.requires_login()
+def remove_member():
+    project_id = request.vars['project_id']
+    person_id = request.vars['person_id']
+    person = _get_person()
+    my_person_id = person["person_id"]
+    project = db(Project.id==project_id).select().first()
+
+    if project.created_by == my_person_id:
+        db((Sharing.project_id==project_id) & (Sharing.person_id==person_id)).delete()
+    redirect(URL(f='team', args=[project_id]))
+
+
+
+@auth.requires_login()
+def _edit_role(project_id, person_id, role_id):
+    try:
+        db((Sharing.project_id==project_id) & \
+            (Sharing.person_id==person_id)).update(role_id=role_id)
+    except:
+        redirect(URL(f='team', args=[project_id]))
+    return
+
+
+@auth.requires_login()
+def team():
+    project_id=request.args(0) or redirect(URL('projects'))
+    team_members = db(Sharing.project_id).select()
+    person = _get_person()
+    person_id = person["person_id"]
+    project = db(Project.id==project_id).select().first()
+    roles = db(Role).select()
+    members_project = [i.person_id for i in db(Sharing.project_id==project_id).select()]
+
+    if project.created_by == person_id or person_id in members_project:
+       if request.vars:
+           person_id, role_id = (request.vars.keys()[0], request.vars.values()[0])
+           _edit_role(project_id, person_id, role_id)
+           redirect(URL(f='team', args=[project_id]))
+       return dict(project=project, team_members=team_members, roles=roles, owner_project=project.created_by == person_id)
     redirect(URL('projects'))
 
 

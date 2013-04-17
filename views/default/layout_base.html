@@ -51,6 +51,8 @@
         <link rel="stylesheet" href='{{=URL("static","css/board.css")}}' />
         {{ elif request.function == "statistics": }}
         <link rel="stylesheet" href='{{=URL("static","css/statistics.css")}}' />
+        {{ elif request.function == "team": }}
+        <link rel="stylesheet" href='{{=URL("static","css/select2.css")}}' />
         {{pass}}
 
         <!-- google font -->
@@ -102,7 +104,7 @@
                         <li class='{{=g_current_page("default/product_backlog/%s" %request.args(0),"active")}}'><a href='{{=URL(f="product_backlog",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Backlog')}}" title="{{=T('Backlog')}}"><i class="icon-tasks"></i> <span>{{=T('Backlog')}}</span></a></li>
                         <li><a href="#" class="tip-right" alt="{{=T('Sprints')}}" title="{{=T('Sprints')}}"><i class="icon-credit-card"></i> <span>{{=T('Sprints')}}</span></a></li>
                         <li><a href="#" class="tip-right" alt="{{=T('Archives')}}" title="{{=T('Archives')}}"><i class="icon-file"></i> <span>{{=T('Archives')}}</span></a></li>
-                        <li><a href="#" class="tip-right" alt="{{=T('Team')}}" title="{{=T('Team')}}"><i class="icon-group"></i> <span>{{=T('Team')}}</span></a></li>
+                        <li class='{{=g_current_page("default/team/%s" %request.args(0),"active")}}'><a href='{{=URL(f="team",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Team')}}" title="{{=T('Team')}}"><i class="icon-group"></i> <span>{{=T('Team')}}</span></a></li>
                         <li class='{{=g_current_page("default/statistics/%s" %request.args(0),"active")}}'><a href='{{=URL(f="statistics",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Statistics')}}" title="{{=T('Statistics')}}"><i class="icon-graph "></i> <span>{{=T('Statistics')}}</span></a></li>
                     {{pass}}
                     <li><button id="toogle_sidebar" class="tip-right" alt="{{=T('Expand / Collapse Menu')}}" title="{{=T('Expand / Collapse Menu')}}"><i class='{{=g_if_in_current_page("default/board/%s" %request.args(0),"icon-chevron-right", "icon-chevron-left")}} icon-white'></i> <span>{{=T('Collapse Menu')}}</span></button></li>
@@ -155,6 +157,9 @@
             <script src='{{=URL("static","js/highcharts/highcharts.js")}}'></script>
             <script src='{{=URL("static","js/highcharts/modules/exporting.js")}}'></script>
             <script async defer src='{{=URL("static","js/statistics.js")}}'></script>
+            {{ elif request.function == "team": }}
+            <script src='{{=URL("static","js/select2.min.js")}}'></script>
+            <script src='{{=URL("static","js/team.js")}}'></script>
             {{ pass }}
 
             <!--[if lte IE 7]><script src='{{=URL("static","js/lte-ie7.js")}}'>></script><![endif]-->
