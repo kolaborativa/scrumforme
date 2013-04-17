@@ -1,5 +1,13 @@
 {{extend 'default/layout_base.html'}}
-
+<script>
+    // OBS: other global variables are generated on the page project
+    msg = {
+        placeholder: '{{=T("Find by peoples")}}',
+        noMatches: '{{=T("No matches found")}}',
+        searching: '{{=T("Searching")}}',
+        inputTooShort: '{{=T("Please enter 1 more character")}}',
+    }
+</script>
 <div id="sub-header-content">
     <div id="content-header">
         <div id="breadcrumb">

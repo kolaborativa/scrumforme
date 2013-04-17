@@ -165,12 +165,12 @@
             <script type="text/javascript">
                 function MultiAjaxAutoComplete(element, url) {
                     $(element).select2({
-                        placeholder: "Procurar por pessoas",
+                        placeholder: msg.placeholder,
                         minimumInputLength: 1,
                         multiple: true,
-                        formatNoMatches: function(){return 'Nenhum resultado obtido'},
-                        formatSearching: function(){return 'Buscando...'},
-                        formatInputTooShort: function(){return 'Digite pelo menos 1 letra para buscar...'},
+                        formatNoMatches: function(){return msg.noMatches},
+                        formatSearching: function(){return msg.searching},
+                        formatInputTooShort: function(){return msg.inputTooShort},
 
                         id: function(e) { return e.id+":"+e.title; },
                         ajax: {
