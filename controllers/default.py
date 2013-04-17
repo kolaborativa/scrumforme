@@ -68,8 +68,9 @@ def product_backlog():
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
+    members_project = [i.person_id for i in db(Sharing.project_id==project_id).select()]
 
-    if project.created_by == person_id:
+    if project.created_by == person_id or person_id in members_project:
         stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
         sprint = db(Sprint.project_id == project.id).select().first()
 
@@ -126,8 +127,9 @@ def board():
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
+    members_project = [i.person_id for i in db(Sharing.project_id==project_id).select()]
 
-    if project.created_by == person_id:
+    if project.created_by == person_id or person_id in members_project:
         sprint = db(Sprint.project_id == project.id).select().first()
         stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
 
