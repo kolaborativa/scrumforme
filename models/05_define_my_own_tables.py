@@ -11,6 +11,12 @@ if not "auth_user" in db.tables:
         Field("first_time", "boolean", default=True),
         migrate="auth_user.table")
 
+if not "role" in db.tables:
+    Role = db.define_table("role",
+        Field("name", "string", length=100, default=None),
+        format='%(name)s',
+        migrate="role.table")
+
 if not "project" in db.tables:
     Project = db.define_table("project",
         Field("created_by", db.person, default=None),
@@ -77,6 +83,13 @@ if not "user_relationship" in db.tables:
         Field("person_id", db.person, default=None),
         migrate="user_relationship.table")
 
+if not "sharing" in db.tables:
+    Sharing = db.define_table("sharing",
+        Field("project_id", db.project, default=None),
+        Field("person_id", db.person, default=None),
+        Field("role_id", db.role, default=None),
+        migrate="sharing.table")
+
 """ Relations between tables (remove fields you don't need from requires) """
 db.project.created_by.requires = IS_IN_DB(db, 'person.id', db.person._format)
 db.sprint.project_id.requires = IS_IN_DB(db, 'project.id', db.project._format)
@@ -88,3 +101,7 @@ db.task.owner_task.requires = IS_IN_DB(db, 'person.id', db.person._format)
 db.task_comment.task_id.requires = IS_IN_DB(db, 'task.id', db.task._format)
 db.user_relationship.auth_user_id.requires = IS_IN_DB(db, 'auth_user.id', db.auth_user._format)
 db.user_relationship.person_id.requires = IS_IN_DB(db, 'person.id', db.person._format)
+db.sharing.project_id.requires = IS_IN_DB(db, 'project.id', db.project._format)
+db.sharing.person_id.requires = IS_IN_DB(db, 'person.id', db.person._format)
+db.sharing.role_id.requires = IS_IN_DB(db, 'role.id', db.role._format)
+

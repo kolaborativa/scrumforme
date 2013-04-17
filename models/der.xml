@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- SQL XML created by WWW SQL Designer, http://code.google.com/p/wwwsqldesigner/ -->
-<!-- Active URL: file:///home/gustavo/arquivos/Programacao/LABS/wwwsqldesigner-2.6/index.html -->
+
 <sql>
 <datatypes db="web2py">
 	<group label="Numeric" color="rgb(238,238,170)">
@@ -82,7 +82,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="22" y="332" name="auth_user">
+<table x="13" y="269" name="auth_user">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -295,7 +295,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="169" y="475" name="user_relationship">
+<table x="157" y="380" name="user_relationship">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -314,4 +314,54 @@
 <part>id</part>
 </key>
 </table>
+<table x="392" y="469" name="sharing">
+<row name="id" null="1" autoincrement="1">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="project_id" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="project" row="id" />
+</row>
+<row name="person_id" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="person" row="id" />
+</row>
+<row name="role_id" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="role" row="id" />
+</row>
+<row name="_object_name" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>Sharing</default>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="138" y="532" name="role">
+<row name="id" null="1" autoincrement="1">
+<datatype>integer</datatype>
+<default>NULL</default>
+</row>
+<row name="name" null="1" autoincrement="0">
+<datatype>string(100)</datatype>
+<default>NULL</default>
+</row>
+<row name="_object_name" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>Role</default>
+</row>
+<row name="_format" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>'%(name)s'</default>
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
 </sql>
+
