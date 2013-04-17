@@ -37,7 +37,25 @@
         <ul>
             {{if team_members:}}
                 {{ for member in team_members: }}
-                <li>{{=member.person_id.name}} {{if member.role_id:}} - {{=member.role_id.name}}{{pass}}</li>
+                <li>{{=member.person_id.name}} - <span class="edit_role">{{if member.role_id:}}{{=member.role_id.name}}{{else:}}{{=T("Define role")}}{{pass}}</span></li>
+                <form style="display:none; background-color:#ccc; border-radius:5px;">
+                    <label>
+                        <strong>{{=T("Manage User")}}</strong><br />
+                        {{=T("What role this person will perform in the project?")}}
+                    </label>
+                    {{ for role in roles: }}
+                        {{ if member.role_id:}}
+                            <input type="radio" name="{{=member.person_id}}" value="{{=role.id}}"
+                                {{if member.role_id.name == role.name:}}checked="checked"{{pass}}    
+                            >{{=role.name}}<br />
+                        {{else:}}
+                            <input type="radio" name="{{=member.person_id}}" value="{{=role.id}}" >{{=role.name}}<br />
+                        {{ pass }}
+                    {{ pass }}
+                    <input type="submit" value="OK" class="btn">
+                    <button id="cancel" class="btn">{{=T("Cancel")}}</button>
+                </form>
+
                 {{ pass }}
             {{pass}}
         </ul>

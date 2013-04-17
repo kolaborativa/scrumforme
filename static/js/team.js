@@ -55,3 +55,8 @@ $('#add').click(function() {
     window.location = url.add_member + '&person_id=' + person_id;
 });
 
+// Edit role
+
+$('.edit_role').click(function(){
+    $(this).parent().next().toggle('normal');
+});

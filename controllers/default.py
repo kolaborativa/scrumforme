@@ -452,10 +452,26 @@ def add_member():
     redirect(URL(f='team', args=[project_id]))
 
 @auth.requires_login()
+def _edit_role(project_id, person_id, role_id):
+    try:
+        db((Sharing.project_id==project_id) & \
+            (Sharing.person_id==person_id)).update(role_id=role_id)
+    except:
+        redirect(URL(f='team', args=[project_id]))
+    return
+
+
+@auth.requires_login()
 def team():
     project_id=request.args(0) or redirect(URL('projects'))
     team_members = db(Sharing.project_id).select()
-    return dict(team_members=team_members)
+
+    roles = db(Role).select()
+    if request.vars:
+        person_id, role_id = (request.vars.keys()[0], request.vars.values()[0])
+        _edit_role(project_id, person_id, role_id)
+        redirect(URL(f='team', args=[project_id]))
+    return dict(team_members=team_members, roles=roles)
 
 
 def user():
