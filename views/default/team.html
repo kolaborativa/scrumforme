@@ -2,7 +2,7 @@
 <script>
     // OBS: other global variables are generated on the page project
     var url = {
-        get_persons : '{{=URL("get_persons_add.json")}}',
+        get_persons : '{{=URL("get_persons_add.json", vars={"project_id": request.args(0)})}}',
         add_member : '{{=URL(f="add_member", vars={"project_id": request.args(0)})}}',
     },
     msg = {

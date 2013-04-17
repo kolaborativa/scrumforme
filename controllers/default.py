@@ -428,9 +428,11 @@ def _create_person():
 
 @auth.requires_login()
 def get_persons_add():
+    project_id = request.vars['project_id']
+    team = [i.person_id for i in db(Sharing.project_id==project_id).select()]
     term=request.vars.q
     rows = db(Person.name.lower().like(term+'%')).select()
-    persons = [{"id": person.id, "title": person.name} for person in rows ]
+    persons = [{"id": person.id, "title": person.name} for person in rows if not person.id in team ]
 
     return dict(total= len(persons), persons=persons)
 
