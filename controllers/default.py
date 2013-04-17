@@ -137,20 +137,34 @@ def board():
 
         if sprint.started:
             if stories:
+                least_one_story = False
                 definition_ready = {}
                 for story in stories:
+                    definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
+                    # requires story points for story on Sprint
                     if not story.story_points:
                         session.message = T("Put all the story points before going to the Board")
                         redirect(URL(f='product_backlog', args=project_id))
+                    # requires at least one story on Sprint
+                    if story.sprint_id:
+                        least_one_story = True
 
-                    definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
+                if not least_one_story:
+                    session.message = T("Move at least one story in the column of the Sprint")
+                    redirect(URL(f='product_backlog', args=project_id))
 
                 tasks = {}
                 for row in definition_ready:
                     for df in definition_ready[row]:
                         tasks[df.id] = db(Task.definition_ready_id == df.id).select()
 
-                return dict(project=project, person_projects=person_projects, stories=stories, definition_ready=definition_ready, tasks=tasks, sprint=sprint)
+                return dict(project=project,
+                            person_projects=person_projects,
+                            stories=stories,
+                            definition_ready=definition_ready,
+                            tasks=tasks,
+                            sprint=sprint
+                            )
             else:
                 session.message = T("You must create stories for your project")
                 redirect(URL(f='product_backlog', args=project_id))
