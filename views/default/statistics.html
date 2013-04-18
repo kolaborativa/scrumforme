@@ -1,12 +1,17 @@
 {{extend 'default/layout_base.html'}}
 
 <script>
+    {{story_points = 0}}
+    {{for i in stories:}}
+        {{story_points += i.story_points}}
+        {{pass}}
+    {{pass}}
     // OBS: other global variables are generated on the page project
     var txt = {
-        stories : '{{=T("Stories")}}',
+        stories : '{{=T("Stories Points")}}',
         burndow_chart : '{{=T("Burndown Chart")}}',
         day : '{{=T("Day")}}',
-        points : '{{=T("Points")}}',
+        points : ' {{=T("Story Points")}}',
         estimated : '{{=T("Estimated")}}',
         actual : '{{=T("Actual")}}',
         weeks : '{{=T("Weeks")}}',
@@ -15,31 +20,15 @@
         sprint_started : '{{=g_blank_fulldate_check(sprint.started)}}',
         sprint_weeks : '{{=sprint.weeks}}',
         sprint_name : '{{=sprint.name}}',
-        stories_len : '{{=len(stories)}}',
-    }
-</script>
-{{concluded_stories = 0}}
-{{for i in stories:}}
-    {{if i.concluded == True:}}
-    {{concluded_stories += 1}}
-    {{pass}}
-{{pass}}
-
-
-
-<script>
-    var stories = {
+        stories_len : '{{=story_points}}',
+    },
+    stories = {
         {{count = 0 }}
         {{ for item in burndown_chart: }}
-        {{=count}}:{date:"{{=g_blank_fulldate_check(item.date_)}}", points: "{{=item.points}}"},
+        {{=count}}:{date:"{{=g_blank_fulldate_check(item.date_)}}", points: "{{=(story_points - item.points)}}"},
         {{count += 1}}
         {{pass}}
     }
-    // console.log(stories)
-</script>
-
-<script>
-     data["concluded_stories"] = '{{=concluded_stories}}';
 </script>
 
 <div id="sub-header-content">
