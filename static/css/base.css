@@ -242,7 +242,7 @@ float: left;
 	width: 220px;
 }
 #sidebar > ul > li {
-	display: block;	
+	display: block;
 	position: relative;
 }
 
@@ -327,7 +327,7 @@ float: left;
     /*margin-top: -38px;*/
     z-index: 20;
 }
- 
+
 #content-header h1 {
     color: #555555;
     font-size: 28px;
@@ -341,19 +341,19 @@ float: left;
 #content-header h1:first-letter {
     text-transform: capitalize;
 }
- 
+
 /* FIX: The following two items were reordered to allow .btn-group to override margin top! */
 #content-header h1, #content-header .btn-group {
     /*margin-top: 30px;*/
 }
- 
+
 #content-header .btn-group {
     float: right;
     right: 20px;
     position: absolute;
     margin-top:-50px; /*FIX: Line up with the header correctly on > tablet size (will be removed below)*/
 }
- 
+
 #header-name {
     line-height: 20px;
 }
@@ -453,7 +453,7 @@ float: left;
 	margin-top: 4px;
 	border-style: solid;
 	border-width: 1px;
-	border-color: transparent;	
+	border-color: transparent;
 }
 /* Footer */
 #footer {
@@ -537,7 +537,7 @@ float: left;
 	width: 16px;
 	height: 16px;
 	display: inline-block;
-	margin: -2px 0 0 !important; 
+	margin: -2px 0 0 !important;
 	border-right: 1px solid #dddddd;
 	margin-right: 10px;
 	padding: 10px;
@@ -1343,10 +1343,10 @@ span.icon .checker {
 }
 
 .dataTables_paginate .first{
-    border-radius: 4px 0 0 4px;    
+    border-radius: 4px 0 0 4px;
 }
 .dataTables_paginate .last {
-    border-radius: 0 4px 4px 0;    
+    border-radius: 0 4px 4px 0;
 }
 .dataTables_paginate .ui-state-disabled, .fc-state-disabled, .pagination.alternate li.disabled a {
     color: #AAAAAA !important;
@@ -1427,7 +1427,7 @@ div.dataTables_wrapper .ui-widget-header {
     background-color: #f5f5f5;
 }
 /* Misc */
-.nopadding {	
+.nopadding {
 	padding: 0 !important;
 }
 .nopadding .table {
@@ -1599,9 +1599,9 @@ html, body, .container, .content {
   padding: 4px 10px;
 }
 
-.icon-comment-custom{ background-position: 0 -186px; width: 19px; height: 17px; padding: 1px 6px;} 
-.icon-config-custom{ background-position: 0 -253px; width: 19px; height: 20px; } 
-.icon-logout-custom{ background-position: 0 -323px; width: 20px; height: 21px; position: relative; top: 7px; } 
+.icon-comment-custom{ background-position: 0 -186px; width: 19px; height: 17px; padding: 1px 6px;}
+.icon-config-custom{ background-position: 0 -253px; width: 19px; height: 20px; }
+.icon-logout-custom{ background-position: 0 -323px; width: 20px; height: 21px; position: relative; top: 7px; }
 .icon-search-custom{ background-position: 0 -394px; width: 19px; height: 19px; }
 
 .error {
@@ -1628,7 +1628,7 @@ html, body, .container, .content {
     top: 0;
     min-width: 150px;
     box-shadow: 0 1px 5px rgba(0,0,0,0.7);
-    border-radius: 5px;     
+    border-radius: 5px;
     list-style: none;
 }
 .close_sidebar #sidebar > ul > li > a > span, .close_sidebar #sidebar > ul > li > button > span {
@@ -1638,7 +1638,7 @@ html, body, .container, .content {
     margin-left: 43px;
 }
 
-.btn-minimize,.btn-minimize:hover,.btn-minimize:focus,.btn-minimize:active,.btn-minimize.active,.btn-minimize.disabled,.btn-minimize[disabled] {
+.btn-nostyle,.btn-nostyle:hover,.btn-nostyle:focus,.btn-nostyle:active,.btn-nostyle.active,.btn-nostyle.disabled,.btn-nostyle[disabled] {
     background: transparent;
     border: none;
     box-shadow: none;
@@ -1675,7 +1675,7 @@ html, body, .container, .content {
 		margin-left: 0 !important;
 		border-top-left-radius: 0;
 	}
-    
+
     #content-header {
         margin-top: 0;
         /*height: 140px; FIX iPhone: Makes header take up too much space/not enough, let it dictate (by h1 text length) */
@@ -1699,7 +1699,7 @@ html, body, .container, .content {
         margin:10px 0; /* FIX iPhone: give equal margins (as below h1), still able to target with finger */
         left: 30%;
     }
-        
+
     /*****/
 	#sidebar {
 		float: none;
@@ -1764,7 +1764,7 @@ html, body, .container, .content {
 		top: 0;
 		min-width: 150px;
 		box-shadow: 0 1px 5px rgba(0,0,0,0.7);
-		border-radius: 5px;		
+		border-radius: 5px;
 		list-style: none;
 	}
 	#sidebar > ul ul li a {

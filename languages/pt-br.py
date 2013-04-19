@@ -302,6 +302,7 @@
 'User %(id)s Registered': 'User %(id)s Registered',
 'User ID': 'User ID',
 'User Voice': 'User Voice',
+'value already in database or empty': 'value already in database or empty',
 'value not allowed': 'value not allowed',
 'value not in database': 'value not in database',
 'Verification': 'Verificação',

@@ -132,7 +132,9 @@ def board():
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
-    members_project = [i.person_id for i in db(Sharing.project_id==project_id).select()]
+
+    team_members = db(Sharing.project_id == project_id).select()
+    members_project = [i.person_id for i in team_members]
 
     if project.created_by == person_id or person_id in members_project:
         sprint = db(Sprint.project_id == project.id).select().first()
@@ -163,6 +165,7 @@ def board():
 
                 return dict(project=project,
                             person_projects=person_projects,
+                            team_members=team_members,
                             stories=stories,
                             definition_ready=definition_ready,
                             tasks=tasks,
@@ -338,7 +341,7 @@ def change_ajax_itens():
             db(Story.id == request.vars.story_id).update(
                 benefit=request.vars.benefit,
             )
-        # must have created some sprint 
+        # must have created some sprint
         elif request.vars.sprint_id:
             # send story to sprint
             if request.vars.name == "sprint":
@@ -615,12 +618,14 @@ def _edit_role(project_id, person_id, role_id):
 @auth.requires_login()
 def team():
     project_id=request.args(0) or redirect(URL('projects'))
-    team_members = db(Sharing.project_id).select()
+    team_members = db(Sharing.project_id == project_id).select()
+
     person = _get_person()
     person_id = person["person_id"]
+
     project = db(Project.id==project_id).select().first()
     roles = db(Role).select()
-    members_project = [i.person_id for i in db(Sharing.project_id==project_id).select()]
+    members_project = [i.person_id for i in team_members]
 
     if project.created_by == person_id or person_id in members_project:
        if request.vars:

@@ -217,17 +217,17 @@ table, th, td {
 }
 
 .vertical {
-    float: right; 
+    float: right;
     position: relative;
     left: 10px;
     font-weight: bold;
     cursor: pointer;
     padding: 10px 0px;
-    -moz-transform: rotate(270deg);  /* FF3.5+ */        
-    -o-transform: rotate(270deg);  /* Opera 10.5 */   
-    -webkit-transform: rotate(270deg);  /* Saf3.1+, Chrome */              
-    filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=3);  /* IE6,IE7 */          
-    -ms-filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); /* IE8 */   
+    -moz-transform: rotate(270deg);  /* FF3.5+ */
+    -o-transform: rotate(270deg);  /* Opera 10.5 */
+    -webkit-transform: rotate(270deg);  /* Saf3.1+, Chrome */
+    filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=3);  /* IE6,IE7 */
+    -ms-filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); /* IE8 */
 }
 
 .vertical:hover {
@@ -277,13 +277,33 @@ table, th, td {
     background-color: rgb(224, 202, 146);
 }
 
-.avatar_card {
+.user_card {
     position: relative;
     bottom: 10px;
     margin-left: 10%;
     border: 1px solid rgb(92, 92, 92);
     width: 80%;
     height: auto;
+}
+
+.nonuser_card {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.nonuser_card:hover {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #08b;
+}
+
+.nonuser_card i {
+    position: relative;
+    top: 3px;
+    font-size: 20px;
+    opacity: 0.7;
 }
 
 .card_container {
@@ -342,8 +362,8 @@ table, th, td {
     left: 2px;
     font-weight: bold;
     cursor: pointer!important;
-    background-color: transparent!important; 
-    border-style: solid!important; 
+    background-color: transparent!important;
+    border-style: solid!important;
     border-width: 0px!important;
     box-shadow: none!important;
 }
@@ -357,10 +377,27 @@ table, th, td {
 
 /*
 =======
- ITENS
+ TEAM
 =======
 */
 
+.users_team {
+    display: none;
+    position: absolute;
+    padding: 10px;
+    background-color: #efefef;
+    background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#fdfdfd), to(#eaeaea));
+    background-image: -webkit-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    background-image: -moz-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    background-image: -ms-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    background-image: -o-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    background-image: -linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', endColorstr='#eaeaea',GradientType=0 );
+    margin: 11px 0px 0px 56px;
+    z-index: 9999;
+    box-shadow: 4px 4px 6px rgb(124, 124, 124);
+    border: 1px solid rgb(185, 183, 183);
+}
 
 
 

@@ -61,7 +61,7 @@ $('#add').click(function() {
 
 // Edit role
 $('.edit_role').click(function(){
-    $(this).parent().next().toggle('normal');
+    $(this).closest("#team_container").find(".role_team").toggle('normal');
 });
 
 // Remove member

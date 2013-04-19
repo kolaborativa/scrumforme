@@ -96,13 +96,13 @@
                         <h5><a href="#" class="editable-click story_card editable" data-type="text" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a></h5>
                     </div>
                     <div class="buttons_container">
-                        <button class="btn btn-minimize expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
+                        <button class="btn btn-nostyle expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
                             <i class="icon-circle-arrow-up"></i></button>
                         <input class="pull-right benefit" type="text" placeholder='?' value='{{=g_blank_check(story.benefit)}}' alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}' disabled>
                         <input class="pull-right story_points" type="text" placeholder="?" value='{{=g_blank_check(story.story_points)}}' alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}' disabled>
                     </div>
                     <div class="clearfix"></div>
-                </div>                            
+                </div>
                 </th>
             </tr>
             <tr class="item_container" data-definitionready='{{=definition_ready[story.id][count].id}}'>
@@ -116,14 +116,15 @@
                     <p class="definition_ready_title">{{=definition_ready[story.id][count].title}}</p>
                     <p class="vertical create_task" alt='{{=T("Create Task")}}' title='{{=T("Create Task")}}'><i class="icon-plus"></i> {{=T("task")}}</p>
                 </td>
-                
+
                 <td class="column_task todo" data-status="todo">
                     {{for task in tasks[definition_ready[story.id][count].id]:}}
                         {{if task["status"] == "todo": }}
                         <ul class="task_container">
                           <li class="task">
                             <div class="avatar_container">
-                                <img class="avatar_card" src='{{=Gravatar(auth.user.email).thumb}}'>
+                                <!-- <img class="user_card" src='{{=Gravatar(auth.user.email).thumb}}'> -->
+                                <button class="btn btn-nostyle user_card nonuser_card"><i class="icon-plus"></i></button>
                             </div>
                             <div class="card_container">
                                 <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
@@ -136,20 +137,30 @@
                                     <span class="delete_item" ><i class="icon-trash"></i></span>
                                 </div>
                             </div>
+                            {{if team_members:}}
+                            <form class="users_team">
+                                {{ for member in team_members: }}
+                                    <h4>{{=member.person_id.name}}</h4>
+                                    <br>
+                                {{ pass }}
+                                <input type="submit" value="OK" class="btn">
+                                <button id="cancel" class="btn">{{=T("Cancel")}}</button>
+                            </form>
+                            {{ pass }}
                             <div class="clearfix"></div>
                           </li>
                         </ul>
                         {{pass}}
                     {{pass}}
                 </td>
-                
+
                 <td class="column_task" data-status="inprogress">
                     {{for task in tasks[definition_ready[story.id][count].id]:}}
                         {{if task["status"] == "inprogress": }}
                         <ul class="task_container">
                           <li class="task">
                             <div class="avatar_container">
-                                <img class="avatar_card" src='{{=Gravatar(auth.user.email).thumb}}' width="45px" height="45px">
+                                <img class="user_card" src='{{=Gravatar(auth.user.email).thumb}}'>
                             </div>
                             <div class="card_container">
                                 <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
@@ -168,14 +179,14 @@
                         {{pass}}
                     {{pass}}
                 </td>
-                
+
                 <td class="column_task" data-status="verification">
                     {{for task in tasks[definition_ready[story.id][count].id]:}}
                         {{if task["status"] == "verification": }}
                         <ul class="task_container">
                           <li class="task">
                             <div class="avatar_container">
-                                <img class="avatar_card" src='{{=Gravatar(auth.user.email).thumb}}' width="45px" height="45px">
+                                <img class="user_card" src='{{=Gravatar(auth.user.email).thumb}}'>
                             </div>
                             <div class="card_container">
                                 <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
@@ -194,14 +205,14 @@
                         {{pass}}
                     {{pass}}
                 </td>
-                
+
                 <td class="column_task" data-status="done">
                     {{for task in tasks[definition_ready[story.id][count].id]:}}
                         {{if task["status"] == "done": }}
                         <ul class="task_container">
                           <li class="task">
                             <div class="avatar_container">
-                                <img class="avatar_card" src='{{=Gravatar(auth.user.email).thumb}}' width="45px" height="45px">
+                                <img class="user_card" src='{{=Gravatar(auth.user.email).thumb}}'>
                             </div>
                             <div class="card_container">
                                 <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>

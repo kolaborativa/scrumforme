@@ -15,7 +15,7 @@
         <!-- Always force latest IE rendering engine
            (even in intranet) & Chrome Frame
            Remove this if you use the .htaccess -->
-           
+
         <meta charset="utf-8" />
 
         <!-- http://dev.w3.org/html5/markup/meta.name.html -->
@@ -34,7 +34,7 @@
 
         <link rel="shortcut icon" href="{{=URL('static','images/favicon.ico')}}" type="image/x-icon">
         <link rel="apple-touch-icon" href="{{=URL('static','images/favicon.png')}}">
-        
+
         <!-- Bootstrap -->
         <link rel="stylesheet" href='{{=URL("static","css/bootstrap.min.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/bootstrap-responsive.min.css")}}' />
@@ -43,7 +43,7 @@
         <link rel="stylesheet" href='{{=URL("static","css/base.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/base.grey.css")}}' class="skin-color" />
         <link rel="stylesheet" href='{{=URL("static","css/bootstrap-editable.css")}}' />
-        
+
         {{ if request.function == "product_backlog": }}
         <link rel="stylesheet" href='{{=URL("static","css/product_backlog.css")}}' />
         {{ elif request.function == "board": }}
@@ -53,6 +53,7 @@
         <link rel="stylesheet" href='{{=URL("static","css/statistics.css")}}' />
         {{ elif request.function == "team": }}
         <link rel="stylesheet" href='{{=URL("static","css/select2.css")}}' />
+        <link rel="stylesheet" href='{{=URL("static","css/team.css")}}' />
         {{pass}}
 
         <!-- google font -->
@@ -92,7 +93,7 @@
             {{ pass }}
         </div>
 
-            
+
         <div id="sidebar" class="close_sidebar">
             <a href="#" class="visible-phone"><i class="icon-th-list"></i> {{=T('Menu')}}</a>
             <ul class="sidebar-fixed">
@@ -137,7 +138,14 @@
         </div>
 
 
-            <script src='{{=URL("static","js/jquery-1.9.1.min.js")}}'></script>
+            <!--[if lt IE 9]>
+                <script src='{{=URL("static","js/jquery-1.9.1.min.js")}}'></script>
+            <![endif]-->
+
+            <!--[if gte IE 9]><!-->
+                <script src='{{=URL("static","js/jquery-2.0.0.min.js")}}'></script>
+            <!--[endif]-->
+
             <script src="{{=URL('static','js/jquery-ui-1.10.2.custom.min.js')}}"></script>
             <script src='{{=URL("static","js/bootstrap.min.js")}}'></script>
             <script async defer src='{{=URL("static","js/web2py.js")}}'></script>

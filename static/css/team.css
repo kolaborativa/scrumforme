@@ -1,0 +1,9 @@
+li {
+    list-style: none;
+}
+
+.role_team {
+    display:none;
+    background-color:#ccc;
+    border-radius:5px;
+}
