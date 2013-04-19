@@ -128,13 +128,18 @@ def product_backlog():
 def board():
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
-
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
-
     team_members = db(Sharing.project_id == project_id).select()
     members_project = [i.person_id for i in team_members]
+
+    # add email to a row object
+    for member in team_members:
+        p = db(db.user_relationship.person_id==member.person_id).select().first()
+        user_member = db(db.auth_user.id==p.auth_user_id).select().first()
+
+        member["email"] = user_member.email
 
     if project.created_by == person_id or person_id in members_project:
         sprint = db(Sprint.project_id == project.id).select().first()
@@ -180,6 +185,41 @@ def board():
 
     else:
         redirect(URL('projects'))
+
+
+# @auth.requires_login()
+# def _members_project():
+#     if request.vars.project_id:
+#         members_project = db(Sharing.project_id == project_id).select()
+
+#     for member in members_project:
+#         p = db(db.user_relationship.person_id==member).select().first()
+#         user_member = db(db.auth_user.id==p.auth_user_id).select().first()
+
+#         p[p.person_id] = user_member.email
+
+
+@auth.requires_login()
+def _edit_owner_task():
+    if request.vars.person_id:
+        db(Task.id == request.vars.task_id).update(
+            owner_task=request.vars.person_id,
+        )
+
+        return True
+
+    else:
+        return False
+    #         (Sharing.person_id==person_id)).update(role_id=role_id)
+    # except:
+    #     redirect(URL(f='team', args=[project_id]))
+    # return
+    # try:
+    #     db((Sharing.project_id==project_id) & \
+    #         (Sharing.person_id==person_id)).update(role_id=role_id)
+    # except:
+    #     redirect(URL(f='team', args=[project_id]))
+    # return
 
 
 @auth.requires_login()

@@ -247,6 +247,11 @@ function statusAction(action, task_status, task) {
 
                 }
                 console_msg = "move status updated!";
+
+            } else if (action === "choose_owner") {
+                $(".project_member").removeClass('color-white');
+                $(task).addClass('color-white');
+                console_msg = "task owner updated!";
             }
 
             console.log(console_msg)
@@ -340,7 +345,7 @@ $('.table').editable({
 // CARD
 // =====
 
-$(document).on("click", ".user_card", function(){
+$(document).on("click", ".choose_owner", function(){
     var item = $('.users_team');
 
     if ($(item).is(":visible")) {
@@ -350,14 +355,25 @@ $(document).on("click", ".user_card", function(){
     }
 });
 
-$("body").click(function() {
-    var item = $('.users_team');
 
-    if ($(item).is(":visible")) {
-     $(item).fadeOut();   // hide button
+$("body").click(function() {
+    var item = $('.users_team'),
+        target = $(event.target).closest(".users_team");
+
+    if( target.is(".users_team") ) {
+        return
+    } else if($(item).is(":visible")) {
+        $(item).fadeOut();   // hide button
     }
  });
 
- $(".users_team").click(function(e){
-     e.stopPropagation();
- });
+
+// edit owner task
+$(document).on("click", ".project_member", function() {
+    var task = $(this).closest(".card_container").find('.task_item'),
+        task_id = task.attr('data-pk'),
+        person_id = $(this).attr('data-person');
+
+    ajax(url.edit_owner_task + '?task_id=' + task_id + '&person_id=' + person_id, [''], 'target_ajax');
+    statusAction("choose_owner", "", $(this));
+});

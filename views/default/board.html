@@ -6,6 +6,7 @@
         createUpdateBacklogItens : '{{=URL("create_update_itens.json")}}',
         changeAjaxItens : '{{=URL("board_ajax_tasks")}}',
         removeTask : '{{=URL("remove_itens")}}',
+        edit_owner_task : '{{=URL("_edit_owner_task")}}',
     },
     msg = {
         field_empty : '{{=T("Click to write")}}',
@@ -124,7 +125,7 @@
                           <li class="task">
                             <div class="avatar_container">
                                 <!-- <img class="user_card" src='{{=Gravatar(auth.user.email).thumb}}'> -->
-                                <button class="btn btn-nostyle user_card nonuser_card"><i class="icon-plus"></i></button>
+                                <button class="btn btn-nostyle user_card nonuser_card choose_owner"><i class="icon-plus"></i></button>
                             </div>
                             <div class="card_container">
                                 <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
@@ -136,17 +137,20 @@
                                     <div class="comment"><i class="icon-comment"></i><span>0</span></div>
                                     <span class="delete_item" ><i class="icon-trash"></i></span>
                                 </div>
-                            </div>
-                            {{if team_members:}}
-                            <form class="users_team">
-                                {{ for member in team_members: }}
-                                    <h4>{{=member.person_id.name}}</h4>
-                                    <br>
+                                {{if team_members:}}
+                                <div class="users_team">
+                                    {{ for member in team_members: }}
+                                    <div class="media project_member" data-person='{{=member.person_id}}'>
+                                        <img class="user_card pull-left" src='{{=Gravatar(member.email).thumb}}'>
+                                        <div class="media-body">
+                                            <h5 class="media-heading">{{=member.person_id.name}}</h5>
+                                            <h6>{{if member.role_id:}}{{=member.role_id.name}}{{else:}}{{=T("no role")}}{{pass}}</h6>
+                                        </div>
+                                    </div>
+                                    {{ pass }}
+                                </div>
                                 {{ pass }}
-                                <input type="submit" value="OK" class="btn">
-                                <button id="cancel" class="btn">{{=T("Cancel")}}</button>
-                            </form>
-                            {{ pass }}
+                            </div>
                             <div class="clearfix"></div>
                           </li>
                         </ul>

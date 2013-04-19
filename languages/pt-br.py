@@ -186,6 +186,7 @@
 'No databases in this application': 'Sem bancos de dados nesta aplicação',
 'No matches found': 'Nenhum resultado obtido',
 'No name match your search!': 'Nenhum nome combina com a sua pesquisa!',
+'no role': 'no role',
 'Number of Definitions of Ready': 'Número de Critérios de Pronto',
 'Object or table name': 'Object or table name',
 'Online examples': 'Alguns exemplos',

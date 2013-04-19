@@ -383,8 +383,12 @@ table, th, td {
 
 .users_team {
     display: none;
+    width: 400px;
+    margin-top: -69px;
+    border: 1px solid rgb(185, 183, 183);
+    z-index: 9999;
+    padding: 5px;
     position: absolute;
-    padding: 10px;
     background-color: #efefef;
     background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#fdfdfd), to(#eaeaea));
     background-image: -webkit-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
@@ -393,14 +397,47 @@ table, th, td {
     background-image: -o-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
     background-image: -linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', endColorstr='#eaeaea',GradientType=0 );
-    margin: 11px 0px 0px 56px;
-    z-index: 9999;
-    box-shadow: 4px 4px 6px rgb(124, 124, 124);
-    border: 1px solid rgb(185, 183, 183);
+    box-shadow: 4px 4px 6px rgb(100, 100, 100);
+    -webkit-box-shadow: 4px 4px 6px rgb(100, 100, 100);
+    -moz-box-shadow: 4px 4px 6px rgb(100, 100, 100);
+    -ms-box-shadow: 4px 4px 6px rgb(100, 100, 100);
+    -o-box-shadow: 4px 4px 6px rgb(100, 100, 100);
 }
 
+.project_member {
+    padding: 1px;
+    float: left;
+}
 
+.project_member:hover {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 0px;
+}
 
+.color-white {
+    background-color: #fff;
+}
+
+.users_team .user_card {
+    width: 45px;
+    position: relative;
+    top: 4px;
+}
+
+.users_team .media {
+    width: 49%;
+    min-height: 80px;
+    margin-top: 0px;
+}
+
+.users_team .media-heading {
+    margin: 0px;
+}
+
+.users_team .media-body h5 {
+    /*padding-right: 4px;*/
+}
 
 /*
 ==============
