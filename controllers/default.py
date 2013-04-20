@@ -131,15 +131,9 @@ def board():
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
-    team_members = db(Sharing.project_id == project_id).select()
-    members_project = [i.person_id for i in team_members]
 
-    # add email to a row object
-    for member in team_members:
-        p = db(db.user_relationship.person_id==member.person_id).select().first()
-        user_member = db(db.auth_user.id==p.auth_user_id).select().first()
-
-        member["email"] = user_member.email
+    team_members = db( (db.user_relationship.person_id==Sharing.person_id) & (Sharing.project_id == project_id) ).select(Sharing.ALL, db.user_relationship.auth_user_id)
+    members_project = [i.sharing.person_id for i in team_members]
 
     if project.created_by == person_id or person_id in members_project:
         sprint = db(Sprint.project_id == project.id).select().first()
@@ -187,18 +181,6 @@ def board():
         redirect(URL('projects'))
 
 
-# @auth.requires_login()
-# def _members_project():
-#     if request.vars.project_id:
-#         members_project = db(Sharing.project_id == project_id).select()
-
-#     for member in members_project:
-#         p = db(db.user_relationship.person_id==member).select().first()
-#         user_member = db(db.auth_user.id==p.auth_user_id).select().first()
-
-#         p[p.person_id] = user_member.email
-
-
 @auth.requires_login()
 def _edit_owner_task():
     if request.vars.person_id:
@@ -210,16 +192,6 @@ def _edit_owner_task():
 
     else:
         return False
-    #         (Sharing.person_id==person_id)).update(role_id=role_id)
-    # except:
-    #     redirect(URL(f='team', args=[project_id]))
-    # return
-    # try:
-    #     db((Sharing.project_id==project_id) & \
-    #         (Sharing.person_id==person_id)).update(role_id=role_id)
-    # except:
-    #     redirect(URL(f='team', args=[project_id]))
-    # return
 
 
 @auth.requires_login()
@@ -616,19 +588,21 @@ def get_persons_add():
 
 @auth.requires_login()
 def add_member():
-    project_id = request.vars['project_id']
-    persons_id = request.vars['persons_id'].split(',')
-    person = _get_person()
-    person_id = person["person_id"]
-    project = db(Project.id==project_id).select().first()
+    if request.vars['persons_id']:
 
-    if project.created_by == person_id:
-        for person in persons_id:
-            Sharing.insert(project_id=project_id,
-                           person_id=int(person),
-                           )
+        project_id = request.vars['project_id']
+        persons_id = request.vars['persons_id'].split(',')
+        person = _get_person()
+        person_id = person["person_id"]
+        project = db(Project.id==project_id).select().first()
 
-    redirect(URL(f='team', args=[project_id]))
+        if project.created_by == person_id:
+            for person in persons_id:
+                Sharing.insert(project_id=project_id,
+                               person_id=int(person),
+                               )
+
+    redirect(URL(f='team', args=[request.vars['project_id']]))
 
 
 @auth.requires_login()

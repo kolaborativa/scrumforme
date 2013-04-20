@@ -249,8 +249,12 @@ function statusAction(action, task_status, task) {
                 console_msg = "move status updated!";
 
             } else if (action === "choose_owner") {
-                $(".project_member").removeClass('color-white');
-                $(task).addClass('color-white');
+                var avatar_container = $(task).closest('.task_container').find(".avatar_container");
+                avatar_container.find('.user_card').remove();
+                $(task).find(".user_card").clone().appendTo(avatar_container);
+
+                $(task).closest(".task_container").find(".users_team").fadeOut();
+
                 console_msg = "task owner updated!";
             }
 

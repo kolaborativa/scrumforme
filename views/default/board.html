@@ -124,8 +124,15 @@
                         <ul class="task_container">
                           <li class="task">
                             <div class="avatar_container">
-                                <!-- <img class="user_card" src='{{=Gravatar(auth.user.email).thumb}}'> -->
-                                <button class="btn btn-nostyle user_card nonuser_card choose_owner"><i class="icon-plus"></i></button>
+                                {{if task["owner_task"]:}}
+                                    {{ for member in team_members: }}
+                                        {{ if task["owner_task"] == member.sharing.person_id: }}
+                                        <img class="user_card choose_owner" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}'>
+                                        {{pass}}
+                                    {{pass}}
+                                {{else:}}
+                                    <button class="btn btn-nostyle user_card nonuser_card choose_owner"><i class="icon-plus"></i></button>
+                                {{pass}}
                             </div>
                             <div class="card_container">
                                 <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
@@ -139,14 +146,22 @@
                                 </div>
                                 {{if team_members:}}
                                 <div class="users_team">
+                                    {{ norule_count = 0}}
                                     {{ for member in team_members: }}
-                                    <div class="media project_member" data-person='{{=member.person_id}}'>
-                                        <img class="user_card pull-left" src='{{=Gravatar(member.email).thumb}}'>
-                                        <div class="media-body">
-                                            <h5 class="media-heading">{{=member.person_id.name}}</h5>
-                                            <h6>{{if member.role_id:}}{{=member.role_id.name}}{{else:}}{{=T("no role")}}{{pass}}</h6>
+                                        {{if member.sharing.role_id and not member.sharing.role_id.name.lower() == "guess":}}
+                                        <div class="media project_member" data-person='{{=member.sharing.person_id}}'>
+                                            <img class="user_card pull-left" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}'>
+                                            <div class="media-body">
+                                                <h5 class="media-heading">{{=member.sharing.person_id.name}}</h5>
+                                                <h6>{{=member.sharing.role_id.name}}</h6>
+                                            </div>
                                         </div>
-                                    </div>
+                                        {{elif not member.sharing.role_id:}}
+                                            {{ norule_count += 1}}
+                                            {{ if norule_count == 1:}}
+                                                {{=T("Some members of the team are without a paper, go TEAM and add their respective roles.")}}
+                                            {{ pass }}
+                                        {{ pass }}
                                     {{ pass }}
                                 </div>
                                 {{ pass }}
@@ -158,13 +173,21 @@
                     {{pass}}
                 </td>
 
-                <td class="column_task" data-status="inprogress">
+                <td class="column_task inprogress" data-status="inprogress">
                     {{for task in tasks[definition_ready[story.id][count].id]:}}
                         {{if task["status"] == "inprogress": }}
                         <ul class="task_container">
                           <li class="task">
                             <div class="avatar_container">
-                                <img class="user_card" src='{{=Gravatar(auth.user.email).thumb}}'>
+                                {{if task["owner_task"]:}}
+                                    {{ for member in team_members: }}
+                                        {{ if task["owner_task"] == member.sharing.person_id: }}
+                                        <img class="user_card choose_owner" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}'>
+                                        {{pass}}
+                                    {{pass}}
+                                {{else:}}
+                                    <button class="btn btn-nostyle user_card nonuser_card choose_owner"><i class="icon-plus"></i></button>
+                                {{pass}}
                             </div>
                             <div class="card_container">
                                 <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
@@ -176,6 +199,27 @@
                                     <div class="comment"><i class="icon-comment"></i><span>0</span></div>
                                     <span class="delete_item" ><i class="icon-trash"></i></span>
                                 </div>
+                                {{if team_members:}}
+                                <div class="users_team">
+                                    {{ norule_count = 0}}
+                                    {{ for member in team_members: }}
+                                        {{if member.sharing.role_id and not member.sharing.role_id.name.lower() == "guess":}}
+                                        <div class="media project_member" data-person='{{=member.sharing.person_id}}'>
+                                            <img class="user_card pull-left" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}'>
+                                            <div class="media-body">
+                                                <h5 class="media-heading">{{=member.sharing.person_id.name}}</h5>
+                                                <h6>{{=member.sharing.role_id.name}}</h6>
+                                            </div>
+                                        </div>
+                                        {{elif not member.sharing.role_id:}}
+                                            {{ norule_count += 1}}
+                                            {{ if norule_count == 1:}}
+                                                {{=T("Some members of the team are without a paper, go TEAM and add their respective roles.")}}
+                                            {{ pass }}
+                                        {{ pass }}
+                                    {{ pass }}
+                                </div>
+                                {{ pass }}
                             </div>
                             <div class="clearfix"></div>
                           </li>
@@ -190,7 +234,15 @@
                         <ul class="task_container">
                           <li class="task">
                             <div class="avatar_container">
-                                <img class="user_card" src='{{=Gravatar(auth.user.email).thumb}}'>
+                                {{if task["owner_task"]:}}
+                                    {{ for member in team_members: }}
+                                        {{ if task["owner_task"] == member.sharing.person_id: }}
+                                        <img class="user_card choose_owner" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}'>
+                                        {{pass}}
+                                    {{pass}}
+                                {{else:}}
+                                    <button class="btn btn-nostyle user_card nonuser_card choose_owner"><i class="icon-plus"></i></button>
+                                {{pass}}
                             </div>
                             <div class="card_container">
                                 <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
@@ -202,6 +254,27 @@
                                     <div class="comment"><i class="icon-comment"></i><span>0</span></div>
                                     <span class="delete_item" ><i class="icon-trash"></i></span>
                                 </div>
+                                {{if team_members:}}
+                                <div class="users_team">
+                                    {{ norule_count = 0}}
+                                    {{ for member in team_members: }}
+                                        {{if member.sharing.role_id and not member.sharing.role_id.name.lower() == "guess":}}
+                                        <div class="media project_member" data-person='{{=member.sharing.person_id}}'>
+                                            <img class="user_card pull-left" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}'>
+                                            <div class="media-body">
+                                                <h5 class="media-heading">{{=member.sharing.person_id.name}}</h5>
+                                                <h6>{{=member.sharing.role_id.name}}</h6>
+                                            </div>
+                                        </div>
+                                        {{elif not member.sharing.role_id:}}
+                                            {{ norule_count += 1}}
+                                            {{ if norule_count == 1:}}
+                                                {{=T("Some members of the team are without a paper, go TEAM and add their respective roles.")}}
+                                            {{ pass }}
+                                        {{ pass }}
+                                    {{ pass }}
+                                </div>
+                                {{ pass }}
                             </div>
                             <div class="clearfix"></div>
                           </li>
@@ -216,7 +289,15 @@
                         <ul class="task_container">
                           <li class="task">
                             <div class="avatar_container">
-                                <img class="user_card" src='{{=Gravatar(auth.user.email).thumb}}'>
+                                {{if task["owner_task"]:}}
+                                    {{ for member in team_members: }}
+                                        {{ if task["owner_task"] == member.sharing.person_id: }}
+                                        <img class="user_card choose_owner" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}'>
+                                        {{pass}}
+                                    {{pass}}
+                                {{else:}}
+                                    <button class="btn btn-nostyle user_card nonuser_card choose_owner"><i class="icon-plus"></i></button>
+                                {{pass}}
                             </div>
                             <div class="card_container">
                                 <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
@@ -228,6 +309,27 @@
                                     <div class="comment"><i class="icon-comment"></i><span>0</span></div>
                                     <span class="delete_item" ><i class="icon-trash"></i></span>
                                 </div>
+                                {{if team_members:}}
+                                <div class="users_team">
+                                    {{ norule_count = 0}}
+                                    {{ for member in team_members: }}
+                                        {{if member.sharing.role_id and not member.sharing.role_id.name.lower() == "guess":}}
+                                        <div class="media project_member" data-person='{{=member.sharing.person_id}}'>
+                                            <img class="user_card pull-left" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}'>
+                                            <div class="media-body">
+                                                <h5 class="media-heading">{{=member.sharing.person_id.name}}</h5>
+                                                <h6>{{=member.sharing.role_id.name}}</h6>
+                                            </div>
+                                        </div>
+                                        {{elif not member.sharing.role_id:}}
+                                            {{ norule_count += 1}}
+                                            {{ if norule_count == 1:}}
+                                                {{=T("Some members of the team are without a paper, go TEAM and add their respective roles.")}}
+                                            {{ pass }}
+                                        {{ pass }}
+                                    {{ pass }}
+                                </div>
+                                {{ pass }}
                             </div>
                             <div class="clearfix"></div>
                           </li>

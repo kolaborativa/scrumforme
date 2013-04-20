@@ -251,6 +251,7 @@
 'Services': 'Services',
 'Sign up': 'Registre-se',
 'Size of cache:': 'Size of cache:',
+'Some members of the team are without a paper, go TEAM and add their respective roles.': 'Alguns membros do time estão sem um papel, vá em EQUIPE e adicione seus respectivos papéis.',
 'Sprint': 'Sprint',
 'Sprints': 'Sprints',
 'Started in': 'Iniciado em',
