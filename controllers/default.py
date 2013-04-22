@@ -182,6 +182,35 @@ def board():
 
 
 @auth.requires_login()
+@service.json
+def _team_project():
+    if request.vars.project_id:
+
+        team_members = db( (db.user_relationship.person_id==Sharing.person_id) & (Sharing.project_id == request.vars.project_id) ).select(Sharing.ALL, db.user_relationship.auth_user_id)
+
+        if team_members:
+            count = 0
+            project = {}
+            for member in team_members:
+                if member.sharing.role_id and not member.sharing.role_id.name.lower() == "guess":
+                    project["%s"%count] = {}
+
+                    project["%s"%count]["person_name"]=member.sharing.person_id.name
+                    project["%s"%count]["person_role"]=T(member.sharing.role_id.name)
+                    project["%s"%count]["person_id"]=member.sharing.person_id
+                    project["%s"%count]["avatar"]=Gravatar(member.user_relationship.auth_user_id.email).thumb
+
+                    count += 1
+
+                elif not member.sharing.role_id:
+                    return dict(norole=True)
+
+            return project
+    else:
+        return False
+
+
+@auth.requires_login()
 def _edit_owner_task():
     if request.vars.person_id:
         db(Task.id == request.vars.task_id).update(

@@ -7,6 +7,7 @@
         changeAjaxItens : '{{=URL("board_ajax_tasks")}}',
         removeTask : '{{=URL("remove_itens")}}',
         edit_owner_task : '{{=URL("_edit_owner_task")}}',
+        team_project : '{{=URL(r=request,f="call",args=["json","_team_project"], vars={"project_id": request.args(0)})}}',
     },
     msg = {
         field_empty : '{{=T("Click to write")}}',
@@ -16,6 +17,8 @@
         task_no_belong : '{{=T("This task does not belong to another definition of ready")}}',
         remove_sucess : '{{=T("Removed Successfully!")}}',
         remove_error : '{{=T("Error in removal!")}}',
+        no_role : '{{=T("Some members of the team are without a paper, go TEAM and add their respective roles.")}}',
+        task_no_exist : '{{=T("first insert the card content.")}}',
         type_error : 'error',
         type_success : 'success',
     },
@@ -44,7 +47,7 @@
 </div>
 
 <div id="info_content" class="row-fluid">
-    <div id="project_info" class="span4">
+    <div id="project_info" data-project='{{=request.args(0)}}' class="span4">
         <p>{{=project.description}}</p>
         <p>{{=g_blank_fulldate_check(project.date_)}} <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
     </div>
@@ -144,27 +147,6 @@
                                     <div class="comment"><i class="icon-comment"></i><span>0</span></div>
                                     <span class="delete_item" ><i class="icon-trash"></i></span>
                                 </div>
-                                {{if team_members:}}
-                                <div class="users_team">
-                                    {{ norule_count = 0}}
-                                    {{ for member in team_members: }}
-                                        {{if member.sharing.role_id and not member.sharing.role_id.name.lower() == "guess":}}
-                                        <div class="media project_member" data-person='{{=member.sharing.person_id}}'>
-                                            <img class="user_card pull-left" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}'>
-                                            <div class="media-body">
-                                                <h5 class="media-heading">{{=member.sharing.person_id.name}}</h5>
-                                                <h6>{{=member.sharing.role_id.name}}</h6>
-                                            </div>
-                                        </div>
-                                        {{elif not member.sharing.role_id:}}
-                                            {{ norule_count += 1}}
-                                            {{ if norule_count == 1:}}
-                                                {{=T("Some members of the team are without a paper, go TEAM and add their respective roles.")}}
-                                            {{ pass }}
-                                        {{ pass }}
-                                    {{ pass }}
-                                </div>
-                                {{ pass }}
                             </div>
                             <div class="clearfix"></div>
                           </li>
@@ -199,27 +181,6 @@
                                     <div class="comment"><i class="icon-comment"></i><span>0</span></div>
                                     <span class="delete_item" ><i class="icon-trash"></i></span>
                                 </div>
-                                {{if team_members:}}
-                                <div class="users_team">
-                                    {{ norule_count = 0}}
-                                    {{ for member in team_members: }}
-                                        {{if member.sharing.role_id and not member.sharing.role_id.name.lower() == "guess":}}
-                                        <div class="media project_member" data-person='{{=member.sharing.person_id}}'>
-                                            <img class="user_card pull-left" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}'>
-                                            <div class="media-body">
-                                                <h5 class="media-heading">{{=member.sharing.person_id.name}}</h5>
-                                                <h6>{{=member.sharing.role_id.name}}</h6>
-                                            </div>
-                                        </div>
-                                        {{elif not member.sharing.role_id:}}
-                                            {{ norule_count += 1}}
-                                            {{ if norule_count == 1:}}
-                                                {{=T("Some members of the team are without a paper, go TEAM and add their respective roles.")}}
-                                            {{ pass }}
-                                        {{ pass }}
-                                    {{ pass }}
-                                </div>
-                                {{ pass }}
                             </div>
                             <div class="clearfix"></div>
                           </li>
@@ -254,27 +215,6 @@
                                     <div class="comment"><i class="icon-comment"></i><span>0</span></div>
                                     <span class="delete_item" ><i class="icon-trash"></i></span>
                                 </div>
-                                {{if team_members:}}
-                                <div class="users_team">
-                                    {{ norule_count = 0}}
-                                    {{ for member in team_members: }}
-                                        {{if member.sharing.role_id and not member.sharing.role_id.name.lower() == "guess":}}
-                                        <div class="media project_member" data-person='{{=member.sharing.person_id}}'>
-                                            <img class="user_card pull-left" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}'>
-                                            <div class="media-body">
-                                                <h5 class="media-heading">{{=member.sharing.person_id.name}}</h5>
-                                                <h6>{{=member.sharing.role_id.name}}</h6>
-                                            </div>
-                                        </div>
-                                        {{elif not member.sharing.role_id:}}
-                                            {{ norule_count += 1}}
-                                            {{ if norule_count == 1:}}
-                                                {{=T("Some members of the team are without a paper, go TEAM and add their respective roles.")}}
-                                            {{ pass }}
-                                        {{ pass }}
-                                    {{ pass }}
-                                </div>
-                                {{ pass }}
                             </div>
                             <div class="clearfix"></div>
                           </li>
@@ -309,27 +249,6 @@
                                     <div class="comment"><i class="icon-comment"></i><span>0</span></div>
                                     <span class="delete_item" ><i class="icon-trash"></i></span>
                                 </div>
-                                {{if team_members:}}
-                                <div class="users_team">
-                                    {{ norule_count = 0}}
-                                    {{ for member in team_members: }}
-                                        {{if member.sharing.role_id and not member.sharing.role_id.name.lower() == "guess":}}
-                                        <div class="media project_member" data-person='{{=member.sharing.person_id}}'>
-                                            <img class="user_card pull-left" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}'>
-                                            <div class="media-body">
-                                                <h5 class="media-heading">{{=member.sharing.person_id.name}}</h5>
-                                                <h6>{{=member.sharing.role_id.name}}</h6>
-                                            </div>
-                                        </div>
-                                        {{elif not member.sharing.role_id:}}
-                                            {{ norule_count += 1}}
-                                            {{ if norule_count == 1:}}
-                                                {{=T("Some members of the team are without a paper, go TEAM and add their respective roles.")}}
-                                            {{ pass }}
-                                        {{ pass }}
-                                    {{ pass }}
-                                </div>
-                                {{ pass }}
                             </div>
                             <div class="clearfix"></div>
                           </li>

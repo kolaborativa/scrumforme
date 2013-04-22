@@ -260,6 +260,9 @@ function statusAction(action, task_status, task) {
 
             console.log(console_msg)
 
+        } else if (message.length > 0 && message !== 'False') {
+            console.log("entrou na equipe")
+
         } else if (message === 'False') {
             console.log("status updated ERROR!")
         }
@@ -289,9 +292,8 @@ $(document).on("click", ".expand_story", function() {
 // by clicking the button to add Task
 $(document).on("click", ".create_task", function() {
 
-    var definition_ready_id = $(this).closest(".item_container").attr("data-definitionready");
-
-    var html = '<ul class="task_container"><li class="task"><div class="avatar_container"><img class="avatar_card" src="http://lorempixel.com/50/50/"></div><div class="card_container"><a href="#" class="editable-click editable-empty editable task_item new_task" data-type="textarea" data-placeholder="' + msg.field_empty + '" data-pk="' + definition_ready_id + '" data-name="task">' + msg.field_empty + '</a><div class="icons_card"><div class="date started_calendar new_calendar" data-date=""><input class="started_date_text" size="16" type="text" value="" readonly><span class="add-on calendar"><i class="icon-calendar"></i></span></div><div class="comment"><i class="icon-comment"></i><span>0</span></div><span class="delete_item" ><i class="icon-trash"></i></span></div></div><div class="clearfix"></div></li></ul>';
+    var definition_ready_id = $(this).closest(".item_container").attr("data-definitionready"),
+        html = '<ul class="task_container"><li class="task"><div class="avatar_container"><button class="btn btn-nostyle user_card nonuser_card choose_owner"><i class="icon-plus"></i></button></div><div class="card_container"><a href="#" class="editable-click editable-empty editable task_item new_task" data-type="textarea" data-placeholder="' + msg.field_empty + '" data-pk="' + definition_ready_id + '" data-name="task">' + msg.field_empty + '</a><div class="icons_card"><div class="date started_calendar" data-date=""><input class="started_date_text" size="16" type="text" value="" readonly><span class="add-on calendar"><i class="icon-calendar"></i></span></div><div class="comment"><i class="icon-comment"></i><span>0</span></div><span class="delete_item" ><i class="icon-trash"></i></span></div></div><div class="clearfix"></div></li></ul>';
 
     var newItem = $(this).closest(".item_container").find(".todo").append(html);
 
@@ -349,14 +351,36 @@ $('.table').editable({
 // CARD
 // =====
 
-$(document).on("click", ".choose_owner", function(){
-    var item = $('.users_team');
+$(document).on("click", ".choose_owner", function() {
+    var item = $('.users_team'),
+        project_id = $("#project_info").attr("data-project")
 
-    if ($(item).is(":visible")) {
-         $(item).fadeOut();   // hide button
-    } else {
-        $(this).closest(".task_container").find(".users_team").fadeToggle();
-    }
+        if ($(item).is(":visible")) {
+            $(item).fadeOut(); // hide button
+            return
+        } else {
+            $(this).closest(".task_container").find(".users_team").fadeIn();
+        }
+
+    $(this).closest(".task_container").find(".users_team").empty();
+    var self = $(this),
+        message = msg.no_role,
+        html = '<div class="users_team">';
+
+    $.getJSON(url.team_project,
+        function(msg) {
+            // console.log(msg);
+            for (i in msg) {
+                if(i === "norole"){
+                    html += '<h5>'+message+'</h5>'
+                } else {
+                html += '<div class="media project_member" data-person="' + msg[i]["person_id"] + '"><img class="user_card choose_owner pull-left" src="' + msg[i]["avatar"] + '"><div class="media-body"><h5 class="media-heading">' + msg[i]["person_name"] + '</h5><h6>' + msg[i]["person_role"] + '</h6></div></div>'
+                }
+            }
+            html += '</div>';
+            self.closest(".task_container").find(".card_container").append(html);
+        }
+    );
 });
 
 
@@ -364,20 +388,27 @@ $("body").click(function() {
     var item = $('.users_team'),
         target = $(event.target).closest(".users_team");
 
-    if( target.is(".users_team") ) {
+    if (target.is(".users_team")) {
         return
-    } else if($(item).is(":visible")) {
-        $(item).fadeOut();   // hide button
+    } else if ($(item).is(":visible")) {
+        $(item).fadeOut(); // hide button
     }
- });
+});
 
 
 // edit owner task
 $(document).on("click", ".project_member", function() {
     var task = $(this).closest(".card_container").find('.task_item'),
+        alredy_exist = task.attr('data-update'),
         task_id = task.attr('data-pk'),
         person_id = $(this).attr('data-person');
 
-    ajax(url.edit_owner_task + '?task_id=' + task_id + '&person_id=' + person_id, [''], 'target_ajax');
-    statusAction("choose_owner", "", $(this));
+    if(alredy_exist === undefined) {
+        alert(msg.task_no_exist)
+    } else {
+        console.log(alredy_exist);
+        ajax(url.edit_owner_task + '?task_id=' + task_id + '&person_id=' + person_id, [''], 'target_ajax');
+        statusAction("choose_owner", "", $(this));
+    }
+
 });
