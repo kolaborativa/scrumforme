@@ -192,7 +192,7 @@ def _team_project():
             count = 0
             project = {}
             for member in team_members:
-                if member.sharing.role_id and not member.sharing.role_id.name.lower() == "guess":
+                if member.sharing.role_id and not member.sharing.role_id.name.lower() == "guest":
                     project["%s"%count] = {}
 
                     project["%s"%count]["person_name"]=member.sharing.person_id.name
