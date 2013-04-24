@@ -42,7 +42,7 @@ $(function() {
     $(".column_task").sortable({
         connectWith: ".column_task",
         placeholder: 'placeholder_item',
-        delay: 25,
+        delay: 100,
         revert: true,
         dropOnEmpty: true,
         start: function(event, ui) {
@@ -61,32 +61,20 @@ $(function() {
         },
         stop: function(event, ui) {
             var task = $(ui.item),
-                old_df_id = $('body').data('definitionreadyid'),
-                new_df_id = task.closest('.item_container').attr('data-definitionready');
-            status = task.closest('.column_task').attr('data-status'),
-            date = task.find('input').val(),
-            value = task.find('.task_item').text();
+                result_task = validationTask("stop", task)
 
-            var result_task = verifyTask("stop", old_df_id, new_df_id, date, status, value)
-
+            // prevents the card being moved does not pass validation
             if (result_task === false) {
-                // prevents send to a different definition of ready or different story
                 return false
             }
 
         },
         receive: function(event, ui) {
             var task = $(ui.item),
-                old_df_id = $('body').data('definitionreadyid'),
-                new_df_id = task.closest('.item_container').attr('data-definitionready');
-            status = task.closest('.column_task').attr('data-status'),
-            date = task.find('input').val(),
-            value = task.find('.task_item').text();
+                result_task = validationTask("", task)
 
-            var result_task = verifyTask("", old_df_id, new_df_id, date, status, value)
-
+            // prevents the card being moved does not pass validation
             if (result_task === false) {
-                // prevents send to a different definition of ready or different story
                 return false
 
             } else if (result_task === true) {
@@ -140,7 +128,13 @@ $(function() {
 
 // change task status block
 
-function verifyTask(action, old_df_id, new_df_id, date, status, value) {
+function validationTask(action, task) {
+    var old_df_id = $('body').data('definitionreadyid'),
+        new_df_id = $(task).closest('.item_container').attr('data-definitionready'),
+        status = $(task).closest('.column_task').attr('data-status'),
+        owner = $(task).find('.user_card').attr('data-owner'),
+        date = $(task).find('input').val(),
+        value = $(task).find('.task_item').text();
 
     if (old_df_id !== new_df_id) {
         // prevents send to a different definition of ready or different story
@@ -160,6 +154,13 @@ function verifyTask(action, old_df_id, new_df_id, date, status, value) {
         // verify if task value is empty
         if (action === "stop") {
             alert(msg.validation_error)
+        }
+        return false
+
+    } else if(owner === undefined) {
+        // prevents block change without the card being assigned to one of the team
+        if (action === "stop") {
+            alert(msg.card_assign)
         }
         return false
 
@@ -293,7 +294,7 @@ $(document).on("click", ".expand_story", function() {
 $(document).on("click", ".create_task", function() {
 
     var definition_ready_id = $(this).closest(".item_container").attr("data-definitionready"),
-        html = '<ul class="task_container"><li class="task"><div class="avatar_container"><button class="btn btn-nostyle user_card nonuser_card choose_owner"><i class="icon-plus"></i></button></div><div class="card_container"><a href="#" class="editable-click editable-empty editable task_item new_task" data-type="textarea" data-placeholder="' + msg.field_empty + '" data-pk="' + definition_ready_id + '" data-name="task">' + msg.field_empty + '</a><div class="icons_card"><div class="date started_calendar" data-date=""><input class="started_date_text" size="16" type="text" value="" readonly><span class="add-on calendar"><i class="icon-calendar"></i></span></div><div class="comment"><i class="icon-comment"></i><span>0</span></div><span class="delete_item" ><i class="icon-trash"></i></span></div></div><div class="clearfix"></div></li></ul>';
+        html = '<ul class="task_container"><li class="task"><div class="avatar_container"><button class="btn btn-nostyle user_card nonuser_card choose_owner"><i class="icon-plus"></i></button></div><div class="card_container"><a href="#" class="editable-click editable-empty editable task_item new_task" data-type="textarea" data-placeholder="' + msg.field_empty + '" data-pk="' + definition_ready_id + '" data-name="task">' + msg.field_empty + '</a><div class="icons_card"><div class="date started_calendar new_calendar" data-date=""><input class="started_date_text" size="16" type="text" value="" readonly><span class="add-on calendar"><i class="icon-calendar"></i></span></div><div class="comment"><i class="icon-comment"></i><span>0</span></div><span class="delete_item" ><i class="icon-trash"></i></span></div></div><div class="clearfix"></div></li></ul>';
 
     var newItem = $(this).closest(".item_container").find(".todo").append(html);
 
@@ -316,7 +317,7 @@ $.fn.editable.defaults.mode = 'inline';
 
 //apply editable to parent div
 $('.table').editable({
-    selector: 'a',
+    selector: 'a.task_item',
     url: url.createUpdateBacklogItens,
     emptytext: msg.field_empty,
     params: function(params) {
@@ -364,19 +365,23 @@ $(document).on("click", ".choose_owner", function() {
 
     $(this).closest(".task_container").find(".users_team").empty();
     var self = $(this),
-        message = msg.no_role,
+        txt = {
+                person_role : msg.no_role,
+                team_page : msg.team_page,
+                },
+        button_url = url.team,
         html = '<div class="users_team">';
 
     $.getJSON(url.team_project,
         function(msg) {
-            // console.log(msg);
             for (i in msg) {
                 if(i === "norole"){
-                    html += '<h5>'+message+'</h5>'
+                    html += '<h5>'+txt.person_role+'</h5>'
                 } else {
-                html += '<div class="media project_member" data-person="' + msg[i]["person_id"] + '"><img class="user_card choose_owner pull-left" src="' + msg[i]["avatar"] + '"><div class="media-body"><h5 class="media-heading">' + msg[i]["person_name"] + '</h5><h6>' + msg[i]["person_role"] + '</h6></div></div>'
+                html += '<div class="media project_member" data-person="' + msg[i]["person_id"] + '"><img class="user_card choose_owner pull-left" src="' + msg[i]["avatar"] + '" data-owner="true"><div class="media-body"><h5 class="media-heading">' + msg[i]["person_name"] + '</h5><h6>' + msg[i]["person_role"] + '</h6></div></div>'
                 }
             }
+            html += '<a href="'+button_url+'" class="btn btn-primary btn-mini">'+txt.team_page+'</a>';
             html += '</div>';
             self.closest(".task_container").find(".card_container").append(html);
         }

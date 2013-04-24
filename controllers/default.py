@@ -642,8 +642,17 @@ def remove_member():
     my_person_id = person["person_id"]
     project = db(Project.id==project_id).select().first()
 
+    # remove task owner
+    task_person = db(Task.owner_task == person_id).select()
+    if task_person:
+        for task in task_person:
+            db(Task.owner_task == task.owner_task).update(
+                owner_task=None,
+            )
+    # remove person of a project
     if project.created_by == my_person_id:
         db((Sharing.project_id==project_id) & (Sharing.person_id==person_id)).delete()
+
     redirect(URL(f='team', args=[project_id]))
 
 

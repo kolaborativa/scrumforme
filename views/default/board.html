@@ -8,6 +8,7 @@
         removeTask : '{{=URL("remove_itens")}}',
         edit_owner_task : '{{=URL("_edit_owner_task")}}',
         team_project : '{{=URL(r=request,f="call",args=["json","_team_project"], vars={"project_id": request.args(0)})}}',
+        team : '{{=URL(f="team",args=[request.args(0)])}}',
     },
     msg = {
         field_empty : '{{=T("Click to write")}}',
@@ -19,6 +20,8 @@
         remove_error : '{{=T("Error in removal!")}}',
         no_role : '{{=T("Some members of the team are without a paper, go TEAM and add their respective roles.")}}',
         task_no_exist : '{{=T("first insert the card content.")}}',
+        team_page : '{{=T("Team Page")}}',
+        card_assign : '{{=T("Assign this card to a member of team before moving it")}}',
         type_error : 'error',
         type_success : 'success',
     },
@@ -130,7 +133,7 @@
                                 {{if task["owner_task"]:}}
                                     {{ for member in team_members: }}
                                         {{ if task["owner_task"] == member.sharing.person_id: }}
-                                        <img class="user_card choose_owner" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}'>
+                                        <img class="user_card choose_owner" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' data-owner="true">
                                         {{pass}}
                                     {{pass}}
                                 {{else:}}
@@ -164,7 +167,7 @@
                                 {{if task["owner_task"]:}}
                                     {{ for member in team_members: }}
                                         {{ if task["owner_task"] == member.sharing.person_id: }}
-                                        <img class="user_card choose_owner" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}'>
+                                        <img class="user_card choose_owner" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' data-owner="true">
                                         {{pass}}
                                     {{pass}}
                                 {{else:}}
@@ -198,7 +201,7 @@
                                 {{if task["owner_task"]:}}
                                     {{ for member in team_members: }}
                                         {{ if task["owner_task"] == member.sharing.person_id: }}
-                                        <img class="user_card choose_owner" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}'>
+                                        <img class="user_card choose_owner" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' data-owner="true">
                                         {{pass}}
                                     {{pass}}
                                 {{else:}}
@@ -232,7 +235,7 @@
                                 {{if task["owner_task"]:}}
                                     {{ for member in team_members: }}
                                         {{ if task["owner_task"] == member.sharing.person_id: }}
-                                        <img class="user_card choose_owner" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}'>
+                                        <img class="user_card choose_owner" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' data-owner="true">
                                         {{pass}}
                                     {{pass}}
                                 {{else:}}
