@@ -7,3 +7,7 @@ li {
     background-color:#ccc;
     border-radius:5px;
 }
+
+.edit_role {
+    cursor: pointer;
+}

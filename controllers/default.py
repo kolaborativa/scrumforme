@@ -14,6 +14,10 @@ def index():
     return dict()
 
 
+def nojs():
+    return dict(message=T("JavaScript must be enabled for you to use Scrumforme"))
+
+
 @auth.requires_login()
 def _get_person():
     """Function that get data of relationship person of the user logged. Projects and person_id.
@@ -23,9 +27,9 @@ def _get_person():
 
     projects = db(Project.created_by==person_id).select()
     person_id = user_relationship.person_id
-    projects_member = db(Sharing.person_id==person_id).select()
+    shared = db(Sharing.person_id==person_id).select()
 
-    return dict(person_id=person_id, projects=projects, projects_member=projects_member)
+    return dict(person_id=person_id, projects=projects, shared=shared)
 
 
 @auth.requires_login()
@@ -35,7 +39,7 @@ def projects():
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
-    projects_member = person['projects_member']
+    shared_with_person = person['shared']
 
     form = SQLFORM.factory(
         Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
@@ -57,7 +61,7 @@ def projects():
     elif form.errors:
         pass
 
-    return dict(form=form, person_projects=person_projects, projects_member=projects_member)
+    return dict(form=form, person_projects=person_projects, shared_with_person=shared_with_person)
 
 
 @auth.requires_login()
@@ -67,7 +71,8 @@ def product_backlog():
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
-    members_project = [i.person_id for i in db(Sharing.project_id==project_id).select()]
+    shared_with_person = person['shared']
+    members_project = [i.person_id for i in shared_with_person]
 
     if project.created_by == person_id or person_id in members_project:
         # response message for view
@@ -111,6 +116,7 @@ def product_backlog():
             return dict(
                         project=project,
                         person_projects=person_projects,
+                        shared_with_person=shared_with_person,
                         stories=stories,
                         definition_ready=definition_ready,
                         tasks=tasks,
@@ -118,7 +124,13 @@ def product_backlog():
                         sprint=sprint
                         )
         else:
-            return dict(project=project, person_projects=person_projects, form_sprint=form_sprint, sprint=sprint)
+            return dict(
+                        project=project,
+                        person_projects=person_projects,
+                        shared_with_person=shared_with_person,
+                        form_sprint=form_sprint,
+                        sprint=sprint
+                        )
 
     else:
         redirect(URL('projects'))
@@ -131,15 +143,15 @@ def board():
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
+    shared_with_person = person['shared']
+    members_project = [i.person_id for i in shared_with_person]
 
-    team_members = db( (db.user_relationship.person_id==Sharing.person_id) & (Sharing.project_id == project_id) ).select(Sharing.ALL, db.user_relationship.auth_user_id)
-    members_project = [i.sharing.person_id for i in team_members]
 
     if project.created_by == person_id or person_id in members_project:
         sprint = db(Sprint.project_id == project.id).select().first()
         stories = db((Story.project_id == project.id) & (Story.sprint_id >0)).select(orderby=Story.position_dom)
 
-        if sprint.started:
+        if hasattr(sprint,"started") and sprint.started:
             if stories:
                 least_one_story = False
                 definition_ready = {}
@@ -162,8 +174,11 @@ def board():
                     for df in definition_ready[row]:
                         tasks[df.id] = db(Task.definition_ready_id == df.id).select()
 
+                team_members = db( (db.user_relationship.person_id==Sharing.person_id) & (Sharing.project_id == project_id) ).select(Sharing.ALL, db.user_relationship.auth_user_id)
+
                 return dict(project=project,
                             person_projects=person_projects,
+                            shared_with_person=shared_with_person,
                             team_members=team_members,
                             stories=stories,
                             definition_ready=definition_ready,
@@ -174,7 +189,7 @@ def board():
                 session.message = T("You must create stories for your project")
                 redirect(URL(f='product_backlog', args=project_id))
         else:
-            session.message = T("You must create and start the sprint before accessing the Board")
+            session.message = T("You must create and launch the sprint before accessing the Board")
             redirect(URL(f='product_backlog', args=project_id))
 
     else:
@@ -244,6 +259,7 @@ def statistics():
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
+    shared_with_person = person["shared"]
 
     if project.created_by == person_id:
         sprint = db(Sprint.project_id == project.id).select().first()
@@ -269,6 +285,7 @@ def statistics():
 
                 return dict(project=project,
                             person_projects=person_projects,
+                            shared_with_person=shared_with_person,
                             sprint=sprint,
                             stories=stories,
                             burndown_chart=burndown_chart
@@ -670,21 +687,30 @@ def _edit_role(project_id, person_id, role_id):
 @auth.requires_login()
 def team():
     project_id=request.args(0) or redirect(URL('projects'))
-    team_members = db(Sharing.project_id == project_id).select()
-
     person = _get_person()
     person_id = person["person_id"]
+    person_projects = person["projects"]
+    shared_with_person = person["shared"]
 
     project = db(Project.id==project_id).select().first()
     roles = db(Role).select()
-    members_project = [i.person_id for i in team_members]
+    members_project = [i.person_id for i in shared_with_person]
+
+    team_members = db(Sharing.project_id == project_id).select()
 
     if project.created_by == person_id or person_id in members_project:
        if request.vars:
            person_id, role_id = (request.vars.keys()[0], request.vars.values()[0])
            _edit_role(project_id, person_id, role_id)
            redirect(URL(f='team', args=[project_id]))
-       return dict(project=project, team_members=team_members, roles=roles, owner_project=project.created_by == person_id)
+       return dict(
+                project=project,
+                person_projects=person_projects,
+                shared_with_person=shared_with_person,
+                team_members=team_members,
+                roles=roles,
+                owner_project=project.created_by == person_id
+                )
     redirect(URL('projects'))
 
 

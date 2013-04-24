@@ -31,6 +31,8 @@
             initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
             user-scalable = yes allows the user to zoom in -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- redirect if javascript is desabled -->
+        <noscript><meta http-equiv="refresh" content='0; url={{=URL("nojs")}}'></noscript>
 
         <link rel="shortcut icon" href="{{=URL('static','images/favicon.ico')}}" type="image/x-icon">
         <link rel="apple-touch-icon" href="{{=URL('static','images/favicon.png')}}">
@@ -60,6 +62,8 @@
         <link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>
 
     </head>
+
+
     <body class='{{=g_current_page("default/board/%s" %request.args(0),"close_sidebar")}}'>
         <div class="flash">{{=response.flash or ''}}</div>
         <div id="header">
@@ -67,11 +71,19 @@
             {{ if auth.is_logged_in(): }}
                 <ul id="projects">
                     <li><a href="{{=URL('projects')}}" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'><i class="icon-plus"></i></a></li>
-                    {{if "person_projects" in globals():}}
-                        {{p_count = 1}}
+                    {{p_count = 1}}
+                    {{if person_projects:}}
                         {{for i in person_projects:}}
-                            {{if p_count <= 8:}}
+                            {{if p_count <= 6:}}
                                 <li class='{{=g_current_page("default/%s/%s" %(request.function,i.id),"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}' class="tip-bottom" alt='{{=i.name}}' title='{{=i.name}}'>{{=i.id}}</a></li>
+                            {{p_count += 1}}
+                            {{pass}}
+                        {{pass}}
+                    {{pass}}
+                    {{if shared_with_person:}}
+                        {{for i in shared_with_person:}}
+                            {{if p_count <= 4:}}
+                                <li class='{{=g_current_page("default/%s/%s" %(request.function,i.project_id),"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.project_id])}}' class="tip-bottom" alt='{{=i.project_id.name}}' title='{{=i.project_id.name}}'>{{=i.project_id}}</a></li>
                             {{p_count += 1}}
                             {{pass}}
                         {{pass}}

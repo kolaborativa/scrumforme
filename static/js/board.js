@@ -63,7 +63,7 @@ $(function() {
             var task = $(ui.item),
                 result_task = validationTask("stop", task)
 
-            // prevents the card being moved does not pass validation
+                // prevents the card being moved does not pass validation
             if (result_task === false) {
                 return false
             }
@@ -73,7 +73,7 @@ $(function() {
             var task = $(ui.item),
                 result_task = validationTask("", task)
 
-            // prevents the card being moved does not pass validation
+                // prevents the card being moved does not pass validation
             if (result_task === false) {
                 return false
 
@@ -157,7 +157,7 @@ function validationTask(action, task) {
         }
         return false
 
-    } else if(owner === undefined) {
+    } else if (owner === undefined) {
         // prevents block change without the card being assigned to one of the team
         if (action === "stop") {
             alert(msg.card_assign)
@@ -366,26 +366,26 @@ $(document).on("click", ".choose_owner", function() {
     $(this).closest(".task_container").find(".users_team").empty();
     var self = $(this),
         txt = {
-                person_role : msg.no_role,
-                team_page : msg.team_page,
-                },
+            person_role: msg.no_role,
+            team_page: msg.team_page
+        },
         button_url = url.team,
         html = '<div class="users_team">';
 
     $.getJSON(url.team_project,
-        function(msg) {
-            for (i in msg) {
-                if(i === "norole"){
-                    html += '<h5>'+txt.person_role+'</h5>'
-                } else {
+
+    function(msg) {
+        for (i in msg) {
+            if (i === "norole") {
+                html += '<h5>' + txt.person_role + '</h5>'
+            } else {
                 html += '<div class="media project_member" data-person="' + msg[i]["person_id"] + '"><img class="user_card choose_owner pull-left" src="' + msg[i]["avatar"] + '" data-owner="true"><div class="media-body"><h5 class="media-heading">' + msg[i]["person_name"] + '</h5><h6>' + msg[i]["person_role"] + '</h6></div></div>'
-                }
             }
-            html += '<a href="'+button_url+'" class="btn btn-primary btn-mini">'+txt.team_page+'</a>';
-            html += '</div>';
-            self.closest(".task_container").find(".card_container").append(html);
         }
-    );
+        html += '<a href="' + button_url + '" class="btn btn-primary btn-mini">' + txt.team_page + '</a>';
+        html += '</div>';
+        self.closest(".task_container").find(".card_container").append(html);
+    });
 });
 
 
@@ -408,7 +408,7 @@ $(document).on("click", ".project_member", function() {
         task_id = task.attr('data-pk'),
         person_id = $(this).attr('data-person');
 
-    if(alredy_exist === undefined) {
+    if (alredy_exist === undefined) {
         alert(msg.task_no_exist)
     } else {
         console.log(alredy_exist);

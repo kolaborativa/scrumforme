@@ -45,7 +45,16 @@
                 <ul id="team_container">
                     <li>{{=member.person_id.name}}</li>
                     <li>
-                        <button class="btn btn-primary btn-mini {{if owner_project:}}edit_role"{{pass}} style="cursor:pointer">{{if member.role_id:}}{{=member.role_id.name}}{{else:}}{{=T("Define role")}}{{pass}}</button>
+                        {{if member.role_id:}}
+                            {{if owner_project:}}
+                                <button class="btn btn-primary btn-mini edit_role">{{=T(member.role_id.name)}}</button>
+                            {{else:}}
+                                <p><strong>{{=T(member.role_id.name)}}</strong></p>
+                            {{pass}}
+                        {{else:}}
+                            <button class="btn btn-primary btn-mini edit_role">{{=T("Define role")}}</button>
+                        {{pass}}
+
                         {{if owner_project:}}
                         <button data-member="{{=member.person_id}}" class=" remove_member btn btn-danger btn-mini">{{=T("remove")}}</button>
                         {{pass}}
