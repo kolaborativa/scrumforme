@@ -221,6 +221,10 @@ def _team_project():
                     return dict(norole=True)
 
             return project
+
+        else:
+            return dict(noteam=True)
+
     else:
         return False
 
@@ -260,8 +264,9 @@ def statistics():
     person_id = person["person_id"]
     person_projects = person["projects"]
     shared_with_person = person["shared"]
+    members_project = [i.person_id for i in shared_with_person]
 
-    if project.created_by == person_id:
+    if project.created_by == person_id or person_id in members_project:
         sprint = db(Sprint.project_id == project.id).select().first()
         stories = db((Story.project_id == project.id) & (Story.sprint_id >0)).select()
 
@@ -545,6 +550,8 @@ def _test_story_completed(definition_ready_id, status):
 
 @auth.requires_login()
 def burndown_chart_test(story_project_id, definition_ready_story):
+    from datetime import datetime
+
     # if story is completed
     if definition_ready_story:
 
@@ -567,7 +574,7 @@ def burndown_chart_test(story_project_id, definition_ready_story):
                 concluded_stories += story.story_points
                 sprint_id = story.sprint_id
 
-        db_burndown = db(Burndown.sprint_id == sprint_id).select().first()
+        db_burndown = db(Burndown.date_ == datetime.now()).select().first()
 
         if db_burndown:
             db(Burndown.id == db_burndown.id).update(
@@ -584,8 +591,6 @@ def burndown_chart_test(story_project_id, definition_ready_story):
         return True
 
     else:
-        from datetime import datetime
-
         stories = db((Story.project_id == story_project_id) & (Story.sprint_id >0)).select()
 
         sprint_id = 0
@@ -595,7 +600,7 @@ def burndown_chart_test(story_project_id, definition_ready_story):
             if story.concluded == True:
                 concluded_stories += story.story_points
 
-        db_burndown = db(Burndown.sprint_id == sprint_id).select().first()
+        db_burndown = db(Burndown.date_ == datetime.now()).select().first()
 
         if db_burndown:
             db(Burndown.id == db_burndown.id).update(

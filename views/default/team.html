@@ -45,14 +45,21 @@
                 <ul id="team_container">
                     <li>{{=member.person_id.name}}</li>
                     <li>
-                        {{if member.role_id:}}
-                            {{if owner_project:}}
-                                <button class="btn btn-primary btn-mini edit_role">{{=T(member.role_id.name)}}</button>
+                        {{print "owner_project"}}
+                        {{if owner_project:}}
+                            <button class="btn btn-primary btn-mini edit_role">
+                            {{if member.role_id:}}
+                                {{=T(member.role_id.name)}}
                             {{else:}}
-                                <p><strong>{{=T(member.role_id.name)}}</strong></p>
+                                {{=T("Define role")}}
                             {{pass}}
+                            </button>
                         {{else:}}
-                            <button class="btn btn-primary btn-mini edit_role">{{=T("Define role")}}</button>
+                            {{if member.role_id:}}
+                                <p><strong>{{=T(member.role_id.name)}}</strong></p>
+                            {{else:}}
+                                <p><strong>{{=T("No role")}}</strong></p>
+                            {{pass}}
                         {{pass}}
 
                         {{if owner_project:}}
@@ -71,7 +78,7 @@
                                     {{if member.role_id.name == role.name:}}checked="checked"{{pass}}
                                 >{{=role.name}}<br />
                             {{else:}}
-                                <input type="radio" name="{{=member.person_id}}" value="{{=role.id}}" >{{=role.name}}<br />
+                                <input type="radio" name="{{=member.person_id}}" value="{{=role.id}}" >{{=T(role.name)}}<br />
                             {{ pass }}
                         {{ pass }}
                         <input type="submit" value="OK" class="btn">

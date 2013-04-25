@@ -366,7 +366,8 @@ $(document).on("click", ".choose_owner", function() {
     $(this).closest(".task_container").find(".users_team").empty();
     var self = $(this),
         txt = {
-            person_role: msg.no_role,
+            norole: msg.no_role,
+            noteam: msg.no_team,
             team_page: msg.team_page
         },
         button_url = url.team,
@@ -376,13 +377,14 @@ $(document).on("click", ".choose_owner", function() {
 
     function(msg) {
         for (i in msg) {
-            if (i === "norole") {
-                html += '<h5>' + txt.person_role + '</h5>'
+            if (i === "norole" || i === "noteam") {
+                html += '<h5>' + txt[i] + '</h5>'
+                html += '<a href="' + button_url + '" class="btn btn-primary btn-mini">' + txt.team_page + '</a>';
+
             } else {
                 html += '<div class="media project_member" data-person="' + msg[i]["person_id"] + '"><img class="user_card choose_owner pull-left" src="' + msg[i]["avatar"] + '" data-owner="true"><div class="media-body"><h5 class="media-heading">' + msg[i]["person_name"] + '</h5><h6>' + msg[i]["person_role"] + '</h6></div></div>'
             }
         }
-        html += '<a href="' + button_url + '" class="btn btn-primary btn-mini">' + txt.team_page + '</a>';
         html += '</div>';
         self.closest(".task_container").find(".card_container").append(html);
     });

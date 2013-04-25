@@ -82,7 +82,7 @@
                     {{pass}}
                     {{if shared_with_person:}}
                         {{for i in shared_with_person:}}
-                            {{if p_count <= 4:}}
+                            {{if p_count <= 10:}}
                                 <li class='{{=g_current_page("default/%s/%s" %(request.function,i.project_id),"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.project_id])}}' class="tip-bottom" alt='{{=i.project_id.name}}' title='{{=i.project_id.name}}'>{{=i.project_id}}</a></li>
                             {{p_count += 1}}
                             {{pass}}
