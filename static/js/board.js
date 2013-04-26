@@ -419,3 +419,12 @@ $(document).on("click", ".project_member", function() {
     }
 
 });
+
+$('#myButton').click(function(e) {
+    e.preventDefault();
+    // $('#myModal').reveal();
+    $('#myModal').reveal({ // The item which will be opened with reveal
+        animation: 'fade',                   // fade, fadeAndPop, none
+        animationspeed: 600,                       // how fast animtions are
+    });
+});

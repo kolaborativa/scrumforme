@@ -493,3 +493,38 @@ table, th, td {
 .story_header .editable-input, .editable-input input[type="text"] {
     width: 100%;
 }
+
+
+
+
+#mask {
+  position:absolute;
+  left:0;
+  top:0;
+  z-index:9000;
+  background-color:#000;
+  display:none;
+}
+
+/*#dialog {
+  position: absolute;
+  top: 10px;
+  left: 30%;
+  margin-left: -50px;
+  width:50%;
+  height:200px;
+  display:none;
+}*/
+
+#dialog {
+    width:40%;
+    padding:20px;
+    display:none;
+    position:absolute;
+    top: 100px;
+    background-color:#ffffff;
+    z-index:9999;
+}
+
+.close{display:block; text-align:right;}
+
