@@ -11,7 +11,7 @@
 
 
 def index():
-    return dict()
+    return dict(form=auth())
 
 
 def nojs():
@@ -757,7 +757,12 @@ def user():
         @auth.requires_permission('read','table name',record_id)
     to decorate functions that need access control
     """
-    return dict(form=auth())
+    form=auth()
+    if form.process().accepted:
+        pass
+    else:
+        redirect(URL('index'))
+    return dict(form=form)
 
 
 def download():
