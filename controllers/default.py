@@ -201,7 +201,9 @@ def board():
 def _team_project():
     if request.vars.project_id:
 
-        team_members = db( (db.user_relationship.person_id==Sharing.person_id) & (Sharing.project_id == request.vars.project_id) ).select(Sharing.ALL, db.user_relationship.auth_user_id)
+        team_members = db(  (db.user_relationship.person_id==Sharing.person_id) & \
+                            (Sharing.project_id == request.vars.project_id) ) \
+                            .select(Sharing.ALL, db.user_relationship.auth_user_id)
 
         if team_members:
             count = 0
@@ -226,7 +228,7 @@ def _team_project():
             return dict(noteam=True)
 
     else:
-        return False
+        return dict(noteam=True)
 
 
 @auth.requires_login()
@@ -237,6 +239,28 @@ def _edit_owner_task():
         )
 
         return True
+
+    else:
+        return False
+
+
+@auth.requires_login()
+@service.json
+def _card_modal():
+    if request.vars.task_id:
+        task = db( (User_relationship.person_id==Sharing.person_id) & \
+                   (Task.id == request.vars.task_id) ) \
+                   .select(Task.ALL, User_relationship.auth_user_id, Sharing.role_id).first()
+        # print task.sharing.role_id.name
+        if task:
+            task.user_relationship.avatar = Gravatar(task.user_relationship.auth_user_id.email).thumb
+            task.user_relationship.member_name = "%s %s" %(task.user_relationship.auth_user_id.first_name,task.user_relationship.auth_user_id.last_name)
+            task.sharing.role_name = task.sharing.role_id.name
+
+            return task
+
+        else:
+            return False
 
     else:
         return False

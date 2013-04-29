@@ -78,7 +78,7 @@ if not "task_comment" in db.tables:
         migrate="task_comment.table")
 
 if not "user_relationship" in db.tables:
-    db.define_table("user_relationship",
+    User_relationship = db.define_table("user_relationship",
         Field("auth_user_id", db.auth_user, default=None),
         Field("person_id", db.person, default=None),
         migrate="user_relationship.table")
@@ -112,4 +112,3 @@ db.sharing.project_id.requires = IS_IN_DB(db, 'project.id', db.project._format)
 db.sharing.person_id.requires = IS_IN_DB(db, 'person.id', db.person._format)
 db.sharing.role_id.requires = IS_IN_DB(db, 'role.id', db.role._format)
 db.burndown.sprint_id.requires = IS_IN_DB(db, 'sprint.id', db.sprint._format)
-

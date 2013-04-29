@@ -771,7 +771,20 @@ float: left;
 	margin-bottom: 0;
 }
 
-.widget-title, .modal-header, .table th, div.dataTables_wrapper .ui-widget-header, .ui-dialog .ui-dialog-titlebar {
+.table th {
+    background-color: #efefef;
+    background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#fdfdfd), to(#eaeaea));
+    background-image: -webkit-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    background-image: -moz-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    background-image: -ms-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    background-image: -o-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    background-image: -linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', endColorstr='#eaeaea',GradientType=0 );
+    border-bottom: 1px solid #CDCDCD;
+    height: 36px;
+}
+
+/*.widget-title, .modal-header, .table th, div.dataTables_wrapper .ui-widget-header, .ui-dialog .ui-dialog-titlebar {
 	background-color: #efefef;
 	background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#fdfdfd), to(#eaeaea));
 	background-image: -webkit-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
@@ -779,10 +792,10 @@ float: left;
     background-image: -ms-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
     background-image: -o-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
     background-image: -linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', endColorstr='#eaeaea',GradientType=0 ); /* IE6-9 */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', endColorstr='#eaeaea',GradientType=0 );
     border-bottom: 1px solid #CDCDCD;
     height: 36px;
-}
+}*/
 .widget-title .nav-tabs {
     border-bottom: 0 none;
 }
@@ -1443,19 +1456,19 @@ div.dataTables_wrapper .ui-widget-header {
     height: 8px;
 }
 .modal {
-	z-index: 99999 !important;
+	z-index: 9999999 !important;
 }
 .modal-backdrop {
-	z-index: 999 !important;
+	z-index: 999999 !important;
 }
-.modal-header {
+/*.modal-header {
 	height: auto;
 	padding: 8px 15px 5px;
 }
 .modal-header h3 {
 	font-size: 12px;
 	text-shadow: 0 1px 0 #ffffff;
-}
+}*/
 
 .notify-ui ul {
 	list-style: none;
@@ -1609,7 +1622,7 @@ html, body, .container, .content {
 }
 
 .hide {
-    display: none!important;
+    display: none;
 }
 
 #toogle_sidebar {

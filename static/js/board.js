@@ -317,7 +317,7 @@ $.fn.editable.defaults.mode = 'inline';
 
 //apply editable to parent div
 $('.table').editable({
-    selector: 'a.task_item',
+    selector: 'a.editable',
     url: url.createUpdateBacklogItens,
     emptytext: msg.field_empty,
     params: function(params) {
@@ -354,44 +354,27 @@ $('.table').editable({
 
 $(document).on("click", ".choose_owner", function() {
     var item = $('.users_team'),
-        project_id = $("#project_info").attr("data-project")
+        project_id = $("#project_info").attr("data-project"),
+        maskHeight = $(document).height(),
+        maskWidth = $(window).width();
+    // add mask
+    $('#mask').css({'width':maskWidth,'height':maskHeight});
+    $('#mask').show();
 
-        if ($(item).is(":visible")) {
-            $(item).fadeOut(); // hide button
-            return
-        } else {
-            $(this).closest(".task_container").find(".users_team").fadeIn();
-        }
+    if ($(item).is(":visible")) {
+        $(item).fadeOut(); // hide button
+        $('#mask').hide();
+        return
+    } else {
+        $(this).closest(".task_container").find(".users_team").fadeIn();
+    }
 
-    $(this).closest(".task_container").find(".users_team").empty();
-    var self = $(this),
-        txt = {
-            norole: msg.no_role,
-            noteam: msg.no_team,
-            team_page: msg.team_page
-        },
-        button_url = url.team,
-        html = '<div class="users_team">';
-
-    $.getJSON(url.team_project,
-
-    function(msg) {
-        for (i in msg) {
-            if (i === "norole" || i === "noteam") {
-                html += '<h5>' + txt[i] + '</h5>'
-                html += '<a href="' + button_url + '" class="btn btn-primary btn-mini">' + txt.team_page + '</a>';
-
-            } else {
-                html += '<div class="media project_member" data-person="' + msg[i]["person_id"] + '"><img class="user_card choose_owner pull-left" src="' + msg[i]["avatar"] + '" data-owner="true"><div class="media-body"><h5 class="media-heading">' + msg[i]["person_name"] + '</h5><h6>' + msg[i]["person_role"] + '</h6></div></div>'
-            }
-        }
-        html += '</div>';
-        self.closest(".task_container").find(".card_container").append(html);
-    });
+    // call team members ajax
+    teamMembers($(this));
 });
 
-
-$("body").click(function() {
+$('#mask').click(function () {
+    $(this).hide();
     var item = $('.users_team'),
         target = $(event.target).closest(".users_team");
 
@@ -402,6 +385,49 @@ $("body").click(function() {
     }
 });
 
+function teamMembers(element) {
+    $(element).closest(".task_container").find(".users_team").remove();
+    var self = $(element),
+        txt = {
+            norole: msg.no_role,
+            noteam: msg.no_team,
+            team_page: msg.team_page
+        },
+        button_url = url.team_page,
+        html = "";
+
+    $(element).closest(".task_container").find(".card_container").append('<div class="users_team"><div class="loading"></div></div>');
+    // positioning
+    var offset = $(element).closest(".task_container").offset();
+
+    var teamPosition = $(".users_team").outerWidth() + offset.left,
+        teamPlacement = offset.left - $(".users_team").outerWidth() - 40;
+
+    if(teamPosition > $(window).width()) {
+        $(".users_team").css({left:teamPlacement,top:offset.top});
+
+    } else {
+        $(".users_team").css({lef:offset.left,top:offset.top});
+    }
+
+
+    $.getJSON(url.team_project,
+    function(msg) {
+        for (i in msg) {
+            if (i === "norole" || i === "noteam") {
+                html += '<h5>' + txt[i] + '</h5>'
+                html += '<a href="' + button_url + '" class="btn btn-primary btn-mini">' + txt.team_page + '</a>';
+
+            } else {
+                html += '<div class="media project_member" data-person="' + msg[i]["person_id"] + '"><img class="user_card choose_owner pull-left" src="' + msg[i]["avatar"] + '" data-owner="true"><div class="media-body"><h5 class="media-heading">' + msg[i]["person_name"] + '</h5><h6>' + msg[i]["person_role"] + '</h6></div></div>'
+            }
+        }
+        $(".loading").hide();
+        self.closest(".task_container").find(".users_team").append(html);
+    });
+
+
+}
 
 // edit owner task
 $(document).on("click", ".project_member", function() {
@@ -420,11 +446,49 @@ $(document).on("click", ".project_member", function() {
 
 });
 
-$('#myButton').click(function(e) {
-    e.preventDefault();
-    // $('#myModal').reveal();
-    $('#myModal').reveal({ // The item which will be opened with reveal
-        animation: 'fade',                   // fade, fadeAndPop, none
-        animationspeed: 600,                       // how fast animtions are
-    });
+$(document).on("click",".card-modal", function(){
+    var topModal = $(this).offset().top - 400,
+        id = $(this).closest(".card_container").find(".task_item").attr("data-pk");
+
+    if(topModal < 200) {
+        topModal = 200;
+    }
+
+    $("#card_modal").css({"top":topModal});
+    $('#card_modal').modal('show');
+    $('body').animate({ scrollTop: $("#card_modal").offset().top - (200) }, 0);
+    $("#card_content").hide();
+    $("#card_modal").prepend('<div class="loading"></div>');
+
+    // call ajax
+    cardModalContainer(id)
 });
+
+function cardModalContainer(id) {
+
+    // $("#card_name").empty();
+    // $("#card_content").empty();
+    var self = $(this),
+        html = "";
+
+    $.getJSON(url.card_modal+"?task_id="+id,
+    function(msg) {
+        // for (i in msg) {
+            if (msg === false) {
+                html += '<h5>nada</h5>'
+
+            } else {
+                console.log(msg);
+                console.log(msg.task);
+                // console.log(msg.task);
+                // html += '<div class="media project_member" data-person="' + msg[i]["person_id"] + '"><img class="user_card choose_owner pull-left" src="' + msg[i]["avatar"] + '" data-owner="true"><div class="media-body"><h5 class="media-heading">' + msg[i]["person_name"] + '</h5><h6>' + msg[i]["person_role"] + '</h6></div></div>'
+                html = '<h3>'+msg.task.title+'</h3>'
+                $("#card_messages").empty();
+                $("#card_messages").append(html);
+                $("#member_modal").html('<img src="'+msg.user_relationship.avatar+'" /> <p>'+msg.user_relationship.member_name+'</p><p>'+msg.sharing.role_name+'</p>');
+            }
+        // }
+        $(".loading").hide();
+        $("#card_content").show();
+    });
+}

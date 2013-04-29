@@ -263,7 +263,7 @@ table, th, td {
     padding: 5px 0px;
 }
 
-.comment i, .calendar i, .started_date_text, .delete_item i {
+.comment i, .calendar i, .started_date_text, .delete_item i, .card-modal i {
     opacity: .7;
 }
 
@@ -326,11 +326,11 @@ table, th, td {
     font-size: 19px;
 }
 
-.delete_item i {
+.delete_item i, .card-modal i {
     font-size: 18px;
 }
 
-.delete_item i:hover {
+.icon-hover i:hover {
     color: #08b;
 }
 
@@ -382,9 +382,7 @@ table, th, td {
 */
 
 .users_team {
-    /*display: none;*/
     width: 400px;
-    margin-top: -69px;
     border: 1px solid rgb(185, 183, 183);
     z-index: 9999;
     padding: 5px;
@@ -437,6 +435,22 @@ table, th, td {
 
 .users_team .media-body h5 {
     /*padding-right: 4px;*/
+}
+
+#mask {
+  position:absolute;
+  left:0;
+  top:0;
+}
+
+.loading {
+    height: 16px;
+    width: 16px;
+    background: url("../img/loading.gif") no-repeat;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 /*
@@ -495,36 +509,12 @@ table, th, td {
 }
 
 
-
-
-#mask {
-  position:absolute;
-  left:0;
-  top:0;
-  z-index:9000;
-  background-color:#000;
-  display:none;
+/*Modal hack*/
+#card_modal {
+    /*remove static position*/
+    position: absolute;
+    /* new custom width */
+    width: 750px;
+    /* must be half of the width, minus scrollbar on the left (30px) */
+    margin-left: -375px;
 }
-
-/*#dialog {
-  position: absolute;
-  top: 10px;
-  left: 30%;
-  margin-left: -50px;
-  width:50%;
-  height:200px;
-  display:none;
-}*/
-
-#dialog {
-    width:40%;
-    padding:20px;
-    display:none;
-    position:absolute;
-    top: 100px;
-    background-color:#ffffff;
-    z-index:9999;
-}
-
-.close{display:block; text-align:right;}
-

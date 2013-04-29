@@ -8,7 +8,8 @@
         removeTask : '{{=URL("remove_itens")}}',
         edit_owner_task : '{{=URL("_edit_owner_task")}}',
         team_project : '{{=URL(r=request,f="call",args=["json","_team_project"], vars={"project_id": request.args(0)})}}',
-        team : '{{=URL(f="team",args=[request.args(0)])}}',
+        team_page : '{{=URL(f="team",args=[request.args(0)])}}',
+        card_modal : '{{=URL(r=request,f="call",args=["json","_card_modal"])}}',
     },
     msg = {
         field_empty : '{{=T("Click to write")}}',
@@ -29,10 +30,11 @@
     date = {
         sprint_started : '{{=sprint.started}}',
         weeks : '{{=sprint.weeks}}',
-    }
+    };
 </script>
 
 <div id="target_ajax"></div>
+<div id="mask"></div>
 
 <div id="sub-header-content">
     <div id="content-header">
@@ -149,7 +151,8 @@
                                         <span class="add-on calendar"><i class="icon-calendar"></i></span>
                                     </div>
                                     <div class="comment"><i class="icon-comment"></i><span>0</span></div>
-                                    <span class="delete_item" ><i class="icon-trash"></i></span>
+                                    <span class="delete_item icon-hover" ><i class="icon-trash"></i></span>
+                                    <span class="card-modal icon-hover" ><i class="icon-cog"></i></span>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -183,7 +186,8 @@
                                         <span class="add-on calendar"><i class="icon-calendar"></i></span>
                                     </div>
                                     <div class="comment"><i class="icon-comment"></i><span>0</span></div>
-                                    <span class="delete_item" ><i class="icon-trash"></i></span>
+                                    <span class="delete_item icon-hover" ><i class="icon-trash"></i></span>
+                                    <span class="card-modal icon-hover" ><i class="icon-cog"></i></span>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -217,7 +221,8 @@
                                         <span class="add-on calendar"><i class="icon-calendar"></i></span>
                                     </div>
                                     <div class="comment"><i class="icon-comment"></i><span>0</span></div>
-                                    <span class="delete_item" ><i class="icon-trash"></i></span>
+                                    <span class="delete_item icon-hover" ><i class="icon-trash"></i></span>
+                                    <span class="card-modal icon-hover" ><i class="icon-cog"></i></span>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -251,7 +256,8 @@
                                         <span class="add-on calendar"><i class="icon-calendar"></i></span>
                                     </div>
                                     <div class="comment"><i class="icon-comment"></i><span>0</span></div>
-                                    <span class="delete_item" ><i class="icon-trash"></i></span>
+                                    <span class="delete_item icon-hover" ><i class="icon-trash"></i></span>
+                                    <span class="card-modal icon-hover" ><i class="icon-cog"></i></span>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -266,37 +272,30 @@
     </table>
 {{pass}}
 
-<a href="#dialog" name="modal">Janela Modal Simples</a>
+<!-- Modal -->
+<div id="card_modal" class="modal hide">
+    <div id="card_content" class="row-fluid">
+        <div class="span3">
+            <div class="well sidebar-nav">
+                <div id="member_modal">
+                </div>
+                <ul class="nav nav-list">
+                    <li><a href="#">{{=T("Activities")}} <span class="add-on"><i class="icon-calendar"></i></span></a></li>
+                    <li><a href="#">{{=T("Attachments")}} <span class="delete_item" ><i class="icon-paper-clip"></i></span></a></li>
+                    <li><a href="#">{{=T("Labels")}} <span class="delete_item" ><i class="icon-tag"></i></span></a></li>
+                    <li><a href="#">{{=T("Delete")}} <span class="delete_item" ><i class="icon-trash"></i></span></a></li>
+                </ul>
+            </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <div id="card_messages">
+            </div>
+        </div><!--/span-->
+    </div><!--/row-->
 
-  <div id="dialog">
-    <a href="#" class="close">x</a><br />
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
-    <p>Janela Modal Simples. Aqui vai o conteúdo da sua Janela Modal Simples.</p>
+  <div class="modal-footer">
+    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">{{=T("Close")}}</button>
+    <!-- <button class="btn btn-primary">Save changes</button> -->
   </div>
-  <!-- Fim Janela Modal com Bloco de Nota -->
-
-  <!-- Máscara para cobrir a tela -->
-    <div id="mask"></div>
+</div>
