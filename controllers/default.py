@@ -255,7 +255,7 @@ def _card_modal():
                    .select(Task.ALL, User_relationship.auth_user_id, Sharing.role_id).first()
         # print task.sharing.role_id.name
         if task:
-            task.user_relationship.avatar = Gravatar(task.user_relationship.auth_user_id.email).thumb
+            task.user_relationship.avatar = Gravatar(task.user_relationship.auth_user_id.email, size=120).thumb
             task.user_relationship.member_name = "%s %s" %(task.user_relationship.auth_user_id.first_name,task.user_relationship.auth_user_id.last_name)
             task.sharing.role_name = task.sharing.role_id.name
 

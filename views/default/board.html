@@ -275,27 +275,22 @@
 <!-- Modal -->
 <div id="card_modal" class="modal hide">
     <div id="card_content" class="row-fluid">
-        <div class="span3">
+        <div id="modal_sidebar" class="span3">
             <div class="well sidebar-nav">
                 <div id="member_modal">
                 </div>
                 <ul class="nav nav-list">
-                    <li><a href="#">{{=T("Activities")}} <span class="add-on"><i class="icon-calendar"></i></span></a></li>
-                    <li><a href="#">{{=T("Attachments")}} <span class="delete_item" ><i class="icon-paper-clip"></i></span></a></li>
-                    <li><a href="#">{{=T("Labels")}} <span class="delete_item" ><i class="icon-tag"></i></span></a></li>
-                    <li><a href="#">{{=T("Delete")}} <span class="delete_item" ><i class="icon-trash"></i></span></a></li>
+                    <li><a href="#">{{=T("Activities")}} <i class="icon-calendar"></i></a></li>
+                    <li><a href="#">{{=T("Attachments")}} <i class="icon-paper-clip"></i></a></li>
+                    <li><a href="#">{{=T("Labels")}} <i class="icon-tag"></i></a></li>
+                    <li><a href="#">{{=T("Delete")}} <i class="icon-trash"></i></a></li>
                 </ul>
             </div><!--/.well -->
         </div><!--/span-->
         <div class="span9">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
             <div id="card_messages">
             </div>
         </div><!--/span-->
     </div><!--/row-->
-
-  <div class="modal-footer">
-    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">{{=T("Close")}}</button>
-    <!-- <button class="btn btn-primary">Save changes</button> -->
-  </div>
 </div>

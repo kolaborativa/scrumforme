@@ -479,7 +479,7 @@ function cardModalContainer(id) {
                 console.log(msg);
                 html = '<h3>'+msg.task.title+'</h3>'
                 $("#card_messages").append(html);
-                $("#member_modal").html('<img src="'+msg.user_relationship.avatar+'" /> <p>'+msg.user_relationship.member_name+'</p><p>'+msg.sharing.role_name+'</p>');
+                $("#member_modal").html('<img src="'+msg.user_relationship.avatar+'" /> <p>'+msg.user_relationship.member_name+'</p><p id="modal_role_name">'+msg.sharing.role_name+'</p>');
                 $('#card_modal').modal('show');
             }
         $(".loading").hide();

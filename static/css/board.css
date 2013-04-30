@@ -508,6 +508,11 @@ table, th, td {
     width: 100%;
 }
 
+/*
+=======
+ MODAL
+=======
+*/
 
 /*Modal hack*/
 #card_modal {
@@ -517,4 +522,62 @@ table, th, td {
     width: 750px;
     /* must be half of the width, minus scrollbar on the left (30px) */
     margin-left: -375px;
+}
+
+#card_modal #modal_sidebar {
+    width: 19.5%;
+}
+
+#member_modal img {
+    padding-bottom: 10px;
+}
+
+#member_modal p {
+    margin: 0px;
+}
+
+#modal_role_name {
+    color: rgb(109, 109, 109);
+    font-style: italic;
+}
+
+#modal_sidebar a {
+    color: #444444;
+}
+
+#card_modal .well {
+    margin-bottom: 0px;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(224, 202, 146)',endColorstr='#fce8c6');
+    background-image: -webkit-gradient(linear,center top,center bottom,from(rgb(224, 202, 146)),to(#fce8c6));
+    background-image: -moz-linear-gradient(center top,rgb(224, 202, 146),#fce8c6);
+    background-color: rgb(224, 202, 146);
+}
+
+#card_modal button.close {
+    padding-top: 10px;
+    position: relative;
+    left: 15px;
+}
+
+#card_modal .nav {
+    padding: 10px 0 0 0;
+}
+
+#card_modal .nav i {
+    float: right;
+    position: relative;
+    top: 4px;
+}
+
+#card_modal .nav-list a {
+    padding: 3px 2px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 5px;
+    background-color: #eeeeee;
+    border: 1px solid #444444;
+}
+
+#card_modal .nav-list a:hover {
+    color: #08b;
 }
