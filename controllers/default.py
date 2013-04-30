@@ -234,9 +234,14 @@ def _team_project():
 @auth.requires_login()
 def _edit_owner_task():
     if request.vars.person_id:
-        db(Task.id == request.vars.task_id).update(
-            owner_task=request.vars.person_id,
-        )
+        if request.vars.person_id == "remove":
+            db(Task.id == request.vars.task_id).update(
+                owner_task=None,
+            )
+        else:
+            db(Task.id == request.vars.task_id).update(
+                owner_task=request.vars.person_id,
+            )
 
         return True
 
@@ -253,10 +258,11 @@ def _card_modal():
                    (User_relationship.person_id == Task.owner_task) & \
                    (Sharing.person_id == Task.owner_task) ) \
                    .select(Task.ALL, User_relationship.auth_user_id, Sharing.role_id).first()
-        # print task.sharing.role_id.name
+        # print task.task.started
         if task:
             task.user_relationship.avatar = Gravatar(task.user_relationship.auth_user_id.email, size=120).thumb
             task.user_relationship.member_name = "%s %s" %(task.user_relationship.auth_user_id.first_name,task.user_relationship.auth_user_id.last_name)
+            task.task.started = g_blank_fulldate_check(task.task.started)
             task.sharing.role_name = task.sharing.role_id.name
 
             return task

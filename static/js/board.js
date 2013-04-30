@@ -1,9 +1,10 @@
 $(function() {
 
     // fixed status card
-    var nav = $('.nav-status');
+    var nav = $('.nav-status'),
+        navOffset = nav.offset();
     $(window).scroll(function() {
-        if ($(this).scrollTop() > 236) {
+        if ($(this).scrollTop() > (navOffset.top - 15)) {
             nav.addClass("fixed-nav");
         } else {
             nav.removeClass("fixed-nav");
@@ -257,6 +258,15 @@ function statusAction(action, task_status, task) {
                 $(task).closest(".task_container").find(".users_team").fadeOut();
 
                 console_msg = "task owner updated!";
+
+            } else if (action === "remove_owner") {
+                var avatar_container = $(task).closest('.task_container').find(".avatar_container");
+                avatar_container.find('.user_card').remove();
+                avatar_container.append('<button class="btn btn-nostyle user_card nonuser_card choose_owner"><i class="icon-plus"></i></button>');
+
+                $(task).closest(".task_container").find(".users_team").fadeOut();
+
+                console_msg = "task owner removed!";
             }
 
             console.log(console_msg)
@@ -388,11 +398,6 @@ $('#mask').click(function () {
 function teamMembers(element) {
     $(element).closest(".task_container").find(".users_team").remove();
     var self = $(element),
-        txt = {
-            norole: msg.no_role,
-            noteam: msg.no_team,
-            team_page: msg.team_page
-        },
         button_url = url.team_page,
         html = "";
 
@@ -410,19 +415,19 @@ function teamMembers(element) {
         $(".users_team").css({lef:offset.left,top:offset.top});
     }
 
-
     $.getJSON(url.team_project,
-    function(msg) {
-        for (i in msg) {
+    function(json) {
+        for (i in json) {
             if (i === "norole" || i === "noteam") {
-                html += '<h5>' + txt[i] + '</h5>'
-                html += '<a href="' + button_url + '" class="btn btn-primary btn-mini">' + txt.team_page + '</a>';
+                html += '<h5>' + msg[i] + '</h5>'
+                html += '<a href="' + button_url + '" class="btn btn-primary btn-mini">' + msg.team_page + '</a>';
 
             } else {
-                html += '<div class="media project_member" data-person="' + msg[i]["person_id"] + '"><img class="user_card choose_owner pull-left" src="' + msg[i]["avatar"] + '" data-owner="true"><div class="media-body"><h5 class="media-heading">' + msg[i]["person_name"] + '</h5><h6>' + msg[i]["person_role"] + '</h6></div></div>'
+                html += '<div class="media project_member" data-person="' + json[i]["person_id"] + '"><img class="user_card choose_owner pull-left" src="' + json[i]["avatar"] + '" data-owner="true"><div class="media-body"><h5 class="media-heading">' + json[i]["person_name"] + '</h5><h6>' + json[i]["person_role"] + '</h6></div></div>'
             }
         }
         $(".loading").hide();
+        html += '<button class="project_member btn btn-nostyle user_card nonuser_card choose_owner pull-left" data-person="remove"><i class="icon-remove"></i></button>'
         self.closest(".task_container").find(".users_team").append(html);
     });
 
@@ -436,16 +441,23 @@ $(document).on("click", ".project_member", function() {
         task_id = task.attr('data-pk'),
         person_id = $(this).attr('data-person');
 
+    if(person_id === "remove") {
+        console.log(alredy_exist);
+        ajax(url.edit_owner_task + '?task_id=' + task_id + '&person_id=' + person_id, [''], 'target_ajax');
+        statusAction("remove_owner", "", $(this));
+        return
+    }
+
     if (alredy_exist === undefined) {
         alert(msg.task_no_exist)
     } else {
-        console.log(alredy_exist);
         ajax(url.edit_owner_task + '?task_id=' + task_id + '&person_id=' + person_id, [''], 'target_ajax');
         statusAction("choose_owner", "", $(this));
     }
 
 });
 
+// open modal
 $(document).on("click",".card-modal", function(){
     var topModal = $(this).offset().top - 400,
         id = $(this).closest(".card_container").find(".task_item").attr("data-pk");
@@ -463,23 +475,24 @@ $(document).on("click",".card-modal", function(){
     cardModalContainer(id)
 });
 
+// loading modal content
 function cardModalContainer(id) {
 
     $("#member_modal").empty();
-    $("#card_messages").empty();
+    $("#modal_messages").empty();
     var self = $(this),
         html = "";
 
     $.getJSON(url.card_modal+"?task_id="+id,
-    function(msg) {
-            if (msg === false) {
+    function(json) {
+            if (json === false) {
                 html += '<h5>nada</h5>'
 
             } else {
-                console.log(msg);
-                html = '<h3>'+msg.task.title+'</h3>'
-                $("#card_messages").append(html);
-                $("#member_modal").html('<img src="'+msg.user_relationship.avatar+'" /> <p>'+msg.user_relationship.member_name+'</p><p id="modal_role_name">'+msg.sharing.role_name+'</p>');
+                console.log(json);
+                html = '<h3>'+json.task.title+'</h3><p class="color_light pull-right">'+msg.started_in+': '+json.task.started+'</p><div class="clearfix"></div>'
+                $("#modal_messages").append(html);
+                $("#member_modal").html('<img src="'+json.user_relationship.avatar+'" /> <p>'+json.user_relationship.member_name+'</p><p id="modal_role_name" class="color_light">'+json.sharing.role_name+'</p>');
                 $('#card_modal').modal('show');
             }
         $(".loading").hide();

@@ -522,6 +522,10 @@ table, th, td {
     width: 750px;
     /* must be half of the width, minus scrollbar on the left (30px) */
     margin-left: -375px;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff4d8',endColorstr='#fce8c6');
+    background-image: -webkit-gradient(linear,center top,center bottom,from(#fff4d8),to(#fce8c6));
+    background-image: -moz-linear-gradient(center top,#fff4d8,#fce8c6);
+    background-color: #fff5e3;
 }
 
 #card_modal #modal_sidebar {
@@ -537,11 +541,14 @@ table, th, td {
 }
 
 #modal_role_name {
-    color: rgb(109, 109, 109);
     font-style: italic;
 }
 
-#modal_sidebar a {
+.color_light {
+    color: rgb(109, 109, 109);
+}
+
+#modal_sidebar i {
     color: #444444;
 }
 
@@ -570,6 +577,7 @@ table, th, td {
 }
 
 #card_modal .nav-list a {
+    color: #000;
     padding: 3px 2px;
     margin-left: 0px;
     margin-right: 0px;
@@ -579,5 +587,5 @@ table, th, td {
 }
 
 #card_modal .nav-list a:hover {
-    color: #08b;
+    background-color: #ccc;
 }
