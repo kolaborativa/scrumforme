@@ -64,6 +64,19 @@ def projects():
     return dict(form=form, person_projects=person_projects, shared_with_person=shared_with_person)
 
 
+def delete_project():
+    """Function that delete a project
+    """
+    project_id = int(request.vars['project_id'])
+    my_person_id = _get_person()['person_id']
+    project = db(Project.id==project_id).select().first()
+
+    if project:
+        if my_person_id == project.created_by:
+            db(Project.id==project.id).delete()
+    redirect(URL('projects'))
+
+
 @auth.requires_login()
 def product_backlog():
     project_id = request.args(0) or redirect(URL('projects'))
