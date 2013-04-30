@@ -455,7 +455,6 @@ $(document).on("click",".card-modal", function(){
     }
 
     $("#card_modal").css({"top":topModal});
-    $('#card_modal').modal('show');
     $('body').animate({ scrollTop: $("#card_modal").offset().top - (200) }, 0);
     $("#card_content").hide();
     $("#card_modal").prepend('<div class="loading"></div>');
@@ -466,28 +465,23 @@ $(document).on("click",".card-modal", function(){
 
 function cardModalContainer(id) {
 
-    // $("#card_name").empty();
-    // $("#card_content").empty();
+    $("#member_modal").empty();
+    $("#card_messages").empty();
     var self = $(this),
         html = "";
 
     $.getJSON(url.card_modal+"?task_id="+id,
     function(msg) {
-        // for (i in msg) {
             if (msg === false) {
                 html += '<h5>nada</h5>'
 
             } else {
                 console.log(msg);
-                console.log(msg.task);
-                // console.log(msg.task);
-                // html += '<div class="media project_member" data-person="' + msg[i]["person_id"] + '"><img class="user_card choose_owner pull-left" src="' + msg[i]["avatar"] + '" data-owner="true"><div class="media-body"><h5 class="media-heading">' + msg[i]["person_name"] + '</h5><h6>' + msg[i]["person_role"] + '</h6></div></div>'
                 html = '<h3>'+msg.task.title+'</h3>'
-                $("#card_messages").empty();
                 $("#card_messages").append(html);
                 $("#member_modal").html('<img src="'+msg.user_relationship.avatar+'" /> <p>'+msg.user_relationship.member_name+'</p><p>'+msg.sharing.role_name+'</p>');
+                $('#card_modal').modal('show');
             }
-        // }
         $(".loading").hide();
         $("#card_content").show();
     });

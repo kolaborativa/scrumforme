@@ -50,6 +50,41 @@
   <link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 
+  <script src="http://cdn.jotfor.ms/static/feedback2.js?3.1.117" type="text/javascript">
+    new JotformFeedback({
+    formId:'31161179003645',
+    base:'http://jotformz.com/',
+    windowTitle:'{{=T("Join the beta test")}}',
+    background:'#FFA500',
+    fontColor:'#FFFFFF',
+    type:false,
+    height:500,
+    width:700
+    });
+  </script>
+
+  <!--[if lt IE 9]>
+      <script src='{{=URL("static","js/jquery-1.9.1.min.js")}}'></script>
+  <![endif]-->
+
+  <!--[if gte IE 9]><!-->
+      <script src='{{=URL("static","js/jquery-2.0.0.min.js")}}'></script>
+  <!--[endif]-->
+
+  <script>
+  $(function() {
+    // Setup drop down menu
+    $('.dropdown-toggle').click(function(){
+    $('.dropdown').toggleClass("open");
+
+    });
+    // Fix input element click problem
+    $('.dropdown input, .dropdown label').click(function(e) {
+    e.stopPropagation();
+    });
+  });
+  </script>
+  <script src='{{=URL("static","js/web2py.js")}}'></script>
 </head>
 
 <body>
@@ -64,26 +99,18 @@
             <div class="row masthead">
               <a href="{{=URL('index')}}" class="pull-left"  alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
               {{ if not auth.is_logged_in(): }}
-              <!-- <a href='{{=URL(c="default", f="user")}}' id="login" class="btn btn-primary pull-right">{{=T("Login")}}</a> -->
-              <ul class="pull-right">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">{{=T("Sign in")}}<b class="caret"></b></a>
-                  <ul class="dropdown-menu" aria-labelledby="drop3">
-                    <li>
-                      <form action='#' enctype="multipart/form-data" method="post">
-                      <input type="email" style="margin:10px;" name="email" placeholder='{{=T("Email")}}' required/>
-                      <input type="password" style="margin:10px;" name="password" placeholder='{{=T("Password")}}' required/>
-                      <!-- <input type="checkbox" style="margin:10px;" name="remember" value="remember" /> {{=T("Remember me (for 30 days)")}} -->
-                      <input type="submit" class="btn btn-primary pull-right" style="margin:10px;" name="submit" value='{{=T("Sign in")}}'>
-                      <div style="display:none;"><input name="_next" type="hidden" value="/scrumforme/default/projects"><input name="_formkey" type="hidden" value='{{=form.formkey}}'><input name="_formname" type="hidden" value="login"></div>
-                      </form>
-                    </li>
-                    <!-- <li class="divider"></li> -->
-                    <!-- <li><a tabindex="-1" href="#">Or Signup, Maybe</a></li> -->
-                  </ul>
-                </li>
-              </ul>
-
+                <ul class="pull-right">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">{{=T("Sign in")}}<b class="caret"></b></a>
+                    <ul class="dropdown-menu" aria-labelledby="drop3">
+                      <li>
+                        {{=LOAD(c='default', f='user',args='login', vars={'_next': URL("projects")}, ajax=True)}}
+                      </li>
+                      <!-- <li class="divider"></li> -->
+                      <!-- <li><a tabindex="-1" href="#">Or Signup, Maybe</a></li> -->
+                    </ul>
+                  </li>
+                </ul>
               {{pass}}
             </div>
             <div class="content-center">
@@ -92,18 +119,7 @@
                   <p>{{=T("Inspired by Agile methodology using Scrum and Kanban simplifying teamwork.")}}</p>
                   {{ if not auth.is_logged_in(): }}
                   <!-- <a href='{{=URL(c="default", f="user", args="register")}}' id="register" class="btn btn-large btn-primary">{{=T("Sign up")}}</a> -->
-                  <script src="http://cdn.jotfor.ms/static/feedback2.js?3.1.117" type="text/javascript">
-                    new JotformFeedback({
-                    formId:'31161179003645',
-                    base:'http://jotformz.com/',
-                    windowTitle:'{{=T("Join the beta test")}}',
-                    background:'#FFA500',
-                    fontColor:'#FFFFFF',
-                    type:false,
-                    height:500,
-                    width:700
-                    });
-                  </script>
+
                   <a id="register" class="btn btn-large btn-primary lightbox-31161179003645">{{=T("Join the beta test")}}</a>
                   {{else:}}
                   <a href='{{=URL("projects")}}' id="register" class="btn btn-large btn-primary">{{=T("My Projects")}}</a>
@@ -125,27 +141,6 @@
       </div>
     </div>
 
-<!--[if lt IE 9]>
-    <script src='{{=URL("static","js/jquery-1.9.1.min.js")}}'></script>
-<![endif]-->
-
-<!--[if gte IE 9]><!-->
-    <script src='{{=URL("static","js/jquery-2.0.0.min.js")}}'></script>
-<!--[endif]-->
-
-<script>
-$(function() {
-  // Setup drop down menu
-  $('.dropdown-toggle').click(function(){
-  $('.dropdown').toggleClass("open");
-
-  });
-  // Fix input element click problem
-  $('.dropdown input, .dropdown label').click(function(e) {
-  e.stopPropagation();
-  });
-});
-</script>
 </body>
 </html>
 

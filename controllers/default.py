@@ -11,7 +11,7 @@
 
 
 def index():
-    return dict(form=auth())
+    return dict()
 
 
 def nojs():
@@ -248,8 +248,10 @@ def _edit_owner_task():
 @service.json
 def _card_modal():
     if request.vars.task_id:
-        task = db( (User_relationship.person_id==Sharing.person_id) & \
-                   (Task.id == request.vars.task_id) ) \
+        # print request.vars
+        task = db( (Task.id == request.vars.task_id) & \
+                   (User_relationship.person_id == Task.owner_task) & \
+                   (Sharing.person_id == Task.owner_task) ) \
                    .select(Task.ALL, User_relationship.auth_user_id, Sharing.role_id).first()
         # print task.sharing.role_id.name
         if task:
@@ -757,12 +759,7 @@ def user():
         @auth.requires_permission('read','table name',record_id)
     to decorate functions that need access control
     """
-    form=auth()
-    if form.process().accepted:
-        pass
-    else:
-        redirect(URL('index'))
-    return dict(form=form)
+    return dict(form=auth())
 
 
 def download():
