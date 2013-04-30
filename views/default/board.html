@@ -22,9 +22,15 @@
         no_role : '{{=T("Some members of the team are without a paper, go TEAM PAGE and add their respective roles.")}}',
         no_team : '{{=T("There are not members on the team, go TEAM PAGE and add new members.")}}',
         task_no_exist : '{{=T("first insert the card content.")}}',
-        team_page : '{{=T("Team Page")}}',
         card_assign : '{{=T("Assign this card to a member of team before moving it")}}',
+    },
+    txt = {
+        team_page : '{{=T("Team Page")}}',
         started_in : '{{=T("Started in")}}',
+        activities : '{{=T("Activities")}}',
+        attachments : '{{=T("Attachments")}}',
+        labels : '{{=T("Labels")}}',
+        delete_card : '{{=T("Delete")}}',
     },
     date = {
         sprint_started : '{{=sprint.started}}',
@@ -145,11 +151,10 @@
                             <div class="card_container">
                                 <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                 <div class="icons_card">
-                                    <div class="date started_calendar" data-date='{{=g_blank_fulldate_check(task["started"])}}'>
-                                        <input class="started_date_text" size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
-                                        <span class="add-on calendar"><i class="icon-calendar"></i></span>
-                                    </div>
-                                    <div class="comment"><i class="icon-comment"></i><span>0</span></div>
+                                    {{if task["started"]:}}
+                                        <span class="calendar"><i class="icon-calendar"></i></span>
+                                    {{pass}}
+                                    <span class="comment"><i class="icon-comment"></i><span>0</span></span>
                                     <span class="delete_item icon-hover" ><i class="icon-trash"></i></span>
                                     <span class="card-modal icon-hover" ><i class="icon-cog"></i></span>
                                 </div>
@@ -180,11 +185,10 @@
                             <div class="card_container">
                                 <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                 <div class="icons_card">
-                                    <div class="date started_calendar" data-date='{{=g_blank_fulldate_check(task["started"])}}'>
-                                        <input class="started_date_text" size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
-                                        <span class="add-on calendar"><i class="icon-calendar"></i></span>
-                                    </div>
-                                    <div class="comment"><i class="icon-comment"></i><span>0</span></div>
+                                    {{if task["started"]:}}
+                                        <span class="calendar"><i class="icon-calendar"></i></span>
+                                    {{pass}}
+                                    <span class="comment"><i class="icon-comment"></i><span>0</span></span>
                                     <span class="delete_item icon-hover" ><i class="icon-trash"></i></span>
                                     <span class="card-modal icon-hover" ><i class="icon-cog"></i></span>
                                 </div>
@@ -215,11 +219,10 @@
                             <div class="card_container">
                                 <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                 <div class="icons_card">
-                                    <div class="date started_calendar" data-date='{{=g_blank_fulldate_check(task["started"])}}'>
-                                        <input class="started_date_text" size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
-                                        <span class="add-on calendar"><i class="icon-calendar"></i></span>
-                                    </div>
-                                    <div class="comment"><i class="icon-comment"></i><span>0</span></div>
+                                    {{if task["started"]:}}
+                                        <span class="calendar"><i class="icon-calendar"></i></span>
+                                    {{pass}}
+                                    <span class="comment"><i class="icon-comment"></i><span>0</span></span>
                                     <span class="delete_item icon-hover" ><i class="icon-trash"></i></span>
                                     <span class="card-modal icon-hover" ><i class="icon-cog"></i></span>
                                 </div>
@@ -250,11 +253,10 @@
                             <div class="card_container">
                                 <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                 <div class="icons_card">
-                                    <div class="date started_calendar" data-date='{{=g_blank_fulldate_check(task["started"])}}'>
-                                        <input class="started_date_text" size="16" type="text" value='{{=g_blank_date_check(task["started"])}}' readonly>
-                                        <span class="add-on calendar"><i class="icon-calendar"></i></span>
-                                    </div>
-                                    <div class="comment"><i class="icon-comment"></i><span>0</span></div>
+                                    {{if task["started"]:}}
+                                        <span class="calendar"><i class="icon-calendar"></i></span>
+                                    {{pass}}
+                                    <span class="comment"><i class="icon-comment"></i><span>0</span></span>
                                     <span class="delete_item icon-hover" ><i class="icon-trash"></i></span>
                                     <span class="card-modal icon-hover" ><i class="icon-cog"></i></span>
                                 </div>
@@ -271,25 +273,3 @@
     </table>
 {{pass}}
 
-<!-- Modal -->
-<div id="card_modal" class="modal hide">
-    <div id="card_content" class="row-fluid">
-        <div id="modal_sidebar" class="span3">
-            <div class="well sidebar-nav">
-                <div id="member_modal">
-                </div>
-                <ul class="nav nav-list">
-                    <li><a href="#">{{=T("Activities")}} <i class="icon-calendar"></i></a></li>
-                    <li><a href="#">{{=T("Attachments")}} <i class="icon-paper-clip"></i></a></li>
-                    <li><a href="#">{{=T("Labels")}} <i class="icon-tag"></i></a></li>
-                    <li><a href="#">{{=T("Delete")}} <i class="icon-trash"></i></a></li>
-                </ul>
-            </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-            <div id="modal_messages">
-            </div>
-        </div><!--/span-->
-    </div><!--/row-->
-</div>

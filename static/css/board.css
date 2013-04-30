@@ -263,7 +263,7 @@ table, th, td {
     padding: 5px 0px;
 }
 
-.comment i, .calendar i, .started_date_text, .delete_item i, .card-modal i {
+.comment i, .calendar i, .delete_item i, .card-modal i {
     opacity: .7;
 }
 
@@ -318,12 +318,9 @@ table, th, td {
     font-size: 14px;
 }
 
-.started_calendar {
-    display: inline;
-}
-
 .calendar {
     font-size: 19px;
+    cursor: auto;
 }
 
 .delete_item i, .card-modal i {
@@ -338,6 +335,7 @@ table, th, td {
     display: inline;
     position: relative;
     left: 4px;
+    cursor: auto;
 }
 
 .comment i {
@@ -355,7 +353,7 @@ table, th, td {
     font-weight: bold;
 }
 
-.started_date_text {
+/*.started_date_text {
     width: 36px;
     position: relative;
     top: 1px;
@@ -366,13 +364,14 @@ table, th, td {
     border-style: solid!important;
     border-width: 0px!important;
     box-shadow: none!important;
-}
+}*/
 
 .icons_card {
     text-align: right;
     position: relative;
     right: 3%;
     margin-top: 25px;
+    margin-bottom: 5px;
 }
 
 /*
@@ -578,7 +577,7 @@ table, th, td {
 
 #card_modal .nav-list a {
     color: #000;
-    padding: 3px 2px;
+    padding: 3px 6px;
     margin-left: 0px;
     margin-right: 0px;
     margin-bottom: 5px;
@@ -588,4 +587,8 @@ table, th, td {
 
 #card_modal .nav-list a:hover {
     background-color: #ccc;
+}
+
+#card_modal #date_started {
+    padding-left: 5px;
 }

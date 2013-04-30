@@ -529,6 +529,7 @@ def board_ajax_tasks():
         db(Task.id == request.vars.task_id).update(
             started=datetime.strptime(request.vars.task_date,'%Y-%m-%d')
         )
+        return True
 
     else:
         return False
