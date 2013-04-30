@@ -173,12 +173,15 @@
             {{ elif request.function == "board": }}
             <script src='{{=URL("static","js/jquery.livesearch.js")}}'></script>
             <script async defer src='{{=URL("static","js/board.js")}}'></script>
-
+            
+            {{ elif request.function == "projects": }}
+            <script async defer src='{{=URL("static","js/delete_project.js")}}'></script>
 
             {{ elif request.function == "statistics": }}
             <script src='{{=URL("static","js/highcharts/highcharts.js")}}'></script>
             <script src='{{=URL("static","js/highcharts/modules/exporting.js")}}'></script>
             <script async defer src='{{=URL("static","js/statistics.js")}}'></script>
+            
             {{ elif request.function == "team": }}
             <script src='{{=URL("static","js/select2.min.js")}}'></script>
             <script src='{{=URL("static","js/team.js")}}'></script>
