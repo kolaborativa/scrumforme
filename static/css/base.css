@@ -307,7 +307,7 @@ float: left;
     position: relative;
     min-height: 500px;
     width: auto;
-    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
     border-top-left-radius: 10px;
 }
 

@@ -313,14 +313,13 @@ table, th, td {
 
 .task_item {
     position: relative;
-    left: 5%;
+    left: 2%;
     top: 5px;
     font-size: 14px;
 }
 
 .calendar {
     font-size: 19px;
-    cursor: auto;
 }
 
 .delete_item i, .card-modal i {
@@ -335,7 +334,6 @@ table, th, td {
     display: inline;
     position: relative;
     left: 4px;
-    cursor: auto;
 }
 
 .comment i {

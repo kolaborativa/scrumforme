@@ -1,13 +1,13 @@
 $(function() {
 
-    // fixed status card
-    var nav = $('.nav-status'),
-        navOffset = nav.offset();
+    // fixed status board
+    var nav = $(".nav-status"),
+        yOffset = nav.offset().top;
     $(window).scroll(function() {
-        if ($(this).scrollTop() > (navOffset.top - 45)) {
+        if ($(window).scrollTop() > yOffset) {
             nav.addClass("fixed-nav");
         } else {
-            nav.removeClass("fixed-nav");
+           nav.removeClass("fixed-nav");
         }
     });
 
@@ -84,7 +84,7 @@ $(function() {
                 }, 1000); // Enable after 1000 ms.
             }
         }
-    });
+    }).disableSelection();
 
 });
 
@@ -149,22 +149,26 @@ function updateStatusColumn(task) {
 }
 
 
-// remove item
+// remove task
 $(document).on("click", ".delete_item", function() {
     if (confirm(msg.confirm)) {
-        var task = $(this).closest(".card_container").find('.task_item'),
-            pk = task.attr('data-pk'),
-            name = task.attr('data-name'),
-            definitionready = task.closest('.item_container').attr('data-definitionready');
-
-        ajax(url.removeTask + '?pk=' + pk + '&name=' + name + '' + '&definitionready=' + definitionready + '', [''], 'target_ajax');
-        statusAction("remove", "", task);
+        removeTask(this);
     }
 });
 
+function removeTask(element) {
+    var task = $(element).closest(".card_container").find('.task_item'),
+        pk = task.attr('data-pk'),
+        name = task.attr('data-name'),
+        definitionready = task.closest('.item_container').attr('data-definitionready');
+
+    ajax(url.removeTask + '?pk=' + pk + '&name=' + name + '' + '&definitionready=' + definitionready + '', [''], 'target_ajax');
+    statusAction("remove", "", task);
+}
+
 
 // check status
-function statusAction(action, status, task) {
+function statusAction(action, status, dom_element, dom_element2) {
     var message = $("#target_ajax").text();
     console.log(message)
 
@@ -173,40 +177,42 @@ function statusAction(action, status, task) {
             // for tasks without a set date
             var console_msg = "";
             if (action === "date") {
-                $(task).closest("#card_content").find("#date_started").html(status);
-                $(task).datepicker('hide');
+                var task_date = $(dom_element).closest('.icons_card').find('.calendar').val();
+                $(dom_element2).datepicker('hide').closest("#card_content").find("#date_started").html(status);
+                console.log(task_date);
+                if (task_date === undefined) {
+                    $(dom_element).closest('.icons_card').prepend('<span class="calendar"><i class="icon-calendar"></i></span>');
+                }
                 console_msg = "date status updated!"
 
             } else if (action === "remove") {
-                $(task).closest(".task_container").fadeOut("fast", function() {
+                $(dom_element).closest(".task_container").fadeOut("fast", function() {
                     $(this).remove()
                 });
                 console_msg = "remove OK!"
 
             } else if (action === "status") {
-                var task_date = $(task).find('.calendar').val();
+                var task_date = $(dom_element).find('.calendar').val();
                 if (task_date === undefined && status === "inprogress") {
-                    // var today = new Date();
-                    $(task).find('.icons_card').prepend('<span class="calendar"><i class="icon-calendar"></i></span>');
-
+                    $(dom_element).find('.icons_card').prepend('<span class="calendar"><i class="icon-calendar"></i></span>');
                 }
                 console_msg = "move status updated!";
 
             } else if (action === "choose_owner") {
-                var avatar_container = $(task).closest('.task_container').find(".avatar_container");
+                var avatar_container = $(dom_element).closest('.task_container').find(".avatar_container");
                 avatar_container.find('.user_card').remove();
-                $(task).find(".user_card").clone().appendTo(avatar_container);
+                $(dom_element).find(".user_card").clone().appendTo(avatar_container);
 
-                $(task).closest(".task_container").find(".users_team").fadeOut();
+                $(dom_element).closest(".task_container").find(".users_team").fadeOut();
 
                 console_msg = "task owner updated!";
 
             } else if (action === "remove_owner") {
-                var avatar_container = $(task).closest('.task_container').find(".avatar_container");
+                var avatar_container = $(dom_element).closest('.task_container').find(".avatar_container");
                 avatar_container.find('.user_card').remove();
                 avatar_container.append('<button class="btn btn-nostyle user_card nonuser_card choose_owner"><i class="icon-plus"></i></button>');
 
-                $(task).closest(".task_container").find(".users_team").fadeOut();
+                $(dom_element).closest(".task_container").find(".users_team").fadeOut();
 
                 console_msg = "task owner removed!";
             }
@@ -226,7 +232,7 @@ function statusAction(action, status, task) {
     } else {
         console.log("waiting for reply...")
         setTimeout(function() {
-            statusAction(action, status, task)
+            statusAction(action, status, dom_element, dom_element2)
         }, 300);
     }
 }
@@ -400,14 +406,17 @@ $(document).on("click", ".project_member", function() {
 
 // open modal
 $(document).on("click",".card-modal", function(){
-    var task_id = $(this).closest(".card_container").find(".task_item").attr("data-pk"),
-        html = '<div id="card_modal" class="modal hide" data-task="'+task_id+'"><div id="card_content" class="row-fluid"><div id="modal_sidebar" class="span3"><div class="well sidebar-nav"><div id="member_modal"></div><ul class="nav nav-list"><li id="started_calendar"><a href="#">'+txt.activities+'<i class="icon-calendar"></i></a></li><li><a href="#">'+txt.attachments+'<i class="icon-paper-clip"></i></a></li><li><a href="#">'+txt.labels+'<i class="icon-tag"></i></a></li><li><a href="#">'+txt.delete_card+'<i class="icon-trash"></i></a></li></ul></div></div><div id="modal_content" class="span9"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button><div id="modal_messages"></div></div></div></div>'
-
     $("#card_modal").remove();
-    $("body").append(html);
-    var topModal = $("#card_modal").offset().top + 100;
+    var card_element = this,
+        task_id = $(this).closest(".card_container").find(".task_item").attr("data-pk"),
+        html = '<div id="card_modal" class="modal hide" data-task="'+task_id+'"><div id="card_content" class="row-fluid"><div id="modal_sidebar" class="span3"><div class="well sidebar-nav"><div id="member_modal"></div><ul class="nav nav-list"><li id="started_calendar"><a href="#">'+txt.activities+'<i class="icon-calendar"></i></a></li><li><a href="#">'+txt.attachments+'<i class="icon-paper-clip"></i></a></li><li><a href="#">'+txt.labels+'<i class="icon-tag"></i></a></li><li class="delete_item_modal"><a href="#">'+txt.delete_card+'<i class="icon-trash"></i></a></li></ul></div></div><div id="modal_content" class="span9"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button><div id="modal_messages"></div></div></div></div>'
 
-    $("#card_modal").css({"top":topModal}).prepend('<div class="loading"></div>');
+    $("body").append(html);
+    var modal_element = $("#card_modal"),
+        topModal = modal_element.offset().top + 100,
+        date_element = $('#started_calendar');
+
+    modal_element.css({"top":topModal}).prepend('<div class="loading"></div>');
 
     // loading modal content
     $.getJSON(url.card_modal+"?task_id="+task_id,
@@ -420,20 +429,28 @@ $(document).on("click",".card-modal", function(){
                 html = '<h3>'+json.task.title+'</h3><span id="date_started" class="color_light pull-right">'+json.task.started+'</span><span class="color_light pull-right">'+txt.started_in+':</span><div class="clearfix"></div>'
                 $("#modal_messages").append(html);
                 $("#member_modal").html('<img src="'+json.user_relationship.avatar+'" /> <p>'+json.user_relationship.member_name+'</p><p id="modal_role_name" class="color_light">'+json.sharing.role_name+'</p>');
-                $('#started_calendar').attr('data-date',json.task.started);
-                $('#card_modal').modal('show').attr("data-task",task_id);
+                date_element.attr('data-date',json.task.started);
+                modal_element.modal('show').attr("data-task",task_id);
             }
         $(".loading").hide();
         // prevent link default
-        $(".nav a").click(function(e){
+        var nav = modal_element.find(".nav");
+        nav.click(function(e){
             e.preventDefault()
         });
+        // remove task
+        nav.find(".delete_item_modal").click(function(e){
+            if (confirm(msg.confirm)) {
+                removeTask(card_element);
+                modal_element.modal('hide');
+            }
+        });
         // call calendar plugin
-        calendar();
+        calendar(date_element, card_element);
     });
 });
 
-function calendar() {
+function calendar(date_element, card_element) {
     // datepicker
     var nowTemp = new Date(),
         now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0),
@@ -443,7 +460,7 @@ function calendar() {
 
     sprint_ended.setDate(sprint_ended.getDate() + burndown);
 
-    $("#started_calendar").datepicker({
+    $(date_element).datepicker({
         format: 'dd/mm/yyyy',
         todayBtn: "linked",
         todayHighlight: true,
@@ -453,22 +470,18 @@ function calendar() {
         pickerPosition: "top-left",
     }).on('changeDate', function(ev) {
         // call the function
-        changeDate(this, ev.date);
+        changeDate(ev.date, card_element, this);
     });
 
 }
 
 // update date of card
-function changeDate(item, date) {
-    var task = $(item),
+function changeDate(date, card_element, modal_element) {
+    var task = $(modal_element),
         task_id = task.closest('#card_modal').attr('data-task');
         task_date = date.format("UTC:yyyy-mm-dd");
 
     ajax(url.changeAjaxItens + '?task_id=' + task_id + '&task_date=' + task_date, [''], 'target_ajax');
     // test server callback
-    statusAction("date", date.format("UTC:dd/mm/yyyy"), item);
+    statusAction("date", date.format("UTC:dd/mm/yyyy"), card_element, modal_element);
 }
-
-// $(document).on("click", ".nav a", function(e){
-//     e.preventDefault()
-// })
