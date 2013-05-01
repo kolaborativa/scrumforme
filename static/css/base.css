@@ -1849,9 +1849,9 @@ html, body, .container, .content {
 @media (min-width: 768px) and (max-width: 979px) {
 	[class*="span"], .row-fluid [class*="span"] {
 		display: block;
-		float: none;
+		/*float: none;*/
 		margin-left: 0;
-		width: auto;
+		/*width: auto;*/
 	}
 }
 @media (max-width: 979px) {

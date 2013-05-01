@@ -75,7 +75,7 @@
                     {{if person_projects:}}
                         {{for i in person_projects:}}
                             {{if p_count <= 6:}}
-                                <li class='{{=g_current_page("default/%s/%s" %(request.function,i.id),"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}' class="tip-bottom" alt='{{=i.name}}' title='{{=i.name}}'>{{=i.id}}</a></li>
+                                <li class='{{=g_current_page("default/%s/%s" %(request.function,i.id),"active")}}'><a href='{{=URL(c="default",f="board",args=[i.id])}}' class="tip-bottom" alt='{{=i.name}}' title='{{=i.name}}'>{{=i.id}}</a></li>
                             {{p_count += 1}}
                             {{pass}}
                         {{pass}}
@@ -83,7 +83,7 @@
                     {{if shared_with_person:}}
                         {{for i in shared_with_person:}}
                             {{if p_count <= 10:}}
-                                <li class='{{=g_current_page("default/%s/%s" %(request.function,i.project_id),"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.project_id])}}' class="tip-bottom" alt='{{=i.project_id.name}}' title='{{=i.project_id.name}}'>{{=i.project_id}}</a></li>
+                                <li class='{{=g_current_page("default/%s/%s" %(request.function,i.project_id),"active")}}'><a href='{{=URL(c="default",f="board",args=[i.project_id])}}' class="tip-bottom" alt='{{=i.project_id.name}}' title='{{=i.project_id.name}}'>{{=i.project_id}}</a></li>
                             {{p_count += 1}}
                             {{pass}}
                         {{pass}}
@@ -173,7 +173,7 @@
             {{ elif request.function == "board": }}
             <script src='{{=URL("static","js/jquery.livesearch.js")}}'></script>
             <script async defer src='{{=URL("static","js/board.js")}}'></script>
-            
+
             {{ elif request.function == "projects": }}
             <script async defer src='{{=URL("static","js/delete_project.js")}}'></script>
 
@@ -181,7 +181,7 @@
             <script src='{{=URL("static","js/highcharts/highcharts.js")}}'></script>
             <script src='{{=URL("static","js/highcharts/modules/exporting.js")}}'></script>
             <script async defer src='{{=URL("static","js/statistics.js")}}'></script>
-            
+
             {{ elif request.function == "team": }}
             <script src='{{=URL("static","js/select2.min.js")}}'></script>
             <script src='{{=URL("static","js/team.js")}}'></script>

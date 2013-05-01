@@ -33,6 +33,7 @@
             {{=form.custom.widget.description}}
             <!-- url -->
             {{ form.elements('#projects_url')[0] ['_placeholder'] = T('Url') }}
+            {{ form.elements('#projects_url')[0] ['_type'] = T('url') }}
             {{=form.custom.widget.url}}
             <br>
             <button type="submit" class="btn btn-primary">{{=T('Create Project')}}</button>

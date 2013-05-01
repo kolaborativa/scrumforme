@@ -353,19 +353,6 @@ table, th, td {
     font-weight: bold;
 }
 
-/*.started_date_text {
-    width: 36px;
-    position: relative;
-    top: 1px;
-    left: 2px;
-    font-weight: bold;
-    cursor: pointer!important;
-    background-color: transparent!important;
-    border-style: solid!important;
-    border-width: 0px!important;
-    box-shadow: none!important;
-}*/
-
 .icons_card {
     text-align: right;
     position: relative;
@@ -518,9 +505,9 @@ table, th, td {
     /*remove static position*/
     position: absolute;
     /* new custom width */
-    width: 750px;
+    /*min-width: 750px;*/
     /* must be half of the width, minus scrollbar on the left (30px) */
-    margin-left: -375px;
+    /*margin-left: -375px;*/
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff4d8',endColorstr='#fce8c6');
     background-image: -webkit-gradient(linear,center top,center bottom,from(#fff4d8),to(#fce8c6));
     background-image: -moz-linear-gradient(center top,#fff4d8,#fce8c6);
@@ -591,4 +578,32 @@ table, th, td {
 
 #card_modal #date_started {
     padding-left: 5px;
+}
+
+
+@media (min-width: 768px) and (max-width: 1919px) {
+    /*Modal hack*/
+    #card_modal {
+        /* new custom width */
+        width: 750px;
+        /* must be half of the width, minus scrollbar on the left (30px) */
+        margin-left: -375px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 979px) {
+    #live_search {
+        float: left;
+    }
+}
+
+@media (max-width: 767px){
+    #modal_sidebar {
+        float: left!important;
+    }
+    #modal_content {
+        float: left!important;
+        width: 74.46808510638297%!important;
+
+    }
 }
