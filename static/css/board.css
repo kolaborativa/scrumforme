@@ -346,7 +346,7 @@ table, th, td {
     font-size: 12px;
     color: #fff;
     position: relative;
-    right: 14px;
+    right: 18px;
     bottom: 2px;
     font-weight: bold;
 }
@@ -357,6 +357,10 @@ table, th, td {
     right: 3%;
     margin-top: 25px;
     margin-bottom: 5px;
+}
+
+.icons_card i {
+    margin: 0 4px;
 }
 
 /*

@@ -409,7 +409,7 @@ $(document).on("click",".card-modal", function(){
     $("#card_modal").remove();
     var card_element = this,
         task_id = $(this).closest(".card_container").find(".task_item").attr("data-pk"),
-        html = '<div id="card_modal" class="modal hide" data-task="'+task_id+'"><div id="card_content" class="row-fluid"><div id="modal_sidebar" class="span3"><div class="well sidebar-nav"><div id="member_modal"></div><ul class="nav nav-list"><li id="started_calendar"><a href="#">'+txt.activities+'<i class="icon-calendar"></i></a></li><li><a href="#">'+txt.attachments+'<i class="icon-paper-clip"></i></a></li><li><a href="#">'+txt.labels+'<i class="icon-tag"></i></a></li><li class="delete_item_modal"><a href="#">'+txt.delete_card+'<i class="icon-trash"></i></a></li></ul></div></div><div id="modal_content" class="span9"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button><div id="modal_messages"></div></div></div></div>'
+        html = '<div id="card_modal" class="modal hide" data-task="'+task_id+'"><div class="row-fluid"><div id="modal_sidebar" class="span3"><div class="well sidebar-nav"><div id="member_modal"></div><ul class="nav nav-list"><li id="started_calendar"><a href="#">'+txt.activities+'<i class="icon-calendar"></i></a></li><li><a href="#">'+txt.attachments+'<i class="icon-paper-clip"></i></a></li><li><a href="#">'+txt.labels+'<i class="icon-tag"></i></a></li><li class="delete_item_modal"><a href="#">'+txt.delete_card+'<i class="icon-trash"></i></a></li></ul></div></div><div id="modal_content" class="span9"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button><div id="modal_title"></div><div id="modal_comment_box"></div></div></div></div>'
 
     $("body").append(html);
     var modal_element = $("#card_modal"),
@@ -426,11 +426,16 @@ $(document).on("click",".card-modal", function(){
 
             } else {
                 // console.log(json);
-                html = '<h3>'+json.task.title+'</h3><span id="date_started" class="color_light pull-right">'+json.task.started+'</span><span class="color_light pull-right">'+txt.started_in+':</span><div class="clearfix"></div>'
-                $("#modal_messages").append(html);
+                var modal_content = $("#modal_content");
+                html = '<div id="modal_title"><h3>'+json.task.title+'</h3><span id="date_started" class="color_light pull-right">'+json.task.started+'</span><span class="color_light pull-right">'+txt.started_in+':</span><div class="clearfix"></div></div>'
+                // $("#modal_title").append(html);
+                modal_content.append(html);
                 $("#member_modal").html('<img src="'+json.user_relationship.avatar+'" /> <p>'+json.user_relationship.member_name+'</p><p id="modal_role_name" class="color_light">'+json.sharing.role_name+'</p>');
                 date_element.attr('data-date',json.task.started);
                 modal_element.modal('show').attr("data-task",task_id);
+                // commentbox
+                var comment_box = '<div id="modal_comment_box"><form accept-charset="UTF-8" action="" method="POST"><textarea class="span10" id="new_message" name="new_message" placeholder="Type in your message" rows="5"></textarea><br><button class="btn btn-success" type="submit">Post</button></form></div>'
+                modal_content.append(comment_box);
             }
         $(".loading").hide();
         // prevent link default

@@ -71,24 +71,15 @@
       <script src='{{=URL("static","js/jquery-2.0.0.min.js")}}'></script>
   <!--[endif]-->
 
-  <script>
-  $(function() {
-    // Setup drop down menu
-    $('.dropdown-toggle').click(function(){
-    $('.dropdown').toggleClass("open");
 
-    });
-    // Fix input element click problem
-    $('.dropdown input, .dropdown label').click(function(e) {
-    e.stopPropagation();
-    });
-  });
-  </script>
   <script src='{{=URL("static","js/web2py.js")}}'></script>
 </head>
 
 <body>
-<a href="https://github.com/gustavox4ids/scrumforme" target="_blank" class="navbar-fixed-top"><img style="-webkit-user-select: none; position: absolute; top: 0; right: 0; border: 0; z-index:9999;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" width="127" height="127"></a>
+<!-- <a href="https://github.com/gustavox4ids/scrumforme" target="_blank" class="navbar-fixed-top"><img style="-webkit-user-select: none; position: absolute; top: 0; right: 0; border: 0; z-index:9999;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" width="127" height="127"></a> -->
+
+
+
 
     <div class="container">
       <div class="content">
@@ -98,17 +89,37 @@
 
             <div class="row masthead">
               <a href="{{=URL('index')}}" class="pull-left"  alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
+
               {{ if not auth.is_logged_in(): }}
                 <ul class="pull-right">
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">{{=T("Sign in")}}<b class="caret"></b></a>
-                    <ul class="dropdown-menu" aria-labelledby="drop3">
-                      <li>
-                        {{=LOAD(c='default', f='user',args='login', vars={'_next': URL("projects")}, ajax=True)}}
-                      </li>
-                      <!-- <li class="divider"></li> -->
-                      <!-- <li><a tabindex="-1" href="#">Or Signup, Maybe</a></li> -->
-                    </ul>
+                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                      {{=form.custom.begin}}
+                          <!-- email -->
+                          {{ form.elements('#auth_user_email')[0] ['_placeholder'] = T("Email") }}
+                          {{ form.elements('#auth_user_email')[0] ['_type'] = "email" }}
+                          {{ form.elements('#auth_user_email')[0] ['_required'] = "required" }}
+                          {{ form.elements('#auth_user_email')[0] ['_style'] = "margin-bottom: 15px;" }}
+                          {{=form.custom.widget.email}}
+
+                          <!-- senha -->
+                          {{ form.elements('#auth_user_password')[0] ['_placeholder'] = T("Password") }}
+                          {{ form.elements('#auth_user_password')[0] ['_required'] = "required" }}
+                          {{ form.elements('#auth_user_password')[0] ['_style'] = "margin-bottom: 15px;" }}
+                          {{=form.custom.widget.password}}
+                          <input style="float: left; margin-right: 10px;" type="checkbox" name="remember-me" id="remember-me" value="1">
+                          <label class="string optional" for="user_remember_me"> {{=T("Remember me (for 30 days)")}}</label>
+                          <input class="btn btn-primary btn-block" type="submit" id="sign-in" value='{{=T("Sign in")}}'>
+                          <!-- <label style="text-align:center;margin-top:5px">{{=T("or")}}</label>
+                          <input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Sign In with Google">
+                          <input class="btn btn-primary btn-block" type="button" id="sign-in-twitter" value="Sign In with Twitter"> -->
+                          <br>
+                          <div class="right">
+                              <a id="reset_password" href="{{=URL(f='user',args='request_reset_password')}}">Esqueceu a senha?</a>
+                          </div>
+                      {{=form.custom.end}}
+                    </div>
                   </li>
                 </ul>
               {{pass}}
@@ -141,6 +152,16 @@
       </div>
     </div>
 
+<script src='{{=URL("static","js/bootstrap-custom.min.js")}}'></script>
+<script>
+$(document).ready(function()
+{
+  //Handles menu drop down
+  $('.dropdown-menu').find('form').click(function (e) {
+        e.stopPropagation();
+        });
+  });
+</script>
 </body>
 </html>
 

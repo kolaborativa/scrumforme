@@ -203,6 +203,7 @@
 'Number of Definitions of Ready': 'Número de Critérios de Pronto',
 'Object or table name': 'Object or table name',
 'Online examples': 'Alguns exemplos',
+'or': 'ou',
 'or import from csv file': 'ou importar de um arquivo csv',
 'Origin': 'Origin',
 'Other Plugins': 'Other Plugins',

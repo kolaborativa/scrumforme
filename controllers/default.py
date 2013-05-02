@@ -11,7 +11,7 @@
 
 
 def index():
-    return dict()
+    return dict(form=auth.login())
 
 
 def nojs():

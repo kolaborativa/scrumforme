@@ -1,31 +1,4 @@
-{{if request.args(0)=='login':}}
-    {{=form.custom.begin}}
-        <!-- email -->
-        {{ form.elements('#auth_user_email')[0] ['_placeholder'] = T("Email") }}
-        {{ form.elements('#auth_user_email')[0] ['_type'] = "email" }}
-        {{ form.elements('#auth_user_email')[0] ['_required'] = "required" }}
-        {{ form.elements('#auth_user_email')[0] ['_style'] = "margin:10px;" }}
-        {{=form.custom.widget.email}}
-
-        <!-- senha -->
-        {{ form.elements('#auth_user_password')[0] ['_placeholder'] = T("Password") }}
-        {{ form.elements('#auth_user_password')[0] ['_required'] = "required" }}
-        {{ form.elements('#auth_user_password')[0] ['_style'] = "margin:10px;" }}
-        {{=form.custom.widget.password}}
-        <!-- <div class="remember"> -->
-            <!-- <div class="left"> -->
-                <input class="checkbox" id="auth_user_remember" style="margin:10px;" name="remember" type="checkbox" value="on" checked /><label style="display:inline;" for="auth_user_remember">{{=T("Remember me (for 30 days)")}}</label>
-            <!-- </div> -->
-            <!-- <div class="right"> -->
-                <!-- <a id="reset_password" href="{{=URL(f='user',args='request_reset_password')}}">Esqueceu a senha?</a> -->
-            <!-- </div> -->
-        <!-- </div> -->
-        <input type="submit" class="btn btn-primary pull-right" style="margin:10px;" name="submit" value='{{=T("Sign in")}}'>
-    {{=form.custom.end}}
-
-{{else:}}
-
-<div class="span11 offset1">
+{{extend 'layout.html'}}
 <h2>{{=T( request.args(0).replace('_',' ').capitalize() )}}</h2>
 <div id="web2py_user_form">
 {{
@@ -40,7 +13,6 @@ pass
 =form
 }}
 </div>
-</div>
 <script language="javascript"><!--
 jQuery("#web2py_user_form input:visible:enabled:first").focus();
 {{if request.args(0)=='register':}}
@@ -49,6 +21,3 @@ jQuery("#web2py_user_form input:visible:enabled:first").focus();
     web2py_validate_entropy(jQuery('#no_table_new_password'),100);
 {{pass}}
 //--></script>
-
-
-{{pass}}
