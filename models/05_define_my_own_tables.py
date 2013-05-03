@@ -73,7 +73,7 @@ if not "task_comment" in db.tables:
     Task_comment = db.define_table("task_comment",
         Field("task_id", db.task, default=None),
         Field("text_", "string", length=256, default=None),
-        Field("date_", "datetime", default=None),
+        Field("date_", "date", default=None),
         format='%(text)s',
         migrate="task_comment.table")
 

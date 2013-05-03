@@ -115,6 +115,7 @@
 'Email and SMS': 'Email and SMS',
 'Email inválido': 'Email inválido',
 'enter an integer between %(min)g and %(max)g': 'enter an integer between %(min)g and %(max)g',
+'enter date and time as %(format)s': 'enter date and time as %(format)s',
 'enter date as %(format)s': 'enter date as %(format)s',
 'Error in removal!': 'Error in removal!',
 'Errors': 'Errors',

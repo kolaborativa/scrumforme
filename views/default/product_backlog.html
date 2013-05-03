@@ -108,7 +108,7 @@
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
-                                    <div class="child_container">
+                                    <div class="list_definition_ready">
                                     {{count = 0}}
                                     {{for df in definition_ready[story.id]:}}
                                         {{if definition_ready[story.id][count].story_id == story.id:}}
@@ -126,7 +126,7 @@
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 </div><!-- definition_ready -->
-                                                <div class="child_container">
+                                                <div class="list_taks">
                                                 {{for task in tasks[definition_ready[story.id][count].id]:}}
                                                     <ul class="item_container zebra_row">
                                                         <li class="task">
@@ -239,7 +239,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                            <div class="child_container">
+                            <div class="list_definition_ready">
                             {{count = 0}}
                             {{for df in definition_ready[story.id]:}}
                                 {{if definition_ready[story.id][count].story_id == story.id:}}
@@ -257,7 +257,7 @@
                                             </div>
                                             <div class="clearfix"></div>
                                         </div><!-- definition_ready -->
-                                        <div class="child_container">
+                                        <div class="list_taks">
                                         {{for task in tasks[definition_ready[story.id][count].id]:}}
                                             <ul class="item_container zebra_row">
                                                 <li class="task">

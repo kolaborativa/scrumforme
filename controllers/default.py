@@ -279,12 +279,14 @@ def _card_modal():
                    (User_relationship.person_id == Task.owner_task) & \
                    (Sharing.person_id == Task.owner_task) ) \
                    .select(Task.ALL, User_relationship.auth_user_id, Sharing.role_id).first()
+        task_comments = db(Task_comment.task_id == request.vars.task_id).select().as_dict()
         # print task.task.started
         if task:
             task.user_relationship.avatar = Gravatar(task.user_relationship.auth_user_id.email, size=120).thumb
             task.user_relationship.member_name = "%s %s" %(task.user_relationship.auth_user_id.first_name,task.user_relationship.auth_user_id.last_name)
             task.task.started = g_blank_fulldate_check(task.task.started)
             task.sharing.role_name = task.sharing.role_id.name
+            task.comments = task_comments
 
             return task
 
@@ -303,6 +305,12 @@ def _card_comments():
                      (Sharing.project_id == request.vars.project_id) ).select().first()
 
         if person:
+            from datetime import datetime
+            Task_comment.insert(
+                task_id=request.vars.task_id,
+                text_=request.vars.new_comment,
+                date_=datetime.today().date()
+            )
             person.user_relationship.avatar = Gravatar(person.user_relationship.auth_user_id.email, size=50).thumb
             person.sharing.role_name = person.sharing.role_id.name
             person.user_relationship.member_name = "%s %s" %(person.user_relationship.auth_user_id.first_name,person.user_relationship.auth_user_id.last_name)

@@ -408,7 +408,7 @@ $(document).on("click",".card-modal", function(){
     $("#card_modal").remove();
     var card_element = this,
         task_id = $(this).closest(".card_container").find(".task_item").attr("data-pk"),
-        html = '<div id="card_modal" class="modal hide" data-task="'+task_id+'"><div class="row-fluid"><div id="modal_sidebar" class="span3"><div class="well sidebar-nav"><div id="member_modal"></div><ul class="nav nav-list"><li id="started_calendar"><a href="#">'+txt.activities+'<i class="icon-calendar"></i></a></li><li><a href="#">'+txt.attachments+'<i class="icon-paper-clip"></i></a></li><li><a href="#">'+txt.labels+'<i class="icon-tag"></i></a></li><li class="delete_item_modal"><a href="#">'+txt.delete_card+'<i class="icon-trash"></i></a></li></ul></div></div><div id="modal_content" class="span9"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button><div id="modal_title"></div><div id="modal_comment_box"></div></div></div></div>'
+        html = '<div id="card_modal" class="modal hide" data-task="'+task_id+'"><div class="row-fluid"><div id="modal_sidebar" class="span3"><div class="well sidebar-nav"><div id="member_modal"></div><ul class="nav nav-list"><li id="started_calendar"><a href="#">'+txt.activities+'<i class="icon-calendar"></i></a></li><li><a href="#">'+txt.attachments+'<i class="icon-paper-clip"></i></a></li><li><a href="#">'+txt.labels+'<i class="icon-tag"></i></a></li><li class="delete_item_modal"><a href="#">'+txt.delete_card+'<i class="icon-trash"></i></a></li></ul></div></div><div id="modal_content" class="span9"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button></div></div></div>'
 
     $("body").append(html);
     var modal_element = $("#card_modal"),
@@ -424,17 +424,22 @@ $(document).on("click",".card-modal", function(){
                 alert(msg.no_team)
 
             } else {
-                // console.log(data);
+                console.log(data);
                 var modal_content = $("#modal_content");
                 html = '<div id="modal_title"><h3>'+data.task.title+'</h3><span id="date_started" class="color_light pull-right">'+data.task.started+'</span><span class="color_light pull-right">'+txt.started_in+':</span><div class="clearfix"></div></div>'
-                // $("#modal_title").append(html);
                 modal_content.append(html);
                 $("#member_modal").html('<img src="'+data.user_relationship.avatar+'" /> <p>'+data.user_relationship.member_name+'</p><p id="modal_role_name" class="color_light">'+data.sharing.role_name+'</p>');
                 date_element.attr('data-date',data.task.started);
                 modal_element.modal('show').attr("data-task",task_id);
                 // commentbox
-                var comment_box = '<div id="modal_comment_box"><form id="send_comment" accept-charset="UTF-8" action="" method="POST"><textarea class="span12" id="new_comment" name="new_comment" placeholder="'+txt.type_message+'" rows="3" required></textarea><br><button class="btn btn-success" type="submit">'+button.comment+'</button></form></div>'
+                var comment_box = '<div id="modal_comment_box"><form id="send_comment" accept-charset="UTF-8" action="" method="POST"><textarea class="span12" id="new_comment" name="new_comment" placeholder="'+txt.type_message+'" rows="3" required></textarea><br><button class="btn btn-success" type="submit">'+button.comment+'</button></form></div><div id="modal_comments"></div>'
                 modal_content.append(comment_box);
+                if(data.comments) {
+                    for(i in data.comments) {
+                        // console.log(data.comments[i]);
+                        $("#modal_comments").append('<hr /><div class="span12"><img class="pull-left" src="'+data.user_relationship.avatar+'" width="50" height="50"><div class="comment_content pull-left"><p><strong>'+data.user_relationship.member_name+'</strong><span class="color_light"> - '+data.sharing.role_name+'</span></p><p>'+data.comments[i]["text_"]+'</p></div></div><div class="clearfix"></div>');
+                    }
+                }
             }
         $(".loading").hide();
         // prevent link default
@@ -452,7 +457,7 @@ $(document).on("click",".card-modal", function(){
         $("form#send_comment").submit(function(e){
             e.preventDefault();
             // call function
-            sendComments(this, project_data.project_id);
+            sendComments(this, project_data.project_id, task_id);
         });
         // call calendar plugin
         calendar(date_element, card_element);
@@ -495,11 +500,12 @@ function changeDate(date, card_element, modal_element) {
     statusAction("date", date.format("UTC:dd/mm/yyyy"), card_element, modal_element);
 }
 
-function sendComments(element, project_id) {
+function sendComments(element, project_id, task_id) {
 
     var dom_element = $(element),
         data_form = dom_element.serialize();
-        data_form += '&project_id=' + project_id
+
+    data_form += '&project_id=' + project_id + '&task_id=' + task_id;
 
     // ajax(url.card_comments + '?' + datas_form, [''], 'target_ajax');
     console.log(data_form);
@@ -510,7 +516,9 @@ function sendComments(element, project_id) {
             console.log(data);
             // empty textarea
                 dom_element.find("#new_comment").val('');
-                $("#modal_content").append('<hr /><div class="span12"><img class="pull-left" src="'+data.user_relationship.avatar+'" alt=""><div class="comment_content pull-left"><p><strong>'+data.user_relationship.member_name+'</strong><span class="color_light"> - '+data.sharing.role_name+'</span></p><p>'+data.comment+'</p></div></div><div class="clearfix"></div>');
+                var comment = $('<hr /><div class="span12"><img class="pull-left" src="'+data.user_relationship.avatar+'" alt=""><div class="comment_content pull-left"><p><strong>'+data.user_relationship.member_name+'</strong><span class="color_light"> - '+data.sharing.role_name+'</span></p><p>'+data.comment+'</p></div></div><div class="clearfix"></div>').hide();
+                $("#modal_comments").prepend(comment);
+                comment.fadeIn('slow');
 
             }
       //data contains the JSON object
