@@ -36,14 +36,26 @@ Installation
 
     http://localhost:8000/scrumforme
 
+*5.*  Insert the Role of users in db.role.
+
++---------+--------------+
+| role.id | role.name    |
++---------+--------------+
+| 1       | PO           |
+| 2       | Scrum Master |
+| 3       | Team         |
+| 4       | Guest        |
++---------+--------------+
+
+
 
 Changelog
 -----------
 
-**v 1.0**:
+**v 0.1**:
 
 - Home Screen.
-- Creation of a new project.
+- Creation of a new project and remove.
 - Product backlog page.
 - Board page.
 - Create Stories.
@@ -55,6 +67,7 @@ Changelog
 - Profile photo by Gravatar.
 - Share project with other users.
 - Delete project.
+- Remove a User from a project.
 
 ---------------------------------------
 
@@ -63,7 +76,6 @@ TODOLIST
 
 - Statistics per person, history, project.
 - Realtime on shared projects.
-- Remove a User from a project.
 - Adjust layout responsive to other devices.
 - Send email to new registered users.
 - When adding a User send email to him.

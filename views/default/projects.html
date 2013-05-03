@@ -40,7 +40,7 @@
         {{=form.custom.end}}
         </div>
         <div class="span5">
-            {{if "person_projects" in globals():}}
+            {{if "person_projects":}}
                 <h3>{{=T('My Projects')}} <span class="label">{{=len(person_projects)}}</span></a></h3>
                 <ul>
                 {{for i in person_projects:}}

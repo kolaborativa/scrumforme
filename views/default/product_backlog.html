@@ -81,7 +81,7 @@
                                             <button class="btn btn-nostyle expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
                                                 <i class="icon-circle-arrow-down"></i></button>
                                             <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
-                                            <select class="pull-right benefit" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>
+                                            <select class="pull-right benefit tip-bottom" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>
                                             {{selects="P M G GG".split()}}
                                             {{if story.benefit:}}
                                                 {{for size in selects:}}
@@ -102,8 +102,8 @@
                                                 {{pass}}
                                             {{pass}}
                                             </select>
-                                            <input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" value='{{=g_blank_check(story.story_points)}}' alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'>
-                                            <button class="btn create_definition_ready pull-right" alt='{{=T("Create Definition of Ready")}}' title='{{=T("Create Definition of Ready")}}'>+ {{=T('DR')}}</button>
+                                            <input class="pull-right story_points only_numbers tip-bottom" type="number" placeholder="?" min="1" value='{{=g_blank_check(story.story_points)}}' alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'>
+                                            <button class="btn create_definition_ready pull-right tip-bottom" alt='{{=T("Create Definition of Ready")}}' title='{{=T("Create Definition of Ready")}}'>+ {{=T('DR')}}</button>
                                             <span class="label qtd_definition_ready pull-right tip-bottom" alt='{{=T("Number of Definitions of Ready")}}' title='{{=T("Number of Definitions of Ready")}}'>{{=len(definition_ready[story.id])}}</span>
                                         </div>
                                         <div class="clearfix"></div>
@@ -115,7 +115,7 @@
                                             <li class="definition_ready_container">
                                                 <div class="definition_ready">
                                                     <div class="text_container">
-                                                        <span class="label tip-right" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>{{=T('DR')}}</span>
+                                                        <span class="label tip-bottom" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>{{=T('DR')}}</span>
                                                         <a href="#" class="editable-click editable definition_ready_card" data-type="textarea" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
                                                     </div>
                                                     <div class="buttons_container">
@@ -133,7 +133,7 @@
                                                             </div>
                                                             <div class="buttons_container">
                                                                 <button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-trash"></i></button>
-                                                                <button class="btn btn-nostyle comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment-custom"><span>0</span></i></button>
+                                                                <button class="btn btn-nostyle comment_definition_ready pull-right" alt='{{=T("comments")}}' title='{{=T("comments")}}'><i class="icon-comment-custom"><span>0</span></i></button>
                                                             </div>
                                                             <div class="clearfix"></div>
                                                         </li><!-- task -->
@@ -208,7 +208,7 @@
                                     <button class="btn btn-nostyle expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
                                         <i class="icon-circle-arrow-down"></i></button>
                                     <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
-                                    <select class="pull-right benefit" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>
+                                    <select class="pull-right benefit tip-bottom" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>
                                     {{selects="P M G GG".split()}}
                                     {{if story.benefit:}}
                                         {{for size in selects:}}
@@ -229,8 +229,8 @@
                                         {{pass}}
                                     {{pass}}
                                     </select>
-                                    <input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" value='{{=g_blank_check(story.story_points)}}' alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'>
-                                    <button class="btn create_definition_ready pull-right" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>+ {{=T('DR')}}</button>
+                                    <input class="pull-right story_points only_numbers tip-bottom" type="number" placeholder="?" min="1" value='{{=g_blank_check(story.story_points)}}' alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'>
+                                    <button class="btn create_definition_ready pull-right tip-bottom" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>+ {{=T('DR')}}</button>
                                     <span class="label qtd_definition_ready pull-right tip-bottom"  alt='{{=T("Number of Definitions of Ready")}}' title='{{=T("Number of Definitions of Ready")}}'>{{=len(definition_ready[story.id])}}</span>
                                 </div>
                                 <div class="clearfix"></div>
@@ -242,7 +242,7 @@
                                     <li class="definition_ready_container">
                                         <div class="definition_ready">
                                             <div class="text_container">
-                                                <span class="label tip-right" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>{{=T('DR')}}</span>
+                                                <span class="label tip-bottom" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>{{=T('DR')}}</span>
                                                 <a href="#" class="editable-click editable definition_ready_card" data-type="textarea" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
                                             </div>
                                             <div class="buttons_container">
@@ -260,7 +260,7 @@
                                                     </div>
                                                     <div class="buttons_container">
                                                         <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
-                                                        <button class="btn btn-nostyle comment_definition_ready pull-right" alt='{{=T("Comment")}}' title='{{=T("Comment")}}'><i class="icon-comment-custom"><span>0</span></i></button>
+                                                        <button class="btn btn-nostyle comment_definition_ready pull-right" alt='{{=T("comments")}}' title='{{=T("comments")}}'><i class="icon-comment-custom"><span>0</span></i></button>
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 </li><!-- task -->

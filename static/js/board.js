@@ -178,7 +178,8 @@ function statusAction(action, status, dom_element, dom_element2) {
             var console_msg = "";
             if (action === "date") {
                 var task_date = $(dom_element).closest('.icons_card').find('.calendar').val();
-                $(dom_element2).datepicker('hide').closest("#card_content").find("#date_started").html(status);
+                $(dom_element2).datepicker('hide').closest("#card_modal").find("#date_started").html(status);
+                console.log(dom_element2);
                 console.log(task_date);
                 if (task_date === undefined) {
                     $(dom_element).closest('.icons_card').prepend('<span class="calendar"><i class="icon-calendar"></i></span>');
@@ -363,22 +364,20 @@ function teamMembers(element) {
     }
 
     $.getJSON(url.team_project,
-    function(json) {
-        for (i in json) {
-            if (i === "norole" || i === "noteam") {
-                html += '<h5>' + msg[i] + '</h5>'
-                html += '<a href="' + url.team_page + '" class="btn btn-primary btn-mini">' + txt.team_page + '</a>';
+    function(data) {
+        if (data === "no_role" || data === "no_team") {
+            html += '<h5>' + msg[i] + '</h5>'
+            html += '<a href="' + url.team_page + '" class="btn btn-primary btn-mini">' + txt.team_page + '</a>';
 
-            } else {
-                html += '<div class="media project_member" data-person="' + json[i]["person_id"] + '"><img class="user_card choose_owner pull-left" src="' + json[i]["avatar"] + '" data-owner="true"><div class="media-body"><h5 class="media-heading">' + json[i]["person_name"] + '</h5><h6>' + json[i]["person_role"] + '</h6></div></div>'
+        } else {
+            for (i in data) {
+                    html += '<div class="media project_member" data-person="' + data[i]["person_id"] + '"><img class="user_card choose_owner pull-left" src="' + data[i]["avatar"] + '" data-owner="true"><div class="media-body"><h5 class="media-heading">' + data[i]["person_name"] + '</h5><h6>' + data[i]["person_role"] + '</h6></div></div>'
             }
+            html += '<div class="media project_member" data-person="remove"><button class="project_member btn btn-nostyle user_card nonuser_card choose_owner pull-left"><i class="icon-remove"></i></button><div class="media-body"><h5 class="media-heading">Remove</h5></div></div>'
         }
         $(".loading").hide();
-        html += '<button class="project_member btn btn-nostyle user_card nonuser_card choose_owner pull-left" data-person="remove"><i class="icon-remove"></i></button>'
         self.closest(".task_container").find(".users_team").append(html);
     });
-
-
 }
 
 // edit owner task
@@ -420,28 +419,28 @@ $(document).on("click",".card-modal", function(){
 
     // loading modal content
     $.getJSON(url.card_modal+"?task_id="+task_id,
-    function(json) {
-            if (json === false) {
-                html += '<h5>nada</h5>'
+    function(data) {
+            if (data === false) {
+                alert(msg.no_team)
 
             } else {
-                // console.log(json);
+                // console.log(data);
                 var modal_content = $("#modal_content");
-                html = '<div id="modal_title"><h3>'+json.task.title+'</h3><span id="date_started" class="color_light pull-right">'+json.task.started+'</span><span class="color_light pull-right">'+txt.started_in+':</span><div class="clearfix"></div></div>'
+                html = '<div id="modal_title"><h3>'+data.task.title+'</h3><span id="date_started" class="color_light pull-right">'+data.task.started+'</span><span class="color_light pull-right">'+txt.started_in+':</span><div class="clearfix"></div></div>'
                 // $("#modal_title").append(html);
                 modal_content.append(html);
-                $("#member_modal").html('<img src="'+json.user_relationship.avatar+'" /> <p>'+json.user_relationship.member_name+'</p><p id="modal_role_name" class="color_light">'+json.sharing.role_name+'</p>');
-                date_element.attr('data-date',json.task.started);
+                $("#member_modal").html('<img src="'+data.user_relationship.avatar+'" /> <p>'+data.user_relationship.member_name+'</p><p id="modal_role_name" class="color_light">'+data.sharing.role_name+'</p>');
+                date_element.attr('data-date',data.task.started);
                 modal_element.modal('show').attr("data-task",task_id);
                 // commentbox
-                var comment_box = '<div id="modal_comment_box"><form accept-charset="UTF-8" action="" method="POST"><textarea class="span10" id="new_message" name="new_message" placeholder="Type in your message" rows="5"></textarea><br><button class="btn btn-success" type="submit">Post</button></form></div>'
+                var comment_box = '<div id="modal_comment_box"><form id="send_comment" accept-charset="UTF-8" action="" method="POST"><textarea class="span12" id="new_comment" name="new_comment" placeholder="'+txt.type_message+'" rows="3" required></textarea><br><button class="btn btn-success" type="submit">'+button.comment+'</button></form></div>'
                 modal_content.append(comment_box);
             }
         $(".loading").hide();
         // prevent link default
         var nav = modal_element.find(".nav");
         nav.click(function(e){
-            e.preventDefault()
+            e.preventDefault();
         });
         // remove task
         nav.find(".delete_item_modal").click(function(e){
@@ -449,6 +448,11 @@ $(document).on("click",".card-modal", function(){
                 removeTask(card_element);
                 modal_element.modal('hide');
             }
+        });
+        $("form#send_comment").submit(function(e){
+            e.preventDefault();
+            // call function
+            sendComments(this, project_data.project_id);
         });
         // call calendar plugin
         calendar(date_element, card_element);
@@ -489,4 +493,30 @@ function changeDate(date, card_element, modal_element) {
     ajax(url.changeAjaxItens + '?task_id=' + task_id + '&task_date=' + task_date, [''], 'target_ajax');
     // test server callback
     statusAction("date", date.format("UTC:dd/mm/yyyy"), card_element, modal_element);
+}
+
+function sendComments(element, project_id) {
+
+    var dom_element = $(element),
+        data_form = dom_element.serialize();
+        data_form += '&project_id=' + project_id
+
+    // ajax(url.card_comments + '?' + datas_form, [''], 'target_ajax');
+    console.log(data_form);
+    $.post(url.card_comments,
+        data_form,
+        function(data, status) {
+            if(status === "success") {
+            console.log(data);
+            // empty textarea
+                dom_element.find("#new_comment").val('');
+                $("#modal_content").append('<hr /><div class="span12"><img class="pull-left" src="'+data.user_relationship.avatar+'" alt=""><div class="comment_content pull-left"><p><strong>'+data.user_relationship.member_name+'</strong><span class="color_light"> - '+data.sharing.role_name+'</span></p><p>'+data.comment+'</p></div></div><div class="clearfix"></div>');
+
+            }
+      //data contains the JSON object
+      //textStatus contains the status: success, error, etc
+    }, "json");
+    // test server callback
+    // statusAction("date", date.format("UTC:dd/mm/yyyy"), card_element, modal_element);
+
 }

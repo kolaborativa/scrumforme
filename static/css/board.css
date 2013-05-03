@@ -142,7 +142,7 @@ table, th, td {
 }
 
 /*zebra rows*/
-.no-th:nth-child(odd) {
+.no-th:nth-child(even) {
     background-color: rgb(243, 242, 242);
 }
 
@@ -580,6 +580,10 @@ table, th, td {
 
 #card_modal #date_started {
     padding-left: 5px;
+}
+
+.comment_content {
+    margin-left: 5px;
 }
 
 

@@ -29,6 +29,9 @@ def _get_person():
     person_id = user_relationship.person_id
     shared = db(Sharing.person_id==person_id).select()
 
+    no_projects = [i.id for i in projects]
+    shared = [i for i in shared if i.project_id == no_projects]
+
     return dict(person_id=person_id, projects=projects, shared=shared)
 
 
@@ -57,6 +60,10 @@ def projects():
                         url=form.vars.url,
                         date_=datetime.now(),
                         )
+        Sharing.insert(project_id=project_id,
+                       person_id=person_id,
+                       role_id=2,
+                       )
         redirect(URL(f="product_backlog",args=[project_id]))
     elif form.errors:
         pass
@@ -233,15 +240,15 @@ def _team_project():
                     count += 1
 
                 elif not member.sharing.role_id:
-                    return dict(norole=True)
+                    return dict(no_role=True)
 
             return project
 
         else:
-            return dict(noteam=True)
+            return dict(no_team=True)
 
     else:
-        return dict(noteam=True)
+        return dict(no_team=True)
 
 
 @auth.requires_login()
@@ -282,6 +289,28 @@ def _card_modal():
 
         else:
             return False
+
+    else:
+        return False
+
+
+@auth.requires_login()
+@service.json
+def _card_comments():
+    if request.vars.new_comment:
+        person = db( (User_relationship.auth_user_id == auth.user.id) & \
+                     (Sharing.project_id == request.vars.project_id) ).select().first()
+        # members_project = [i.person_id for i in shared_with_person]
+        # print person
+        # print request.vars.new_comment
+        # print auth.user.id
+        if person:
+            person.user_relationship.avatar = Gravatar(person.user_relationship.auth_user_id.email, size=50).thumb
+            person.sharing.role_name = person.sharing.role_id.name
+            person.user_relationship.member_name = "%s %s" %(person.user_relationship.auth_user_id.first_name,person.user_relationship.auth_user_id.last_name)
+            person.comment = request.vars.new_comment
+
+        return person
 
     else:
         return False
@@ -686,6 +715,7 @@ def get_persons_add():
 @auth.requires_login()
 def add_member():
     if request.vars['persons_id']:
+        print request.vars['persons_id']
 
         project_id = request.vars['project_id']
         persons_id = request.vars['persons_id'].split(',')

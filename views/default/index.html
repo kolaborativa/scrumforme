@@ -54,7 +54,7 @@
     new JotformFeedback({
     formId:'31161179003645',
     base:'http://jotformz.com/',
-    windowTitle:'{{=T("Join the beta test")}}',
+    windowTitle:'{{=T("Join the waiting list for the BETA")}}',
     background:'#FFA500',
     fontColor:'#FFFFFF',
     type:false,
@@ -131,7 +131,7 @@
                   {{ if not auth.is_logged_in(): }}
                   <!-- <a href='{{=URL(c="default", f="user", args="register")}}' id="register" class="btn btn-large btn-primary">{{=T("Sign up")}}</a> -->
 
-                  <a id="register" class="btn btn-large btn-primary lightbox-31161179003645">{{=T("Join the beta test")}}</a>
+                  <a id="register" class="btn btn-large btn-primary lightbox-31161179003645">{{=T("Join the waiting list for the BETA")}}</a>
                   {{else:}}
                   <a href='{{=URL("projects")}}' id="register" class="btn btn-large btn-primary">{{=T("My Projects")}}</a>
                   {{pass}}

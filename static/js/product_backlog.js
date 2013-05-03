@@ -5,7 +5,7 @@
 */
 
 $(function() {
-    
+
     // catch size dynamically to increase the size of content
     var firstHeight = $('#header').outerHeight(),
         secondHeight = $('#sub-header-content').outerHeight(),
@@ -49,7 +49,7 @@ $(function() {
 */
 
 // modify style buttons
-$.fn.editableform.buttons = 
+$.fn.editableform.buttons =
  '<button type="button" class="btn editable-cancel pull-left"><i class="icon-return-key"></i></button>'+
   '<button type="submit" class="btn btn-success editable-submit pull-right"><i class="icon-ok icon-white"></i></button>';
 $.fn.editable.defaults.mode = 'inline';
@@ -99,7 +99,7 @@ $('.project-items').editable({
         story.find(".benefit").removeAttr("disabled");
         story.find(".expand_story").removeAttr("disabled");
         $(this).closest(".story_container").find(".send_story_sprint").removeAttr("disabled");
-    
+
     }else if(value.name === "definition_ready") {
         var label_DR = story.find(".qtd_definition_ready").text();
         story.find(".qtd_definition_ready").text(parseInt(label_DR)+1);
@@ -132,7 +132,7 @@ $('#create_story').click(function(){
       var indexItem = 1;
     }
 
-    var html = '<ul class="story_container item_container"><li class="story"><div class="story_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="textarea" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-index="'+indexItem+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn btn-minimize expand_story pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-circle-arrow-down"></i></button><button class="btn delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-trash"></i></button><select class="pull-right benefit" alt="'+title.benefit+'" title="'+title.benefit+'" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" alt="'+title.points+'" title="'+title.points+'" disabled="disabled"><button class="btn create_definition_ready pull-right" alt="'+title.create_DR+'" title="'+title.create_DR+'" disabled="disabled">+ '+buttons.DR+'</button><span class="label qtd_definition_ready pull-right tip-bottom" alt="'+title.label_DR+'" title="'+title.label_DR+'">0</span></div><div class="clearfix"></div></div></li><div class="buttons_footer new_buttons_footer"><button class="btn btn-primary pull-right send_story_sprint" disabled="disabled">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div></div></ul>';
+    var html = '<ul class="story_container item_container"><li class="story"><div class="story_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="textarea" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-index="'+indexItem+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn btn-nostyle expand_story pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-circle-arrow-down"></i></button><button class="btn delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-trash"></i></button><select class="pull-right benefit" alt="'+title.benefit+'" title="'+title.benefit+'" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" alt="'+title.points+'" title="'+title.points+'" disabled="disabled"><button class="btn create_definition_ready pull-right" alt="'+title.create_DR+'" title="'+title.create_DR+'" disabled="disabled">+ '+buttons.DR+'</button><span class="label qtd_definition_ready pull-right tip-bottom" alt="'+title.label_DR+'" title="'+title.label_DR+'">0</span></div><div class="clearfix"></div></div></li><div class="buttons_footer new_buttons_footer"><button class="btn btn-primary pull-right send_story_sprint" disabled="disabled">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div></div></ul>';
 
     $("#backlog").find(".project-items").append(html);
 
@@ -155,7 +155,7 @@ $(document).on("click", ".create_definition_ready", function(){
     setTimeout(function () {
        newItem.find(".new_definition_ready:last").trigger('click')
     }, 100);
-    
+
 });
 
 // by clicking the button to add Task
@@ -170,7 +170,7 @@ $(document).on("click", ".create_task", function(){
     setTimeout(function () {
        newItem.find(".new_task:last").trigger('click')
     }, 100);
-    
+
 });
 
 // click expand story
@@ -231,7 +231,7 @@ $(document).on("click", ".send_story_sprint", function(){
       alert(msg.move_sprint_error);
       return false
     }
-    
+
     ajax(url.changeAjaxItens+'?name=sprint&sprint_id='+sprintID+'&story_id='+storyID, [''], 'target_ajax');
     statusAction(object,"sprint","send");
 
@@ -246,7 +246,7 @@ $(document).on("click", ".back_backlog", function(){
     var object = $(this).closest(".story_container"),
         storyID = object.find(".story_card").attr("data-pk"),
         sprintID = $(".story_container").attr("data-sprint");
-    
+
     ajax(url.changeAjaxItens+'?name=backlog&sprint_id='+storyID+'&story_id='+storyID, [''], 'target_ajax');
     statusAction(object,"backlog","send");
 });
@@ -264,7 +264,7 @@ $(document).on("click", ".delete_item", function(){
 
 // for remove itens
 function removeItem(pk,name,object,action) {
-    
+
     if(name === "task") {
         var definitionready = $(object).closest('.definition_ready_container').find(".definition_ready_card").attr('data-pk');
         ajax(url.removeBacklogItens+'?pk='+pk+'&name='+name+'&definitionready='+definitionready+'', [''], 'target_ajax');
@@ -274,7 +274,7 @@ function removeItem(pk,name,object,action) {
     }
 
     var status = statusAction(object,"",action);
-    
+
     if(status === true) {
         // get total number of Definitions of Ready and decreases
         console.log(status)
@@ -357,7 +357,7 @@ function statusAction(object,item,action) {
             if(action==="remove") {
                 // find element to be deleted
                 $(object).closest(".item_container").fadeOut("fast", function() { $(this).remove() });
-            }            
+            }
         }
 
     } else if(message === "False") {
