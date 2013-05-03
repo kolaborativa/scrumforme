@@ -30,7 +30,7 @@ def _get_person():
     shared = db(Sharing.person_id==person_id).select()
 
     no_projects = [i.id for i in projects]
-    shared = [i for i in shared if i.project_id == no_projects]
+    shared = [i for i in shared if not i.project_id in no_projects]
 
     return dict(person_id=person_id, projects=projects, shared=shared)
 
@@ -173,21 +173,21 @@ def board():
 
         if hasattr(sprint,"started") and sprint.started:
             if stories:
-                least_one_story = False
+                # least_one_story = False
                 definition_ready = {}
                 for story in stories:
+                    if not story.story_points:
+                        session.message = T("Put all the story points before going to the Board")
+                        redirect(URL(f='product_backlog', args=project_id))
                     definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
                     # requires story points for story on Sprint
-                    if story.sprint_id:
-                        least_one_story = True
+                    # if story.sprint_id:
+                        # least_one_story = True
                         # requires story points for story on Sprint
-                        if not story.story_points:
-                            session.message = T("Put all the story points before going to the Board")
-                            redirect(URL(f='product_backlog', args=project_id))
 
-                if not least_one_story:
-                    session.message = T("Move at least one story in the column of the Sprint")
-                    redirect(URL(f='product_backlog', args=project_id))
+                # if not least_one_story:
+                #     session.message = T("Move at least one story in the column of the Sprint")
+                #     redirect(URL(f='product_backlog', args=project_id))
 
                 tasks = {}
                 for row in definition_ready:
@@ -206,7 +206,8 @@ def board():
                             sprint=sprint
                             )
             else:
-                session.message = T("You must create stories for your project")
+                session.message = T("Move at least one story in the column of the Sprint")
+                # session.message = T("You must create stories for your project")
                 redirect(URL(f='product_backlog', args=project_id))
         else:
             session.message = T("You must create and launch the sprint before accessing the Board")
@@ -300,10 +301,7 @@ def _card_comments():
     if request.vars.new_comment:
         person = db( (User_relationship.auth_user_id == auth.user.id) & \
                      (Sharing.project_id == request.vars.project_id) ).select().first()
-        # members_project = [i.person_id for i in shared_with_person]
-        # print person
-        # print request.vars.new_comment
-        # print auth.user.id
+
         if person:
             person.user_relationship.avatar = Gravatar(person.user_relationship.auth_user_id.email, size=50).thumb
             person.sharing.role_name = person.sharing.role_id.name

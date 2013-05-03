@@ -108,6 +108,7 @@
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
+                                    <div class="child_container">
                                     {{count = 0}}
                                     {{for df in definition_ready[story.id]:}}
                                         {{if definition_ready[story.id][count].story_id == story.id:}}
@@ -125,6 +126,7 @@
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 </div><!-- definition_ready -->
+                                                <div class="child_container">
                                                 {{for task in tasks[definition_ready[story.id][count].id]:}}
                                                     <ul class="item_container zebra_row">
                                                         <li class="task">
@@ -139,11 +141,13 @@
                                                         </li><!-- task -->
                                                     </ul>
                                                 {{pass}}
+                                                </div>
                                                 </li>
                                             </ul>
                                             {{count += 1}}
                                         {{pass}}
                                     {{pass}}
+                                    </div>
                                 </li><!-- story -->
                                 <div class="buttons_footer">
                                     <button class="btn btn-primary pull-right send_story_sprint">{{=T("Send to Sprint")}} <i class="icon-circle-arrow-right icon-white"></i></button>
@@ -235,6 +239,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
+                            <div class="child_container">
                             {{count = 0}}
                             {{for df in definition_ready[story.id]:}}
                                 {{if definition_ready[story.id][count].story_id == story.id:}}
@@ -252,6 +257,7 @@
                                             </div>
                                             <div class="clearfix"></div>
                                         </div><!-- definition_ready -->
+                                        <div class="child_container">
                                         {{for task in tasks[definition_ready[story.id][count].id]:}}
                                             <ul class="item_container zebra_row">
                                                 <li class="task">
@@ -266,11 +272,13 @@
                                                 </li><!-- task -->
                                             </ul>
                                         {{pass}}
+                                        </div>
                                         </li>
                                     </ul>
                                     {{count += 1}}
                                 {{pass}}
                             {{pass}}
+                        </div>
                         </li><!-- story -->
                         <div class="buttons_footer">
                             <button class="btn btn-danger pull-right back_backlog"><i class="icon-circle-arrow-left icon-white"></i> {{=T("Back to Backlog")}}</button>

@@ -150,10 +150,10 @@ $(document).on("click", ".create_definition_ready", function(){
 
     var html = '<ul class="item_container"><li class="definition_ready_container new_definition_ready_container"><div class="definition_ready"><div class="text_container"><span class="label" style="margin-right: 4px;" alt="'+title.label_DR+'" title="'+title.label_DR+'">'+buttons.DR+' </span><a href="#" class="editable-click editable-empty definition_ready_card editable new_definition_ready" data-type="textarea" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="definition_ready">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn btn-minimize expand_definition_ready pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-circle-arrow-up"></i></button><button class="btn delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-trash"></i></button><button class="btn create_task pull-right" alt="'+title.task+'" title="'+title.task+'" disabled="disabled">+ '+buttons.task+'</button></div><div class="clearfix"></div></div></li></ul>';
 
-    var newItem = $(this).closest(".story").append(html);
+    var newItem = $(this).closest(".story").find(".child_container").prepend(html);
 
     setTimeout(function () {
-       newItem.find(".new_definition_ready:last").trigger('click')
+       newItem.find(".new_definition_ready:first").trigger('click')
     }, 100);
 
 });
@@ -165,10 +165,10 @@ $(document).on("click", ".create_task", function(){
 
     var html = '<ul class="item_container zebra_row"><li class="task"><div class="text_container"><a href="#" class="editable-click editable-empty editable new_task" data-type="textarea" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="task">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-trash"></i></button><button class="btn btn-minimize comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment-custom"><span>0</span></i></button></div><div class="clearfix"></div></li></ul>';
 
-    var newItem = $(this).closest(".definition_ready_container").append(html);
+    var newItem = $(this).closest(".definition_ready_container").find(".child_container").prepend(html);
 
     setTimeout(function () {
-       newItem.find(".new_task:last").trigger('click')
+       newItem.find(".new_task:first").trigger('click')
     }, 100);
 
 });
