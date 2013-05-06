@@ -74,6 +74,7 @@ if not "task_comment" in db.tables:
         Field("task_id", db.task, default=None),
         Field("text_", "string", length=256, default=None),
         Field("date_", "date", default=None),
+        Field("owner_comment", db.person, default=None),
         format='%(text)s',
         migrate="task_comment.table")
 
@@ -106,6 +107,7 @@ db.definition_ready.story_id.requires = IS_IN_DB(db, 'story.id', db.story._forma
 db.task.definition_ready_id.requires = IS_IN_DB(db, 'definition_ready.id', db.definition_ready._format)
 db.task.owner_task.requires = IS_IN_DB(db, 'person.id', db.person._format)
 db.task_comment.task_id.requires = IS_IN_DB(db, 'task.id', db.task._format)
+db.task_comment.owner_comment.requires = IS_IN_DB(db, 'person.id', db.person._format)
 db.user_relationship.auth_user_id.requires = IS_IN_DB(db, 'auth_user.id', db.auth_user._format)
 db.user_relationship.person_id.requires = IS_IN_DB(db, 'person.id', db.person._format)
 db.sharing.project_id.requires = IS_IN_DB(db, 'project.id', db.project._format)

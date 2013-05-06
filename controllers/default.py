@@ -279,15 +279,36 @@ def _card_modal():
                    (User_relationship.person_id == Task.owner_task) & \
                    (Sharing.person_id == Task.owner_task) ) \
                    .select(Task.ALL, User_relationship.auth_user_id, Sharing.role_id).first()
-        task_comments = db(Task_comment.task_id == request.vars.task_id).select().as_dict()
-        # print task.task.started
+
         if task:
             task.user_relationship.avatar = Gravatar(task.user_relationship.auth_user_id.email, size=120).thumb
-            task.user_relationship.member_name = "%s %s" %(task.user_relationship.auth_user_id.first_name,task.user_relationship.auth_user_id.last_name)
             task.task.started = g_blank_fulldate_check(task.task.started)
             task.sharing.role_name = task.sharing.role_id.name
-            task.comments = task_comments
+            task.user_relationship.member_name = "%s %s" \
+                            %(task.user_relationship.auth_user_id.first_name, \
+                            task.user_relationship.auth_user_id.last_name)
 
+
+            task_comments = db(Task_comment.task_id == request.vars.task_id).select(orderby=~Task_comment.id)
+            comments ={}
+            print task_comments
+            if task_comments:
+                for i in task_comments:
+                    person = db( (User_relationship.person_id == i.owner_comment) & \
+                           (Sharing.person_id == i.owner_comment) ) \
+                           .select(User_relationship.auth_user_id, Sharing.role_id).first()
+
+                    name = "%s %s" %(person.user_relationship.auth_user_id.first_name, \
+                                    person.user_relationship.auth_user_id.last_name)
+                    comments[i.id] = {
+                            "role":person.sharing.role_id.name,
+                            "avatar":Gravatar(person.user_relationship.auth_user_id.email, size=120).thumb,
+                            "name":name,
+                            "text":i.text_,
+                            "date":i.date_,
+                            }
+
+            task["comments"] = comments
             return task
 
         else:
@@ -303,13 +324,13 @@ def _card_comments():
     if request.vars.new_comment:
         person = db( (User_relationship.auth_user_id == auth.user.id) & \
                      (Sharing.project_id == request.vars.project_id) ).select().first()
-
         if person:
             from datetime import datetime
             Task_comment.insert(
                 task_id=request.vars.task_id,
                 text_=request.vars.new_comment,
-                date_=datetime.today().date()
+                date_=datetime.today().date(),
+                owner_comment=person.user_relationship.person_id
             )
             person.user_relationship.avatar = Gravatar(person.user_relationship.auth_user_id.email, size=50).thumb
             person.sharing.role_name = person.sharing.role_id.name
@@ -565,6 +586,22 @@ def board_ajax_tasks():
             started=datetime.strptime(request.vars.task_date,'%Y-%m-%d')
         )
         return True
+
+    else:
+        return False
+
+
+@auth.requires_login()
+@service.json
+def _update_task_date():
+    if request.vars.task_date:
+        from datetime import datetime
+        db(Task.id == request.vars.task_id).update(
+            started=datetime.strptime(request.vars.task_date,'%Y-%m-%d')
+        )
+        raw_date = request.vars.task_date.split("-")
+        date_formated = "%s/%s/%s" %(raw_date[2],raw_date[1],raw_date[0])
+        return date_formated
 
     else:
         return False

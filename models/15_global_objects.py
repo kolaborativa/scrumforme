@@ -19,7 +19,7 @@ def g_current_page(url, classe, empty=''):
         url_server = '%s/%s/%s' % (request.controller, request.function, request.args(0))
     else:
         url_server = '%s/%s' % (request.controller, request.function)
-    
+
     if url == url_server:
         return classe
     else:
@@ -32,7 +32,7 @@ def g_if_in_current_page(url, classe, anotherclass):
         url_server = '%s/%s/%s' % (request.controller, request.function, request.args(0))
     else:
         url_server = '%s/%s' % (request.controller, request.function)
-    
+
     if url == url_server:
         return classe
     else:
@@ -64,4 +64,4 @@ def g_blank_date_check(item):
 	else:
 		item=""
 		return item
-    
+

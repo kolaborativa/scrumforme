@@ -171,8 +171,12 @@
             {{ if request.function == "product_backlog": }}
             <script async defer src='{{=URL("static","js/product_backlog.js")}}'></script>
             {{ elif request.function == "board": }}
+            <script src='{{=URL("static","js/board.js")}}'></script>
+            <script src='{{=URL("static","js/board-editable.js")}}'></script>
+            <script src='{{=URL("static","js/board-card.js")}}'></script>
+            <script src='{{=URL("static","js/board-modal.js")}}'></script>
             <script src='{{=URL("static","js/jquery.livesearch.js")}}'></script>
-            <script async defer src='{{=URL("static","js/board.js")}}'></script>
+            <script src='{{=URL("static","js/board-livesearch.js")}}'></script>
 
             {{ elif request.function == "projects": }}
             <script async defer src='{{=URL("static","js/delete_project.js")}}'></script>

@@ -1,13 +1,13 @@
 $(document).ready(function(){
 
-	
+
 	// to find the largest index of the array
 	Array.max = function( array ){
 	  return Math.max.apply( Math, array );
 	};
-	
+
 	// === Sidebar navigation === //
-	
+
 	$('.submenu > a').click(function(e)
 	{
 		e.preventDefault();
@@ -23,22 +23,22 @@ $(document).ready(function(){
 				submenu.fadeOut(250);
 			}
 			li.removeClass('open');
-		} else 
+		} else
 		{
 			if(($(window).width() > 768) || ($(window).width() < 479)) {
-				submenus.slideUp();			
+				submenus.slideUp();
 				submenu.slideDown();
 			} else {
-				submenus.fadeOut(250);			
+				submenus.fadeOut(250);
 				submenu.fadeIn(250);
 			}
-			submenus_parents.removeClass('open');		
-			li.addClass('open');	
+			submenus_parents.removeClass('open');
+			li.addClass('open');
 		}
 	});
-	
+
 	var ul = $('#sidebar > ul');
-	
+
 	$('#sidebar > a').click(function(e)
 	{
 		e.preventDefault();
@@ -47,20 +47,20 @@ $(document).ready(function(){
 		{
 			sidebar.removeClass('open');
 			ul.slideUp(250);
-		} else 
+		} else
 		{
 			sidebar.addClass('open');
 			ul.slideDown(250);
 		}
 	});
-	
+
 	// === Resize window related === //
 	$(window).resize(function()
 	{
 		if($(window).width() > 479)
 		{
-			ul.css({'display':'block'});	
-			$('#content-header .btn-group').css({width:'auto'});		
+			ul.css({'display':'block'});
+			$('#content-header .btn-group').css({width:'auto'});
 		}
 		if($(window).width() < 479)
 		{
@@ -73,7 +73,7 @@ $(document).ready(function(){
             $('#content-header .btn-group').css({width:'auto'});
 		}
 	});
-	
+
 	if($(window).width() < 468)
 	{
 		ul.css({'display':'none'});
@@ -84,30 +84,30 @@ $(document).ready(function(){
 	   $('#content-header .btn-group').css({width:'auto'});
 		ul.css({'display':'block'});
 	}
-	
+
 	// === Tooltips === //
-	$('.tip').tooltip();	
-	$('.tip-left').tooltip({ placement: 'left' });	
-	$('.tip-right').tooltip({ placement: 'right' });	
-	$('.tip-top').tooltip({ placement: 'top' });	
-	$('.tip-bottom').tooltip({ placement: 'bottom' });	
-	
+	$('.tip').tooltip();
+	$('.tip-left').tooltip({ placement: 'left' });
+	$('.tip-right').tooltip({ placement: 'right' });
+	$('.tip-top').tooltip({ placement: 'top' });
+	$('.tip-bottom').tooltip({ placement: 'bottom' });
+
 	// === Search input typeahead === //
 	$('#search input[type=text]').typeahead({
 		source: ['Dashboard','Form elements','Common Elements','Validation','Wizard','Buttons','Icons','Interface elements','Support','Calendar','Gallery','Reports','Charts','Graphs','Widgets'],
 		items: 4
 	});
-	
+
 	// === Fixes the position of buttons group in content header and top user navigation === //
 	function fix_position()
 	{
 		var uwidth = $('#user-nav > ul').width();
 		$('#user-nav > ul').css({width:uwidth,'margin-left':'-' + uwidth / 2 + 'px'});
-        
+
         var cwidth = $('#content-header .btn-group').width();
         $('#content-header .btn-group').css({width:cwidth,'margin-left':'-' + uwidth / 2 + 'px'});
 	}
-	
+
 	// === Style switcher === //
 	// $('#style-switcher i').click(function()
 	// {
@@ -115,7 +115,7 @@ $(document).ready(function(){
 	// 	{
 	// 		$(this).parent().animate({marginRight:'-=220'});
 	// 		$(this).removeClass('open');
-	// 	} else 
+	// 	} else
 	// 	{
 	// 		$(this).parent().animate({marginRight:'+=220'});
 	// 		$(this).addClass('open');
@@ -123,7 +123,7 @@ $(document).ready(function(){
 	// 	$(this).toggleClass('icon-arrow-left');
 	// 	$(this).toggleClass('icon-arrow-right');
 	// });
-	
+
 	// $('#style-switcher a').click(function()
 	// {
 	// 	var style = $(this).attr('href').replace('#','');

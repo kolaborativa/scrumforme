@@ -1,5 +1,6 @@
-$(function() {
+var body_cursor = $("body");
 
+$(function() {
     // fixed status board
     var nav = $(".nav-status"),
         yOffset = nav.offset().top;
@@ -9,34 +10,6 @@ $(function() {
         } else {
            nav.removeClass("fixed-nav");
         }
-    });
-
-    // livesearch
-    $('input[name="livesearch"]').search('.task', function(on) {
-        var nofound = $('#nothingfound'),
-            td = $('.table td'),
-            ul = $('.table ul');
-
-        on.reset(function(ui) {
-            nofound.hide();
-            td.show();
-            ul.show();
-        });
-
-        on.empty(function() {
-            nofound.show();
-            td.hide();
-            ul.hide();
-        });
-
-        on.results(function(results) {
-            nofound.hide();
-            td.hide();
-            ul.hide();
-            $(results).closest("td").show();
-            $(results).closest("ul").show();
-            $(results).closest("tr").find("td").show();
-        });
     });
 
     // drag in drop
@@ -168,7 +141,7 @@ function removeTask(element) {
 
 
 // check status
-function statusAction(action, status, dom_element, dom_element2) {
+function statusAction(action, status, dom_element) {
     var message = $("#target_ajax").text();
     console.log(message)
 
@@ -176,17 +149,7 @@ function statusAction(action, status, dom_element, dom_element2) {
         if (message === 'True') {
             // for tasks without a set date
             var console_msg = "";
-            if (action === "date") {
-                var task_date = $(dom_element).closest('.icons_card').find('.calendar').val();
-                $(dom_element2).datepicker('hide').closest("#card_modal").find("#date_started").html(status);
-                console.log(dom_element2);
-                console.log(task_date);
-                if (task_date === undefined) {
-                    $(dom_element).closest('.icons_card').prepend('<span class="calendar"><i class="icon-calendar"></i></span>');
-                }
-                console_msg = "date status updated!"
-
-            } else if (action === "remove") {
+            if (action === "remove") {
                 $(dom_element).closest(".task_container").fadeOut("fast", function() {
                     $(this).remove()
                 });
@@ -233,7 +196,7 @@ function statusAction(action, status, dom_element, dom_element2) {
     } else {
         console.log("waiting for reply...")
         setTimeout(function() {
-            statusAction(action, status, dom_element, dom_element2)
+            statusAction(action, status, dom_element)
         }, 300);
     }
 }
@@ -244,7 +207,6 @@ $(document).on("click", ".expand_story", function() {
         // custom class to expand / collapse tables of the same story
         story_id = item.closest(".table").attr("data-storyid");
 
-    console.log(story_id)
     $(".story" + story_id).find(".item_container").fadeToggle("slow");
     item.find("i").toggleClass("icon-circle-arrow-down").toggleClass("icon-circle-arrow-up");
 });
@@ -264,267 +226,3 @@ $(document).on("click", ".create_task", function() {
 });
 
 
-// =============
-// PLUGIN HACKS
-// =============
-
-// modify style buttons
-$.fn.editableform.buttons =
-    '<button type="button" class="btn editable-cancel pull-left"><i class="icon-return-key"></i></button>' +
-    '<button type="submit" class="btn btn-success editable-submit pull-right"><i class="icon-ok icon-white"></i></button>';
-$.fn.editable.defaults.mode = 'inline';
-
-//apply editable to parent div
-$('.table').editable({
-    selector: 'a.editable',
-    url: url.createUpdateBacklogItens,
-    emptytext: msg.field_empty,
-    params: function(params) {
-        // sending parameters indicating whether the item is to upgrade or not
-        // send the new ID as param
-        var dbUpdate = $(this).attr("data-update"),
-            dbID = $(this).attr("data-pk"),
-            definitionready = $(this).closest('.item_container').attr('data-definitionready');
-
-        if (dbUpdate) {
-            params.dbUpdate = true;
-            params.dbID = dbID;
-        } else {
-            params.dbUpdate = false;
-            params.definitionready = definitionready;
-        }
-        return params;
-    },
-    validate: function(value) {
-        if (value === '') return msg.validation_error;
-    },
-    success: function(value, response) {
-        // get the coming new database ID and update in DOM
-        $(this).attr("data-pk", value.database_id);
-        // changes the status of the created item for item update
-        $(this).attr("data-update", true);
-    }
-});
-
-
-// =====
-// CARD
-// =====
-
-$(document).on("click", ".choose_owner", function() {
-    var item = $('.users_team'),
-        project_id = $("#project_info").attr("data-project"),
-        maskHeight = $(document).height(),
-        maskWidth = $(window).width();
-    // add mask
-    $('#mask').css({'width':maskWidth,'height':maskHeight});
-    $('#mask').show();
-
-    if ($(item).is(":visible")) {
-        $(item).fadeOut(); // hide button
-        $('#mask').hide();
-        return
-    } else {
-        $(this).closest(".task_container").find(".users_team").fadeIn();
-    }
-
-    // call team members ajax
-    teamMembers($(this));
-});
-
-$('#mask').click(function () {
-    $(this).hide();
-    var item = $('.users_team'),
-        target = $(event.target).closest(".users_team");
-
-    if (target.is(".users_team")) {
-        return
-    } else if ($(item).is(":visible")) {
-        $(item).fadeOut(); // hide button
-    }
-});
-
-function teamMembers(element) {
-    $(element).closest(".task_container").find(".users_team").remove();
-    var self = $(element),
-        html = "";
-
-    $(element).closest(".task_container").find(".card_container").append('<div class="users_team"><div class="loading"></div></div>');
-    // positioning
-    var offset = $(element).closest(".task_container").offset();
-
-    var teamPosition = $(".users_team").outerWidth() + offset.left,
-        teamPlacement = offset.left - $(".users_team").outerWidth() - 40;
-
-    if(teamPosition > $(window).width()) {
-        $(".users_team").css({left:teamPlacement,top:offset.top});
-
-    } else {
-        $(".users_team").css({lef:offset.left,top:offset.top});
-    }
-
-    $.getJSON(url.team_project,
-    function(data) {
-        if (data === "no_role" || data === "no_team") {
-            html += '<h5>' + msg[i] + '</h5>'
-            html += '<a href="' + url.team_page + '" class="btn btn-primary btn-mini">' + txt.team_page + '</a>';
-
-        } else {
-            for (i in data) {
-                    html += '<div class="media project_member" data-person="' + data[i]["person_id"] + '"><img class="user_card choose_owner pull-left" src="' + data[i]["avatar"] + '" data-owner="true"><div class="media-body"><h5 class="media-heading">' + data[i]["person_name"] + '</h5><h6>' + data[i]["person_role"] + '</h6></div></div>'
-            }
-            html += '<div class="media project_member" data-person="remove"><button class="project_member btn btn-nostyle user_card nonuser_card choose_owner pull-left"><i class="icon-remove"></i></button><div class="media-body"><h5 class="media-heading">Remove</h5></div></div>'
-        }
-        $(".loading").hide();
-        self.closest(".task_container").find(".users_team").append(html);
-    });
-}
-
-// edit owner task
-$(document).on("click", ".project_member", function() {
-    var task = $(this).closest(".card_container").find('.task_item'),
-        alredy_exist = task.attr('data-update'),
-        task_id = task.attr('data-pk'),
-        person_id = $(this).attr('data-person');
-
-    if(person_id === "remove") {
-        console.log(alredy_exist);
-        ajax(url.edit_owner_task + '?task_id=' + task_id + '&person_id=' + person_id, [''], 'target_ajax');
-        statusAction("remove_owner", "", $(this));
-        return
-    }
-
-    if (alredy_exist === undefined) {
-        alert(msg.task_no_exist)
-    } else {
-        ajax(url.edit_owner_task + '?task_id=' + task_id + '&person_id=' + person_id, [''], 'target_ajax');
-        statusAction("choose_owner", "", $(this));
-    }
-
-});
-
-// open modal
-$(document).on("click",".card-modal", function(){
-    $("#card_modal").remove();
-    var card_element = this,
-        task_id = $(this).closest(".card_container").find(".task_item").attr("data-pk"),
-        html = '<div id="card_modal" class="modal hide" data-task="'+task_id+'"><div class="row-fluid"><div id="modal_sidebar" class="span3"><div class="well sidebar-nav"><div id="member_modal"></div><ul class="nav nav-list"><li id="started_calendar"><a href="#">'+txt.activities+'<i class="icon-calendar"></i></a></li><li><a href="#">'+txt.attachments+'<i class="icon-paper-clip"></i></a></li><li><a href="#">'+txt.labels+'<i class="icon-tag"></i></a></li><li class="delete_item_modal"><a href="#">'+txt.delete_card+'<i class="icon-trash"></i></a></li></ul></div></div><div id="modal_content" class="span9"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button></div></div></div>'
-
-    $("body").append(html);
-    var modal_element = $("#card_modal"),
-        topModal = modal_element.offset().top + 100,
-        date_element = $('#started_calendar');
-
-    modal_element.css({"top":topModal}).prepend('<div class="loading"></div>');
-
-    // loading modal content
-    $.getJSON(url.card_modal+"?task_id="+task_id,
-    function(data) {
-            if (data === false) {
-                alert(msg.no_team)
-
-            } else {
-                console.log(data);
-                var modal_content = $("#modal_content");
-                html = '<div id="modal_title"><h3>'+data.task.title+'</h3><span id="date_started" class="color_light pull-right">'+data.task.started+'</span><span class="color_light pull-right">'+txt.started_in+':</span><div class="clearfix"></div></div>'
-                modal_content.append(html);
-                $("#member_modal").html('<img src="'+data.user_relationship.avatar+'" /> <p>'+data.user_relationship.member_name+'</p><p id="modal_role_name" class="color_light">'+data.sharing.role_name+'</p>');
-                date_element.attr('data-date',data.task.started);
-                modal_element.modal('show').attr("data-task",task_id);
-                // commentbox
-                var comment_box = '<div id="modal_comment_box"><form id="send_comment" accept-charset="UTF-8" action="" method="POST"><textarea class="span12" id="new_comment" name="new_comment" placeholder="'+txt.type_message+'" rows="3" required></textarea><br><button class="btn btn-success" type="submit">'+button.comment+'</button></form></div><div id="modal_comments"></div>'
-                modal_content.append(comment_box);
-                if(data.comments) {
-                    for(i in data.comments) {
-                        // console.log(data.comments[i]);
-                        $("#modal_comments").append('<hr /><div class="span12"><img class="pull-left" src="'+data.user_relationship.avatar+'" width="50" height="50"><div class="comment_content pull-left"><p><strong>'+data.user_relationship.member_name+'</strong><span class="color_light"> - '+data.sharing.role_name+'</span></p><p>'+data.comments[i]["text_"]+'</p></div></div><div class="clearfix"></div>');
-                    }
-                }
-            }
-        $(".loading").hide();
-        // prevent link default
-        var nav = modal_element.find(".nav");
-        nav.click(function(e){
-            e.preventDefault();
-        });
-        // remove task
-        nav.find(".delete_item_modal").click(function(e){
-            if (confirm(msg.confirm)) {
-                removeTask(card_element);
-                modal_element.modal('hide');
-            }
-        });
-        $("form#send_comment").submit(function(e){
-            e.preventDefault();
-            // call function
-            sendComments(this, project_data.project_id, task_id);
-        });
-        // call calendar plugin
-        calendar(date_element, card_element);
-    });
-});
-
-function calendar(date_element, card_element) {
-    // datepicker
-    var nowTemp = new Date(),
-        now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0),
-        sprint_started = new Date(date.sprint_started),
-        sprint_ended = new Date(date.sprint_started),
-        burndown = date.weeks * 7;
-
-    sprint_ended.setDate(sprint_ended.getDate() + burndown);
-
-    $(date_element).datepicker({
-        format: 'dd/mm/yyyy',
-        todayBtn: "linked",
-        todayHighlight: true,
-        autoclose: true,
-        startDate: sprint_started,
-        endDate: sprint_ended,
-        pickerPosition: "top-left",
-    }).on('changeDate', function(ev) {
-        // call the function
-        changeDate(ev.date, card_element, this);
-    });
-
-}
-
-// update date of card
-function changeDate(date, card_element, modal_element) {
-    var task = $(modal_element),
-        task_id = task.closest('#card_modal').attr('data-task');
-        task_date = date.format("UTC:yyyy-mm-dd");
-
-    ajax(url.changeAjaxItens + '?task_id=' + task_id + '&task_date=' + task_date, [''], 'target_ajax');
-    // test server callback
-    statusAction("date", date.format("UTC:dd/mm/yyyy"), card_element, modal_element);
-}
-
-function sendComments(element, project_id, task_id) {
-
-    var dom_element = $(element),
-        data_form = dom_element.serialize();
-
-    data_form += '&project_id=' + project_id + '&task_id=' + task_id;
-
-    // ajax(url.card_comments + '?' + datas_form, [''], 'target_ajax');
-    console.log(data_form);
-    $.post(url.card_comments,
-        data_form,
-        function(data, status) {
-            if(status === "success") {
-            console.log(data);
-            // empty textarea
-                dom_element.find("#new_comment").val('');
-                var comment = $('<hr /><div class="span12"><img class="pull-left" src="'+data.user_relationship.avatar+'" alt=""><div class="comment_content pull-left"><p><strong>'+data.user_relationship.member_name+'</strong><span class="color_light"> - '+data.sharing.role_name+'</span></p><p>'+data.comment+'</p></div></div><div class="clearfix"></div>').hide();
-                $("#modal_comments").prepend(comment);
-                comment.fadeIn('slow');
-
-            }
-      //data contains the JSON object
-      //textStatus contains the status: success, error, etc
-    }, "json");
-    // test server callback
-    // statusAction("date", date.format("UTC:dd/mm/yyyy"), card_element, modal_element);
-
-}

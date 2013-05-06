@@ -4,7 +4,7 @@ Scrumforme
 The **Scrumforme** meant to be easy, organized and accessible.
 Inspired by Agile methodology using Scrum and Kanban simplifying teamwork.
 
-Demo online [scrumforme.me](http://scrumforme.me/ "Scrumforme")
+Demo online [scrumfor.me](http://scrumfor.me/ "Scrumforme")
 
 ---------------------------------------
 

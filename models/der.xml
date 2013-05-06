@@ -218,7 +218,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="656" y="328" name="task">
+<table x="847" y="299" name="task">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -265,7 +265,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="961" y="369" name="task_comment">
+<table x="554" y="484" name="task_comment">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -282,6 +282,11 @@
 <row name="date_" null="1" autoincrement="0">
 <datatype>date</datatype>
 <default>NULL</default>
+</row>
+<row name="owner_comment" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>NULL</default>
+<relation table="person" row="id" />
 </row>
 <row name="_object_name" null="1" autoincrement="0">
 <datatype>integer</datatype>
@@ -318,7 +323,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="392" y="469" name="sharing">
+<table x="352" y="547" name="sharing">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -367,7 +372,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="512" y="304" name="burndown">
+<table x="603" y="316" name="burndown">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
