@@ -4,7 +4,7 @@ Scrumforme
 The **Scrumforme** meant to be easy, organized and accessible.
 Inspired by Agile methodology using Scrum and Kanban simplifying teamwork.
 
-Demo online [scrumforme.agenciax4.com.br](http://scrumforme.agenciax4.com.br/ "Scrumforme")
+Demo online [scrumforme.me](http://scrumforme.me/ "Scrumforme")
 
 ---------------------------------------
 
@@ -38,6 +38,7 @@ Installation
 
 *5.*  Insert the Role of users in db.role.
 
+```bash
 +---------+--------------+
 | role.id | role.name    |
 +---------+--------------+
@@ -46,7 +47,7 @@ Installation
 | 3       | Team         |
 | 4       | Guest        |
 +---------+--------------+
-
+```
 
 
 Changelog
