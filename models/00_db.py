@@ -53,11 +53,15 @@ auth.settings.extra_fields['auth_user']= [
 ## create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
 
+## imported variables
+from data_config import EMAIL_SERVER, CLIENT_EMAIL, CLIENT_LOGIN
+
 ## configure email
-mail = auth.settings.mailer
-mail.settings.server = 'logging' or 'smtp.gmail.com:587'
-mail.settings.sender = 'you@gmail.com'
-mail.settings.login = 'username:password'
+mail = Mail()
+mail.settings.server = EMAIL_SERVER
+mail.settings.sender = CLIENT_EMAIL
+mail.settings.login = CLIENT_LOGIN
+auth.settings.mailer = mail
 
 ## configure auth policy
 auth.settings.registration_requires_verification = False
