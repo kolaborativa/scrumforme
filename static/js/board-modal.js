@@ -87,7 +87,7 @@ $(document).on("click",".card-modal", function(){
                         var key = keys[i];
                         var value = data.comments[key];
                         /* do something with key & value here */
-                        $("#modal_comments").append('<hr /><div class="span12"><img class="pull-left" src="'+value["avatar"]+'" width="50" height="50"><div class="comment_content pull-left"><p><strong>'+value["name"]+'</strong><span class="color_light"> - '+value["role"]+'</span></p><p>'+value["text"]+'</p></div></div><div class="clearfix"></div>');
+                        $("#modal_comments").append('<hr /><div class="span12"><img class="pull-left" src="'+value["avatar"]+'" width="50" height="50"><div class="comment_content pull-left"><p><strong>'+value["name"]+'</strong><span class="color_light"> - '+value["role"]+'</span></p><p>'+value["text"]+'</p></div></div><ul class="comment_buttons color_light"><li>'+value["date"]+'</li><li class="edit_comment">'+button.edit+'</li><li class="delete_comment">'+button.delete+'</li></ul><div class="clearfix"></div>');
                     }
                 } // end comments
             } // end ajax
@@ -184,7 +184,7 @@ function sendComments(element, project_id, task_id) {
             console.log(data);
             // empty textarea
                 dom_element.find("#new_comment").val('');
-                var comment = $('<hr /><div class="span12"><img class="pull-left" src="'+data.user_relationship.avatar+'" alt=""><div class="comment_content pull-left"><p><strong>'+data.user_relationship.member_name+'</strong><span class="color_light"> - '+data.sharing.role_name+'</span></p><p>'+data.comment+'</p></div></div><div class="clearfix"></div>').hide();
+                var comment = $('<hr /><div class="span12"><img class="pull-left" src="'+data.user_relationship.avatar+'" alt=""><div class="comment_content pull-left"><p><strong>'+data.user_relationship.member_name+'</strong><span class="color_light"> - '+data.sharing.role_name+'</span></p><p>'+data.comment+'</p></div></div><ul class="comment_buttons color_light"><li>'+data.date_comment+'</li><li class="edit_comment">'+button.edit+'</li><li class="delete_comment">'+button.delete+'</li></ul><div class="clearfix"></div>').hide();
                 $("#modal_comments").prepend(comment);
                 comment.fadeIn('slow');
 

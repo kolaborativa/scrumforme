@@ -514,6 +514,7 @@ table, th, td {
     background-image: -webkit-gradient(linear,center top,center bottom,from(#fff4d8),to(#fce8c6));
     background-image: -moz-linear-gradient(center top,#fff4d8,#fce8c6);
     background-color: #fff5e3;
+    padding-bottom: 20px;
 }
 
 #card_modal #modal_sidebar {
@@ -584,6 +585,28 @@ table, th, td {
 
 .comment_content {
     margin-left: 5px;
+}
+
+#modal_comments hr {
+    margin: 10px 0;
+}
+
+.comment_buttons {
+    float: right;
+}
+
+.comment_buttons li {
+    list-style: none;
+    float: left;
+    margin-left: 10px;
+}
+
+.delete_comment, .edit_comment {
+    cursor: pointer;
+}
+
+.delete_comment:hover, .edit_comment:hover {
+    color: #000;
 }
 
 

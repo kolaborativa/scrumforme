@@ -289,7 +289,7 @@ def _card_modal():
                             task.user_relationship.auth_user_id.last_name)
 
 
-            task_comments = db(Task_comment.task_id == request.vars.task_id).select(orderby=~Task_comment.id)
+            task_comments = db(Task_comment.task_id == request.vars.task_id).select()
             comments ={}
             print task_comments
             if task_comments:
@@ -305,7 +305,7 @@ def _card_modal():
                             "avatar":Gravatar(person.user_relationship.auth_user_id.email, size=120).thumb,
                             "name":name,
                             "text":i.text_,
-                            "date":i.date_,
+                            "date":g_blank_fulldate_check(i.date_),
                             }
 
             task["comments"] = comments
@@ -336,6 +336,7 @@ def _card_comments():
             person.sharing.role_name = person.sharing.role_id.name
             person.user_relationship.member_name = "%s %s" %(person.user_relationship.auth_user_id.first_name,person.user_relationship.auth_user_id.last_name)
             person.comment = request.vars.new_comment
+            person.date_comment = g_blank_fulldate_check(datetime.today().date())
 
         return person
 
