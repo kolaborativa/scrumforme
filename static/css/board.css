@@ -547,6 +547,7 @@ table, th, td {
     background-image: -webkit-gradient(linear,center top,center bottom,from(rgb(224, 202, 146)),to(#fce8c6));
     background-image: -moz-linear-gradient(center top,rgb(224, 202, 146),#fce8c6);
     background-color: rgb(224, 202, 146);
+    border: none;
 }
 
 #card_modal button.close {

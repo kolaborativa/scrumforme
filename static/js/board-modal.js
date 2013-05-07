@@ -62,7 +62,7 @@ $(document).on("click",".card-modal", function(){
                 html += '<div id="modal_title"><h3>'+data.task.title+'</h3><span id="date_started" class="color_light pull-right">'+data.task.started+'</span>';
                 if(data.task.started!=="") {
                     html += '<span class="color_light pull-right">'+txt.started_in+':</span>';
-                    // insert date
+                    // insert data date
                     date_element.attr('data-date',data.task.started);
                 }
                 html += '<div class="clearfix"></div></div>';
@@ -147,7 +147,7 @@ function changeDate(date, card_element, modal_element) {
     var task = $(modal_element),
         task_id = task.closest('#card_modal').attr('data-task');
         task_date = date.format("UTC:yyyy-mm-dd"),
-        querystring = '?task_id=' + task_id + '&task_date=' + task_date;
+        querystring = 'task_id=' + task_id + '&task_date=' + task_date;
 
     body_cursor.css({"cursor":"wait"});
     $.post(url.update_task_date,
@@ -157,9 +157,13 @@ function changeDate(date, card_element, modal_element) {
                 var card = $(card_element),
                     task_date = card.closest('.icons_card').find('.calendar').val();
 
-                task.datepicker('hide').closest("#card_modal").find("#date_started").html(data);
                 if (task_date === undefined) {
+                    var date_html = '<span id="date_started" class="color_light pull-right">'+data+'</span>';
+                    date_html += '<span class="color_light pull-right">'+txt.started_in+':</span>';
+                    task.datepicker('hide').closest("#card_modal").find("#date_started").html(date_html);
                     card.closest('.icons_card').prepend('<span class="calendar"><i class="icon-calendar"></i></span>');
+                } else {
+                    task.datepicker('hide').closest("#card_modal").find("#date_started").html(data);
                 }
                 body_cursor.css({"cursor":"auto"});
                 console.log("date status updated!");
@@ -175,9 +179,8 @@ function sendComments(element, project_id, task_id) {
 
     data_form += '&project_id=' + project_id + '&task_id=' + task_id;
 
-    // ajax(url.card_comments + '?' + datas_form, [''], 'target_ajax');
     console.log(data_form);
-    $.post(url.card_comments,
+    $.post(url.card_new_comment,
         data_form,
         function(data, status) {
             if(status === "success") {

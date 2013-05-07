@@ -291,7 +291,6 @@ def _card_modal():
 
             task_comments = db(Task_comment.task_id == request.vars.task_id).select()
             comments ={}
-            print task_comments
             if task_comments:
                 for i in task_comments:
                     person = db( (User_relationship.person_id == i.owner_comment) & \
@@ -320,7 +319,7 @@ def _card_modal():
 
 @auth.requires_login()
 @service.json
-def _card_comments():
+def _card_new_comment():
     if request.vars.new_comment:
         person = db( (User_relationship.auth_user_id == auth.user.id) & \
                      (Sharing.project_id == request.vars.project_id) ).select().first()
@@ -595,7 +594,7 @@ def board_ajax_tasks():
 @auth.requires_login()
 @service.json
 def _update_task_date():
-    if request.vars.task_date:
+    if request.vars.task_id:
         from datetime import datetime
         db(Task.id == request.vars.task_id).update(
             started=datetime.strptime(request.vars.task_date,'%Y-%m-%d')
