@@ -1,6 +1,11 @@
-html, body, .container, .content {
+html, body {
     height: 100%;
     background-color: #3b3b3b;
+}
+
+header {
+    width: 70%!important;
+    margin: 0  auto;
 }
 
 h1 {
@@ -33,54 +38,39 @@ h1 {
     font-weight: bold;
 }
 
-.container, .content {
-    position: relative;
-}
-
-.proper-content {
-    padding-top: 40px; /* >= navbar height */
-    margin: 0 auto;
-    max-width: 700px;
-}
-
-.wrapper {
+.container {
     min-height: 100%;
     height: auto !important;
     height: 100%;
-    margin: 0 auto -96px; /* same as the footer */
+    margin: 0 auto -100px; /* the bottom margin is the negative value of the footer's height */
 }
-
-.push {
-    height: 96px; /* same as the footer */
-}
-.footer-wrapper {
-    position: relative;
-    height: 96px;
-}
-.footer-wrapper img {
-    /*width: 432px;*/
-    margin: 0 auto;
-    display: block;
-}
-
 
 .content-center {
     color: #fff;
     text-align: center;
-    padding-top: 100px;
+    padding-top: 96px;
 }
 
 .content-center h2{
-font-weight:normal;
-font-family: 'Quicksand', sans-serif;
-text-transform:uppercase;
-font-size:60px;
-line-height:55px;
+    font-weight:normal;
+    font-family: 'Quicksand', sans-serif;
+    text-transform:uppercase;
+    font-size:60px;
+    line-height:55px;
 }
 
 .content-center p{
-font-size:18px;
-padding:10px;
-line-height:25px;
-font-family:'Oswald',Arial,Helvetica,sans-serif;
+    font-size:18px;
+    padding:10px;
+    line-height:25px;
+    font-family:'Oswald',Arial,Helvetica,sans-serif;
+}
+
+footer, .push {
+    height: 96px; /* .push must be the same height as .footer */
+}
+
+footer img {
+    margin: 0 auto;
+    display: block;
 }

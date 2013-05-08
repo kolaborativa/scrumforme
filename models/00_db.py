@@ -39,7 +39,7 @@ response.generic_patterns = ['*'] if request.is_local else []
 ## (more options discussed in gluon/tools.py)
 #########################################################################
 
-from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
+from gluon.tools import Auth, Crud, Service, PluginManager, prettydate, Mail
 auth = Auth(db)
 crud, service, plugins = Crud(db), Service(), PluginManager()
 

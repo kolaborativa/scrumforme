@@ -76,78 +76,63 @@
 </head>
 
 <body>
-<a href="https://github.com/gustavox4ids/scrumforme" target="_blank" class="navbar-fixed-top"><img style="-webkit-user-select: none; position: absolute; top: 0; right: 0; border: 0; z-index:9999;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" width="127" height="127"></a>
+<a href="https://github.com/gustavox4ids/scrumforme" target="_blank" class="navbar-fixed-top"><img style="-webkit-user-select: none; position: absolute; top: 0; left: 0; border: 0; z-index:9999;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" width="127" height="127"></a>
 
     <div class="container">
-      <div class="content">
+      <header class="row-fluid">
+        <a href="{{=URL('index')}}" class="pull-left"  alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
 
-        <div class="wrapper">
-          <div class="proper-content">
+        {{ if not auth.is_logged_in(): }}
+          <ul id="login" class="pull-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">{{=T("Sign in")}}<b class="caret"></b></a>
+              <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                {{=form.custom.begin}}
+                    <!-- email -->
+                    {{ form.elements('#auth_user_email')[0] ['_placeholder'] = T("Email") }}
+                    {{ form.elements('#auth_user_email')[0] ['_type'] = "email" }}
+                    {{ form.elements('#auth_user_email')[0] ['_required'] = "required" }}
+                    {{ form.elements('#auth_user_email')[0] ['_style'] = "margin-bottom: 15px;" }}
+                    {{=form.custom.widget.email}}
 
-            <div class="row masthead">
-              <a href="{{=URL('index')}}" class="pull-left"  alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
-
-              {{ if not auth.is_logged_in(): }}
-                <ul class="pull-right">
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">{{=T("Sign in")}}<b class="caret"></b></a>
-                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-                      {{=form.custom.begin}}
-                          <!-- email -->
-                          {{ form.elements('#auth_user_email')[0] ['_placeholder'] = T("Email") }}
-                          {{ form.elements('#auth_user_email')[0] ['_type'] = "email" }}
-                          {{ form.elements('#auth_user_email')[0] ['_required'] = "required" }}
-                          {{ form.elements('#auth_user_email')[0] ['_style'] = "margin-bottom: 15px;" }}
-                          {{=form.custom.widget.email}}
-
-                          <!-- senha -->
-                          {{ form.elements('#auth_user_password')[0] ['_placeholder'] = T("Password") }}
-                          {{ form.elements('#auth_user_password')[0] ['_required'] = "required" }}
-                          {{ form.elements('#auth_user_password')[0] ['_style'] = "margin-bottom: 15px;" }}
-                          {{=form.custom.widget.password}}
-                          <input style="float: left; margin-right: 10px;" type="checkbox" name="remember-me" id="remember-me" value="1">
-                          <label class="string optional" for="user_remember_me"> {{=T("Remember me (for 30 days)")}}</label>
-                          <input class="btn btn-primary btn-block" type="submit" id="sign-in" value='{{=T("Sign in")}}'>
-                          <!-- <label style="text-align:center;margin-top:5px">{{=T("or")}}</label>
-                          <input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Sign In with Google">
-                          <input class="btn btn-primary btn-block" type="button" id="sign-in-twitter" value="Sign In with Twitter"> -->
-                          <br>
-                          <div class="right">
-                              <a id="reset_password" href="{{=URL(f='user',args='request_reset_password')}}">Esqueceu a senha?</a>
-                          </div>
-                      {{=form.custom.end}}
+                    <!-- senha -->
+                    {{ form.elements('#auth_user_password')[0] ['_placeholder'] = T("Password") }}
+                    {{ form.elements('#auth_user_password')[0] ['_required'] = "required" }}
+                    {{ form.elements('#auth_user_password')[0] ['_style'] = "margin-bottom: 15px;" }}
+                    {{=form.custom.widget.password}}
+                    <input style="float: left; margin-right: 10px;" type="checkbox" name="remember-me" id="remember-me" value="1">
+                    <label class="string optional" for="user_remember_me"> {{=T("Remember me (for 30 days)")}}</label>
+                    <input class="btn btn-primary btn-block" type="submit" id="sign-in" value='{{=T("Sign in")}}'>
+                    <!-- <label style="text-align:center;margin-top:5px">{{=T("or")}}</label>
+                    <input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Sign In with Google">
+                    <input class="btn btn-primary btn-block" type="button" id="sign-in-twitter" value="Sign In with Twitter"> -->
+                    <br>
+                    <div class="right">
+                        <a id="reset_password" href="{{=URL(f='user',args='request_reset_password')}}">Esqueceu a senha?</a>
                     </div>
-                  </li>
-                </ul>
-              {{pass}}
-            </div>
-            <div class="content-center">
-                  <h2>{{=T("Coming Soon")}}</h2>
-                  <p>{{=T("The Scrumforme meant to be easy, organized and accessible.")}}</p>
-                  <p>{{=T("Inspired by Agile methodology using Scrum and Kanban simplifying teamwork.")}}</p>
-                  {{ if not auth.is_logged_in(): }}
-                  <!-- <a href='{{=URL(c="default", f="user", args="register")}}' id="register" class="btn btn-large btn-primary">{{=T("Sign up")}}</a> -->
+                {{=form.custom.end}}
+              </div>
+            </li>
+          </ul>
+        {{pass}}
+      </header>
+      <section class="content-center">
+            <h2>{{=T("Coming Soon")}}</h2>
+            <p>{{=T("The Scrumforme meant to be easy, organized and accessible.")}}</p>
+            <p>{{=T("Inspired by Agile methodology using Scrum and Kanban simplifying teamwork.")}}</p>
+            {{ if not auth.is_logged_in(): }}
+            <!-- <a href='{{=URL(c="default", f="user", args="register")}}' id="register" class="btn btn-large btn-primary">{{=T("Sign up")}}</a> -->
 
-                  <a id="register" class="btn btn-large btn-primary lightbox-31161179003645">{{=T("Join the waiting list for the BETA")}}</a>
-                  {{else:}}
-                  <a href='{{=URL("projects")}}' id="register" class="btn btn-large btn-primary">{{=T("My Projects")}}</a>
-                  {{pass}}
-             </div>
-
-
-          </div><!-- /.proper-content -->
-
-          <div class="push"></div>
-
-        </div><!-- /.wrapper -->
-
-        <div class="footer-wrapper">
-          <footer>
-            <a href='http://agenciax4.com.br' id="agenciax4-logo" alt="AgenciaX4 Logo" title="AgenciaX4 Logo"><img src='{{=URL("static","img/agenciax4-signature.png")}}' alt="AgenciaX4 Logo" title="AgenciaX4 Logo"></a>
-          </footer>
-        </div>
-      </div>
-    </div>
+            <a id="register" class="btn btn-large btn-primary lightbox-31161179003645">{{=T("Join the waiting list for the BETA")}}</a>
+            {{else:}}
+            <a href='{{=URL("projects")}}' id="register" class="btn btn-large btn-primary">{{=T("My Projects")}}</a>
+            {{pass}}
+       </section>
+       <div class="push"></div>
+  </div>
+    <footer>
+      <a href='http://agenciax4.com.br' id="agenciax4-logo" alt="AgenciaX4 Logo" title="AgenciaX4 Logo"><img src='{{=URL("static","img/agenciax4-signature.png")}}' alt="AgenciaX4 Logo" title="AgenciaX4 Logo"></a>
+    </footer>
 
 <script src='{{=URL("static","js/bootstrap-custom.min.js")}}'></script>
 <script>
