@@ -333,21 +333,22 @@ table, th, td {
 .comment {
     display: inline;
     position: relative;
-    left: 4px;
+    left: 5px;
 }
 
 .comment i {
     font-size: 22px;
     position: relative;
     top: 5px;
+    margin: 0px!important;
 }
 
-.comment span {
-    font-size: 12px;
+.number_comment {
+    font-size: 10px;
     color: #fff;
     position: relative;
-    right: 18px;
-    bottom: 2px;
+    right: 17px;
+    bottom: 8px;
     font-weight: bold;
 }
 

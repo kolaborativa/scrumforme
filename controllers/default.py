@@ -194,6 +194,11 @@ def board():
                     for df in definition_ready[row]:
                         tasks[df.id] = db(Task.definition_ready_id == df.id).select()
 
+                card_comments = {}
+                for row in tasks:
+                    for task in tasks[row]:
+                        card_comments[task["id"]] = db(Task_comment.task_id == task["id"]).select()
+
                 team_members = db( (db.user_relationship.person_id==Sharing.person_id) & (Sharing.project_id == project_id) ).select(Sharing.ALL, db.user_relationship.auth_user_id)
 
                 return dict(project=project,
@@ -203,6 +208,7 @@ def board():
                             stories=stories,
                             definition_ready=definition_ready,
                             tasks=tasks,
+                            card_comments=card_comments,
                             sprint=sprint
                             )
             else:
@@ -325,19 +331,32 @@ def _card_new_comment():
                      (Sharing.project_id == request.vars.project_id) ).select().first()
         if person:
             from datetime import datetime
-            Task_comment.insert(
-                task_id=request.vars.task_id,
-                text_=request.vars.new_comment,
-                date_=datetime.today().date(),
-                owner_comment=person.user_relationship.person_id
-            )
+            new_comment_id = Task_comment.insert(
+                                task_id=request.vars.task_id,
+                                text_=request.vars.new_comment,
+                                date_=datetime.today().date(),
+                                owner_comment=person.user_relationship.person_id
+                            )
             person.user_relationship.avatar = Gravatar(person.user_relationship.auth_user_id.email, size=50).thumb
             person.sharing.role_name = person.sharing.role_id.name
             person.user_relationship.member_name = "%s %s" %(person.user_relationship.auth_user_id.first_name,person.user_relationship.auth_user_id.last_name)
             person.comment = request.vars.new_comment
             person.date_comment = g_blank_fulldate_check(datetime.today().date())
+            person.new_comment_id = new_comment_id
 
         return person
+
+    else:
+        return False
+
+
+@auth.requires_login()
+@service.json
+def _card_delete_comment():
+    if request.vars.task_comment_id and not request.vars.task_comment_id == "undefined":
+        db(Task_comment.id == request.vars.task_comment_id).delete()
+
+        return True
 
     else:
         return False

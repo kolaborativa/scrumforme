@@ -1,5 +1,3 @@
-var body_cursor = $("body");
-
 $(function() {
     // fixed status board
     var nav = $(".nav-status"),

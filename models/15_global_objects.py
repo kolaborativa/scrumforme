@@ -65,3 +65,10 @@ def g_blank_date_check(item):
 		item=""
 		return item
 
+
+def g_format_number(number):
+    '''retorna o numero formatado com 0 antes do numero se for menor que 10'''
+    if number < 10:
+        number = " %s" % number
+
+    return number
