@@ -44,7 +44,7 @@
                     modal_element.modal('show').attr("data-task", task_id);
 
                     // commentbox
-                    var comment_box = '<div id="modal_comment_box"><form id="send_comment" accept-charset="UTF-8" action="" method="POST"><textarea class="span12" id="new_comment" name="new_comment" placeholder="' + txt.type_message + '" rows="3" required></textarea><br><button class="btn btn-success" type="submit">' + button.comment + '</button></form></div><div id="modal_comments"></div>';
+                    var comment_box = '<div id="modal_comment_box"><form id="send_comment" accept-charset="UTF-8" action="" method="POST"><textarea class="span12" id="new_comment" name="new_comment" placeholder="' + txt.type_message + '" rows="2" required></textarea><br><button class="btn btn-success" type="submit">' + button.comment + '</button></form></div><div id="modal_comments"></div>';
                     modal_content.append(comment_box);
 
                     // start comments
@@ -52,14 +52,17 @@
                         // console.log(data.comments);
                         var keys = Object.keys(data.comments), // or loop over the object to get the array
                             key = "",
-                            value = "";
+                            value = "",
+                            new_text = "";
                         keys.reverse(); // maybe use custom reverse, to change direction use .sort()
                         // keys now will be in wanted order
                         for (var i = 0; i < keys.length; i++ ) { // now lets iterate in reverse order
                             key = keys[i];
                             value = data.comments[key];
-                            /* do something with key & value here */
-                            $("#modal_comments").append('<div class="card_comments" data-commentid="' + key + '"><hr /><img class="pull-left" src="' + value["avatar"] + '" width="50" height="50"><div class="comment_content pull-left"><p><strong>' + value["name"] + '</strong><span class="color_light"> - ' + value["role"] + '</span></p><p>' + value["text"] + '</p></div><div class="clearfix"></div><ul class="comment_buttons color_light"><li>' + value["date"] + '</li><li class="edit_comment">' + button.edit + '</li><li class="delete_comment">' + button.delete + '</li></ul><div class="clearfix"></div></div>');
+
+                            new_text = urlize(value["text"], {nofollow: true, autoescape: true});
+
+                            $("#modal_comments").append('<div class="card_comments" data-commentid="' + key + '"><hr /><img class="pull-left" src="' + value["avatar"] + '" width="50" height="50"><div class="comment_content pull-left"><p><strong>' + value["name"] + '</strong><span class="color_light"> - ' + value["role"] + '</span></p><p>' + new_text + '</p></div><div class="clearfix"></div><ul class="comment_buttons color_light"><li>' + value["date"] + '</li><li class="edit_comment">' + button.edit + '</li><li class="delete_comment">' + button.delete + '</li></ul><div class="clearfix"></div></div>');
                         } // end loop
                     } // end comments
                 } // data via ajax

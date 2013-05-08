@@ -586,6 +586,7 @@ table, th, td {
 }
 
 .comment_content {
+    width: 90%;
     margin-left: 5px;
 }
 

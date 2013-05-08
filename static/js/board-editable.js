@@ -13,6 +13,7 @@ $('.table').editable({
     selector: 'a.editable',
     url: url.createUpdateBacklogItens,
     emptytext: msg.field_empty,
+    rows: 1,
     params: function(params) {
         // sending parameters indicating whether the item is to upgrade or not
         // send the new ID as param

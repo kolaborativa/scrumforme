@@ -6,6 +6,24 @@ $(document).ready(function(){
 	  return Math.max.apply( Math, array );
 	};
 
+	// autogrow textarea
+    $(document).on("keyup", "textarea", function(e) {
+    	autoGrownTextarea(this, e)
+    });
+
+	// autogrow click link to call textarea
+    $(document).on("click", "a.editable", function(e) {
+    	autoGrownTextarea(this, e);
+    });
+
+    function autoGrownTextarea (link, e) {
+    	var element = $(link).parent().find("textarea"),
+    		new_size = element.prop('scrollHeight') + parseFloat(element.css("borderTopWidth")) + parseFloat(element.css("borderBottomWidth"));
+        while(element.outerHeight() < new_size) {
+            element.height(element.height()+1);
+        };
+    }
+
 	// === Sidebar navigation === //
 
 	$('.submenu > a').click(function(e)

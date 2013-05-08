@@ -62,9 +62,10 @@ $.fn.editable.defaults.mode = 'inline';
 
 //apply editable to parent div
 $('.project-items').editable({
-  selector: 'a',
+  selector: 'a.editable',
   url: url.createUpdateBacklogItens,
   emptytext: msg.field_empty,
+  rows: 1,
   params: function(params) {
       // sending parameters indicating whether the item is to upgrade or not
       // send the new ID as param
@@ -112,7 +113,7 @@ $('.project-items').editable({
     $(this).attr("data-pk", value.database_id);
     // changes the status of the created item for item update
     $(this).attr("data-update", true);
-  }
+  },
 });
 
 // by clicking the button to add Story
