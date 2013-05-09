@@ -363,6 +363,20 @@ def _card_delete_comment():
 
 
 @auth.requires_login()
+def _delete_all_comments(task_id):
+    if task_id:
+        all_comments = db(Task_comment.task_id == task_id).select()
+
+        for comment in all_comments:
+            db(Task_comment.id == comment.id).delete()
+
+        return True
+
+    else:
+        return False
+
+
+@auth.requires_login()
 def launch_sprint():
     from datetime import datetime
 
@@ -487,15 +501,22 @@ def remove_itens():
     if request.vars:
         if request.vars.name == "task":
             db(Task.id == request.vars.pk).delete()
+            # remove all comments of this task
+            _delete_all_comments(request.vars.pk)
             # updates the status of story
             _test_story_completed(request.vars.definitionready, "remove")
 
         if request.vars.name == "definition_ready":
+            # delete definition of ready
             db(Definition_ready.id == request.vars.pk).delete()
-            all_definitions_data = db(Definition_ready.id == request.vars.pk).select()
+            all_tasks = db(Task.definition_ready_id == request.vars.pk).select()
 
-            for df in all_definitions_data:
-                db(Task.definition_ready_id == df.id).delete()
+            for task in all_tasks:
+                # remove all tasks
+                db(Task.id == task.id).delete()
+                # remove all comments of this task
+                _delete_all_comments(task.id)
+            # updates the status of story
 
         elif request.vars.name == "story":
             db(Story.id == request.vars.pk).delete()
@@ -503,7 +524,11 @@ def remove_itens():
 
             for df in all_definitions_data:
                 db(Definition_ready.id == df.id).delete()
+                task = db(Task.definition_ready_id == df.id).select().first()
+                # remove task
                 db(Task.definition_ready_id == df.id).delete()
+                # remove all comments of this task
+                _delete_all_comments(task.id)
 
         return True
     else:

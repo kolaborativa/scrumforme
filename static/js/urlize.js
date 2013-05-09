@@ -259,7 +259,7 @@ function urlize(text, options) {
             url = htmlescape(url);
             trimmed = htmlescape(trimmed);
         }
-        middle = '<a href="' + url + '"' + nofollow_attr + target_attr + ' target="_blank">' + trimmed + '</a>';
+        middle = '<a href="' + url + '"' + nofollow_attr + target_attr + '>' + trimmed + '</a>';
         words[i] = lead + middle + trail;
         } else {
         if (safe_input) {

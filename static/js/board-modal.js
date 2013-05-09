@@ -53,16 +53,16 @@
                         var keys = Object.keys(data.comments), // or loop over the object to get the array
                             key = "",
                             value = "",
-                            new_text = "";
+                            new_comment = "";
                         keys.reverse(); // maybe use custom reverse, to change direction use .sort()
                         // keys now will be in wanted order
                         for (var i = 0; i < keys.length; i++ ) { // now lets iterate in reverse order
                             key = keys[i];
                             value = data.comments[key];
 
-                            new_text = urlize(value["text"], {nofollow: true, autoescape: true});
+                            new_comment = urlize(value["text"], {nofollow: true, autoescape: true, target: "_blank"});
 
-                            $("#modal_comments").append('<div class="card_comments" data-commentid="' + key + '"><hr /><img class="pull-left" src="' + value["avatar"] + '" width="50" height="50"><div class="comment_content pull-left"><p><strong>' + value["name"] + '</strong><span class="color_light"> - ' + value["role"] + '</span></p><p>' + new_text + '</p></div><div class="clearfix"></div><ul class="comment_buttons color_light"><li>' + value["date"] + '</li><li class="edit_comment">' + button.edit + '</li><li class="delete_comment">' + button.delete + '</li></ul><div class="clearfix"></div></div>');
+                            $("#modal_comments").append('<div class="card_comments" data-commentid="' + key + '"><hr /><img class="pull-left" src="' + value["avatar"] + '" width="50" height="50"><div class="comment_content pull-left"><p><strong>' + value["name"] + '</strong><span class="color_light"> - ' + value["role"] + '</span></p><p>' + new_comment + '</p></div><div class="clearfix"></div><ul class="comment_buttons color_light"><li>' + value["date"] + '</li><li class="edit_comment">' + button.edit + '</li><li class="delete_comment">' + button.delete + '</li></ul><div class="clearfix"></div></div>');
                         } // end loop
                     } // end comments
                 } // data via ajax
@@ -164,7 +164,8 @@
                 if(status === "success") {
                     var element_comment = $(card_element).closest(".icons_card").find(".number_comment"),
                         number_comments = parseInt(element_comment.text()) + 1,
-                        comment = $('<div class="card_comments" data-commentid="' + data.new_comment_id + '"><hr /><img class="pull-left" src="' + data.user_relationship.avatar + '" alt=""><div class="comment_content pull-left"><p><strong>' + data.user_relationship.member_name + '</strong><span class="color_light"> - ' + data.sharing.role_name + '</span></p><p>' + data.comment + '</p></div><div class="clearfix"></div><ul class="comment_buttons color_light"><li>' + data.date_comment + '</li><li class="edit_comment">' + button.edit + '</li><li class="delete_comment">' + button.delete + '</li></ul><div class="clearfix"></div></div>').hide();
+                        new_comment = urlize(data.comment, {nofollow: true, autoescape: true, target: "_blank"}),
+                        comment = $('<div class="card_comments" data-commentid="' + data.new_comment_id + '"><hr /><img class="pull-left" src="' + data.user_relationship.avatar + '" alt=""><div class="comment_content pull-left"><p><strong>' + data.user_relationship.member_name + '</strong><span class="color_light"> - ' + data.sharing.role_name + '</span></p><p>' + new_comment + '</p></div><div class="clearfix"></div><ul class="comment_buttons color_light"><li>' + data.date_comment + '</li><li class="edit_comment">' + button.edit + '</li><li class="delete_comment">' + button.delete + '</li></ul><div class="clearfix"></div></div>').hide();
                     // insert in dom
                     $("#modal_comments").prepend(comment);
                     // show comment

@@ -267,6 +267,7 @@ $(document).on("click", ".delete_item", function(){
 function removeItem(pk,name,object,action) {
 
     if(name === "task") {
+        // for delete tasks only
         var definitionready = $(object).closest('.definition_ready_container').find(".definition_ready_card").attr('data-pk');
         ajax(url.removeBacklogItens+'?pk='+pk+'&name='+name+'&definitionready='+definitionready+'', [''], 'target_ajax');
 

@@ -7,7 +7,6 @@
 <!--[if IE 9]><html class="ie9 ie-lte9 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{=T.accepted_language or 'en'}}"> <!--<![endif]-->
 <head>
-<title>{{=response.title or request.application}}</title>
   <!--[if !HTML5]>
       <meta http-equiv="X-UA-Compatible" content="IE=edge{{=not request.is_local and ',chrome=1' or ''}}">
   <![endif]-->
@@ -16,13 +15,17 @@
        (even in intranet) & Chrome Frame
        Remove this if you use the .htaccess -->
 
+  <title>Scrumforme - Ferramenta Scrum e Kanban simplificando o trabalho em equipe.</title>
+  <meta name="description" content="Aprenda a usar uma ferramenta de metodologia Agile para gestão de projetos em equipe Scrum." />
+  <meta name="keywords" content="scrum, kanban, metodologia scrum, equipe scrum, scrum online, scrum board, scrum tool, scrum master, agile, sprint, backlog, burndown, lean." />
+
   <meta charset="utf-8" />
 
   <!-- http://dev.w3.org/html5/markup/meta.name.html -->
   <meta name="application-name" content="{{=request.application}}" />
 
   <!-- Speaking of Google, don't forget to set your site up:
-       http://google.com/webmasters -->
+     http://google.com/webmasters -->
   <meta name="google-site-verification" content="" />
 
   <!--  Mobile Viewport Fix
