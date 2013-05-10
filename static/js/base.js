@@ -7,17 +7,17 @@ $(document).ready(function(){
 	};
 
 	// autogrow textarea
-    $(document).on("keyup", "textarea", function(e) {
-    	autoGrownTextarea(this, e)
+    $(document).on("keyup", "textarea", function() {
+    	autoGrownTextarea(this);
     });
 
 	// autogrow click link to call textarea
-    $(document).on("click", "a.editable", function(e) {
-    	autoGrownTextarea(this, e);
+    $(document).on("click", ".editable", function() {
+    	autoGrownTextarea(this);
     });
 
-    function autoGrownTextarea (link, e) {
-    	var element = $(link).parent().find("textarea"),
+    function autoGrownTextarea (parentElement) {
+    	var element = $(parentElement).parent().find("textarea"),
     		new_size = element.prop('scrollHeight') + parseFloat(element.css("borderTopWidth")) + parseFloat(element.css("borderBottomWidth"));
         while(element.outerHeight() < new_size) {
             element.height(element.height()+1);

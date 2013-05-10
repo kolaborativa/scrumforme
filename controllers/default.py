@@ -325,7 +325,7 @@ def _card_modal():
 
 @auth.requires_login()
 @service.json
-def _card_new_comment():
+def _card_new_comment_or_update():
     if request.vars.new_comment:
         person = db( (User_relationship.auth_user_id == auth.user.id) & \
                      (Sharing.project_id == request.vars.project_id) ).select().first()
@@ -345,6 +345,13 @@ def _card_new_comment():
             person.new_comment_id = new_comment_id
 
         return person
+
+    elif request.vars.update_comment:
+        db(Task_comment.id == request.vars.comment_id).update(
+            text_=request.vars.update_comment,
+        )
+
+        return request.vars.update_comment
 
     else:
         return False

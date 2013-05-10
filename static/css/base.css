@@ -78,6 +78,21 @@ div.flash #closeflash {
 	margin-left: 15px;
 }
 
+.loading_item {
+    position:fixed;
+    padding: 20px;
+    background-color: #282828;
+    color: rgb(231, 231, 231);
+    display: none;
+    border-radius: 1px;
+    box-shadow: 0px 0px 20px #000;
+    top:50%;
+    left:50%;
+    margin-left: -100px;
+    margin-top: -50px;
+    z-index: 999999;
+}
+
 #projects {
 position: relative;
 top: 10px;

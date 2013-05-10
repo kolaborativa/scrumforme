@@ -65,9 +65,14 @@
 
     </head>
 
-
     <body class='{{=g_current_page("default/board/%s" %request.args(0),"close_sidebar")}}'>
         <div class="flash">{{=response.flash or ''}}</div>
+        <div class="loading_item">
+            <h4>
+            <img src='{{=URL("static", "img/ajax-loader.gif")}}'>
+            Carregando...</h4>
+        </div>
+
         <div id="header">
             <a href="{{=URL('index')}}" alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
             {{ if auth.is_logged_in(): }}
@@ -106,7 +111,6 @@
                 </div>
             {{ pass }}
         </div>
-
 
         <div id="sidebar" class="close_sidebar">
             <a href="#" class="visible-phone"><i class="icon-th-list"></i> {{=T('Menu')}}</a>

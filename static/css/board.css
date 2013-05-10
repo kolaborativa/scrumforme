@@ -592,16 +592,23 @@ table, th, td {
 
 #modal_comments hr {
     margin: 10px 0;
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #ccc;
 }
 
 .comment_buttons {
     float: right;
+    font-size: 12px;
 }
 
 .comment_buttons li {
     list-style: none;
     float: left;
     margin-left: 10px;
+}
+
+.cancel-edit {
+    margin-left: 20px;
 }
 
 .delete_comment, .edit_comment {

@@ -259,6 +259,7 @@
 'Role': 'Role',
 'Rows in Table': 'Linhas na tabela',
 'Rows selected': 'Linhas selecionadas',
+'Save': 'Salvar',
 'Save model as...': 'Save model as...',
 'Save profile': 'Save profile',
 'Scrum Master': 'Scrum Master',
