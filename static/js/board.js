@@ -1,21 +1,27 @@
 $(function() {
     // fixed status board
-    var nav = $(".nav-status"),
-        yOffset = nav.offset().top;
+    // var nav = $(".nav-status"),
+    //     yOffset = nav.offset().top;
 
-    positionHeight(nav, yOffset);
+    // positionHeight(nav, yOffset);
 
-    function positionHeight(element, height) {
-        var jElement = $(element),
-            windowElement = $(window);
-        windowElement.scroll(function() {
-            if (windowElement.scrollTop() > height) {
-                jElement.addClass("fixed-nav");
-            } else {
-                jElement.removeClass("fixed-nav");
-            }
-        });
-    }
+    // function positionHeight(element, height) {
+    //     var jElement = $(element),
+    //         windowElement = $(window);
+    //     windowElement.scroll(function() {
+    //         if (windowElement.scrollTop() > height) {
+    //             jElement.addClass("fixed-nav");
+    //         } else {
+    //             jElement.removeClass("fixed-nav");
+    //         }
+    //     });
+    // }
+    // var teste = $('.nav-status').offset()
+    // console.log($('.nav-status').offset().left)
+    $('.nav-status').floatfixed({
+    scrollOffsetTopx:100,
+    leftx: $('.nav-status').offset().left,
+    });
 
     // drag in drop
     $(".column_task").sortable({

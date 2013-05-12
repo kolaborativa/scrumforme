@@ -52,6 +52,7 @@
         <link rel="stylesheet" href='{{=URL("static","css/product_backlog.css")}}' />
         {{ elif request.function == "board": }}
         <link rel="stylesheet" href='{{=URL("static","css/datepicker.css")}}' />
+        <link rel="stylesheet" href='{{=URL("static","css/floatfixed.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/board.css")}}' />
         {{ elif request.function == "statistics": }}
         <link rel="stylesheet" href='{{=URL("static","css/statistics.css")}}' />
@@ -184,6 +185,7 @@
             <script src='{{=URL("static","js/board-modal.js")}}'></script>
             <script src='{{=URL("static","js/jquery.livesearch.js")}}'></script>
             <script src='{{=URL("static","js/board-livesearch.js")}}'></script>
+            <script src='{{=URL("static","js/floatfixed.js")}}'></script>
 
             {{ elif request.function == "projects": }}
             <script async defer src='{{=URL("static","js/delete_project.js")}}'></script>

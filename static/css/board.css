@@ -26,13 +26,7 @@
     background-color: rgb(231, 231, 231);
 }
 
-.fixed-nav{
-    z-index: 9999;
-    position: fixed;
-    top: 0;
-    width: 100%;
-} /* this make our menu fixed top */
-
+/* this customize css of our menu fixed top */
 .fixed-nav .column {
     width: 19.3%;
 }
@@ -135,6 +129,7 @@ table, th, td {
 
 .table td{
     width: 20%;
+    word-break: break-word;
 }
 
 .no-th {
