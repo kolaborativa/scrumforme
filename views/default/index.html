@@ -103,8 +103,8 @@
                     {{ form.elements('#auth_user_password')[0] ['_required'] = "required" }}
                     {{ form.elements('#auth_user_password')[0] ['_style'] = "margin-bottom: 15px;" }}
                     {{=form.custom.widget.password}}
-                    <input style="float: left; margin-right: 10px;" type="checkbox" name="remember-me" id="remember-me" value="1">
-                    <label class="string optional" for="user_remember_me"> {{=T("Remember me (for 30 days)")}}</label>
+                    <input style="float: left; margin-right: 10px; position: relative; bottom: 3px;" class="checkbox" id="auth_user_remember" name="remember" type="checkbox" value="on" />
+                    <label for="auth_user_remember">{{=T("Remember me (for 30 days)")}}</label>
                     <input class="btn btn-primary btn-block" type="submit" id="sign-in" value='{{=T("Sign in")}}'>
                     <!-- <label style="text-align:center;margin-top:5px">{{=T("or")}}</label>
                     <input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Sign In with Google">

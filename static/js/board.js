@@ -2,13 +2,20 @@ $(function() {
     // fixed status board
     var nav = $(".nav-status"),
         yOffset = nav.offset().top;
-    $(window).scroll(function() {
-        if ($(window).scrollTop() > yOffset) {
-            nav.addClass("fixed-nav");
-        } else {
-           nav.removeClass("fixed-nav");
-        }
-    });
+
+    positionHeight(nav, yOffset);
+
+    function positionHeight(element, height) {
+        var jElement = $(element),
+            windowElement = $(window);
+        windowElement.scroll(function() {
+            if (windowElement.scrollTop() > height) {
+                jElement.addClass("fixed-nav");
+            } else {
+                jElement.removeClass("fixed-nav");
+            }
+        });
+    }
 
     // drag in drop
     $(".column_task").sortable({
