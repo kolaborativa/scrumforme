@@ -1,9 +1,3 @@
-
-/* 
-#WebMaster : Felipe Campos 
-#Version : 1.0
-*/
-
 #back-top {
   background-color: #222236;
   background-color: rgba(0, 0, 0, 0.3);
@@ -39,8 +33,10 @@
   color: #fff;
   text-decoration: none;
 }
+.standardClass:after{
+  content: '^';
+}
 
-.icon-chevron-up:before {
-content: "^";
+.fixed-nav{
 
 }

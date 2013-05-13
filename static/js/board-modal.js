@@ -21,6 +21,7 @@
         $.getJSON(url.card_modal + "?task_id=" + task_id,
             function (data) {
                 if (data === false) {
+                    $(".loading_item").fadeOut("fast");
                     alert(msg.no_team);
 
                 } else {
