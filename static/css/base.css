@@ -334,13 +334,10 @@ float: left;
     background-image: -o-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
     background-image: linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
     border-top-left-radius: 10px;
-    min-height: 80px; /*FIX: Use MIN-height... Allow header to get bigger for larger content (such as the h1) */
-    /*position: absolute; FIX: This breaks layout significantly when spelled correctly*/
-    /*padding-top: 5px;*/
-    /*FIX: Allows h1 to not have to be absolutely positioned and control it's parent's height*/
+    min-height: 36px; /*FIX: Use MIN-height... Allow header to get bigger for larger content (such as the h1) */
     width: 100%;
-    /*margin-top: -38px;*/
     z-index: 20;
+    border-bottom: 1px solid rgb(189, 189, 189);
 }
 
 #content-header h1 {
@@ -369,18 +366,50 @@ float: left;
     margin-top:-50px; /*FIX: Line up with the header correctly on > tablet size (will be removed below)*/
 }
 
-#header-name {
-    line-height: 20px;
+#sub-header-content {
+    background-color: #fff;
+
+}
+
+#project_info, #sprint_info {
+    padding: 5px 0px;
+    background-color: #444444;
+    background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#FFFFFF), to(#EEEEEE));
+    background-image: -webkit-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background-image: -moz-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background-image: -ms-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background-image: -o-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    background-image: linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    border: 1px solid rgb(189, 189, 189);
+    min-height: 90px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 #project_info {
-    margin-left: 5%;
 }
 
-#project_info:first-letter {
-    text-transform: capitalize;
+#project_info strong {
+    text-transform: uppercase;
+    background-color: #ccc;
+    padding: 5px 10px;
 }
 
+#project_info a {
+    color: #444444;
+}
+
+#project_info a:hover {
+    text-decoration: underline;
+    color: #000;
+}
+
+#project_content {
+    padding: 10px;
+}
+
+#sprint_info {
+}
 
 /******/
 #content-header .btn-group .btn {
@@ -1617,10 +1646,6 @@ html, body, .container, .content {
 	position: fixed!important;
 }
 
-#sub-header-content {
-	background-color: #444444;
-}
-
 .icon-comment-custom,.icon-config-custom,
 .icon-logout-custom,.icon-search-custom,.icon-trash-custom{
   background: url(../img/images1.png) no-repeat top left;
@@ -1879,4 +1904,19 @@ html, body, .container, .content {
 	.dataTables_filter, .dataTables_paginate {
 		text-align: center;
 	}
+}
+
+@media (min-width: 1200px) {
+
+    #sub-header-content .span6 {
+        width: 49.6%;
+    }
+
+    #sub-header-content [class*="span"]:first-child {
+        margin-left: 0px;
+    }
+
+    #sub-header-content [class*="span"] {
+        margin-left: 0.8%;
+    }
 }

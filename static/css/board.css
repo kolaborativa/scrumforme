@@ -24,6 +24,8 @@
     width: 100%;
     text-align: center;
     background-color: rgb(231, 231, 231);
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 
 /* this customize css of our menu fixed top */
@@ -33,6 +35,10 @@
 
 .nav-status, .definition_ready_container {
     display: table;
+}
+
+#df-collumn {
+    background-color: #fff;
 }
 
 .column {
@@ -56,32 +62,19 @@ ul {
     display: none;
 }
 
-#info_content {
-    padding: 20px 0 10px 0px;
-    background-color: #fff;
-}
-
-.info-column {
-    /*display: table-cell;*/
-}
-
-#project_info {
-    margin-left: 22px;
-    /*padding-left: 20px;*/
-    /*width:40%;*/
-}
-
-#time_sprint {
-    /*width:40%;*/
-    position: relative;
-    bottom: 5px;
+#sprint_name {
+    text-align: center;
+    font-size: 16px;
+    text-transform: capitalize;
+    font-weight: bold;
 }
 
 #clock {
-    width:62%;
-    padding: 10px 0;
+    width:40%;
+    padding: 5px 0;
     background-color: #444444;
     color: #fff;
+    margin: 5px 5px 5px 10px;
 }
 
 #clock i {
@@ -102,17 +95,50 @@ ul {
 }
 
 #live_search {
-    float: right;
+    width: 53%;
+    margin-left: 2%;
 }
 
 #live_search input {
-    margin: 10px 0px 0px 0px;
+    width: 95%;
+    margin: 5px 0px 0px 0px;
+    border: 2px solid rgb(179, 179, 179);
+    border-radius: 0px;
+    background: url(../img/serach_icon_gray.png) no-repeat top left;
+    background-position: 98% 5px;
+}
+
+#expand_close_btns {
+    margin-top: 10px;
+}
+
+#expand_close_btns button {
+    width: 49%;
+    text-align: left;
+    border: 2px solid rgb(179, 179, 179);
+    border-radius: 0px;
+    background-color: rgb(228, 223, 223);
+}
+
+#expand_close_btns i {
+    float: right;
+    font-size: 18px;
+    position: relative;
+    top: 3px;
+}
+
+.close_all_stories {
+    margin-left: 2%;
 }
 
 #nothingfound {
-    position: absolute;
     display: none;
     color: red;
+}
+
+#stories_content {
+    background-color: #fff;
+    padding-top: 5px;
 }
 
 .story_container, .definition_ready_container {

@@ -55,29 +55,24 @@
 <div id="target_ajax"></div>
 <div id="mask"></div>
 
-<div id="sub-header-content">
-    <div id="content-header">
-        <div id="breadcrumb">
-            <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
-            <a href="#" class="current">{{=T('Board')}}</a>
-        </div>
-        <div id="header-name" class="pull-left">
-            <h1>{{=project.name}}</h1>
-        </div>
-        <div id="sprint-name" class="span5 pull-right">
-            <h4><span>{{=sprint.name}}</span> - {{=sprint.weeks}} {{=T('Weeks')}}</h5>
-        </div>
-        <div class="clearfix"></div>
+<div id="content-header">
+    <div id="breadcrumb">
+        <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
+        <a href="#" class="current"><i class="icon-list-alt"></i>{{=T('Board')}}</a>
     </div>
 </div>
 
-<div id="info_content" class="row-fluid">
-    <div id="project_info" data-project='{{=request.args(0)}}' class="span4">
-        <p>{{=project.description}}</p>
-        <p>{{=g_blank_fulldate_check(project.date_)}} <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
+<div id="sub-header-content" class="row-fluid">
+    <div id="project_info" class="span6">
+        <div id="project_content">
+            <p><strong>{{=project.name}}</strong> - {{=project.description}}</p>
+            <p><a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
+        </div>
     </div>
-    <div id="time_sprint" class="span4">
-        <div id="clock">
+    <div id="sprint_info" class="span6">
+        <div id="clock" class="pull-left">
+            <p id="sprint_name">{{=sprint.name}}</p>
+            <div class="clearfix"></div>
             <i class="icon-time pull-left"></i>
             <div class="pull-left">
                 {{from datetime import timedelta}}
@@ -85,17 +80,29 @@
                 <p>{{=T('Started in')}}: <strong>{{=g_blank_fulldate_check(sprint.started)}}</strong></p>
                 <p>{{=T('Estimated for')}}: <strong>{{=g_blank_fulldate_check(estimated_date)}}</strong></p>
             </div>
-            <div class="clearfix"></div>
+            <!-- <div class="clearfix"></div> -->
         </div>
-    </div>
-    <div id="live_search" class="span3">
-        <input type="text" name="livesearch" placeholder='{{=T("Search on Sprint")}}' alt='{{=T("Search on Sprint")}}' title='{{=T("Search on Sprint")}}'>
-        <p id="nothingfound">{{=T("No name match your search!")}}</p>
+        <div id="live_search" class="pull-left">
+            <input type="text" name="livesearch" placeholder='{{=T("Make a search in tasks")}}'>
+            <p id="nothingfound">{{=T("No name match your search!")}}</p>
+            <div id="expand_close_btns">
+                <button class="btn btn-nostyle expand_all_stories pull-left" alt='{{=T("Open Stories")}}' title='{{=T("Open Stories")}}'>
+                    {{=T("Open Stories")}}
+                    <i class="icon-circle-arrow-down"></i>
+                </button>
+                <button class="btn btn-nostyle close_all_stories pull-left" alt='{{=T("Close Stories")}}' title='{{=T("Close Stories")}}'>
+                    {{=T("Close Stories")}}
+                    <i class="icon-circle-arrow-up"></i>
+                </button>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
     </div>
 </div>
 
 <div class="nav-status">
-    <div class="column">
+    <div id="df-collumn" class="column">
         <h4>{{=T('Definition of Ready')}}</h4>
     </div>
     <div class="column">
@@ -112,6 +119,7 @@
     </div>
 </div>
 
+<div id="stories_content">
 {{definition_ids =[]}}
 {{for story in stories:}}
     {{count = 0}}
@@ -294,4 +302,4 @@
         </tr>
     </table>
 {{pass}}
-
+</div>

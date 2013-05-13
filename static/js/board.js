@@ -1,7 +1,8 @@
 $(function() {
     // fixed status board
     $('.nav-status').floatfixed({
-        scrollOffsetTopx:100,
+        // scrollOffsetTopx: 100,
+        scrollTopSpeed: 700,
         leftx: $('.nav-status').offset().left,
         scrollClass: "icon-chevron-up icon-white"
     });
@@ -203,6 +204,26 @@ $(document).on("click", ".expand_story", function() {
 
     $(".story" + story_id).find(".item_container").fadeToggle("slow");
     item.find("i").toggleClass("icon-circle-arrow-down").toggleClass("icon-circle-arrow-up");
+});
+
+// click close all stories
+$(".close_all_stories").click(function() {
+    var element = $(".item_container");
+
+    if (element.is(":visible")) {
+        element.fadeOut("slow");
+        $(".expand_story").find("i").removeClass("icon-circle-arrow-up").addClass("icon-circle-arrow-down");
+    }
+});
+
+// expand close all stories
+$(".expand_all_stories").click(function() {
+    var element = $(".item_container");
+
+    if (element.is(":hidden")) {
+        element.fadeIn("slow");
+        $(".expand_story").find("i").removeClass("icon-circle-arrow-down").addClass("icon-circle-arrow-up");
+    }
 });
 
 // by clicking the button to add Task
