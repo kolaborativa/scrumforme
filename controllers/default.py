@@ -180,14 +180,6 @@ def board():
                         session.message = T("Put all the story points before going to the Board")
                         redirect(URL(f='product_backlog', args=project_id))
                     definition_ready[story.id] = db(Definition_ready.story_id == story.id).select()
-                    # requires story points for story on Sprint
-                    # if story.sprint_id:
-                        # least_one_story = True
-                        # requires story points for story on Sprint
-
-                # if not least_one_story:
-                #     session.message = T("Move at least one story in the column of the Sprint")
-                #     redirect(URL(f='product_backlog', args=project_id))
 
                 tasks = {}
                 for row in definition_ready:
@@ -202,6 +194,7 @@ def board():
                 team_members = db( (db.user_relationship.person_id==Sharing.person_id) & (Sharing.project_id == project_id) ).select(Sharing.ALL, db.user_relationship.auth_user_id)
 
                 return dict(project=project,
+                            person_id=person_id,
                             person_projects=person_projects,
                             shared_with_person=shared_with_person,
                             team_members=team_members,
@@ -311,6 +304,7 @@ def _card_modal():
                             "name":name,
                             "text":i.text_,
                             "date":g_blank_fulldate_check(i.date_),
+                            "person_id":i.owner_comment,
                             }
 
             task["comments"] = comments
@@ -347,11 +341,18 @@ def _card_new_comment_or_update():
         return person
 
     elif request.vars.update_comment:
-        db(Task_comment.id == request.vars.comment_id).update(
-            text_=request.vars.update_comment,
-        )
+        comment = db(Task_comment.id == request.vars.comment_id).select().first()
 
-        return request.vars.update_comment
+        if int(comment.owner_comment) == int(request.vars.person_id):
+            db(Task_comment.id == request.vars.comment_id).update(
+                text_=request.vars.update_comment,
+            )
+
+            return request.vars.update_comment
+
+        else:
+            return False
+
 
     else:
         return False
@@ -361,9 +362,15 @@ def _card_new_comment_or_update():
 @service.json
 def _card_delete_comment():
     if request.vars.task_comment_id and not request.vars.task_comment_id == "undefined":
-        db(Task_comment.id == request.vars.task_comment_id).delete()
+        comment = db(Task_comment.id == request.vars.task_comment_id).select().first()
 
-        return True
+        if int(comment.owner_comment) == int(request.vars.person_id):
+            db(Task_comment.id == request.vars.task_comment_id).delete()
+
+            return True
+
+        else:
+            return False
 
     else:
         return False

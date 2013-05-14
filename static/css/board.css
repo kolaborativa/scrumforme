@@ -120,6 +120,10 @@ ul {
     background-color: rgb(228, 223, 223);
 }
 
+#expand_close_btns button:hover {
+    background-color: rgb(202, 202, 202);
+}
+
 #expand_close_btns i {
     float: right;
     font-size: 18px;
@@ -137,8 +141,7 @@ ul {
 }
 
 #stories_content {
-    background-color: #fff;
-    padding-top: 5px;
+    border-top: 5px solid #fff;
 }
 
 .story_container, .definition_ready_container {
@@ -150,7 +153,23 @@ table, th, td {
 }
 
 .table{
-    background-color: #fff;
+    background-color: rgb(243, 242, 242);
+    margin-bottom: 0px;
+}
+
+.table th{
+    background-color: rgb(187, 187, 187);
+    background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(rgb(243, 243, 243)), to(rgb(187, 187, 187)));
+    background-image: -webkit-linear-gradient(top, rgb(243, 243, 243) 0%, rgb(187, 187, 187) 100%);
+    background-image: -moz-linear-gradient(top, rgb(243, 243, 243) 0%, rgb(187, 187, 187) 100%);
+    background-image: -ms-linear-gradient(top, rgb(243, 243, 243) 0%, rgb(187, 187, 187) 100%);
+    background-image: -o-linear-gradient(top, rgb(243, 243, 243) 0%, rgb(187, 187, 187) 100%);
+    background-image: -linear-gradient(top, #rgb(243, 243, 243) 0%, rgb(187, 187, 187) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgb(243, 243, 243)', endColorstr='rgb(187, 187, 187)',GradientType=0 );
+}
+
+.table_container:not(:first-child) {
+    margin-top: 10px;
 }
 
 .table td{
@@ -158,13 +177,22 @@ table, th, td {
     word-break: break-word;
 }
 
+.table td:first-child{
+    background-color: #fff;
+    box-shadow: 1px 0px 1px #444;
+}
+
 .no-th {
-    margin-top: -20px;
+    /*margin-top: -20px;*/
 }
 
 /*zebra rows*/
 .no-th:nth-child(even) {
-    background-color: rgb(243, 242, 242);
+    background-color: rgb(243, 242, 242)!important;
+}
+
+.no-th:nth-child(odd) {
+    background-color: #fff!important;
 }
 
 .task_container {
@@ -221,10 +249,26 @@ table, th, td {
 
 .benefit {
     width: 8%;
+    background-color: rgb(133, 133, 133)!important;
+    color: #fff!important;
+    text-align: center;
+}
+
+.benefit::-webkit-input-placeholder {
+  color: #fff;
+}
+.benefit:-moz-placeholder {
+  color: #fff;
+}
+.benefit:-ms-input-placeholder {
+  color: #fff;
 }
 
 .story_points {
     width: 8%;
+    background-color: rgb(133, 133, 133)!important;
+    color: #fff!important;
+    text-align: center;
 }
 
 .expand_story {
@@ -234,26 +278,28 @@ table, th, td {
 }
 
 .definition_ready_title {
-    width: 90%;
+    width: 85%;
+    margin-top: 15px;
+    padding: 0 15px;
 }
 
-.vertical {
+.create_task {
+    width: 100%;
+    border-radius: 0px;
+    background-color: rgb(202, 202, 202);
+}
+
+.create_task i {
     float: right;
+    font-size: 18px;
     position: relative;
-    left: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 10px 0px;
-    -moz-transform: rotate(270deg);  /* FF3.5+ */
-    -o-transform: rotate(270deg);  /* Opera 10.5 */
-    -webkit-transform: rotate(270deg);  /* Saf3.1+, Chrome */
-    filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=3);  /* IE6,IE7 */
-    -ms-filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); /* IE8 */
+    top: 3px;
 }
 
-.vertical:hover {
-    color: #08b;
+.create_task:hover {
+    background-color: rgb(228, 223, 223);
 }
+
 /*
 ============
  MOVE ITEMS

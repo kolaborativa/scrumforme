@@ -14,6 +14,7 @@
 'Actual': 'Atual',
 'Add': 'Adicionar',
 'Add new team member': 'Adicionar novo membro ao time',
+'Add Task': 'Adicionar Tarefa',
 'Administrative interface': 'Interface administrativa',
 'Administrative Interface': 'Administrative Interface',
 'Ajax Recipes': 'Ajax Recipes',

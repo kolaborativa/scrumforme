@@ -63,16 +63,22 @@
                         var keys = Object.keys(data.comments), // or loop over the object to get the array
                             key = "",
                             value = "",
-                            new_comment = "";
+                            new_comment = "",
+                            person_owner_comment = "";
                         keys.reverse(); // maybe use custom reverse, to change direction use .sort()
                         // keys now will be in wanted order
                         for (var i = 0; i < keys.length; i++ ) { // now lets iterate in reverse order
                             key = keys[i];
                             value = data.comments[key];
-
+                            // owner comment
+                            if (info.person_id == value["person_id"]) {
+                                person_owner_comment = '</li><li class="edit_comment">' + button.edit + '</li><li class="delete_comment">' + button.delete + '</li>';
+                            } else {
+                                person_owner_comment = "";
+                            }
+                            // url parse to link
                             new_comment = urlize(value["text"], {nofollow: true, autoescape: true, target: "_blank"});
-
-                            $("#modal_comments").append('<div class="card_comments" data-commentid="' + key + '"><hr /><img class="pull-left" src="' + value["avatar"] + '" width="50" height="50"><div class="comment_content pull-left"><p><strong>' + value["name"] + '</strong><span class="color_light"> - ' + value["role"] + '</span></p><p class="the_comment">' + new_comment + '</p></div><div class="clearfix"></div><ul class="comment_buttons color_light"><li>' + value["date"] + '</li><li class="edit_comment">' + button.edit + '</li><li class="delete_comment">' + button.delete + '</li></ul><div class="clearfix"></div></div>');
+                            $("#modal_comments").append('<div class="card_comments" data-commentid="' + key + '"><hr /><img class="pull-left" src="' + value["avatar"] + '" width="50" height="50"><div class="comment_content pull-left"><p><strong>' + value["name"] + '</strong><span class="color_light"> - ' + value["role"] + '</span></p><p class="the_comment">' + new_comment + '</p></div><div class="clearfix"></div><ul class="comment_buttons color_light"><li>' + value["date"] + person_owner_comment + '</ul><div class="clearfix"></div></div>');
                         } // end loop
                     } // end comments
                 } // data via ajax
@@ -98,7 +104,7 @@
                 $("form#send_comment").submit(function(e){
                     e.preventDefault();
                     // call function
-                    sendComments(this, project_data.project_id, task_id, card_element);
+                    sendComments(this, info.project_id, task_id, card_element);
                 });
 
                 // call calendar plugin
@@ -200,7 +206,7 @@
 
     function deleteCardComment(element) {
         var comment = $(element).closest(".card_comments"),
-            send_data = '&task_comment_id=' + comment.attr("data-commentid");
+            send_data = '&task_comment_id=' + comment.attr("data-commentid") + '&person_id=' + info.person_id;
 
         $.post(url.card_delete_comment,
             send_data,
@@ -254,19 +260,24 @@
             card_element = body.data('card_element'),
             comment_id = form.closest(".card_comments").attr("data-commentid");
 
-        data_form += '&project_id=' + project_data.project_id + '&comment_id=' + comment_id;
+        data_form += '&project_id=' + info.project_id + '&comment_id=' + comment_id + "&person_id=" + info.person_id;
         $.post(url.card_new_comment_or_update,
             data_form,
             function(data, status) {
                 if(status === "success") {
-                    var comment = urlize(data, {nofollow: true, autoescape: true, target: "_blank"}),
-                        comment_element = $('<p class="the_comment">' + comment + '</p>');
+                    if(data) {
+                        var comment = urlize(data, {nofollow: true, autoescape: true, target: "_blank"}),
+                            comment_element = $('<p class="the_comment">' + comment + '</p>');
 
-                    // replace a edited comment
-                    form.fadeOut('fast',function(){
-                        form.replaceWith(comment_element);
-                        comment_element.hide().fadeIn('fast');
-                    });
+                        // replace a edited comment
+                        form.fadeOut('fast',function(){
+                            form.replaceWith(comment_element);
+                            comment_element.hide().fadeIn('fast');
+                        });
+
+                    } else if(data === false) {
+                        alert(msg.remove_error)
+                    }
                 }
           //data contains the JSON object
         }, "json");

@@ -36,36 +36,26 @@
         };
 </script>
 
+<div id="target_ajax"></div>
+
 <div class="row-fluid">
+    <div id="content-header">
+        <div id="breadcrumb">
+            <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
+            <a href='{{=URL("projects")}}' title="{{=T('Go to')}} {{=T('Projects')}}" class="tip-bottom"><i class="icon icon-th"></i> {{=T('Projects')}}</a>
+            <a href="#" class="current">{{=T('Product Backlog')}}</a>
+        </div>
+    </div>
     <div id="backlog" class="span6">
-        <div id="sub-header-content">
-            <div id="content-header">
-                <div id="breadcrumb">
-                    <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
-                    <a href='{{=URL("projects")}}' title="{{=T('Go to')}} {{=T('Projects')}}" class="tip-bottom"><i class="icon icon-th"></i> {{=T('Projects')}}</a>
-                    <a href="#" class="current">{{=T('Product Backlog')}}</a>
+        <div id="sub-header-content" class="row-fluid">
+            <div id="project_info" class="span11">
+                <div id="project_content">
+                    <p><strong>{{=project.name}}</strong> - {{=project.description}}</p>
+                    <p><a href="{{=project.url}}" target="_blank">{{=project.url}}</a> <button id="create_story" class="btn btn-primary pull-right">{{=T('Create Story')}}</button></p>
                 </div>
-                <div id="header-name" class="pull-left">
-                    <h1>{{=project.name}}</h1>
-                </div>
-                <div class="clearfix"></div>
             </div>
         </div>
-
-        <div id="target_ajax"></div>
-
         <div class="container-fluid">
-            <div id="backlog_story_buttons" class="row-fluid">
-                <div id="project_info" class="span8 pull-left">
-                    <p>{{=project.description}}</p>
-                    <p>{{=project.date_.strftime("%d/%m/%Y")}} <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
-                </div>
-                    <button id="create_story" class="btn btn-primary pull-right">{{=T('Create Story')}}</button>
-                <!-- <div class="span5 offset1"> -->
-                    <!-- <br> -->
-                <!-- </div> -->
-                <div class="clearfix"></div>
-            </div>
             <div class="project-items">
                 <!-- STORY CONTENT -->
                 {{if "stories" in globals():}}

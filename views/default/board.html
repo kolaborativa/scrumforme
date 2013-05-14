@@ -43,8 +43,9 @@
         cancel : '{{=T("Cancel")}}',
         delete : '{{=T("Delete")}}',
     },
-    project_data = {
+    info = {
         project_id : '{{=project.id}}',
+        person_id : '{{=person_id}}',
     },
     date = {
         sprint_started : '{{=sprint.started}}',
@@ -126,7 +127,7 @@
     {{for df in definition_ready[story.id]:}}
         {{if not definition_ready[story.id][count].story_id in definition_ids:}}
         <!-- custom class to expand / collapse tables of the same story -->
-        <table class="table story{{=definition_ready[story.id][count].story_id}}" data-storyid='{{=definition_ready[story.id][count].story_id}}'>
+        <table class="table story{{=definition_ready[story.id][count].story_id}} table_container" data-storyid='{{=definition_ready[story.id][count].story_id}}'>
             <tr>
                 <th class="story_header" colspan=5>
                     <div class="text_container">
@@ -134,7 +135,8 @@
                     </div>
                     <div class="buttons_container">
                         <button class="btn btn-nostyle expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
-                            <i class="icon-circle-arrow-up"></i></button>
+                            <i class="icon-circle-arrow-up"></i>
+                        </button>
                         <input class="pull-right benefit" type="text" placeholder='?' value='{{=g_blank_check(story.benefit)}}' alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}' disabled>
                         <input class="pull-right story_points" type="text" placeholder="?" value='{{=g_blank_check(story.story_points)}}' alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}' disabled>
                     </div>
@@ -150,8 +152,11 @@
             <tr class="item_container" data-definitionready='{{=definition_ready[story.id][count].id}}'>
         {{pass}}
                 <td>
+                    <button class="btn btn-nostyle create_task" alt='{{=T("Add Task")}}' title='{{=T("Add Task")}}'>
+                        {{=T("Add Task")}}
+                        <i class="icon-circle-arrow-right"></i>
+                    </button>
                     <p class="definition_ready_title">{{=definition_ready[story.id][count].title}}</p>
-                    <p class="vertical create_task" alt='{{=T("Create Task")}}' title='{{=T("Create Task")}}'><i class="icon-plus"></i> {{=T("task")}}</p>
                 </td>
 
                 <td class="column_task todo" data-status="todo">
