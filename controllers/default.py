@@ -229,7 +229,7 @@ def _team_project():
             count = 0
             project = {}
             for member in team_members:
-                if member.sharing.role_id and not member.sharing.role_id.name.lower() == "guest":
+                if member.sharing.role_id:
                     project["%s"%count] = {}
 
                     project["%s"%count]["person_name"]=member.sharing.person_id.name
@@ -322,7 +322,7 @@ def _card_modal():
 def _card_new_comment_or_update():
     if request.vars.new_comment:
         person = db( (User_relationship.auth_user_id == auth.user.id) & \
-                     (Sharing.project_id == request.vars.project_id) ).select().first()
+                     (Sharing.person_id == request.vars.person_id) ).select().first()
         if person:
             from datetime import datetime
             new_comment_id = Task_comment.insert(

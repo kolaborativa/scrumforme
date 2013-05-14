@@ -172,7 +172,7 @@
         var dom_element = $(element),
             data_form = dom_element.serialize();
 
-        data_form += '&project_id=' + project_id + '&task_id=' + task_id;
+        data_form += '&project_id=' + project_id + '&task_id=' + task_id + '&person_id=' + info.person_id;
 
         $.post(url.card_new_comment_or_update,
             data_form,
