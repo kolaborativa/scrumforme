@@ -466,6 +466,8 @@ def create_update_itens():
                             )
                 # updates the status of story
                 _test_story_completed(request.vars.definitionready, "todo")
+                from realtime import _update_card
+                _update_card()
 
             return dict(success="success",msg="gravado com sucesso!",name=request.vars.name,database_id=database_id)
 

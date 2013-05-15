@@ -132,7 +132,7 @@
 
             <script src="{{=URL('static','js/jquery-ui-1.10.2.custom.min.js')}}"></script>
             <script src='{{=URL("static","js/bootstrap.min.js")}}'></script>
-            <script async defer src='{{=URL("static","js/web2py.js")}}'></script>
+            <script src='{{=URL("static","js/web2py.js")}}'></script>
             <script async defer src='{{=URL("static","js/base.js")}}'></script>
             {{ if not request.function == "projects": }}
             <script src='{{=URL("static","js/bootstrap-editable.min.js")}}'></script>
@@ -151,6 +151,12 @@
             <script src='{{=URL("static","js/jquery.livesearch.js")}}'></script>
             <script src='{{=URL("static","js/board-livesearch.js")}}'></script>
             <script src='{{=URL("static","js/floatfixed.js")}}'></script>
+            <script>
+                  jQuery(document).ready(function(){
+                    var data;
+                    web2py_websocket('ws:127.0.0.1:8888/realtime/mygroup', function(e){data=eval(e.data)});
+                  });
+            </script>
 
             {{ elif request.function == "projects": }}
             <script async defer src='{{=URL("static","js/delete_project.js")}}'></script>
