@@ -37,38 +37,13 @@ def _get_person():
 
 @auth.requires_login()
 def projects():
-    from datetime import datetime
 
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
     shared_with_person = person['shared']
 
-    form = SQLFORM.factory(
-        Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
-        Field('description', label= T('Description')),
-        Field('url', label= 'Url'),
-        table_name='projects',
-        submit_button=T('CREATE')
-        )
-
-    if form.accepts(request.vars):
-        project_id = Project.insert(
-                        created_by=person_id,
-                        name=form.vars.name,
-                        description=form.vars.description,
-                        url=form.vars.url,
-                        date_=datetime.now(),
-                        )
-        Sharing.insert(project_id=project_id,
-                       person_id=person_id,
-                       role_id=2,
-                       )
-        redirect(URL(f="product_backlog",args=[project_id]))
-    elif form.errors:
-        pass
-
-    return dict(form=form, person_projects=person_projects, shared_with_person=shared_with_person)
+    return dict(person_projects=person_projects, shared_with_person=shared_with_person)
 
 
 def delete_project():
@@ -90,7 +65,6 @@ def product_backlog():
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
     person = _get_person()
     person_id = person["person_id"]
-    person_projects = person["projects"]
     shared_with_person = person['shared']
     members_project = [i.person_id for i in shared_with_person]
 
@@ -135,8 +109,6 @@ def product_backlog():
 
             return dict(
                         project=project,
-                        person_projects=person_projects,
-                        shared_with_person=shared_with_person,
                         stories=stories,
                         definition_ready=definition_ready,
                         tasks=tasks,
@@ -146,8 +118,6 @@ def product_backlog():
         else:
             return dict(
                         project=project,
-                        person_projects=person_projects,
-                        shared_with_person=shared_with_person,
                         form_sprint=form_sprint,
                         sprint=sprint
                         )
@@ -162,7 +132,6 @@ def board():
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
     person = _get_person()
     person_id = person["person_id"]
-    person_projects = person["projects"]
     shared_with_person = person['shared']
     members_project = [i.person_id for i in shared_with_person]
 
@@ -195,8 +164,6 @@ def board():
 
                 return dict(project=project,
                             person_id=person_id,
-                            person_projects=person_projects,
-                            shared_with_person=shared_with_person,
                             team_members=team_members,
                             stories=stories,
                             definition_ready=definition_ready,
@@ -299,7 +266,7 @@ def _card_modal():
                     name = "%s %s" %(person.user_relationship.auth_user_id.first_name, \
                                     person.user_relationship.auth_user_id.last_name)
                     comments[i.id] = {
-                            "role":person.sharing.role_id.name,
+                            "role":T(person.sharing.role_id.name),
                             "avatar":Gravatar(person.user_relationship.auth_user_id.email, size=120).thumb,
                             "name":name,
                             "text":i.text_,
@@ -410,7 +377,6 @@ def statistics():
 
     person = _get_person()
     person_id = person["person_id"]
-    person_projects = person["projects"]
     shared_with_person = person["shared"]
     members_project = [i.person_id for i in shared_with_person]
 
@@ -437,8 +403,6 @@ def statistics():
                 burndown_chart = db(Burndown.sprint_id == sprint.id).select(orderby=Burndown.date_)
 
                 return dict(project=project,
-                            person_projects=person_projects,
-                            shared_with_person=shared_with_person,
                             sprint=sprint,
                             stories=stories,
                             burndown_chart=burndown_chart
@@ -871,7 +835,6 @@ def team():
     project_id=request.args(0) or redirect(URL('projects'))
     person = _get_person()
     person_id = person["person_id"]
-    person_projects = person["projects"]
     shared_with_person = person["shared"]
 
     project = db(Project.id==project_id).select().first()
@@ -887,8 +850,6 @@ def team():
            redirect(URL(f='team', args=[project_id]))
        return dict(
                 project=project,
-                person_projects=person_projects,
-                shared_with_person=shared_with_person,
                 team_members=team_members,
                 roles=roles,
                 owner_project=project.created_by == person_id

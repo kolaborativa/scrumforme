@@ -23,22 +23,6 @@
 
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span4">
-        {{=form.custom.begin}}
-            <!-- name -->
-            {{ form.elements('#projects_name')[0] ['_placeholder'] = T('Name') }}
-            {{=form.custom.widget.name}}
-            <!-- description -->
-            {{ form.elements('#projects_description')[0] ['_placeholder'] = T('Description') }}
-            {{=form.custom.widget.description}}
-            <!-- url -->
-            {{ form.elements('#projects_url')[0] ['_placeholder'] = T('Url') }}
-            {{ form.elements('#projects_url')[0] ['_type'] = T('url') }}
-            {{=form.custom.widget.url}}
-            <br>
-            <button type="submit" class="btn btn-primary">{{=T('Create Project')}}</button>
-        {{=form.custom.end}}
-        </div>
         <div class="span5">
             {{if "person_projects":}}
                 <h3>{{=T('My Projects')}} <span class="label">{{=len(person_projects)}}</span></a></h3>

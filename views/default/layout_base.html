@@ -74,44 +74,9 @@
             Carregando...</h4>
         </div>
 
-        <div id="header">
-            <a href="{{=URL('index')}}" alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
-            {{ if auth.is_logged_in(): }}
-                <ul id="projects">
-                    <li><a href="{{=URL('projects')}}" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'><i class="icon-plus"></i></a></li>
-                    {{p_count = 1}}
-                    {{if person_projects:}}
-                        {{for i in person_projects:}}
-                            {{if p_count <= 6:}}
-                                <li class='{{=g_current_page("default/%s/%s" %(request.function,i.id),"active")}}'><a href='{{=URL(c="default",f="board",args=[i.id])}}' class="tip-bottom" alt='{{=i.name}}' title='{{=i.name}}'>{{=i.id}}</a></li>
-                            {{p_count += 1}}
-                            {{pass}}
-                        {{pass}}
-                    {{pass}}
-                    {{if shared_with_person:}}
-                        {{for i in shared_with_person:}}
-                            {{if p_count <= 10:}}
-                                <li class='{{=g_current_page("default/%s/%s" %(request.function,i.project_id),"active")}}'><a href='{{=URL(c="default",f="board",args=[i.project_id])}}' class="tip-bottom" alt='{{=i.project_id.name}}' title='{{=i.project_id.name}}'>{{=i.project_id}}</a></li>
-                            {{p_count += 1}}
-                            {{pass}}
-                        {{pass}}
-                    {{pass}}
-                </ul>
-                <div id="user-nav" class="navbar navbar-inverse">
-                    <ul class="nav">
-                            <li>
-                                <form action="">
-                                    <div id="search">
-                                        <input type="text" placeholder='{{=T("Search here")}}'/><button type="submit" class="tip-right" alt='{{=T("Search")}}' title='{{=T("Search")}}'><i class="icon-search-custom"></i></button>
-                                    </div>
-                                </form>
-                            </li>
-                            <li><a href='{{=URL(f="user",args="profile",vars={"_next":"index"})}}' alt='{{=T("Profile")}}' title='{{=T("Profile")}}'><i class="icon-user"></i></a></li>
-                            <li><a href='{{=URL(f="user",args="logout",vars={"_next":"index"})}}' alt='{{=T("Logout")}}' title='{{=T("Logout")}}'><i class="icon-logout-custom"></i></a></li>
-                    </ul>
-                </div>
-            {{ pass }}
-        </div>
+
+        {{include "default/header.html"}}
+
 
         <div id="sidebar" class="close_sidebar">
             <a href="#" class="visible-phone"><i class="icon-th-list"></i> {{=T('Menu')}}</a>

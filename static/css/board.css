@@ -148,7 +148,7 @@ ul {
     /*display: table;*/
 }
 
-table, th, td {
+td {
     border: 1px solid #ccc;
 }
 
@@ -187,11 +187,7 @@ table, th, td {
 }
 
 /*zebra rows*/
-.no-th:nth-child(even) {
-    background-color: rgb(243, 242, 242)!important;
-}
-
-.no-th:nth-child(odd) {
+.table:nth-child(even) {
     background-color: #fff!important;
 }
 

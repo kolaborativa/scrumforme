@@ -72,3 +72,48 @@ def g_format_number(number):
         number = " %s" % number
 
     return number
+
+
+class G_projects(object):
+    """header projects"""
+
+    def new_project(self):
+        from datetime import datetime
+        person = _get_person()
+        person_id = person["person_id"]
+
+        form = SQLFORM.factory(
+            Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
+            Field('description', label= T('Description')),
+            Field('url', label= 'Url'),
+            table_name='projects',
+            submit_button=T('CREATE')
+            )
+
+        if form.accepts(request.vars):
+            project_id = Project.insert(
+                            created_by=person_id,
+                            name=form.vars.name,
+                            description=form.vars.description,
+                            url=form.vars.url,
+                            date_=datetime.now(),
+                            )
+            Sharing.insert(project_id=project_id,
+                           person_id=person_id,
+                           role_id=2,
+                           )
+            redirect(URL(f="product_backlog",args=[project_id]))
+
+        elif form.errors:
+            response.flash = T('form has errors')
+
+        return form
+
+    def projects(self):
+
+        person = _get_person()
+        person_id = person["person_id"]
+        person_projects = person["projects"]
+        shared_with_person = person['shared']
+
+        return dict(person_projects=person_projects, shared_with_person=shared_with_person)

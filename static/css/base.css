@@ -133,6 +133,7 @@ float: left;
 	top: 12px;
 	left: 0px;
 	padding: 0px 18px;
+    text-decoration: none;
 }
 
 #projects li a:hover {
@@ -310,8 +311,6 @@ float: left;
 #sidebar > ul ul li:last-child a {
 	border-bottom: 0;
 }
-
-
 
 /* Content */
 #content {
