@@ -280,7 +280,7 @@
 <default>NULL</default>
 </row>
 <row name="date_" null="1" autoincrement="0">
-<datatype>date</datatype>
+<datatype>datetime</datatype>
 <default>NULL</default>
 </row>
 <row name="owner_comment" null="1" autoincrement="0">

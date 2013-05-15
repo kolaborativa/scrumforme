@@ -258,6 +258,7 @@ def _card_modal():
             task_comments = db(Task_comment.task_id == request.vars.task_id).select()
             comments ={}
             if task_comments:
+                from gluon.tools import prettydate
                 for i in task_comments:
                     person = db( (User_relationship.person_id == i.owner_comment) & \
                            (Sharing.person_id == i.owner_comment) ) \
@@ -270,7 +271,7 @@ def _card_modal():
                             "avatar":Gravatar(person.user_relationship.auth_user_id.email, size=120).thumb,
                             "name":name,
                             "text":i.text_,
-                            "date":g_blank_fulldate_check(i.date_),
+                            "date":prettydate(i.date_,T),
                             "person_id":i.owner_comment,
                             }
 
@@ -292,17 +293,20 @@ def _card_new_comment_or_update():
                      (Sharing.person_id == request.vars.person_id) ).select().first()
         if person:
             from datetime import datetime
+            from gluon.tools import prettydate
+            d = datetime.now()
+
             new_comment_id = Task_comment.insert(
                                 task_id=request.vars.task_id,
                                 text_=request.vars.new_comment,
-                                date_=datetime.today().date(),
+                                date_=d,
                                 owner_comment=person.user_relationship.person_id
                             )
             person.user_relationship.avatar = Gravatar(person.user_relationship.auth_user_id.email, size=50).thumb
-            person.sharing.role_name = person.sharing.role_id.name
+            person.sharing.role_name = str(person.sharing.role_id.name)
             person.user_relationship.member_name = "%s %s" %(person.user_relationship.auth_user_id.first_name,person.user_relationship.auth_user_id.last_name)
             person.comment = request.vars.new_comment
-            person.date_comment = g_blank_fulldate_check(datetime.today().date())
+            person.date_comment = str(prettydate(d, T))
             person.new_comment_id = new_comment_id
 
         return person
