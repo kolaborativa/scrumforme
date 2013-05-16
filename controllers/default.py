@@ -444,7 +444,7 @@ def create_or_update_itens():
                     title=request.vars.value,
                 )
 
-            return dict(success="success",msg="gravado com sucesso!")
+            return dict(success="success",msg="successfully saved!")
 
         # creating tasks
         elif request.vars.dbUpdate == "false":
@@ -477,10 +477,10 @@ def create_or_update_itens():
                             )
                 _realtime_update_card(data)
 
-            return dict(success="success",msg="gravado com sucesso!",name=request.vars.name,database_id=database_id)
+            return dict(success="success",msg="successfully saved!",name=request.vars.name,database_id=database_id)
 
     else:
-        return dict(error="error",msg="erro ao gravar!")
+        return dict(error="error",msg="error writing!")
 
 
 @auth.requires_login()
