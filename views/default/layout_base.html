@@ -152,36 +152,12 @@
             <script src='{{=URL("static","js/jquery.livesearch.js")}}'></script>
             <script src='{{=URL("static","js/board-livesearch.js")}}'></script>
             <script src='{{=URL("static","js/floatfixed.js")}}'></script>
-
+            <!-- call realtime JS -->
             <script>
-              jQuery(document).ready(function(){
-                // develop local
-                // web2py_websocket('ws://127.0.0.1:8888/realtime/mygroup', function(e){
-                // on production
-                web2py_websocket('ws://agenciax4.com.br:8888/realtime/mygroup', function(e){
-
-                    var obj = JSON.parse(e.data),
-                        story = $('.item_container[data-definitionready="' + obj.definition_ready_id +'"]');
-
-                    // console.log(obj);
-                    if(obj.move === true) {
-                        var status = ["todo", "inprogress", "verification", "done"];
-
-                        for(i in status) {
-                            query = "definition_ready_id=" + obj.definition_ready_id + "&status=" + status[i];
-                            story.find("." + status[i]).load("http://{{=request.env.http_host}}/{{=request.application}}/{{=request.controller}}" + "/load_tasks/?" + query);
-                        }
-
-                    } else {
-                        query = "definition_ready_id=" + obj.definition_ready_id + "&status=" + obj.status;
-                        story.find("." + obj.status).load("http://{{=request.env.http_host}}/{{=request.application}}/{{=request.controller}}" + "/load_tasks/?" + query);
-                    }
-
-                });
-
-              });
-
+                var urlLoadTasks = "http://{{=request.env.http_host}}/{{=request.application}}/{{=request.controller}}/load_tasks/"
             </script>
+            <script src='{{=URL("static","js/realtime.js")}}'></script>
+
             {{ elif request.function == "projects": }}
             <script async defer src='{{=URL("static","js/delete_project.js")}}'></script>
 
