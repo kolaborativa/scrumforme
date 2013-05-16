@@ -155,7 +155,10 @@
 
             <script>
               jQuery(document).ready(function(){
-                web2py_websocket('ws://127.0.0.1:8888/realtime/mygroup', function(e){
+                // develop local
+                // web2py_websocket('ws://127.0.0.1:8888/realtime/mygroup', function(e){
+                // on production
+                web2py_websocket('ws://agenciax4.com.br:8888/realtime/mygroup', function(e){
 
                     var obj = JSON.parse(e.data),
                         story = $('.item_container[data-definitionready="' + obj.definition_ready_id +'"]');
@@ -174,7 +177,6 @@
                         story.find("." + obj.status).load("http://{{=request.env.http_host}}/{{=request.application}}/{{=request.controller}}" + "/load_tasks/?" + query);
                     }
 
-                    makeSortable();
                 });
 
               });
