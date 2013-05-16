@@ -153,7 +153,7 @@ def board():
                 tasks = {}
                 for row in definition_ready:
                     for df in definition_ready[row]:
-                        tasks[df.id] = db(Task.definition_ready_id == df.id).select()
+                        tasks[df.id] = db(Task.definition_ready_id == df.id).select(orderby=~Task.id)
 
                 card_comments = {}
                 for row in tasks:
@@ -258,7 +258,6 @@ def _card_modal():
             task_comments = db(Task_comment.task_id == request.vars.task_id).select()
             comments ={}
             if task_comments:
-                from gluon.tools import prettydate
                 for i in task_comments:
                     person = db( (User_relationship.person_id == i.owner_comment) & \
                            (Sharing.person_id == i.owner_comment) ) \
@@ -271,7 +270,7 @@ def _card_modal():
                             "avatar":Gravatar(person.user_relationship.auth_user_id.email, size=120).thumb,
                             "name":name,
                             "text":i.text_,
-                            "date":prettydate(i.date_,T),
+                            "date":i.date_.strftime("%d/%m/%Y %H:%M:%S"),
                             "person_id":i.owner_comment,
                             }
 
@@ -293,7 +292,6 @@ def _card_new_comment_or_update():
                      (Sharing.person_id == request.vars.person_id) ).select().first()
         if person:
             from datetime import datetime
-            from gluon.tools import prettydate
             d = datetime.now()
 
             new_comment_id = Task_comment.insert(
@@ -306,7 +304,7 @@ def _card_new_comment_or_update():
             person.sharing.role_name = str(person.sharing.role_id.name)
             person.user_relationship.member_name = "%s %s" %(person.user_relationship.auth_user_id.first_name,person.user_relationship.auth_user_id.last_name)
             person.comment = request.vars.new_comment
-            person.date_comment = str(prettydate(d, T))
+            person.date_comment = d.strftime("%d/%m/%Y %H:%M:%S")
             person.new_comment_id = new_comment_id
 
         return person
@@ -425,7 +423,7 @@ def statistics():
 
 
 @auth.requires_login()
-def create_update_itens():
+def create_or_update_itens():
     """Function that creates or updates items. Receive updates if request.vars.dbUpdate
     and takes the ID to be updated with request.vars.dbID
     """
@@ -470,13 +468,116 @@ def create_update_itens():
                             )
                 # updates the status of story
                 _test_story_completed(request.vars.definitionready, "todo")
-                from realtime import _update_card
-                _update_card()
+
+                # send to realtime
+                data = dict(
+                            definition_ready_id=request.vars.definitionready,
+                            status="todo",
+                            task_id=database_id
+                            )
+                _realtime_update_card(data)
 
             return dict(success="success",msg="gravado com sucesso!",name=request.vars.name,database_id=database_id)
 
     else:
         return dict(error="error",msg="erro ao gravar!")
+
+
+@auth.requires_login()
+def move_tasks():
+    # board page
+    from datetime import datetime
+
+    if request.vars.task_status and request.vars.definitionready:
+        # update status of task if in progress
+        if request.vars.task_status == "inprogress":
+            task = db(Task.id == request.vars.task_id).select().first()
+            if task.started:
+                # if has a date
+                db(Task.id == request.vars.task_id).update(
+                    status=request.vars.task_status,
+                    ended=None,
+                )
+            else:
+                # if no has date yet
+                db(Task.id == request.vars.task_id).update(
+                    status=request.vars.task_status,
+                    started=datetime.today().date(),
+                    ended=None,
+                )
+        # update status of task if in todo or verification
+        elif request.vars.task_status == "todo" or request.vars.task_status == "verification":
+            db(Task.id == request.vars.task_id).update(
+                status=request.vars.task_status,
+                ended=None,
+            )
+        # update status of task if in done
+        elif request.vars.task_status == "done":
+            db(Task.id == request.vars.task_id).update(
+                status=request.vars.task_status,
+                ended=datetime.today().date()
+            )
+        # if the request.vars.task does not meet the requirements
+        else:
+            return False
+
+        # updates the status of story
+        _test_story_completed(request.vars.definitionready, request.vars.task_status)
+
+        # send to realtime
+        data = dict(
+                    definition_ready_id=request.vars.definitionready,
+                    status=request.vars.task_status,
+                    task_id=request.vars.task_id,
+                    move=True
+                    )
+        _realtime_update_card(data)
+
+        return True
+
+    else:
+        return False
+
+
+@auth.requires_login()
+def _realtime_update_card(element):
+    from gluon.contrib.websocket_messaging import websocket_send
+    import json
+
+    # data = "realtimeUpdateTak()"
+    data = json.dumps(element)
+    websocket_send('http://localhost:8888', data, 'mykey', 'mygroup')
+
+
+@auth.requires_login()
+def load_tasks():
+    if request.vars.definition_ready_id and request.vars.status:
+        tasks = db(Task.definition_ready_id == request.vars.definition_ready_id).select(orderby=~Task.id)
+
+        if tasks:
+            column_tasks = {}
+            count = 0
+            for task in tasks:
+                if task.status == request.vars.status:
+                    if task.owner_task:
+                        person = db(User_relationship.person_id == task.owner_task).select().first()
+                        task.email = person.auth_user_id.email
+
+                        task.comments = len(db(Task_comment.task_id == task.id).select())
+
+                    else:
+                        task.comments = None
+
+                    column_tasks[count] = task
+                    count += 1
+
+            return dict(tasks = column_tasks)
+
+        else:
+            return False
+
+    else:
+        return False
 
 
 @auth.requires_login()
@@ -560,61 +661,6 @@ def change_ajax_itens():
                         )
 
         return True
-    else:
-        return False
-
-
-@auth.requires_login()
-def board_ajax_tasks():
-    # board page
-    from datetime import datetime
-
-    if request.vars.task_status and request.vars.definitionready:
-        # update status of task if in progress
-        if request.vars.task_status == "inprogress":
-            task = db(Task.id == request.vars.task_id).select().first()
-            if task.started:
-                # if has a date
-                db(Task.id == request.vars.task_id).update(
-                    status=request.vars.task_status,
-                    ended=None,
-                )
-            else:
-                # if no has date yet
-                db(Task.id == request.vars.task_id).update(
-                    status=request.vars.task_status,
-                    started=datetime.today().date(),
-                    ended=None,
-                )
-        # update status of task if in todo or verification
-        elif request.vars.task_status == "todo" or request.vars.task_status == "verification":
-            db(Task.id == request.vars.task_id).update(
-                status=request.vars.task_status,
-                ended=None,
-            )
-        # update status of task if in done
-        elif request.vars.task_status == "done":
-            db(Task.id == request.vars.task_id).update(
-                status=request.vars.task_status,
-                ended=datetime.today().date()
-            )
-        # if the request.vars.task does not meet the requirements
-        else:
-            return False
-
-
-        # updates the status of story
-        _test_story_completed(request.vars.definitionready, request.vars.task_status)
-
-        return True
-
-    # if the request is to update the date
-    elif request.vars.task_date:
-        db(Task.id == request.vars.task_id).update(
-            started=datetime.strptime(request.vars.task_date,'%Y-%m-%d')
-        )
-        return True
-
     else:
         return False
 

@@ -141,7 +141,7 @@
     // update date of card
     function changeDate(date, card_element, modal_element) {
         var task = $(modal_element),
-            task_id = task.closest('#card_modal').attr('data-task');
+            task_id = task.closest('#card_modal').attr('data-task'),
             task_date = date.format("UTC:yyyy-mm-dd"),
             querystring = 'task_id=' + task_id + '&task_date=' + task_date;
 
@@ -191,7 +191,13 @@
                     if (number_comments < 10) {
                         number_comments = " " + number_comments; //this space is to adjust the layout
                     }
+                    // adds the number of comments
                     element_comment.text(number_comments);
+                    // if there is no comment
+                    if (!element_comment.length) {
+                        var comment = '<span class="comment"><i class="icon-comment"><span class="number_comment"> 1</span></i></span>';
+                        $(card_element).closest(".icons_card").prepend(comment);
+                    }
                 }
           //data contains the JSON object
         }, "json");

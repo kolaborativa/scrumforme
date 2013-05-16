@@ -14,7 +14,7 @@
             move_sprint_error : '{{=T("Before moving a story to sprint, you must create a sprint!")}}',
         },
         url = {
-            createUpdateBacklogItens : '{{=URL("create_update_itens.json")}}',
+            create_or_update_itens : '{{=URL("create_or_update_itens.json")}}',
             removeBacklogItens : '{{=URL("remove_itens")}}',
             changeAjaxItens : '{{=URL("change_ajax_itens")}}',
         },
@@ -65,7 +65,7 @@
                                 <li class="story">
                                     <div class="story_header">
                                         <div class="text_container">
-                                            <a href="#" class="editable-click story_card editable" data-type="textarea" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-index="{{=story.position_dom}}" data-url="{{=URL('create_update_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
+                                            <a href="#" class="editable-click story_card editable" data-type="textarea" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-index="{{=story.position_dom}}" data-url="{{=URL('create_or_update_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
                                         </div>
                                         <div class="buttons_container">
                                             <button class="btn btn-nostyle expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
@@ -107,7 +107,7 @@
                                                 <div class="definition_ready">
                                                     <div class="text_container">
                                                         <span class="label tip-bottom" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>{{=T('DR')}}</span>
-                                                        <a href="#" class="editable-click editable definition_ready_card" data-type="textarea" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
+                                                        <a href="#" class="editable-click editable definition_ready_card" data-type="textarea" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_or_update_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
                                                     </div>
                                                     <div class="buttons_container">
                                                         <button class="btn btn-nostyle expand_definition_ready pull-right" alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'><i class="icon-circle-arrow-up"></i></button>
@@ -121,7 +121,7 @@
                                                     <ul class="item_container zebra_row">
                                                         <li class="task">
                                                             <div class="text_container">
-                                                                <a href="#" class="editable-click editable" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                                                <a href="#" class="editable-click editable" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_or_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                                             </div>
                                                             <div class="buttons_container">
                                                                 <button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-trash"></i></button>
@@ -196,7 +196,7 @@
                         <li class="story">
                             <div class="story_header">
                                 <div class="text_container">
-                                    <a href="#" class="editable-click story_card editable" data-type="textarea" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-index="{{=story.position_dom}}" data-url="{{=URL('create_update_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
+                                    <a href="#" class="editable-click story_card editable" data-type="textarea" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-index="{{=story.position_dom}}" data-url="{{=URL('create_or_update_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
                                 </div>
                                 <div class="buttons_container">
                                     <button class="btn btn-nostyle expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
@@ -238,7 +238,7 @@
                                         <div class="definition_ready">
                                             <div class="text_container">
                                                 <span class="label tip-bottom" alt='{{=T("Definition of Ready")}}' title='{{=T("Definition of Ready")}}'>{{=T('DR')}}</span>
-                                                <a href="#" class="editable-click editable definition_ready_card" data-type="textarea" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_update_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
+                                                <a href="#" class="editable-click editable definition_ready_card" data-type="textarea" data-pk="{{=definition_ready[story.id][count].id}}" data-url="{{=URL('create_or_update_itens.json')}}" data-name="definition_ready" data-update="true">{{=definition_ready[story.id][count].title}}</a>
                                             </div>
                                             <div class="buttons_container">
                                                 <button class="btn btn-nostyle expand_definition_ready pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'><i class="icon-circle-arrow-up"></i></button>
@@ -252,7 +252,7 @@
                                             <ul class="item_container zebra_row">
                                                 <li class="task">
                                                     <div class="text_container">
-                                                        <a href="#" class="editable-click editable" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                                        <a href="#" class="editable-click editable" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_or_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                                     </div>
                                                     <div class="buttons_container">
                                                         <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>

@@ -67,7 +67,7 @@ function web2py_event_handlers() {
     doc.off('click', '.flash')
       switch(xhr.status){
         case 500:
-          $('.flash').html(ajax_error_500).slideDown(); 
+          $('.flash').html(ajax_error_500).slideDown();
       }
   });
 };
@@ -193,7 +193,7 @@ function web2py_calc_entropy(mystring) {
         var c = mystringlist[i], inset=5;
         for(var j = 0; j<csets.length; j++)
           if (csets[j].indexOf(c) != -1) {inset = j; break;}
-        //calculate effect of character on alphabet size       
+        //calculate effect of character on alphabet size
         if(!(inset in seen)) {seen[inset] = 1;score += csets[inset].length;}
         else if (!(c in other)) {score += 1;other[c] = 1;}
         if (inset != lastset) {score += 1;lastset = inset;}

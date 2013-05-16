@@ -3,8 +3,8 @@
 <script>
     // OBS: other global variables are generated on the page project
     var url = {
-        createUpdateBacklogItens : '{{=URL("create_update_itens.json")}}',
-        changeAjaxItens : '{{=URL("board_ajax_tasks")}}',
+        create_or_update_itens : '{{=URL("create_or_update_itens.json")}}',
+        move_tasks : '{{=URL("move_tasks")}}',
         removeTask : '{{=URL("remove_itens")}}',
         edit_owner_task : '{{=URL("_edit_owner_task")}}',
         team_page : '{{=URL(f="team",args=[request.args(0)])}}',
@@ -131,7 +131,7 @@
             <tr>
                 <th class="story_header" colspan=5>
                     <div class="text_container">
-                        <h5><a href="#" class="editable-click story_card editable" data-type="text" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_update_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a></h5>
+                        <h5><a href="#" class="editable-click story_card editable" data-type="text" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-url="{{=URL('create_or_update_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a></h5>
                     </div>
                     <div class="buttons_container">
                         <button class="btn btn-nostyle expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
@@ -176,7 +176,7 @@
                                 {{pass}}
                             </div>
                             <div class="card_container">
-                                <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_or_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                 <div class="icons_card">
                                     {{if task["started"]:}}
                                         <span class="calendar"><i class="icon-calendar"></i></span>
@@ -212,7 +212,7 @@
                                 {{pass}}
                             </div>
                             <div class="card_container">
-                                <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_or_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                 <div class="icons_card">
                                     {{if task["started"]:}}
                                         <span class="calendar"><i class="icon-calendar"></i></span>
@@ -231,7 +231,7 @@
                     {{pass}}
                 </td>
 
-                <td class="column_task" data-status="verification">
+                <td class="column_task verification" data-status="verification">
                     {{for task in tasks[definition_ready[story.id][count].id]:}}
                         {{if task["status"] == "verification": }}
                         <ul class="task_container">
@@ -248,7 +248,7 @@
                                 {{pass}}
                             </div>
                             <div class="card_container">
-                                <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_or_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                 <div class="icons_card">
                                     {{if task["started"]:}}
                                         <span class="calendar"><i class="icon-calendar"></i></span>
@@ -267,7 +267,7 @@
                     {{pass}}
                 </td>
 
-                <td class="column_task" data-status="done">
+                <td class="column_task done" data-status="done">
                     {{for task in tasks[definition_ready[story.id][count].id]:}}
                         {{if task["status"] == "done": }}
                         <ul class="task_container">
@@ -284,7 +284,7 @@
                                 {{pass}}
                             </div>
                             <div class="card_container">
-                                <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
+                                <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_or_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                 <div class="icons_card">
                                     {{if task["started"]:}}
                                         <span class="calendar"><i class="icon-calendar"></i></span>

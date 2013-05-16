@@ -11,7 +11,7 @@ $.fn.editable.defaults.mode = 'inline';
 //apply editable to parent div
 $('.table').editable({
     selector: 'a.editable',
-    url: url.createUpdateBacklogItens,
+    url: url.create_or_update_itens,
     emptytext: msg.field_empty,
     rows: 1,
     params: function(params) {

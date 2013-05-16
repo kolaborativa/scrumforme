@@ -1,0 +1,29 @@
+{{count=0}}
+{{for task in tasks:}}
+    <ul class="task_container">
+      <li class="task">
+        <div class="avatar_container">
+            {{if tasks[task]["owner_task"]:}}
+                <img class="user_card choose_owner" src='{{=Gravatar(tasks[task]["email"]).thumb}}' data-owner="true">
+            {{else:}}
+                <button class="btn btn-nostyle user_card nonuser_card choose_owner"><i class="icon-plus"></i></button>
+            {{pass}}
+        </div>
+        <div class="card_container">
+            <a href="#" class="editable-click editable task_item" data-type="textarea" data-pk='{{=tasks[task]["id"]}}' data-url="{{=URL('create_update_itens.json')}}" data-name="task" data-update="true">{{=tasks[task]["title"]}}</a>
+            <div class="icons_card">
+                {{if tasks[task]["started"]:}}
+                    <span class="calendar"><i class="icon-calendar"></i></span>
+                {{pass}}
+                {{if tasks[task]["comments"]:}}
+                    <span class="comment"><i class="icon-comment"><span class="number_comment">{{ =g_format_number( tasks[task]["comments"] ) }}</span></i></span>
+                {{pass}}
+                <span class="delete_item icon-hover" ><i class="icon-trash"></i></span>
+                <span class="card-modal icon-hover" ><i class="icon-cog"></i></span>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+      </li>
+    </ul>
+    {{count +=1}}
+{{pass}}

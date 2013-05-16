@@ -7,54 +7,58 @@ $(function() {
         scrollClass: "icon-chevron-up icon-white"
     });
 
-    // drag in drop
-    $(".column_task").sortable({
-        connectWith: ".column_task",
-        placeholder: 'placeholder_item',
-        delay: 200,
-        revert: true,
-        dropOnEmpty: true,
-        start: function(event, ui) {
-            var placeholder = $(ui.item).clone().css({
-                opacity: "0.6",
-                zIndex: "1"
-            });
-            $(".placeholder_item").css({
-                height: placeholder.height(),
-                marginBottom: "10px"
-            });
-            ui.placeholder.html(placeholder);
-
-            var definition_ready_id = $(ui.item).closest('.item_container').attr('data-definitionready');
-            $('body').data('definitionreadyid', definition_ready_id);
-        },
-        stop: function(event, ui) {
-            var task = $(ui.item),
-                result_task = validationTask("stop", task)
-
-                // prevents the card being moved does not pass validation
-            if (result_task === false) {
-                return false
-            }
-
-        },
-        receive: function(event, ui) {
-            var task = $(ui.item),
-                result_task = validationTask("", task)
-
-                // prevents the card being moved does not pass validation
-            if (result_task === false) {
-                return false
-
-            } else if (result_task === true) {
-                setTimeout(function() {
-                    updateStatusColumn($(ui.item))
-                }, 1000); // Enable after 1000 ms.
-            }
-        }
-    }).disableSelection();
-
 });
+    // drag in drop
+    var makeSortable = function(){
+        $(".column_task").sortable({
+            connectWith: ".column_task",
+            placeholder: 'placeholder_item',
+            delay: 200,
+            revert: true,
+            dropOnEmpty: true,
+            start: function(event, ui) {
+                var placeholder = $(ui.item).clone().css({
+                    opacity: "0.6",
+                    zIndex: "1"
+                });
+                $(".placeholder_item").css({
+                    height: placeholder.height(),
+                    marginBottom: "10px"
+                });
+                ui.placeholder.html(placeholder);
+
+                var definition_ready_id = $(ui.item).closest('.item_container').attr('data-definitionready');
+                $('body').data('definitionreadyid', definition_ready_id);
+            },
+            stop: function(event, ui) {
+                var task = $(ui.item),
+                    result_task = validationTask("stop", task)
+
+                    // prevents the card being moved does not pass validation
+                if (result_task === false) {
+                    return false
+                }
+
+            },
+            receive: function(event, ui) {
+                var task = $(ui.item),
+                    result_task = validationTask("", task)
+
+                    // prevents the card being moved does not pass validation
+                if (result_task === false) {
+                    return false
+
+                } else if (result_task === true) {
+                    setTimeout(function() {
+                        updateStatusColumn($(ui.item))
+                    }, 1000); // Enable after 1000 ms.
+                }
+            }
+        }).disableSelection();
+    }
+
+    makeSortable();
+
 
 
 // change task status block
@@ -111,7 +115,7 @@ function updateStatusColumn(task) {
         definitionready = task.closest('.item_container').attr('data-definitionready');
 
     // send to server
-    ajax(url.changeAjaxItens + '?task_id=' + task_id + '&task_status=' + task_status + '&definitionready=' + definitionready, [''], 'target_ajax');
+    ajax(url.move_tasks + '?task_id=' + task_id + '&task_status=' + task_status + '&definitionready=' + definitionready, [''], 'target_ajax');
     // test server callback
     statusAction("status", task_status, task);
 }
@@ -235,9 +239,20 @@ $(document).on("click", ".create_task", function() {
     var newItem = $(this).closest(".item_container").find(".todo").prepend(html);
 
     setTimeout(function() {
-        newItem.find(".new_task:last").trigger('click');
+        newItem.find(".new_task:first").trigger('click');
     }, 100);
-
 });
+
+function realtimeUpdateTak(element) {
+    // var element = $(element),
+        // definition_ready_id = element.closest(".item_container").attr("data-definitionready"),
+    var html = '<ul class="task_container"><li class="task"><div class="avatar_container"><button class="btn btn-nostyle user_card nonuser_card choose_owner"><i class="icon-plus"></i></button></div><div class="card_container"><a href="#" class="editable-click editable-empty editable task_item new_task" data-type="textarea" data-placeholder="' + "msg.field_empty" + '" data-pk="' + "definition_ready_id" + '" data-name="task">' + "msg.field_empty" + '</a><div class="icons_card"><span class="delete_item icon-hover" ><i class="icon-trash"></i></span><span class="card-modal icon-hover" ><i class="icon-cog"></i></span></div></div><div class="clearfix"></div></li></ul>',
+        newItem = $(".item_container").find(".todo").prepend(html);
+
+    // setTimeout(function() {
+        // newItem.find(".new_task:first").trigger('click');
+    // }, 100);
+
+}
 
 

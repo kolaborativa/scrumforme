@@ -1,6 +1,8 @@
-from gluon.contrib.websocket_messaging import websocket_send
-
-def _update_card():
+def _update_card(element):
+    from gluon.contrib.websocket_messaging import websocket_send
+    import json
     # sending websocket message
-    js = "console.log('Here boy!!!')"
-    websocket_send('http://localhost:8888', js, 'mykey', 'mygroup')
+    # js = "console.log('Here boy!!!')"
+    data = json.dumps(element)
+    print "novo"
+    websocket_send('http://localhost:8888', element, 'mykey', 'mygroup')
