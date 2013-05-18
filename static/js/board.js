@@ -9,8 +9,7 @@ $(function() {
 
 });
     // drag in drop
-    var makeSortable = function(){
-        $(".column_task").sortable({
+    var sortableOptions = {
             connectWith: ".column_task",
             placeholder: 'placeholder_item',
             delay: 200,
@@ -54,10 +53,9 @@ $(function() {
                     }, 1000); // Enable after 1000 ms.
                 }
             }
-        }).disableSelection();
-    }
+        }
+    $(".column_task").sortable(sortableOptions).disableSelection();
 
-    makeSortable();
 
 
 
@@ -115,7 +113,7 @@ function updateStatusColumn(task) {
         definitionready = task.closest('.item_container').attr('data-definitionready');
 
     // send to server
-    ajax(url.move_tasks + '?task_id=' + task_id + '&task_status=' + task_status + '&definitionready=' + definitionready, [''], 'target_ajax');
+    ajax(url.move_tasks + '?task_id=' + task_id + '&task_status=' + task_status + '&definitionready=' + definitionready + '&project_id=' + info.project_id, [''], 'target_ajax');
     // test server callback
     statusAction("status", task_status, task);
 }
@@ -134,7 +132,7 @@ function removeTask(element) {
         name = task.attr('data-name'),
         definitionready = task.closest('.item_container').attr('data-definitionready');
 
-    ajax(url.removeTask + '?pk=' + pk + '&name=' + name + '' + '&definitionready=' + definitionready + '', [''], 'target_ajax');
+    ajax(url.removeTask + '?pk=' + pk + '&name=' + name + '' + '&definitionready=' + definitionready + '&project_id=' + info.project_id, [''], 'target_ajax');
     statusAction("remove", "", task);
 }
 

@@ -469,12 +469,12 @@ def create_or_update_itens():
                 # updates the status of story
                 _test_story_completed(request.vars.definitionready, "todo")
 
-                # send to realtime
+                # call realtime
                 data = dict(
                             definition_ready_id=request.vars.definitionready,
-                            status="todo",
-                            task_id=database_id
+                            project_id=request.vars.project_id,
                             )
+
                 _realtime_update_card(data)
 
             return dict(success="success",msg="successfully saved!",name=request.vars.name,database_id=database_id)
@@ -524,12 +524,10 @@ def move_tasks():
         # updates the status of story
         _test_story_completed(request.vars.definitionready, request.vars.task_status)
 
-        # send to realtime
+        # call realtime
         data = dict(
                     definition_ready_id=request.vars.definitionready,
-                    status=request.vars.task_status,
-                    task_id=request.vars.task_id,
-                    move=True
+                    project_id=request.vars.project_id,
                     )
         _realtime_update_card(data)
 
@@ -544,40 +542,9 @@ def _realtime_update_card(element):
     from gluon.contrib.websocket_messaging import websocket_send
     import json
 
-    # data = "realtimeUpdateTak()"
     data = json.dumps(element)
-    websocket_send('http://localhost:8888', data, 'mykey', 'mygroup')
-
-
-@auth.requires_login()
-def load_tasks():
-    if request.vars.definition_ready_id and request.vars.status:
-        tasks = db(Task.definition_ready_id == request.vars.definition_ready_id).select(orderby=~Task.id)
-
-        if tasks:
-            column_tasks = {}
-            count = 0
-            for task in tasks:
-                if task.status == request.vars.status:
-                    if task.owner_task:
-                        person = db(User_relationship.person_id == task.owner_task).select().first()
-                        task.email = person.auth_user_id.email
-
-                        task.comments = len(db(Task_comment.task_id == task.id).select())
-
-                    else:
-                        task.comments = None
-
-                    column_tasks[count] = task
-                    count += 1
-
-            return dict(tasks = column_tasks)
-
-        else:
-            return False
-
-    else:
-        return False
+    projectID = "project%s" %element["project_id"]
+    websocket_send('http://localhost:8888', data, 'mykey', projectID)
 
 
 @auth.requires_login()
@@ -590,6 +557,13 @@ def remove_itens():
             _delete_all_comments(request.vars.pk)
             # updates the status of story
             _test_story_completed(request.vars.definitionready, "remove")
+
+            # call realtime
+            data = dict(
+                definition_ready_id=request.vars.definitionready,
+                project_id=request.vars.project_id,
+                )
+            _realtime_update_card(data)
 
         if request.vars.name == "definition_ready":
             # delete definition of ready

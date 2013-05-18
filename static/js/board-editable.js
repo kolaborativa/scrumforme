@@ -28,6 +28,8 @@ $('.table').editable({
             params.dbUpdate = false;
             params.definitionready = definitionready;
         }
+
+        params.project_id = info.project_id;
         return params;
     },
     validate: function(value) {
