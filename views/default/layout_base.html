@@ -149,15 +149,11 @@
             <script src='{{=URL("static","js/board-editable.js")}}'></script>
             <script src='{{=URL("static","js/board-card.js")}}'></script>
             <script src='{{=URL("static","js/board-modal.js")}}'></script>
+            <!-- call realtime JS -->
+            <script src='{{=URL("static","js/board-realtime.js")}}'></script>
             <script src='{{=URL("static","js/jquery.livesearch.js")}}'></script>
             <script src='{{=URL("static","js/board-livesearch.js")}}'></script>
             <script src='{{=URL("static","js/floatfixed.js")}}'></script>
-            <!-- call realtime JS -->
-            <script>
-                var urlLoadTasks = "http://{{=request.env.http_host}}/{{=request.application}}/{{=request.controller}}/load_tasks/",
-                    project_id = {{=request.args(0)}};
-            </script>
-            <script src='{{=URL("static","js/realtimeBoard.js")}}'></script>
 
             {{ elif request.function == "projects": }}
             <script async defer src='{{=URL("static","js/delete_project.js")}}'></script>

@@ -15,7 +15,7 @@ The Scrumforme is a web2py application and run it you will need:
 
 - Python 2.7.x
 - Web2Py 2.4.6
-- Firefox 15+, Chrome 20+
+- Tested in Firefox 21+ and Google Chrome 26+
 
 ---------------------------------------
 
@@ -69,6 +69,7 @@ Changelog
 - Share project with other users.
 - Delete project.
 - Remove a User from a project.
+- Realtime on Board projects.
 
 ---------------------------------------
 
@@ -76,7 +77,6 @@ TODOLIST
 -----------
 
 - Statistics per person, history, project.
-- Realtime on shared projects.
 - Adjust layout responsive to other devices.
 - Send email to new registered users.
 - When adding a User send email to him.

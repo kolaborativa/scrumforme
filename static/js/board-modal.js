@@ -18,7 +18,7 @@
         // remove last append modal in body
         $("#card_modal").remove();
         // loading modal content
-        $.getJSON(url.card_modal + "?task_id=" + task_id,
+        $.getJSON(url.card_modal + "?task_id=" + task_id + "&project_id=" + info.project_id,
             function (data) {
                 if (data === false) {
                     $(".loading_item").fadeOut("fast");

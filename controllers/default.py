@@ -254,12 +254,13 @@ def _card_modal():
                             %(task.user_relationship.auth_user_id.first_name, \
                             task.user_relationship.auth_user_id.last_name)
 
-
+            # comments of this card
             task_comments = db(Task_comment.task_id == request.vars.task_id).select()
             comments ={}
             if task_comments:
                 for i in task_comments:
                     person = db( (User_relationship.person_id == i.owner_comment) & \
+                           (Sharing.project_id == request.vars.project_id) &\
                            (Sharing.person_id == i.owner_comment) ) \
                            .select(User_relationship.auth_user_id, Sharing.role_id).first()
 
@@ -301,7 +302,7 @@ def _card_new_comment_or_update():
                                 owner_comment=person.user_relationship.person_id
                             )
             person.user_relationship.avatar = Gravatar(person.user_relationship.auth_user_id.email, size=50).thumb
-            person.sharing.role_name = str(person.sharing.role_id.name)
+            person.sharing.role_name = str(T(person.sharing.role_id.name))
             person.user_relationship.member_name = "%s %s" %(person.user_relationship.auth_user_id.first_name,person.user_relationship.auth_user_id.last_name)
             person.comment = request.vars.new_comment
             person.date_comment = d.strftime("%d/%m/%Y %H:%M:%S")
