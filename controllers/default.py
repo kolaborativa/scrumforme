@@ -545,6 +545,7 @@ def move_tasks():
 
         # call realtime
         data_realtime = dict(
+                    page=request.vars.page,
                     definition_ready_id=request.vars.definitionready,
                     project_id=request.vars.project_id,
                     )

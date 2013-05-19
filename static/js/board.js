@@ -113,7 +113,7 @@ function updateStatusColumn(task) {
         definitionready = task.closest('.item_container').attr('data-definitionready');
 
     // send to server
-    ajax(url.move_tasks + '?task_id=' + task_id + '&task_status=' + task_status + '&definitionready=' + definitionready + '&project_id=' + info.project_id, [''], 'target_ajax');
+    ajax(url.move_tasks + '?task_id=' + task_id + '&task_status=' + task_status + '&definitionready=' + definitionready + '&project_id=' + info.project_id + '&page=' + info.page, [''], 'target_ajax');
     // test server callback
     statusAction("status", task_status, task);
 }
@@ -132,7 +132,7 @@ function removeTask(element) {
         name = task.attr('data-name'),
         definitionready = task.closest('.item_container').attr('data-definitionready');
 
-    ajax(url.removeTask + '?pk=' + pk + '&name=' + name + '' + '&definitionready=' + definitionready + '&project_id=' + info.project_id, [''], 'target_ajax');
+    ajax(url.removeTask + '?pk=' + pk + '&name=' + name + '' + '&definitionready=' + definitionready + '&project_id=' + info.project_id + '&page=' + info.page, [''], 'target_ajax');
     statusAction("remove", "", task);
 }
 
