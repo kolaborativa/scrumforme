@@ -30,6 +30,7 @@ $('.table').editable({
         }
 
         params.project_id = info.project_id;
+        params.page = info.page;
         return params;
     },
     validate: function(value) {

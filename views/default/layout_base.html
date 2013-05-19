@@ -146,8 +146,6 @@
             <script src='{{=URL("static","js/board-editable.js")}}'></script>
             <script src='{{=URL("static","js/board-card.js")}}'></script>
             <script src='{{=URL("static","js/board-modal.js")}}'></script>
-            <!-- call realtime JS -->
-            <script src='{{=URL("static","js/board-realtime.js")}}'></script>
             <script src='{{=URL("static","js/jquery.livesearch.js")}}'></script>
             <script src='{{=URL("static","js/board-livesearch.js")}}'></script>
             <script src='{{=URL("static","js/floatfixed.js")}}'></script>
@@ -164,6 +162,12 @@
             <script src='{{=URL("static","js/select2.min.js")}}'></script>
             <script src='{{=URL("static","js/team.js")}}'></script>
             {{ pass }}
+
+            <!-- call realtime JS -->
+            <script>
+                var project_id = "{{=request.args(0)}}";
+            </script>
+            <script src='{{=URL("static","js/realtime.js")}}'></script>
 
             <!--[if lte IE 7]><script src='{{=URL("static","js/lte-ie7.js")}}'>></script><![endif]-->
     </body>

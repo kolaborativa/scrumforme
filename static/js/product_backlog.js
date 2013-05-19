@@ -19,28 +19,30 @@ $(function() {
     $("#backlog").find(".project-items").height(StoryContentBacklog);
     $("#sprint").find(".project-items").height(StoryContentSprint);
 
-    // sprint stories itens
-    $( "#sprint .project-items" ).sortable({
-            placeholder: 'placeholder_item',
-            delay:25,
-            revert:true,
-            dropOnEmpty: true,
-            start: function( event, ui ) {
-                var placeholder = $(ui.item).clone().css({opacity:"0.6",zIndex:"1"});
-                $(".placeholder_item").css({height:placeholder.height(),margin:"0px 0px 20px 0px"});
-                ui.placeholder.html(placeholder);
-
-            },
-            stop: function( event, ui ) {
-
-                setTimeout(function () {
-                    // call the function
-                    updateStoryOrder()
-                }, 1000); // Enable after 1000 ms.
-
-            }
-    });
 });
+
+// sprint stories itens
+var sortableOptions = {
+        placeholder: 'placeholder_item',
+        delay:25,
+        revert:true,
+        dropOnEmpty: true,
+        start: function( event, ui ) {
+            var placeholder = $(ui.item).clone().css({opacity:"0.6",zIndex:"1"});
+            $(".placeholder_item").css({height:placeholder.height(),margin:"0px 0px 20px 0px"});
+            ui.placeholder.html(placeholder);
+
+        },
+        stop: function( event, ui ) {
+
+            setTimeout(function () {
+                // call the function
+                updateStoryOrder()
+            }, 1000); // Enable after 1000 ms.
+
+        }
+}
+$( "#sprint .project-items" ).sortable(sortableOptions);
 
 /*
 ==============
@@ -84,6 +86,8 @@ $('.project-items').editable({
         params.definitionready = definitionready;
         params.order = order;
       }
+      params.project_id = info.project_id;
+      params.page = info.page;
       return params;
   },
   validate: function(value) {
@@ -133,7 +137,7 @@ $('#create_story').click(function(){
       var indexItem = 1;
     }
 
-    var html = '<ul class="story_container item_container"><li class="story"><div class="story_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="textarea" data-placeholder="Click para escrever" data-pk="'+projectID+'" data-index="'+indexItem+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn btn-nostyle expand_story pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-circle-arrow-down"></i></button><button class="btn delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-trash"></i></button><select class="pull-right benefit" alt="'+title.benefit+'" title="'+title.benefit+'" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" alt="'+title.points+'" title="'+title.points+'" disabled="disabled"><button class="btn create_definition_ready pull-right" alt="'+title.create_DR+'" title="'+title.create_DR+'" disabled="disabled">+ '+buttons.DR+'</button><span class="label qtd_definition_ready pull-right tip-bottom" alt="'+title.label_DR+'" title="'+title.label_DR+'">0</span></div><div class="clearfix"></div></div><div class="list_definition_ready"></div></li><div class="buttons_footer new_buttons_footer"><button class="btn btn-primary pull-right send_story_sprint" disabled="disabled">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div></div></ul>';
+    var html = '<ul class="story_container item_container"><li class="story"><div class="story_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="textarea" data-placeholder="Click para escrever" data-pk="'+info.project_id+'" data-index="'+indexItem+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn btn-nostyle expand_story pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-circle-arrow-down"></i></button><button class="btn delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-trash"></i></button><select class="pull-right benefit" alt="'+title.benefit+'" title="'+title.benefit+'" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" alt="'+title.points+'" title="'+title.points+'" disabled="disabled"><button class="btn create_definition_ready pull-right" alt="'+title.create_DR+'" title="'+title.create_DR+'" disabled="disabled">+ '+buttons.DR+'</button><span class="label qtd_definition_ready pull-right tip-bottom" alt="'+title.label_DR+'" title="'+title.label_DR+'">0</span></div><div class="clearfix"></div></div><div class="list_definition_ready"></div></li><div class="buttons_footer new_buttons_footer"><button class="btn btn-primary pull-right send_story_sprint" disabled="disabled">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div></div></ul>';
 
     $("#backlog").find(".project-items").append(html);
 
@@ -164,7 +168,7 @@ $(document).on("click", ".create_task", function(){
 
     var story_id = $(this).closest(".definition_ready_container").find(".definition_ready_card").attr("data-pk");
 
-    var html = '<ul class="item_container zebra_row"><li class="task"><div class="text_container"><a href="#" class="editable-click editable-empty editable new_task" data-type="textarea" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="task">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-trash"></i></button><button class="btn btn-minimize comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment-custom"><span>0</span></i></button></div><div class="clearfix"></div></li></ul>';
+    var html = '<ul class="item_container zebra_row"><li class="task"><div class="text_container"><a href="#" class="editable-click editable-empty editable new_task" data-type="textarea" data-placeholder="'+msg.field_empty+'" data-pk="'+story_id+'" data-name="task">'+msg.field_empty+'</a></div><div class="buttons_container"><button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-trash"></i></button><button class="btn btn-nostyle comment_definition_ready pull-right" alt="Comment" title="Comment"><i class="icon-comment-custom"><span>0</span></i></button></div><div class="clearfix"></div></li></ul>';
 
     var newItem = $(this).closest(".definition_ready_container").find(".list_taks").prepend(html);
 
@@ -233,7 +237,7 @@ $(document).on("click", ".send_story_sprint", function(){
       return false
     }
 
-    ajax(url.changeAjaxItens+'?name=sprint&sprint_id='+sprintID+'&story_id='+storyID, [''], 'target_ajax');
+    ajax(url.changeAjaxItens+'?name=sprint&sprint_id='+sprintID+'&story_id='+storyID+'&project_id='+info.project_id, [''], 'target_ajax');
     statusAction(object,"sprint","send");
 
     // update all story order in sprint
@@ -248,7 +252,7 @@ $(document).on("click", ".back_backlog", function(){
         storyID = object.find(".story_card").attr("data-pk"),
         sprintID = $(".story_container").attr("data-sprint");
 
-    ajax(url.changeAjaxItens+'?name=backlog&sprint_id='+storyID+'&story_id='+storyID, [''], 'target_ajax');
+    ajax(url.changeAjaxItens+'?name=backlog&sprint_id='+storyID+'&story_id='+storyID+'&project_id='+info.project_id, [''], 'target_ajax');
     statusAction(object,"backlog","send");
 });
 
@@ -269,10 +273,10 @@ function removeItem(pk,name,object,action) {
     if(name === "task") {
         // for delete tasks only
         var definitionready = $(object).closest('.definition_ready_container').find(".definition_ready_card").attr('data-pk');
-        ajax(url.removeBacklogItens+'?pk='+pk+'&name='+name+'&definitionready='+definitionready+'', [''], 'target_ajax');
+        ajax(url.removeBacklogItens+'?pk='+pk+'&name='+name+'&definitionready='+definitionready+'&project_id='+info.project_id, [''], 'target_ajax');
 
     }else{
-        ajax(url.removeBacklogItens+'?pk='+pk+'&name='+name+'', [''], 'target_ajax');
+        ajax(url.removeBacklogItens+'?pk='+pk+'&name='+name+'&project_id='+info.project_id, [''], 'target_ajax');
     }
 
     var status = statusAction(object,"",action);
@@ -308,7 +312,7 @@ function updateStoryOrder(){
 
     valuesUrl = jQuery.param(allValues);
     // send to server
-    ajax(url.changeAjaxItens+'?sprint_id='+sprint_id+'&order=order'+'&'+valuesUrl, [''], 'target_ajax');
+    ajax(url.changeAjaxItens+'?sprint_id='+sprint_id+'&order=order'+'&project_id='+info.project_id+'&'+valuesUrl, [''], 'target_ajax');
     // test server callback
     statusAction("","sprint","order");
 }

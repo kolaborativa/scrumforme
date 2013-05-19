@@ -23,7 +23,7 @@ $(document).on("click", ".choose_owner", function() {
     teamMembers($(this));
 });
 
-$('#mask').click(function () {
+$('#mask').click(function (event) {
     $(this).hide();
     var item = $('.users_team'),
         target = $(event.target).closest(".users_team");

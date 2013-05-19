@@ -2,8 +2,7 @@
 
 <script>
     // OBS: other global variables are generated on the page project
-    var projectID = '{{=project.id}}',
-        msg = {
+    var msg = {
             field_empty : '{{=T("Click to write")}}',
             validation_error : '{{=T("Can not be empty")}}',
             confirm : '{{=T("Are you sure you want to continue?")}}',
@@ -15,8 +14,12 @@
         },
         url = {
             create_or_update_itens : '{{=URL("create_or_update_itens.json")}}',
-            removeBacklogItens : '{{=URL("remove_itens")}}',
+            removeBacklogItens : '{{=URL("remove_backlog_itens")}}',
             changeAjaxItens : '{{=URL("change_ajax_itens")}}',
+        },
+        info = {
+            project_id : '{{=project.id}}',
+            page : '{{=request.function}}',
         },
         buttons = {
             DR : '{{=T("DR")}}',
