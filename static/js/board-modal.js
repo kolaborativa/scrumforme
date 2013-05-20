@@ -54,7 +54,7 @@
                     modal_element.modal('show').attr("data-task", task_id);
 
                     // commentbox
-                    var comment_box = '<div id="modal_comment_box"><form id="send_comment" accept-charset="UTF-8" action="" method="POST"><textarea class="span12" id="new_comment" name="new_comment" placeholder="' + txt.type_message + '" rows="2" required></textarea><br><button class="btn btn-success" type="submit">' + button.comment + '</button></form></div><div id="modal_comments"></div>';
+                    var comment_box = '<div id="modal_comment_box"><form id="send_comment" accept-charset="UTF-8" action="" method="POST"><textarea class="span12 autoheight" id="new_comment" name="new_comment" placeholder="' + txt.type_message + '" rows="2" required></textarea><br><button class="btn btn-success" type="submit">' + button.comment + '</button></form></div><div id="modal_comments"></div>';
                     modal_content.append(comment_box);
 
                     // start comments
@@ -240,7 +240,7 @@
         var element = $(this).closest(".card_comments"),
             the_comment = element.find(".the_comment"),
             comment_text = the_comment.text(),
-            editableText = $('<form class="update_comment" accept-charset="UTF-8" action="" method="POST"><textarea class="span12" id="update_comment" name="update_comment" placeholder=' + txt.type_message + ' rows="2" required="">'+comment_text+'</textarea><br><button class="btn btn-mini btn-success" type="submit">' + button.save + '</button><button class="cancel-edit btn btn-mini">' + button.cancel + '</button></form>');
+            editableText = $('<form class="update_comment" accept-charset="UTF-8" action="" method="POST"><textarea class="span12 autoheight" id="update_comment" name="update_comment" placeholder=' + txt.type_message + ' rows="2" required="">'+comment_text+'</textarea><br><button class="btn btn-mini btn-success" type="submit">' + button.save + '</button><button class="cancel-edit btn btn-mini">' + button.cancel + '</button></form>');
 
         // change to editable
         the_comment.fadeOut('fast',function(){

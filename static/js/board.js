@@ -241,16 +241,4 @@ $(document).on("click", ".create_task", function() {
     }, 100);
 });
 
-function realtimeUpdateTak(element) {
-    // var element = $(element),
-        // definition_ready_id = element.closest(".item_container").attr("data-definitionready"),
-    var html = '<ul class="task_container"><li class="task"><div class="avatar_container"><button class="btn btn-nostyle user_card nonuser_card choose_owner"><i class="icon-plus"></i></button></div><div class="card_container"><a href="#" class="editable-click editable-empty editable task_item new_task" data-type="textarea" data-placeholder="' + "msg.field_empty" + '" data-pk="' + "definition_ready_id" + '" data-name="task">' + "msg.field_empty" + '</a><div class="icons_card"><span class="delete_item icon-hover" ><i class="icon-trash"></i></span><span class="card-modal icon-hover" ><i class="icon-cog"></i></span></div></div><div class="clearfix"></div></li></ul>',
-        newItem = $(".item_container").find(".todo").prepend(html);
-
-    // setTimeout(function() {
-        // newItem.find(".new_task:first").trigger('click');
-    // }, 100);
-
-}
-
 

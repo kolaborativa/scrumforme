@@ -750,6 +750,67 @@ def _update_task_date():
         return False
 
 
+@auth.requires_login()
+@service.json
+def chat_all_users():
+    if request.vars.project_id:
+
+        team_members = db(  (db.user_relationship.person_id==Sharing.person_id) & \
+                            (Sharing.project_id == request.vars.project_id) ) \
+                            .select(Sharing.ALL, db.user_relationship.auth_user_id)
+
+        if team_members:
+            # count = 0
+            project = {}
+            for n,member in enumerate(team_members):
+            # for member in team_members:
+                project[n] = {}
+
+                project[n]["person_name"]=member.sharing.person_id.name
+                project[n]["person_role"]=T(member.sharing.role_id.name)
+                project[n]["person_id"]=member.sharing.person_id
+                project[n]["avatar"]=Gravatar(member.user_relationship.auth_user_id.email).thumb
+
+                # count += 1
+
+            return project
+
+        else:
+            return dict(no_team=True)
+
+    else:
+        return dict(no_team=True)
+
+
+@auth.requires_login()
+@service.json
+def send_message_chat():
+    if request.vars.chat:
+        from datetime import datetime
+
+        data_realtime = dict(
+            chat=request.vars.chat,
+            name=request.vars.name,
+            message=request.vars.message,
+            time=datetime.now().strftime("%d/%m %H:%M"),
+            color=request.vars.color,
+            project_id=request.vars.project_id,
+            )
+        _realtime_update(data_realtime)
+
+
+@auth.requires_login()
+@service.json
+def user_online_now():
+    if request.vars.person_id:
+        data_realtime = dict(
+            online=request.vars.online,
+            person_id=request.vars.person_id,
+            project_id=request.vars.project_id,
+            )
+        _realtime_update(data_realtime)
+
+
 # ===================
 #  BACKLOG FUNCTIONS
 # ===================

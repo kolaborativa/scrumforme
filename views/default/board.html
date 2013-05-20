@@ -13,6 +13,9 @@
         card_new_comment_or_update : '{{=URL(r=request,f="call",args=["json","_card_new_comment_or_update"])}}',
         card_delete_comment : '{{=URL(r=request,f="call",args=["json","_card_delete_comment"])}}',
         update_task_date : '{{=URL(r=request,f="call",args=["json","_update_task_date"])}}',
+        chat_all_users : '{{=URL(r=request,f="call",args=["json","chat_all_users"])}}',
+        send_message_chat : '{{=URL(r=request,f="call",args=["json","send_message_chat"])}}',
+        user_online_now : '{{=URL(r=request,f="call",args=["json","user_online_now"])}}',
     },
     msg = {
         field_empty : '{{=T("Click to write")}}',
@@ -47,6 +50,7 @@
         project_id : '{{=project.id}}',
         page : '{{=request.function}}',
         person_id : '{{=person_id}}',
+        color_message_chat : '#'+(Math.random()*0xFFFFFF<<0).toString(16),
     },
     date = {
         sprint_started : '{{=sprint.started}}',
@@ -56,11 +60,16 @@
 
 <div id="target_ajax"></div>
 <div id="mask"></div>
+<!-- chat -->
+{{include "default/chat.html"}}
+
 
 <div id="content-header">
     <div id="breadcrumb">
         <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
         <a href="#" class="current"><i class="icon-list-alt"></i>{{=T('Board')}}</a>
+        <button id="call_chat" class="btn btn-nostyle pull-right" alt="Chat" title="Chat"><i class="icon-comment-alt color-green"></i> Chat</button>
+        <div class="clearfix"></div>
     </div>
 </div>
 

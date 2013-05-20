@@ -54,6 +54,8 @@
         <link rel="stylesheet" href='{{=URL("static","css/datepicker.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/floatfixed.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/board.css")}}' />
+        <!-- chat -->
+        <link rel="stylesheet" href='{{=URL("static","css/chat.css")}}' />
         {{ elif request.function == "statistics": }}
         <link rel="stylesheet" href='{{=URL("static","css/statistics.css")}}' />
         {{ elif request.function == "team": }}
@@ -73,7 +75,6 @@
 
 
         {{include "default/header.html"}}
-
 
         <div id="sidebar" class="close_sidebar">
             <a href="#" class="visible-phone"><i class="icon-th-list"></i> {{=T('Menu')}}</a>
@@ -149,6 +150,8 @@
             <script src='{{=URL("static","js/jquery.livesearch.js")}}'></script>
             <script src='{{=URL("static","js/board-livesearch.js")}}'></script>
             <script src='{{=URL("static","js/floatfixed.js")}}'></script>
+            <!-- chat -->
+            <script src='{{=URL("static","js/chat.js")}}'></script>
 
             {{ elif request.function == "projects": }}
             <script async defer src='{{=URL("static","js/delete_project.js")}}'></script>
@@ -168,6 +171,25 @@
                 var project_id = "{{=request.args(0)}}";
             </script>
             <script src='{{=URL("static","js/realtime.js")}}'></script>
+
+            <!-- UserVoice JavaScript SDK (only needed once on a page) -->
+            <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/Bi2xqa4NNvPpiavFveZsdA.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
+
+            <!-- A tab to launch the Classic Widget -->
+            <script>
+            UserVoice = window.UserVoice || [];
+            UserVoice.push(['showTab', 'classic_widget', {
+              mode: 'full',
+              primary_color: '#cc6d00',
+              link_color: '#007dbf',
+              default_mode: 'support',
+              forum_id: 207481,
+              tab_label: 'Feedback',
+              tab_color: '#292929',
+              tab_position: 'bottom-right',
+              tab_inverted: false
+            }]);
+            </script>
 
             <!--[if lte IE 7]><script src='{{=URL("static","js/lte-ie7.js")}}'>></script><![endif]-->
     </body>

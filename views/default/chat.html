@@ -1,0 +1,64 @@
+<aside id="chat">
+    <!--chat-control-->
+    <div class="loading"></div>
+    <div id="chat-container">
+        <div class="chat-control">
+            <ul class="item grd-white">
+                <li class="active"><a href="#contact" data-toggle="tab" title='{{=T("Users")}}'><i class="icon-adult"></i> {{=T("Users")}}</a></li>
+                <li class=""><a href="#teamchat" data-toggle="tab" title='{{=T("Group Chat")}}'><i class="icon-group"></i> {{=T("Group Chat")}}</a></li>
+            </ul>
+        </div><!-- /chat-control-->
+        <!-- chat-content -->
+        <div id="chat-content">
+            <!--contact-control-->
+            <div id="contact-control">
+                <div class="btn-group pull-right">
+                    <button id="change_status" class="dropdown-toggle btn-nostyle" data-toggle="dropdown">
+                        <i class="icon-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><i class="icofont-certificate color-green"></i> Online</a></li>
+                        <li><a href="#"><i class="icofont-certificate color-silver-dark"></i> Offline</a></li>
+                        <li><a href="#"><i class="icofont-certificate color-red"></i> {{=T("Busy")}}</a></li>
+                        <li><a href="#"><i class="icofont-certificate color-orange"></i> {{=T("Idle")}}</a></li>
+                    </ul>
+                </div>
+                <div id="user_container">
+
+                </div>
+            </div><!--/contact-control-->
+
+            <div class="tab-content">
+
+                <!--contact-->
+                <div class="tab-pane fade active in" id="contact">
+                    <div class="side-contact">
+                        <!--contact-list, we set this max-height:380px, you can set this if you want-->
+                        <ul class="contact-list">
+
+                        </ul><!--/contact-list-->
+                    </div>
+                </div><!--/contact-->
+
+                <!--chat-->
+                <div class="tab-pane fade" id="teamchat">
+                    <div class="side-chat">
+                        <!--header part-->
+<!--                         <div class="chat-header">
+                            <h5><i class="icofont-certificate color-green"></i> Jane smith</h5>
+                        </div> -->
+                        <!--content part-->
+                        <div class="chat-content">
+                        </div>
+                        <!--input <part--></part-->
+                        <div id="chat-input">
+                            <textarea  id="chat_message" class="input-block-level" placeholder='{{=T("chat here")}}...'></textarea>
+                        </div>
+                    </div>
+                    <div class="divider-content"><span></span></div>
+                </div><!--chat-->
+
+            </div>
+        </div><!-- /chat-content -->
+    </div><!-- /chat-container -->
+</aside>

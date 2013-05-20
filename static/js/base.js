@@ -7,7 +7,7 @@ $(document).ready(function(){
 	};
 
 	// autogrow textarea
-    $(document).on("keyup", "textarea", function() {
+    $(document).on("keyup", ".editable-input > textarea, .autoheight", function() {
     	autoGrownTextarea(this);
     });
 
@@ -157,6 +157,6 @@ $(document).ready(function(){
 							.find("i")
 							.toggleClass("icon-chevron-left")
 							.toggleClass("icon-chevron-right");
-		// $("#sidebar").find(".active").toggleClass("open");
 	});
+
 });

@@ -1,0 +1,299 @@
+/*CHAT*/
+
+
+/** text color helper**/
+.color-black{
+    color: #222222;
+}
+
+.color-white{
+    color: #FFFFFF;
+}
+
+.color-silver{
+    color: #F1F1F1;
+}
+
+.color-silver-dark{
+    color : #777777;
+}
+
+.color-win8{
+    color: #00CCFF;
+}
+
+.color-teal{
+    color: #00A0B1;
+}
+
+.color-blue{
+    color: #2E8DEF;
+}
+.color-purple{
+    color: #A700AE;
+}
+.color-purple-dark{
+    color: #643EBF;
+}
+.color-red{
+    color: #BF1E4B;
+}
+.color-orange{
+    color: #DC572E;
+}
+.color-green{
+    color: #00A600;
+}
+.color-sky{
+    color: #0A5BC4;
+}
+/** end text color helper**/
+
+#call_chat{
+/*    position: absolute;
+    top: 100px;
+    right: 10px;*/
+    /*z-index: 1;*/
+    margin: 3px 10px 0 0;
+}
+
+#chat{
+    position: fixed;
+    display: none;
+    height:100%;
+    top: 93px;
+    background-color: #FFFFFF;
+    width: 17%;
+    margin-left: -2.35%;
+    border: 1px solid #CDCDCD;
+    right: 0px;
+    z-index: 9999;
+}
+
+#chat a{
+    color: inherit;
+}
+
+#chat a:hover{
+    color: inherit;
+    text-decoration: none;
+}
+
+#chat-container {
+    display: none;
+}
+
+#change_status {
+    margin-top: 10px;
+}
+
+.user_online h5 {
+    margin-left: 10px;
+}
+
+#contact-control ul li a:hover{
+    color: #fff;
+}
+
+#contact-control hr{
+    margin: 2px 0;
+}
+
+.side-contact ul.contact-list{
+    max-height: 460px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.side-contact ul.contact-list,
+.side-contact ul.contact-list li.contact-alt{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+.side-contact ul.contact-list li.contact-alt:hover{
+    background: #f1f1f1;
+}
+.side-contact ul.contact-list .contact-alt:first-child{
+    border: 1px solid #CDCDCD;
+}
+.side-contact ul.contact-list .contact-alt{
+    border: 1px solid #CDCDCD;
+    border-top: none;
+}
+.side-contact ul.contact-list .contact-alt.active{
+    border-left: none;
+    background: #FFFFFF;
+    color: #00A0B1;
+}
+
+.side-contact ul.contact-list .pull-left{
+    margin-right: 10px;
+}
+.side-contact ul.contact-list .pull-right{
+    margin-left: 10px;
+}
+
+.side-contact ul.contact-list .contact-item-body{
+    overflow: hidden;
+    *overflow: visible;
+    zoom: 1;
+}
+.side-contact ul.contact-list .contact-alt a{
+    display: block;
+    height: 42px;
+    max-height: 42px;
+    overflow: hidden;
+    padding: 5px 5px 0px 5px;
+}
+
+.side-contact ul.contact-list .contact-alt .status{
+    float: right;
+    line-height: 32px;
+    margin-right: 5px;
+}
+
+.side-contact ul.contact-list .contact-item-heading{
+    margin: 0px;
+    width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.side-contact ul.contact-list .help-block{
+    margin: 0px;
+    margin-top: -5px;
+    white-space: nowrap;
+}
+
+
+.grd-white {
+    background: #ffffff;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top, #ffffff 0%, #f1f1f1 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f1f1f1));
+    background: -webkit-linear-gradient(top, #ffffff 0%,#f1f1f1 100%);
+    background: -o-linear-gradient(top, #ffffff 0%,#f1f1f1 100%);
+    background: -ms-linear-gradient(top, #ffffff 0%,#f1f1f1 100%);
+    background: linear-gradient(to bottom, #ffffff 0%,#f1f1f1 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f1f1f1',GradientType=0 );
+    border: 1px solid #fafafa;
+}
+
+
+/* side chat */
+.side-chat{
+    border: 1px solid #CDCDCD;
+    border-bottom: none;
+    overflow: hidden;
+    background: #FFFFFF;
+}
+.side-chat .chat-header{
+    padding: 10px 5px;
+    border-bottom: 1px solid #CDCDCD;
+    height: 24px;
+    color: #626262;
+    background: #f1f1f1;
+}
+.side-chat .chat-header *{
+    margin: auto;
+    white-space: nowrap;
+}
+.side-chat .chat-header .chat-action{
+    line-height: 24px;
+}
+.side-chat .chat-header .chat-action *{
+    font-weight: normal;
+    font-size: 1em;
+    color: #626262;
+    margin-right: 3px;
+}
+.side-chat .chat-content{
+    border-bottom: 1px solid #CDCDCD;
+    padding: 5px;
+    padding-bottom: 20px;
+    overflow: hidden;
+    overflow-y: auto;
+    height: 370px;
+    max-height: 370px;
+}
+
+.side-chat .chat-content .chat-message{
+    margin-bottom: 5px;
+}
+.side-chat .chat-content .chat-message .chat-time{
+    float: right;
+}
+.side-chat .chat-content .chat-message .chat-text{
+    clear: both;
+    text-align: left;
+}
+
+.side-chat #chat-input{
+    padding: 5px;
+    border-bottom: 1px solid #CDCDCD;
+}
+.side-chat #chat-input textarea{
+    resize: none;
+    font-size: 1em;
+    color: #626262;
+    max-width: 100%;
+}
+.side-chat #chat-input textarea:focus,
+.side-chat #chat-input textarea:active{
+    -webkit-box-shadow:rgba(0, 0, 0, 0.0745098) 0 1px 1px inset, rgba(205, 205, 205, 0.6) 0 0 8px;
+    border-color:rgba(205, 205, 205, 0.8);
+    box-shadow:rgba(0, 0, 0, 0.0745098) 0 1px 1px inset, rgba(205, 205, 205, 0.6) 0 0 8px;
+    outline:0;
+}
+
+
+.chat-control > ul.item{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    white-space: nowrap;
+}
+#chat-content{
+    padding: 5px;
+    font-size: .8em;
+    text-align: justify;
+    /*overflow: hidden;*/
+    /*overflow-y: auto;*/
+}
+
+.chat-control > ul.item > li{
+    margin: 0px;
+    position: relative;
+    margin-right: 0px;
+    padding: 0px;
+    list-style: none;
+    line-height: 36px;
+    display: table-cell;
+    text-align: center;
+    border-right: 1px solid #CDCDCD;
+}
+.chat-control > ul.item > li a{
+    margin: 0px;
+    display: block;
+    height: 100%;
+    padding: 0px 10px;
+}
+.chat-control > ul.item > li.active{
+    background-color: #FFFFFF;
+}
+.chat-control > ul.item > li.active:after{
+    position: absolute;
+    left: 0px;
+    content: ' ';
+    display: inline-block;
+    width: 100%;
+    border-bottom: 1px solid #FFF;
+}
+.chat-control > ul.item > li.divider{
+    position: absolute;
+    padding: 0px;
+    height: 38px;
+    width: 0px;
+    border-right: 1px solid #CDCDCD;
+}
+
