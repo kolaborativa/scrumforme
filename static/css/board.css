@@ -372,7 +372,7 @@ td {
 
 .card_container {
     float: left;
-    width: 75%;
+    width: 74%;
 }
 
 .task_item {
@@ -658,6 +658,10 @@ td {
     margin: 10px 0;
     border-top: 1px solid #eeeeee;
     border-bottom: 1px solid #ccc;
+}
+
+.the_comment {
+    word-wrap: break-word;
 }
 
 .comment_buttons {

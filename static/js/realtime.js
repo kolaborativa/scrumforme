@@ -14,9 +14,14 @@ $(document).ready(function () {
         host = "agenciax4.com.br";
     }
 
-    web2py_websocket('ws://' + host + ':8888/realtime/' + myGroup, function (e) {
+    web2py_websocket('ws://' + host + ':8888/realtime/' + myGroup, function (event) {
 
-        obj = JSON.parse(e.data);
+        if (event.data === "+anonymous" || event.data === "-anonymous") {
+            return false;
+        } else {
+            obj = JSON.parse(event.data);
+        }
+
 
         if (obj.page === "board") {
             selector = '.item_container[data-definitionready="' + obj.definition_ready_id + '"]';

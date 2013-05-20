@@ -1007,7 +1007,6 @@ def _realtime_update(element):
     import json
 
     data = json.dumps(element)
-    print data
     projectID = "project%s" %element["project_id"]
     websocket_send('http://localhost:8888', data, 'mykey', projectID)
 
