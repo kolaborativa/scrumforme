@@ -44,6 +44,10 @@ margin-top: 0px;
 =======
 */
 
+#backlog_content {
+    background-color: #fff;
+}
+
 #sprint-header {
     padding-top: 10px;
     margin-bottom: 20px;

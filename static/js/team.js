@@ -66,8 +66,15 @@ $('#add').click(function() {
 });
 
 // Edit role
-$('.edit_role').click(function(){
-    $(this).closest("#team_container").find(".role_team").toggle('normal');
+$('.edit_role').click(function(event){
+    event.preventDefault();
+    $(".role_team").hide('normal');
+    $(this).closest(".users").find(".role_team").toggle('normal');
+});
+
+$('.cancel').click(function(event){
+    event.preventDefault();
+    $(this).closest(".role_team").toggle('normal');
 });
 
 // Remove member

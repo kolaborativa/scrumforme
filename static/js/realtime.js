@@ -25,6 +25,10 @@ $(document).ready(function(){
     // Web Socket is connected
         // call users chat
         callChat();
+        // set this user online
+        setTimeout(function () {
+            usersOnlineNow();
+        },3000);
     };
     ws.onmessage = function (event) {
 
@@ -52,24 +56,29 @@ $(document).ready(function(){
             });
 
         } else if (obj.hasOwnProperty("chat")) {
-            var html = '<div class="chat-message"><span class="chat-time">' + obj.time + '</span><strong class="chat-user" style="color:' + obj.color + '">' + obj.name + ': </strong><div class="chat-text">' + obj.message + '</div></div>',
-                chat_timeline = $(".chat-content");
-            chat_timeline.append(html)
-            chat_timeline.scrollTop(chat_timeline[0].scrollHeight);
+            var html = '<div class="chat-message"><span class="chat-time">' + obj.time + '</span><strong class="chat-user" style="color:' + obj.color + '">' + obj.name + ': </strong><div class="chat-text"><p>' + obj.message + '</p></div></div>',
+                chat_timeline = $(".chat-content"),
+                atBottom = (chat_timeline[0].scrollHeight - chat_timeline.scrollTop() + 1 == chat_timeline.outerHeight());
+
+            chat_timeline.append(html);
+            if (atBottom) {
+                chat_timeline.scrollTop(chat_timeline[0].scrollHeight);
+            } else {
+                $(".chat-content").animate({scrollTop: chat_timeline[0].scrollHeight});
+            }
 
         } else if (obj.hasOwnProperty("online")) {
             var usuario = $('.user_online[data-id="' + obj.person_id + '"]');
             usuario.find(".status").attr("title","online");
-            console.log(usuario);
             usuario.find("i").addClass("color-green");
         }
 
     };
     ws.onerror = function(event){
-        alert("Error Occurred - "+event.data);
+        console.log("Error Occurred - "+event.data);
     };
     ws.onclose = function() {
         // websocket is closed.
-        alert("Connection is closed...");
+        console.log("Connection is closed...");
     };
 });

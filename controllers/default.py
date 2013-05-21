@@ -344,7 +344,6 @@ def get_persons_add():
 @auth.requires_login()
 def add_member():
     if request.vars['persons_id']:
-        print request.vars['persons_id']
 
         project_id = request.vars['project_id']
         persons_id = request.vars['persons_id'].split(',')
@@ -409,19 +408,24 @@ def team():
     roles = db(Role).select()
     members_project = [i.person_id for i in shared_with_person]
 
-    team_members = db(Sharing.project_id == project_id).select()
+    team_members = db(  (db.user_relationship.person_id==Sharing.person_id) & \
+                        (Sharing.project_id == project_id) ) \
+                        .select(Sharing.ALL, db.user_relationship.auth_user_id)
 
     if project.created_by == person_id or person_id in members_project:
        if request.vars:
            person_id, role_id = (request.vars.keys()[0], request.vars.values()[0])
            _edit_role(project_id, person_id, role_id)
            redirect(URL(f='team', args=[project_id]))
+
        return dict(
                 project=project,
                 team_members=team_members,
                 roles=roles,
-                owner_project=project.created_by == person_id
+                owner_project=project.created_by == person_id,
+                owner_project_person_id=project.created_by
                 )
+
     redirect(URL('projects'))
 
 
@@ -645,7 +649,7 @@ def _card_modal():
                             "avatar":Gravatar(person.user_relationship.auth_user_id.email, size=120).thumb,
                             "name":name,
                             "text":i.text_,
-                            "date":i.date_.strftime("%d/%m/%Y %H:%M:%S"),
+                            "date":i.date_.strftime("%d/%m/%Y %H:%M"),
                             "person_id":i.owner_comment,
                             }
 
@@ -679,7 +683,7 @@ def _card_new_comment_or_update():
             person.sharing.role_name = str(T(person.sharing.role_id.name))
             person.user_relationship.member_name = "%s %s" %(person.user_relationship.auth_user_id.first_name,person.user_relationship.auth_user_id.last_name)
             person.comment = request.vars.new_comment
-            person.date_comment = d.strftime("%d/%m/%Y %H:%M:%S")
+            person.date_comment = d.strftime("%d/%m/%Y %H:%M")
             person.new_comment_id = new_comment_id
 
         return person
@@ -760,18 +764,18 @@ def chat_all_users():
                             .select(Sharing.ALL, db.user_relationship.auth_user_id)
 
         if team_members:
-            # count = 0
             project = {}
             for n,member in enumerate(team_members):
-            # for member in team_members:
                 project[n] = {}
 
+                if member.sharing.role_id:
+                    project[n]["person_role"]=T(member.sharing.role_id.name)
+                else:
+                    project[n]["person_role"]=T("No role")
+
                 project[n]["person_name"]=member.sharing.person_id.name
-                project[n]["person_role"]=T(member.sharing.role_id.name)
                 project[n]["person_id"]=member.sharing.person_id
                 project[n]["avatar"]=Gravatar(member.user_relationship.auth_user_id.email).thumb
-
-                # count += 1
 
             return project
 
@@ -933,6 +937,7 @@ def change_ajax_itens():
 # =============================
 
 @auth.requires_login()
+@service.json
 def create_or_update_itens():
     """Function that creates or updates items. Receive updates if request.vars.dbUpdate
     and takes the ID to be updated with request.vars.dbID

@@ -13,7 +13,7 @@
             move_sprint_error : '{{=T("Before moving a story to sprint, you must create a sprint!")}}',
         },
         url = {
-            create_or_update_itens : '{{=URL("create_or_update_itens.json")}}',
+            create_or_update_itens : '{{=URL(r=request,f="call",args=["json","create_or_update_itens"])}}',
             removeBacklogItens : '{{=URL("remove_backlog_itens")}}',
             changeAjaxItens : '{{=URL("change_ajax_itens")}}',
         },
@@ -41,14 +41,15 @@
 
 <div id="target_ajax"></div>
 
-<div class="row-fluid">
-    <div id="content-header">
-        <div id="breadcrumb">
-            <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
-            <a href='{{=URL("projects")}}' title="{{=T('Go to')}} {{=T('Projects')}}" class="tip-bottom"><i class="icon icon-th"></i> {{=T('Projects')}}</a>
-            <a href="#" class="current">{{=T('Product Backlog')}}</a>
-        </div>
+<div id="content-header">
+    <div id="breadcrumb">
+        <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
+        <a href='{{=URL("projects")}}' title="{{=T('Go to')}} {{=T('Projects')}}" class="tip-bottom"><i class="icon icon-th"></i> {{=T('Projects')}}</a>
+        <a href="#" class="current">{{=T('Product Backlog')}}</a>
     </div>
+</div>
+
+<div id="backlog_content" class="row-fluid">
     <div id="backlog" class="span6">
         <div id="sub-header-content" class="row-fluid">
             <div id="project_info" class="span11">

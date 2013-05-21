@@ -3,7 +3,7 @@ $("#call_chat").click(function () {
 
     if (chatElement.is(":hidden")) {
         $("#chat").show();
-        // set users online
+        // set this user online
         usersOnlineNow();
 
     } else {
@@ -85,3 +85,7 @@ function usersOnlineNow () {
     }, "json");
 
 }
+
+$(document).on("click", "#bottom-chat", function () {
+    $(".chat-content").animate({scrollTop: chat_timeline[0].scrollHeight});
+})

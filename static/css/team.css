@@ -2,12 +2,142 @@ li {
     list-style: none;
 }
 
+#project_info, #sprint_info {
+    min-height: 95px;
+}
+
+.italic {
+    font-style: italic;
+}
+
 .role_team {
+    width: 180px;
     display:none;
-    background-color:#ccc;
-    border-radius:5px;
+    background-color:#fff;
+    text-align: left;
+    position: absolute;
+    top: -5px;
+    z-index: 9999;
+    padding: 5px;
+    border: 2px solid rgb(179, 179, 179);
+}
+
+.role_team p {
+    color: rgb(114, 114, 114);
+}
+
+.question_role {
+    font-style: italic;
+    /*font-weight: bold;*/
+    font-size: 12.5px;
 }
 
 .edit_role {
     cursor: pointer;
+    text-decoration: underline;
+    font-style: italic;
+}
+
+.role_content {
+    background-color: rgb(238, 235, 235);
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.edit_role:hover {
+    text-decoration: none;
+}
+
+#right_content {
+    margin-left: 20px;
+}
+
+#addUsers_icons i.icon-user {
+    font-size: 30px;
+    color: #444444;
+}
+
+#addUsers_icons i.icon-plus {
+    position: relative;
+    top: 4px;
+    right: 20px;
+    color: rgb(126, 126, 126);
+    font-size: 14px;
+    text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;
+}
+
+#search_users, .select2-container, .select2-container-multi {
+    width: 91%;
+}
+
+#search_users button {
+    position: relative;
+    right: 33px;
+}
+
+.thumbnails {
+    text-align: center;
+    min-height: 300px;
+}
+
+.users {
+    min-height: 240px;
+}
+
+.thumbnails img {
+    margin: 0 auto;
+}
+
+img.thumbnail_owner_project {
+    background-color: #8ac401;
+    padding-bottom: 20px;
+}
+
+#owner_project {
+    position: relative;
+    bottom: 20px;
+    color: #fff;
+}
+
+#owner_container {
+    position: relative;
+    bottom: 20px;
+}
+
+.users_container {
+    position: relative;
+    top: 15px;
+}
+
+.users_container h5 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cancel, .addrole {
+    display:block;
+    width: 45%!important;
+    border-radius: 0px;
+    background-color: rgb(228, 223, 223);
+    color: #000;
+    padding: 5px;
+    text-align: center;
+}
+
+.addrole {
+    float: left;
+}
+
+.cancel {
+    float: right;
+}
+
+.cancel:hover {
+    background-color: #ccc;
+    color: #000;
+}
+
+.addrole:hover {
+    background-color: #ccc!important;
 }

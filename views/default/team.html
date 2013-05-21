@@ -14,78 +14,106 @@
         confirmRemove: '{{=T("Are you sure you want to remove this user?")}}',
     }
 </script>
-<div id="sub-header-content">
-    <div id="content-header">
-        <div id="breadcrumb">
-            <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
-            <a href="#" class="current" title="{{=T('Projects')}}" >{{=T('Projects')}}</a>
+
+<div id="content-header">
+    <div id="breadcrumb">
+        <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
+        <a href="#" class="current"><i class="icon-list-alt"></i>{{=T('Team')}}</a>
+    </div>
+        <div class="clearfix"></div>
+</div>
+
+<div id="sub-header-content" class="row-fluid">
+    <div id="project_info" class="span6">
+        <div id="project_content">
+            <p><strong>{{=project.name}}</strong> - {{=project.description}}</p>
+            <p><a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
         </div>
-        <div id="header-name" class="pull-left">
+    </div>
+    <div id="sprint_info" class="span6">
+        <div id="right_content">
             {{ if owner_project: }}
-                <h1>{{=T('Add new team member')}} - {{=project.name}}</h1>
-            {{ else: }}
-                <h1>{{=project.name}}</h1>
+            <h4>{{=T("Add professionals in your project team")}}</h4>
+                <div id="addUsers_icons" class="pull-left">
+                    <i class="icon-user"></i>
+                    <i class="icon-plus"></i>
+                </div>
+                <div id="search_users" class="pull-left">
+                    <input type='hidden' id="e6" />
+                    <button class="btn-nostyle" id="add" alt='{{=T("Add")}}' title='{{=T("Add")}}'><i class="icon-plus"></i></button>
+                </div>
             {{pass}}
         </div>
         <div class="clearfix"></div>
-        <!-- <div multiple id="e1"> -->
-        <!-- </div> -->
-
-        {{ if owner_project: }}
-            <input type='hidden' id="e6" style="width: 500px;"  />
-            <br /> <button id="add">{{=T('Add')}}</button>
-        {{pass}}
     </div>
 </div>
+
+<!-- <div class="container-fluid"> -->
+
 <div class="container-fluid">
-    <div class="span5">
-        <h2>{{=T('Members')}}:</h2>
-            {{if team_members:}}
-                {{ for member in team_members: }}
-                <ul id="team_container">
-                    <li>{{=member.person_id.name}}</li>
-                    <li>
-                        {{if owner_project:}}
-                            <button class="btn btn-primary btn-mini edit_role">
-                            {{if member.role_id:}}
-                                {{=T(member.role_id.name)}}
-                            {{else:}}
-                                {{=T("Define role")}}
-                            {{pass}}
-                            </button>
-                        {{else:}}
-                            {{if member.role_id:}}
-                                <p><strong>{{=T(member.role_id.name)}}</strong></p>
-                            {{else:}}
-                                <p><strong>{{=T("No role")}}</strong></p>
-                            {{pass}}
-                        {{pass}}
 
-                        {{if owner_project:}}
-                        <button data-member="{{=member.person_id}}" class=" remove_member btn btn-danger btn-mini">{{=T("remove")}}</button>
-                        {{pass}}
-                    </li>
-                    <br>
-                    <form class="role_team">
-                        <label>
-                            <strong>{{=T("Manage User")}}</strong><br />
-                            {{=T("What role this person will perform in the project?")}}
-                        </label>
-                        {{ for role in roles: }}
-                            {{ if member.role_id:}}
-                                <input type="radio" name="{{=member.person_id}}" value="{{=role.id}}"
-                                    {{if member.role_id.name == role.name:}}checked="checked"{{pass}}
-                                >{{=role.name}}<br />
-                            {{else:}}
-                                <input type="radio" name="{{=member.person_id}}" value="{{=role.id}}" >{{=T(role.name)}}<br />
-                            {{ pass }}
-                        {{ pass }}
-                        <input type="submit" value="OK" class="btn">
-                        <button id="cancel" class="btn">{{=T("Cancel")}}</button>
-                    </form>
-                </ul>
 
-                {{ pass }}
+{{if team_members:}}
+<h3>{{=T('Members')}}:</h3>
+    <ul class="thumbnails">
+    {{ for member in team_members: }}
+      <li class="span2 users">
+        {{if member.sharing.person_id == owner_project_person_id: }}
+          <img class="thumbnail thumbnail_owner_project" alt="{{=member.sharing.person_id.name}}" title="{{=member.sharing.person_id.name}}" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}'>
+          <p id="owner_project"><i class="icon-star"></i> {{=T("Owner")}}</p>
+          <div id="owner_container">
+        {{else:}}
+          <img class="thumbnail" alt="{{=member.sharing.person_id.name}}"  title="{{=member.sharing.person_id.name}}" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}'>
+          <div class="users_container">
+        {{pass}}
+            <h5>{{=member.sharing.person_id.name}}</h5>
+            {{if owner_project:}}
+            <a href="#" class="edit_role">
+            {{if member.sharing.role_id:}}
+                {{=T(member.sharing.role_id.name)}}
+            {{else:}}
+                {{=T("Define role")}}
             {{pass}}
-    </div><!--/span5-->
-</div><!--/container-fluid-->
+            </a>
+            {{else:}}
+                {{if member.sharing.role_id:}}
+                    <p class="italic">{{=T(member.sharing.role_id.name)}}</p>
+                {{else:}}
+                    <p class="italic">{{=T("No role")}}</p>
+                {{pass}}
+            {{pass}}
+
+            {{if owner_project:}}
+            <br>
+            <br>
+            <button data-member="{{=member.sharing.person_id}}" class=" remove_member btn btn-danger btn-mini">{{=T("remove")}}</button>
+            {{pass}}
+            <form class="role_team">
+                <p class="text-center">{{=T("Manage User")}}</p>
+                <div class="role_content">
+                    <p class="question_role">{{=T("What role this person will perform in the project?")}}</p>
+                    {{ for role in roles: }}
+                        {{ if member.sharing.role_id:}}
+                            <label class="radio">
+                                <input type="radio" name="{{=member.sharing.person_id}}" value="{{=role.id}}"
+                                    {{if member.sharing.role_id.name == role.name:}}checked="checked"{{pass}}
+                                >{{=T(role.name)}}
+                            </label>
+                        {{else:}}
+                            <label class="radio">
+                                <input type="radio" name="{{=member.sharing.person_id}}" value="{{=role.id}}" >{{=T(role.name)}}
+                            </label>
+                        {{ pass }}
+                    {{ pass }}
+                </div>
+                <input type="submit" value="OK" class="btn btn-nostyle addrole">
+                <a href="#" class="cancel" class="btn">{{=T("Cancel")}}</a>
+                <div class="clearfix"></div>
+            </form>
+          </div>
+        </li>
+    {{ pass }}
+    </ul>
+{{pass}}
+
+</div>

@@ -72,13 +72,13 @@
                             value = data.comments[key];
                             // owner comment
                             if (info.person_id == value["person_id"]) {
-                                person_owner_comment = '</li><li class="edit_comment">' + button.edit + '</li><li class="delete_comment">' + button.delete + '</li>';
+                                person_owner_comment = '<li class="edit_comment"><i class="icon-pencil"></i> ' + button.edit + '</li><li class="delete_comment"><i class="icon-trash"></i> ' + button.delete + '</li>';
                             } else {
                                 person_owner_comment = "";
                             }
                             // url parse to link
                             new_comment = urlize(value["text"], {nofollow: true, autoescape: true, target: "_blank"});
-                            $("#modal_comments").append('<div class="card_comments" data-commentid="' + key + '"><hr /><img class="pull-left" src="' + value["avatar"] + '" width="50" height="50"><div class="comment_content pull-left"><p><strong>' + value["name"] + '</strong><span class="color_light"> - ' + value["role"] + '</span></p><p class="the_comment">' + new_comment + '</p></div><div class="clearfix"></div><ul class="comment_buttons color_light"><li>' + value["date"] + person_owner_comment + '</ul><div class="clearfix"></div></div>');
+                            $("#modal_comments").append('<div class="card_comments" data-commentid="' + key + '"><hr /><img class="pull-left" src="' + value["avatar"] + '" width="50" height="50"><div class="comment_content pull-left"><p><strong>' + value["name"] + '</strong><span class="color_light"> - ' + value["role"] + '</span></p><p class="the_comment">' + new_comment + '</p></div><div class="clearfix"></div><ul class="comment_buttons color_light">' + person_owner_comment + '<li><i class="icon-calendar"></i> ' + value["date"] + '</li></ul><div class="clearfix"></div></div>');
                         } // end loop
                     } // end comments
                 } // data via ajax
@@ -181,7 +181,7 @@
                     var element_comment = $(card_element).closest(".icons_card").find(".number_comment"),
                         number_comments = parseInt(element_comment.text()) + 1,
                         new_comment = urlize(data.comment, {nofollow: true, autoescape: true, target: "_blank"}),
-                        comment = $('<div class="card_comments" data-commentid="' + data.new_comment_id + '"><hr /><img class="pull-left" src="' + data.user_relationship.avatar + '" alt=""><div class="comment_content pull-left"><p><strong>' + data.user_relationship.member_name + '</strong><span class="color_light"> - ' + data.sharing.role_name + '</span></p><p class="the_comment">' + new_comment + '</p></div><div class="clearfix"></div><ul class="comment_buttons color_light"><li>' + data.date_comment + '</li><li class="edit_comment">' + button.edit + '</li><li class="delete_comment">' + button.delete + '</li></ul><div class="clearfix"></div></div>').hide();
+                        comment = $('<div class="card_comments" data-commentid="' + data.new_comment_id + '"><hr /><img class="pull-left" src="' + data.user_relationship.avatar + '" alt=""><div class="comment_content pull-left"><p><strong>' + data.user_relationship.member_name + '</strong><span class="color_light"> - ' + data.sharing.role_name + '</span></p><p class="the_comment">' + new_comment + '</p></div><div class="clearfix"></div><ul class="comment_buttons color_light"><li class="edit_comment"><i class="icon-pencil"></i> ' + button.edit + '</li><li class="delete_comment"><i class="icon-trash"></i> ' + button.delete + '</li><li><i class="icon-calendar"></i> ' + data.date_comment + '</li></ul><div class="clearfix"></div></div>').hide();
                     // insert in dom
                     $("#modal_comments").prepend(comment);
                     // show comment

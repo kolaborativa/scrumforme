@@ -50,11 +50,11 @@
 /** end text color helper**/
 
 #call_chat{
-/*    position: absolute;
-    top: 100px;
-    right: 10px;*/
-    /*z-index: 1;*/
     margin: 3px 10px 0 0;
+}
+
+#call_chat{
+
 }
 
 #chat{
@@ -224,11 +224,14 @@
     float: right;
 }
 .side-chat .chat-content .chat-message .chat-text{
+    word-wrap: break-word;
     clear: both;
     text-align: left;
 }
 
 .side-chat #chat-input{
+    position: relative;
+    bottom: 20px;
     padding: 5px;
     border-bottom: 1px solid #CDCDCD;
 }
@@ -297,3 +300,43 @@
     border-right: 1px solid #CDCDCD;
 }
 
+#bottom-chat {
+  background-color: #222236;
+  background-color: rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  display: block;
+  line-height: 30px;
+  position: relative;
+  bottom: 60px;
+  left: 10px;
+  /*display: none;*/
+  overflow: hidden;
+  z-index: 1000;
+  -webkit-border-radius: 20px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 20px;
+  -moz-background-clip: padding;
+  border-radius: 20px;
+  background-clip: padding-box;
+  -webkit-transition: background 0.3s ease-in-out;
+  -moz-transition: background 0.3s ease-in-out;
+  -o-transition: background 0.3s ease-in-out;
+  -ms-transition: background 0.3s ease-in-out;
+  transition: background 0.3s ease-in-out;
+  text-decoration: none
+}
+
+#bottom-chat:hover,
+#bottom-chat:focus {
+  background-color: #181826;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  text-decoration: none;
+}
+
+#bottom-chat i {
+  color: #fff;
+}
