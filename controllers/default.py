@@ -796,8 +796,8 @@ def send_message_chat():
             chat=request.vars.chat,
             name=request.vars.name,
             message=request.vars.message,
-            time=datetime.now().strftime("%d/%m %H:%M"),
-            color=request.vars.color,
+            time=datetime.now().strftime("%H:%M %d/%m/%Y"),
+            avatar=request.vars.avatar,
             project_id=request.vars.project_id,
             )
         _realtime_update(data_realtime)

@@ -63,7 +63,7 @@
     height:100%;
     top: 93px;
     background-color: #FFFFFF;
-    width: 17%;
+    width: 20%;
     margin-left: -2.35%;
     border: 1px solid #CDCDCD;
     right: 0px;
@@ -213,8 +213,8 @@
     padding-bottom: 20px;
     overflow: hidden;
     overflow-y: auto;
-    height: 370px;
-    max-height: 370px;
+    height: 400px;
+    max-height: 400px;
 }
 
 .side-chat .chat-content .chat-message{
@@ -230,8 +230,6 @@
 }
 
 .side-chat #chat-input{
-    position: relative;
-    bottom: 20px;
     padding: 5px;
     border-bottom: 1px solid #CDCDCD;
 }
@@ -300,6 +298,11 @@
     border-right: 1px solid #CDCDCD;
 }
 
+.avatar-chat {
+    width: 32px;
+    height: 32px;
+}
+
 #bottom-chat {
   background-color: #222236;
   background-color: rgba(0, 0, 0, 0.3);
@@ -309,10 +312,11 @@
   text-align: center;
   display: block;
   line-height: 30px;
-  position: relative;
-  bottom: 60px;
-  left: 10px;
-  /*display: none;*/
+  position: fixed;
+  /*bottom: 90px;*/
+  right: 30px;
+  float: right;
+  display: none;
   overflow: hidden;
   z-index: 1000;
   -webkit-border-radius: 20px;

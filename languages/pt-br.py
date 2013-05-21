@@ -163,7 +163,6 @@
 'Hello World': 'Olá Mundo',
 'Home': 'Home',
 'How did you get here?': 'How did you get here?',
-'Idle': 'Ocioso',
 'import': 'import',
 'Import/Export': 'Importar/Exportar',
 'In Progress': 'Em Andamento',

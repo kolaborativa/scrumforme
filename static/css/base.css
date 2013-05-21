@@ -1136,7 +1136,7 @@ img.thumbnail {
 .chat-messages {
     background: none repeat scroll 0 0 #FDFDFD;
     border: 1px solid #DDDDDD;
-    height: 425px;
+    /*height: 425px;*/
     overflow: auto;
     position: relative;
 }
@@ -1156,7 +1156,6 @@ img.thumbnail {
 	float: right;
 }
 #chat-messages-inner p {
-    padding: 10px;
     margin: 10px 0;
 }
 #chat-messages-inner p img {

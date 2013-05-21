@@ -56,15 +56,22 @@ $(document).ready(function(){
             });
 
         } else if (obj.hasOwnProperty("chat")) {
-            var html = '<div class="chat-message"><span class="chat-time">' + obj.time + '</span><strong class="chat-user" style="color:' + obj.color + '">' + obj.name + ': </strong><div class="chat-text"><p>' + obj.message + '</p></div></div>',
+            var html = '<p style="display: block;"><img src="' + obj.avatar + '" alt=""><span class="msg-block"><strong>' + obj.name + '</strong> <span class="time">- ' + obj.time + '</span><span class="msg">' + obj.message + '</span></span></p>',
                 chat_timeline = $(".chat-content"),
+                bottomChat = $("#bottom-chat"),
                 atBottom = (chat_timeline[0].scrollHeight - chat_timeline.scrollTop() + 1 == chat_timeline.outerHeight());
 
             chat_timeline.append(html);
+
             if (atBottom) {
                 chat_timeline.scrollTop(chat_timeline[0].scrollHeight);
+
+                if (bottomChat.is(":visible")) {
+                    bottomChat.fadeOut();
+                }
+
             } else {
-                $(".chat-content").animate({scrollTop: chat_timeline[0].scrollHeight});
+                bottomChat.fadeIn();
             }
 
         } else if (obj.hasOwnProperty("online")) {

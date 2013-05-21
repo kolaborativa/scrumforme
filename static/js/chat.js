@@ -30,9 +30,9 @@ function callChat() {
             for (i in data) {
                 if (data[i]["person_id"] === parseInt(info.person_id)) {
                     first_name = data[i]["person_name"].split(" ");
-                    user_data = '<div class="user_online" data-id="' + data[i]["person_id"] + '"><div class="pull-left"><img class="contact-item-object" style="width: 32px;height: 32px;" src="' + data[i]["avatar"] + '"></div><div class="contact-item-body pull-left"><h5 class="user_name">' + first_name[0] + '</h5></div><div class="clearfix"></div></div><hr>';
+                    user_data = '<div class="user_online" data-id="' + data[i]["person_id"] + '"><div class="pull-left"><img class="avatar-chat" src="' + data[i]["avatar"] + '"></div><div class="contact-item-body pull-left"><h5 class="user_name">' + first_name[0] + '</h5></div><div class="clearfix"></div></div><hr>';
                 } else {
-                    html += '<li class="contact-alt grd-white"><a href="#" class="user_online" data-id="' + data[i]["person_id"] + '"><div class="contact-item"><div class="pull-left"><img class="contact-item-object" style="width: 32px;height: 32px;" src="' + data[i]["avatar"] + '"></div><div class="contact-item-body"><div class="status" title="offline"><i class="icon-certificate color-gray"></i></div><p class="contact-item-heading bold">' + data[i]["person_name"] + '</p><p class="help-block"><small class="muted">' + data[i]["person_role"] + '</small></p></div></div></a></li>';
+                    html += '<li class="contact-alt grd-white"><a href="#" class="user_online" data-id="' + data[i]["person_id"] + '"><div class="contact-item"><div class="pull-left"><img class="avatar-chat" src="' + data[i]["avatar"] + '"></div><div class="contact-item-body"><div class="status" title="offline"><i class="icon-certificate color-gray"></i></div><p class="contact-item-heading bold">' + data[i]["person_name"] + '</p><p class="help-block"><small class="muted">' + data[i]["person_role"] + '</small></p></div></div></a></li>';
                 }
             }
         }
@@ -52,14 +52,15 @@ function sendMessage(element) {
 
     var mymessage = $(element).val(), //get message text
         myname = $(".user_name").text(), //get user name
-        querystring = "";
+        querystring = "",
+        avatar = $("#user_container").find("img").attr("src");
 
-    if(mymessage == ""){ //emtpy message?
-        alert("Enter Some message Please!");
-        return;
+    if(mymessage == "\n" ){ //emtpy message?
+        $(element).val("");
+        return false;
     }
 
-    querystring = "&chat=true&message=" + mymessage + "&name=" + myname + "&project_id=" + info.project_id + "&color=" + info.color_message_chat;
+    querystring = "&chat=true&message=" + mymessage + "&name=" + myname + "&project_id=" + info.project_id + "&avatar=" + avatar;
 
     $.post(url.send_message_chat,
         querystring,
@@ -86,6 +87,8 @@ function usersOnlineNow () {
 
 }
 
-$(document).on("click", "#bottom-chat", function () {
-    $(".chat-content").animate({scrollTop: chat_timeline[0].scrollHeight});
+$("#bottom-chat").click(function () {
+    var chat_timeline = $(".chat-content");
+    chat_timeline.animate({scrollTop: chat_timeline[0].scrollHeight});
+    $(this).fadeOut();
 })
