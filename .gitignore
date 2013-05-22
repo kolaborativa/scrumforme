@@ -2,11 +2,9 @@
 *.*~
 *.bak
 *.log
-*.ogg
 *.ogv
 *.pyc
 *.swp
-*.wav
 *.avi
 
 # sqlite database files and web2py table structs
