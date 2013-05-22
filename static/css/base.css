@@ -1186,6 +1186,7 @@ img.thumbnail {
 #chat-messages-inner .msg {
     display: block;
     margin-top: 10px;
+    font-size: 13px;
 }
 #chat-messages-inner .msg-block:before {
 	border-right: 7px solid rgba(0,0,0,0.1);

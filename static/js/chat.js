@@ -48,15 +48,16 @@ $('#chat_message').on('keyup', function(e) {
     }
 });
 
-function sendMessage(element) {
+function sendMessage(object) {
 
-    var mymessage = $(element).val(), //get message text
+    var element = $(object), //get message text
+        mymessage = element.val(), //get message text
         myname = $(".user_name").text(), //get user name
         querystring = "",
         avatar = $("#user_container").find("img").attr("src");
 
     if(mymessage == "\n" ){ //emtpy message?
-        $(element).val("");
+        element.val("");
         return false;
     }
 
@@ -66,7 +67,7 @@ function sendMessage(element) {
         querystring,
         function(data, status) {
             if(status === "success") {
-                $(element).val("");
+                element.val("");
                 console.log("message sended");
             }
       //data contains the JSON object
@@ -86,6 +87,11 @@ function usersOnlineNow () {
     }, "json");
 
 }
+
+$("#chat-group").click(function () {
+    // focus on textarea
+    setTimeout(function(){$('#chat_message').focus();}, 400)
+})
 
 $("#bottom-chat").click(function () {
     var chat_timeline = $(".chat-content");

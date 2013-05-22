@@ -73,6 +73,7 @@ $(document).ready(function(){
             } else {
                 bottomChat.fadeIn();
             }
+            $('#chatAudio')[0].play();
 
         } else if (obj.hasOwnProperty("online")) {
             var usuario = $('.user_online[data-id="' + obj.person_id + '"]');

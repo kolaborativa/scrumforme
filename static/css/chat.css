@@ -235,18 +235,10 @@
 }
 .side-chat #chat-input textarea{
     resize: none;
-    font-size: 1em;
+    font-size: 13px;
     color: #626262;
     max-width: 100%;
 }
-.side-chat #chat-input textarea:focus,
-.side-chat #chat-input textarea:active{
-    -webkit-box-shadow:rgba(0, 0, 0, 0.0745098) 0 1px 1px inset, rgba(205, 205, 205, 0.6) 0 0 8px;
-    border-color:rgba(205, 205, 205, 0.8);
-    box-shadow:rgba(0, 0, 0, 0.0745098) 0 1px 1px inset, rgba(205, 205, 205, 0.6) 0 0 8px;
-    outline:0;
-}
-
 
 .chat-control > ul.item{
     margin: 0px;
