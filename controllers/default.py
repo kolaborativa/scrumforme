@@ -359,9 +359,11 @@ def add_member():
         persons_id = request.vars['persons_id'].split(',')
         person = _get_person()
         person_id = person["person_id"]
-        project = db(Project.id==project_id).select().first()
 
-        if project.created_by == person_id:
+        project = db(Project.id==project_id).select().first()
+        shared = db(Sharing.person_id==person_id).select().first()
+
+        if project.created_by == person_id or shared.project_admin == True:
             for person in persons_id:
                 Sharing.insert(project_id=project_id,
                                person_id=int(person),
@@ -376,7 +378,9 @@ def remove_member():
     person_id = request.vars['person_id']
     person = _get_person()
     my_person_id = person["person_id"]
+
     project = db(Project.id==project_id).select().first()
+    shared = db(Sharing.person_id==my_person_id).select().first()
 
     # remove task owner
     task_person = db(Task.owner_task == person_id).select()
@@ -386,7 +390,7 @@ def remove_member():
                 owner_task=None,
             )
     # remove person of a project
-    if project.created_by == my_person_id:
+    if project.created_by == my_person_id or shared.project_admin == True:
         db((Sharing.project_id==project_id) & (Sharing.person_id==person_id)).delete()
 
     redirect(URL(f='team', args=[project_id]))
@@ -394,10 +398,13 @@ def remove_member():
 
 
 @auth.requires_login()
-def _edit_role(project_id, person_id, role_id):
+def _edit_role(project_id, person_id, role_id, project_admin=False):
     try:
         db((Sharing.project_id==project_id) & \
-            (Sharing.person_id==person_id)).update(role_id=role_id)
+            (Sharing.person_id==person_id)).update(
+                                                role_id=role_id,
+                                                project_admin=project_admin
+                                                )
     except:
         redirect(URL(f='team', args=[project_id]))
     return
@@ -422,18 +429,31 @@ def team():
                         (Sharing.project_id == project_id) ) \
                         .select(Sharing.ALL, db.user_relationship.auth_user_id)
 
-    if project.created_by == person_id or person_id in members_project:
-       if request.vars:
-           person_id, role_id = (request.vars.keys()[0], request.vars.values()[0])
-           _edit_role(project_id, person_id, role_id)
-           redirect(URL(f='team', args=[project_id]))
+    project_admins = [a.sharing.person_id for a in team_members if a.sharing.project_admin]
 
-       return dict(
+    if project.created_by == person_id or person_id in members_project:
+        if request.vars:
+            if request.vars.project_admin and len(request.vars.keys()) > 1:
+                project_admin = request.vars.keys()[0]
+                person_id = request.vars.keys()[1]
+                role_id = request.vars.values()[1]
+                _edit_role(project_id, person_id, role_id, project_admin)
+
+            else:
+                person_id = request.vars.keys()[0]
+                role_id = request.vars.values()[0]
+
+                _edit_role(project_id, person_id, role_id)
+
+            redirect(URL(f='team', args=[project_id]))
+
+        return dict(
                 project=project,
                 team_members=team_members,
                 roles=roles,
                 owner_project=project.created_by == person_id,
-                owner_project_person_id=project.created_by
+                owner_project_person_id=project.created_by,
+                project_admin=person_id in project_admins
                 )
 
     redirect(URL('projects'))
@@ -798,7 +818,7 @@ def chat_all_users():
 
 @auth.requires_login()
 @service.json
-def send_message_chat():
+def send_message_chat_group():
     if request.vars.chat:
         from datetime import datetime
 

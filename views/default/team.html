@@ -32,7 +32,7 @@
     </div>
     <div id="sprint_info" class="span6">
         <div id="right_content">
-            {{ if owner_project: }}
+            {{ if owner_project or project_admin: }}
             <h4>{{=T("Add professionals in your project team")}}</h4>
                 <div id="addUsers_icons" class="pull-left">
                     <i class="icon-user"></i>
@@ -67,7 +67,7 @@
           <div class="users_container">
         {{pass}}
             <h5>{{=member.sharing.person_id.name}}</h5>
-            {{if owner_project:}}
+            {{if owner_project or project_admin:}}
             <a href="#" class="edit_role">
             {{if member.sharing.role_id:}}
                 {{=T(member.sharing.role_id.name)}}
@@ -82,8 +82,7 @@
                     <p class="italic">{{=T("No role")}}</p>
                 {{pass}}
             {{pass}}
-
-            {{if owner_project:}}
+            {{if owner_project or project_admin:}}
             <br>
             <br>
             <button data-member="{{=member.sharing.person_id}}" class=" remove_member btn btn-danger btn-mini">{{=T("remove")}}</button>
@@ -105,6 +104,11 @@
                             </label>
                         {{ pass }}
                     {{ pass }}
+                    <hr>
+                    <label class="checkbox">
+                        <input type="checkbox" name="project_admin" {{if member.sharing.project_admin:}}checked="checked"{{pass}}
+                        >Admin
+                    </label>
                 </div>
                 <input type="submit" value="OK" class="btn btn-nostyle addrole">
                 <a href="#" class="cancel" class="btn">{{=T("Cancel")}}</a>

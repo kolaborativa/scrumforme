@@ -1,9 +1,3 @@
-$(function() {
-
-
-
-});
-
 $(".call_chat").click(function () {
     var chatElement = $("#chat");
 
@@ -69,7 +63,7 @@ function sendMessage(object) {
 
     querystring = "&chat=true&message=" + mymessage + "&name=" + myname + "&project_id=" + info.project_id + "&avatar=" + avatar;
 
-    $.post(url.send_message_chat,
+    $.post(url.send_message_chat_group,
         querystring,
         function(data, status) {
             if(status === "success") {
@@ -100,10 +94,6 @@ $("#chat-group").click(function () {
 
     setTimeout(function(){
         chatContainer.find("textarea").focus();
-        // set chat message box height until textarea chat
-        $('.chat-content').height(function(index, height) {
-            return window.innerHeight - ($(this).offset().top + 40 + chatContainer.outerHeight());
-        });
     }, 400);
 });
 
@@ -112,11 +102,6 @@ $("#bottom-chat").click(function () {
     var chat_timeline = $(".chat-content");
     chat_timeline.animate({scrollTop: chat_timeline[0].scrollHeight});
     $(this).fadeOut();
-});
-
-// set chat height until bottom
-$('#chat').height(function(index, height) {
-    return (window.innerHeight - $(this).offset().top);
 });
 
 

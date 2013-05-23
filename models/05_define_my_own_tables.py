@@ -89,6 +89,7 @@ if not "sharing" in db.tables:
         Field("project_id", db.project, default=None),
         Field("person_id", db.person, default=None),
         Field("role_id", db.role, default=None),
+        Field("project_admin", "boolean", default=False),
         migrate="sharing.table")
 
 if not "burndown" in db.tables:

@@ -82,7 +82,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="13" y="269" name="auth_user">
+<table x="4" y="244" name="auth_user">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -103,7 +103,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="375" y="89" name="sprint">
+<table x="359" y="66" name="sprint">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -141,7 +141,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="602" y="36" name="story">
+<table x="600" y="9" name="story">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -265,7 +265,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="554" y="484" name="task_comment">
+<table x="555" y="444" name="task_comment">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -300,7 +300,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="157" y="380" name="user_relationship">
+<table x="146" y="304" name="user_relationship">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -323,7 +323,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="352" y="547" name="sharing">
+<table x="360" y="474" name="sharing">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -343,6 +343,10 @@
 <default>NULL</default>
 <relation table="role" row="id" />
 </row>
+<row name="project_admin" null="1" autoincrement="0">
+<datatype>boolean</datatype>
+<default>False</default>
+</row>
 <row name="_object_name" null="1" autoincrement="0">
 <datatype>integer</datatype>
 <default>Sharing</default>
@@ -351,7 +355,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="138" y="532" name="role">
+<table x="174" y="492" name="role">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -372,7 +376,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="603" y="316" name="burndown">
+<table x="578" y="286" name="burndown">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
