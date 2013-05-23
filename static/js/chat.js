@@ -1,4 +1,10 @@
-$("#call_chat").click(function () {
+$(function() {
+
+
+
+});
+
+$(".call_chat").click(function () {
     var chatElement = $("#chat");
 
     if (chatElement.is(":hidden")) {
@@ -88,13 +94,86 @@ function usersOnlineNow () {
 
 }
 
+// set focus on textarea
 $("#chat-group").click(function () {
-    // focus on textarea
-    setTimeout(function(){$('#chat_message').focus();}, 400)
-})
+    var chatContainer = $("#chat-input");
 
+    setTimeout(function(){
+        chatContainer.find("textarea").focus();
+        // set chat message box height until textarea chat
+        $('.chat-content').height(function(index, height) {
+            return window.innerHeight - ($(this).offset().top + 40 + chatContainer.outerHeight());
+        });
+    }, 400);
+});
+
+// to bottom on the chat
 $("#bottom-chat").click(function () {
     var chat_timeline = $(".chat-content");
     chat_timeline.animate({scrollTop: chat_timeline[0].scrollHeight});
     $(this).fadeOut();
-})
+});
+
+// set chat height until bottom
+$('#chat').height(function(index, height) {
+    return (window.innerHeight - $(this).offset().top);
+});
+
+
+
+// =======================
+//  CHAT NOTIFICATION API
+// =======================
+
+function authorize(object) {
+    var element = $(object);
+    Notification.requestPermission(function(perm) {
+        element.parent().find("span").show();
+    });
+}
+
+function isAuth() {
+    return Notification.permission === 'granted' ||
+            window.webkitNotifications.checkPermission() === 0;
+};
+
+function show(avatar, titleNotify, message) {
+  var notification = new Notification(titleNotify, {
+      dir: "auto",
+      lang: "",
+      icon: avatar,
+      body: message,
+      tag: "sometag",
+  });
+
+  // notification.onclose = …
+  // notification.onshow = …
+  // notification.onerror = …
+    notification.onclick = function() {
+        window.focus();
+        this.cancel();
+    };
+    notification.onshow = function() {
+        setTimeout(function () {
+            notification.close();
+        }, 10000);
+    };
+}
+
+var Notifications = {
+    requestPermission: function(callback) {
+        window.webkitNotifications.requestPermission(callback);
+    }
+};
+
+$('#authorize_notification').click(function() {
+    authorize(this);
+});
+
+
+// call the notification
+function notify(avatar, titleNotify, message) {
+    if (this.isAuth()) {
+        show(avatar, titleNotify, message);
+    }
+}

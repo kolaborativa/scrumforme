@@ -2,6 +2,7 @@ $(document).ready(function(){
     "use strict";
 
     var host = window.location.host,
+        window_focus = true,
         myGroup = "project" + project_id,
         wsUri,
         ws,
@@ -10,6 +11,10 @@ $(document).ready(function(){
         container,
         selectorSortable,
         selector;
+
+    // verify windows focus
+    window.onblur = function() { window_focus = false; }
+    window.onfocus = function() { window_focus = true; }
 
     if (host === "localhost:8000") {
         host = "127.0.0.1";
@@ -56,9 +61,11 @@ $(document).ready(function(){
             });
 
         } else if (obj.hasOwnProperty("chat")) {
-            var html = '<p style="display: block;"><img src="' + obj.avatar + '" alt=""><span class="msg-block"><strong>' + obj.name + '</strong> <span class="time">- ' + obj.time + '</span><span class="msg">' + obj.message + '</span></span></p>',
+            var message = urlize(obj.message, {nofollow: true, autoescape: true, target: "_blank"}),
+                html = '<p style="display: block;"><img src="' + obj.avatar + '" alt=""><span class="msg-block"><strong>' + obj.name + '</strong> <span class="time">- ' + obj.time + '</span><span class="msg">' + message + '</span></span></p>',
                 chat_timeline = $(".chat-content"),
                 bottomChat = $("#bottom-chat"),
+                titleNotify = txt.titleNotification + " " + obj.name + ":",
                 atBottom = (chat_timeline[0].scrollHeight - chat_timeline.scrollTop() + 1 == chat_timeline.outerHeight());
 
             chat_timeline.append(html);
@@ -73,7 +80,13 @@ $(document).ready(function(){
             } else {
                 bottomChat.fadeIn();
             }
-            $('#chatAudio')[0].play();
+
+
+            if(!window_focus) {
+                // play sound on message
+                $('#chatAudio')[0].play();
+                notify(obj.avatar, titleNotify, message);
+            }
 
         } else if (obj.hasOwnProperty("online")) {
             var usuario = $('.user_online[data-id="' + obj.person_id + '"]');

@@ -1134,7 +1134,7 @@ img.thumbnail {
 	padding: 15px;
 }
 .chat-messages {
-    background: none repeat scroll 0 0 #FDFDFD;
+    background: none repeat scroll 0 0 rgb(236, 236, 236);
     border: 1px solid #DDDDDD;
     /*height: 425px;*/
     overflow: auto;
@@ -1167,6 +1167,7 @@ img.thumbnail {
     margin-top: 6px;
 }
 #chat-messages-inner .msg-block, #chat-messages-inner p.offline span {
+    word-wrap: break-word;
     background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #cccccc;
     box-shadow: 1px 1px 0 1px rgba(0, 0, 0, 0.05);
@@ -1174,6 +1175,13 @@ img.thumbnail {
     margin-left: 40px;
     padding: 10px;
     position: relative;
+}
+#chat-messages-inner .msg-block a {
+    color: blue;
+}
+#chat-messages-inner .msg-block a:hover {
+    color: blue;
+    text-decoration: underline;
 }
 #chat-messages-inner p.offline span {
     background: none repeat scroll  0 0 #FFF5F5;

@@ -85,7 +85,7 @@
                     {{if not request.function == "projects":}}
                         <li class='{{=g_current_page("default/board/%s" %request.args(0),"active")}}'><a href='{{=URL(f="board",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Board')}}" title="{{=T('Board')}}"><i class="icon-list-alt"></i> <span>{{=T('Board')}}</span></a></li>
                         <li class='{{=g_current_page("default/product_backlog/%s" %request.args(0),"active")}}'><a href='{{=URL(f="product_backlog",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Backlog')}}" title="{{=T('Backlog')}}"><i class="icon-tasks"></i> <span>{{=T('Backlog')}}</span></a></li>
-                        <li><a href="#" class="tip-right" alt="{{=T('Sprints')}}" title="{{=T('Sprints')}}"><i class="icon-credit-card"></i> <span>{{=T('Sprints')}}</span></a></li>
+                        <li class='{{=g_current_page("default/sprints/%s" %request.args(0),"active")}}'><a href='{{=URL(f="sprints",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Sprints')}}" title="{{=T('Sprints')}}"><i class="icon-credit-card"></i> <span>{{=T('Sprints')}}</span></a></li>
                         <li><a href="#" class="tip-right" alt="{{=T('Archives')}}" title="{{=T('Archives')}}"><i class="icon-file"></i> <span>{{=T('Archives')}}</span></a></li>
                         <li class='{{=g_current_page("default/team/%s" %request.args(0),"active")}}'><a href='{{=URL(f="team",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Team')}}" title="{{=T('Team')}}"><i class="icon-group"></i> <span>{{=T('Team')}}</span></a></li>
                         <li class='{{=g_current_page("default/statistics/%s" %request.args(0),"active")}}'><a href='{{=URL(f="statistics",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Statistics')}}" title="{{=T('Statistics')}}"><i class="icon-graph "></i> <span>{{=T('Statistics')}}</span></a></li>
@@ -131,7 +131,7 @@
             <script src='{{=URL("static","js/web2py.js")}}'></script>
             <script src="{{=URL('static','js/jquery-ui-1.10.3.custom.min.js')}}"></script>
             <script src='{{=URL("static","js/bootstrap.min.js")}}'></script>
-            <script async defer src='{{=URL("static","js/base.js")}}'></script>
+            <script src='{{=URL("static","js/base.js")}}'></script>
             {{ if not request.function == "projects": }}
             <script src='{{=URL("static","js/bootstrap-editable.min.js")}}'></script>
             <script async defer src="{{=URL('static','js/jquery.ui.touch-punch.min.js')}}"></script>
@@ -168,7 +168,10 @@
 
             <!-- call realtime JS -->
             <script>
-                var project_id = "{{=request.args(0)}}";
+                var project_id = "{{=request.args(0)}}",
+                    txt = {
+                        titleNotification : '{{=T("New message from")}}',
+                    };
             </script>
             <script src='{{=URL("static","js/realtime.js")}}'></script>
 

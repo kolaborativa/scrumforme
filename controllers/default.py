@@ -67,6 +67,16 @@ def delete_project():
     redirect(URL('projects'))
 
 
+# ==============
+#  PAGE SPRINTS
+# ==============
+
+@auth.requires_login()
+def sprints():
+    return dict()
+
+
+
 # ======================
 #  PAGE PRODUCT BACKLOG
 # ======================
