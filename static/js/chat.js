@@ -97,6 +97,14 @@ $("#chat-group").click(function () {
     }, 400);
 });
 
+// set focus on textarea
+$("#chat-config").click(function () {
+
+    setTimeout(function(){
+        isAuth();
+    }, 1000);
+});
+
 // to bottom on the chat
 $("#bottom-chat").click(function () {
     var chat_timeline = $(".chat-content");
@@ -113,13 +121,22 @@ $("#bottom-chat").click(function () {
 function authorize(object) {
     var element = $(object);
     Notification.requestPermission(function(perm) {
-        element.parent().find("span").show();
+        element.parent().find("span").fadeIn();
+        setTimeout(function(){
+            element.parent().find("span").fadeOut();
+        }, 400);
+        isAuth();
     });
 }
 
 function isAuth() {
-    return Notification.permission === 'granted' ||
+    var authorized = Notification.permission === 'granted' ||
             window.webkitNotifications.checkPermission() === 0;
+    if(authorized === true) {
+        var authorize_notification = $("#authorize_notification");
+        authorize_notification.addClass("disabled btn-success").text("ON");
+    }
+    return authorized
 };
 
 function show(avatar, titleNotify, message) {

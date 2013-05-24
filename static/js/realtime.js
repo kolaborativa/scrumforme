@@ -66,7 +66,7 @@ $(document).ready(function(){
                 html = '<p style="display: block;"><img src="' + obj.avatar + '" alt=""><span class="msg-block"><strong>' + obj.name + '</strong> <span class="time">- ' + obj.time + '</span><span class="msg">' + message + '</span></span></p>',
                 chat_timeline = $(".chat-content"),
                 bottomChat = $("#bottom-chat"),
-                titleNotify = txt.titleNotification + " " + obj.name + ":",
+                titleNotify = txtGlobal.titleNotification + " " + obj.name + ":",
                 atBottom = (chat_timeline[0].scrollHeight - chat_timeline.scrollTop() + 1 == chat_timeline.outerHeight());
             console.log(chat_timeline.outerHeight());
             chat_timeline.append(html);

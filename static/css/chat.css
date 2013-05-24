@@ -53,6 +53,13 @@
     margin: 3px 10px 0 0;
 }
 
+.button_chat{
+    position: fixed;
+    bottom: 0px;
+    right: 100px;
+    z-index: 9999;
+}
+
 #call_chat{
 
 }
@@ -67,7 +74,7 @@
     margin-left: -2.35%;
     border: 1px solid #CDCDCD;
     right: 0px;
-    z-index: 9999;
+    z-index: 10000;
 }
 
 #chat a{

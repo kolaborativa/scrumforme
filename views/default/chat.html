@@ -7,7 +7,7 @@
                 <li class="active"><a href="#contact" data-toggle="tab" title='{{=T("Team")}}'><i class="icon-adult"></i> {{=T("Team")}}</a></li>
                 <li id="chat-group"><a href="#teamchat" data-toggle="tab" title='{{=T("Group Chat")}}'><i class="icon-group"></i> {{=T("Group Chat")}}</a></li>
                 <li class="call_chat"><button class="btn-nostyle" title='{{=T("minimize")}}'><i class="icon-minus"></i></button></li>
-                <li id="chat-group"><a href="#chatconfig" data-toggle="tab" title='{{=T("Group Chat")}}'><i class="icon-cog"></i></a></li>
+                <li id="chat-config"><a href="#chatconfig" data-toggle="tab" title='{{=T("Group Chat")}}'><i class="icon-cog"></i></a></li>
             </ul>
         </div><!-- /chat-control-->
         <!-- chat-content -->
@@ -63,8 +63,8 @@
                 <!--chatconfig-->
                 <div class="tab-pane fade" id="chatconfig">
                     <div id="chat_config">
-                        <h5>Notifications</h5>
-                        <button id="authorize_notification" class="btn btn-primary">ON</button>
+                        <h5>{{=T("Notifications")}}</h5>
+                        <button id="authorize_notification" class="btn btn-primary">{{=T("authorize")}}</button>
                         <br>
                         <br>
                         <span style="display:none;">OK</span>
