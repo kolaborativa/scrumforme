@@ -21,104 +21,119 @@ $(function() {
 
 });
 
-// sprint stories itens
-var sortableOptions = {
-        placeholder: 'placeholder_item',
-        delay:25,
-        revert:true,
-        dropOnEmpty: true,
-        start: function( event, ui ) {
-            var placeholder = $(ui.item).clone().css({opacity:"0.6",zIndex:"1"});
-            $(".placeholder_item").css({height:placeholder.height(),margin:"0px 0px 20px 0px"});
-            ui.placeholder.html(placeholder);
 
-        },
-        stop: function( event, ui ) {
+// ====================================
+//  IF THE USER HAS PERMISSION TO EDIT
+// ====================================
 
-            setTimeout(function () {
-                // call the function
-                updateStoryOrder()
-            }, 1000); // Enable after 1000 ms.
+if (info.have_permissitions === true) {
+    // sprint stories itens
+    var sortableOptions = {
+            placeholder: 'placeholder_item',
+            delay:25,
+            revert:true,
+            dropOnEmpty: true,
+            start: function( event, ui ) {
+                var placeholder = $(ui.item).clone().css({opacity:"0.6",zIndex:"1"});
+                $(".placeholder_item").css({height:placeholder.height(),margin:"0px 0px 20px 0px"});
+                ui.placeholder.html(placeholder);
 
-        }
-}
-$( "#sprint .project-items" ).sortable(sortableOptions);
+            },
+            stop: function( event, ui ) {
 
-/*
-==============
- PLUGNS HACKS
-==============
-*/
+                setTimeout(function () {
+                    // call the function
+                    updateStoryOrder()
+                }, 1000); // Enable after 1000 ms.
 
-// modify style buttons
-$.fn.editableform.buttons =
- '<button type="button" class="btn editable-cancel pull-left"><i class="icon-return-key"></i></button>'+
-  '<button type="submit" class="btn btn-success editable-submit pull-right"><i class="icon-ok icon-white"></i></button>';
-$.fn.editable.defaults.mode = 'inline';
-
-/*
-=============================
- ITEMS GENERATED DYNAMICALLY
-=============================
-*/
-
-//apply editable to parent div
-$('.project-items').editable({
-  selector: 'a.editable',
-  url: url.create_or_update_itens,
-  emptytext: msg.field_empty,
-  rows: 1,
-  params: function(params) {
-      // sending parameters indicating whether the item is to upgrade or not
-      // send the new ID as param
-      var dbUpdate = $(this).attr("data-update"),
-          dbID = $(this).attr("data-pk"),
-          order = $(this).attr("data-index"),
-          definitionready = $(this).closest('.definition_ready_container').find(".definition_ready_card").attr('data-pk');
-
-      if(dbUpdate) {
-        // updating tasks
-        params.dbUpdate = true;
-        params.dbID = dbID;
-      }else {
-        // creating tasks
-        params.dbUpdate = false;
-        params.definitionready = definitionready;
-        params.order = order;
-      }
-      params.project_id = info.project_id;
-      params.page = info.page;
-      return params;
-  },
-  validate: function(value) {
-      if(value === '') return msg.validation_error;
-  },
-  success: function(value,response) {
-    // enables the buttons
-    var story = $(this).closest(".story");
-
-    if(value.name === "story") {
-        story.find(".new_story").removeClass("new_story");
-        story.find(".create_definition_ready").removeAttr("disabled");
-        story.find(".story_points").removeAttr("disabled");
-        story.find(".benefit").removeAttr("disabled");
-        story.find(".expand_story").removeAttr("disabled");
-        $(this).closest(".story_container").find(".send_story_sprint").removeAttr("disabled");
-
-    }else if(value.name === "definition_ready") {
-        var label_DR = story.find(".qtd_definition_ready").text();
-        story.find(".qtd_definition_ready").text(parseInt(label_DR)+1);
-        story.find(".create_task").removeAttr("disabled");
-    }else if(value.name === "task") {
-        $(this).closest(".definition_ready_container").find(".expand_definition_ready").removeAttr("disabled");
+            }
     }
+    $( "#sprint .project-items" ).sortable(sortableOptions);
 
-    // get the coming new database ID and update in DOM
-    $(this).attr("data-pk", value.database_id);
-    // changes the status of the created item for item update
-    $(this).attr("data-update", true);
-  },
-});
+    /*
+    ==============
+     PLUGNS HACKS
+    ==============
+    */
+
+    // modify style buttons
+    $.fn.editableform.buttons =
+     '<button type="button" class="btn editable-cancel pull-left"><i class="icon-return-key"></i></button>'+
+      '<button type="submit" class="btn btn-success editable-submit pull-right"><i class="icon-ok icon-white"></i></button>';
+    $.fn.editable.defaults.mode = 'inline';
+
+    /*
+    =============================
+     ITEMS GENERATED DYNAMICALLY
+    =============================
+    */
+
+    //apply editable to parent div
+    $('.project-items').editable({
+      selector: 'a.editable',
+      url: url.create_or_update_itens,
+      emptytext: msg.field_empty,
+      rows: 1,
+      params: function(params) {
+          // sending parameters indicating whether the item is to upgrade or not
+          // send the new ID as param
+          var dbUpdate = $(this).attr("data-update"),
+              dbID = $(this).attr("data-pk"),
+              order = $(this).attr("data-index"),
+              definitionready = $(this).closest('.definition_ready_container').find(".definition_ready_card").attr('data-pk');
+
+          if(dbUpdate) {
+            // updating tasks
+            params.dbUpdate = true;
+            params.dbID = dbID;
+          }else {
+            // creating tasks
+            params.dbUpdate = false;
+            params.definitionready = definitionready;
+            params.order = order;
+          }
+          params.project_id = info.project_id;
+          params.page = info.page;
+          return params;
+      },
+      validate: function(value) {
+          if(value === '') return msg.validation_error;
+      },
+      success: function(value,response) {
+        // enables the buttons
+        var story = $(this).closest(".story");
+
+        if(value.name === "story") {
+            story.find(".new_story").removeClass("new_story");
+            story.find(".create_definition_ready").removeAttr("disabled");
+            story.find(".story_points").removeAttr("disabled");
+            story.find(".benefit").removeAttr("disabled");
+            story.find(".expand_story").removeAttr("disabled");
+            $(this).closest(".story_container").find(".send_story_sprint").removeAttr("disabled");
+
+        }else if(value.name === "definition_ready") {
+            var label_DR = story.find(".qtd_definition_ready").text();
+            story.find(".qtd_definition_ready").text(parseInt(label_DR)+1);
+            story.find(".create_task").removeAttr("disabled");
+        }else if(value.name === "task") {
+            $(this).closest(".definition_ready_container").find(".expand_definition_ready").removeAttr("disabled");
+        }
+
+        // get the coming new database ID and update in DOM
+        $(this).attr("data-pk", value.database_id);
+        // changes the status of the created item for item update
+        $(this).attr("data-update", true);
+      },
+    });
+
+// ====================================
+//  IF THE USER HAS PERMISSION TO EDIT
+// ====================================
+} else {
+    $(".text_container").css({"width":"90%"});
+    $(".buttons_container").css({"width":"10%"});
+}
+
 
 // by clicking the button to add Story
 $('#create_story').click(function(){

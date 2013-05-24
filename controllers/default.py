@@ -30,7 +30,6 @@ def _get_person():
     person_id = user_relationship.person_id
 
     projects = db(Project.created_by==person_id).select()
-    person_id = user_relationship.person_id
     shared = db(Sharing.person_id==person_id).select()
 
     no_projects = [i.id for i in projects]
@@ -87,10 +86,16 @@ def product_backlog():
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
     person = _get_person()
     person_id = person["person_id"]
-    shared_with_person = person['shared']
-    members_project = [i.person_id for i in shared_with_person]
+    shared = db( (Sharing.project_id == project.id) & \
+                 (Sharing.person_id == person_id) ).select().first()
 
-    if project.created_by == person_id or person_id in members_project:
+    if project.created_by == person_id or shared.person_id == person_id:
+
+        have_permissitions = False
+        role = [1,2]
+        if shared.role_id in role or shared.project_admin == True or project.created_by == person_id:
+            have_permissitions = True
+
         # response message for view
         response.flash = session.message
         try:
@@ -135,13 +140,15 @@ def product_backlog():
                         definition_ready=definition_ready,
                         tasks=tasks,
                         form_sprint=form_sprint,
-                        sprint=sprint
+                        sprint=sprint,
+                        have_permissitions=have_permissitions,
                         )
         else:
             return dict(
                         project=project,
                         form_sprint=form_sprint,
-                        sprint=sprint
+                        sprint=sprint,
+                        have_permissitions=have_permissitions,
                         )
 
     else:
@@ -198,8 +205,7 @@ def board():
                             sprint=sprint
                             )
             else:
-                session.message = T("Move at least one story in the column of the Sprint")
-                # session.message = T("You must create stories for your project")
+                session.message = T("You must create at least one story and move it to the column Sprint")
                 redirect(URL(f='product_backlog', args=project_id))
         else:
             session.message = T("You must create and launch the sprint before accessing the Board")
