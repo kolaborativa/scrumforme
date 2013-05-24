@@ -31,10 +31,16 @@ margin-top: 0px;
 */
 
 .project-items {
-    /*height: 390px;*/
-    /*height: 80%;*/
     padding-right: 10px;
     overflow-y: scroll;
+}
+
+.no_permission .text_container {
+    width: 90%;
+}
+
+.no_permission .buttons_container {
+    width: 10%;
 }
 
 

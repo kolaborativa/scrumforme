@@ -56,7 +56,12 @@
             <div id="project_info" class="span11">
                 <div id="project_content">
                     <p><strong>{{=project.name}}</strong> - {{=project.description}}</p>
-                    <p><a href="{{=project.url}}" target="_blank">{{=project.url}}</a> <button id="create_story" class="btn btn-primary pull-right">{{=T('Create Story')}}</button></p>
+                    <p><a href="{{=project.url}}" target="_blank">{{=project.url}}</a>
+                        {{if have_permissitions:}}
+                        <!-- if the user has permission to edit items -->
+                        <button id="create_story" class="btn btn-primary pull-right">{{=T('Create Story')}}</button>
+                        {{pass}}
+                    </p>
                 </div>
             </div>
         </div>
@@ -194,6 +199,8 @@
             </div>
             <div class="clearfix"></div>
             {{else:}}
+                {{if have_permissitions:}}
+                <!-- if the user has permission to edit items -->
                 <h4>{{=T('New Sprint')}}</h4>
                 {{=form_sprint.custom.begin}}
                     <!-- name -->
@@ -205,6 +212,8 @@
                     {{=form_sprint.custom.widget.weeks}}
                     <button type="submit" class="btn btn-primary">{{=T('Create Sprint')}}</button>
                 {{=form_sprint.custom.end}}
+                <!-- if the user has permission to edit items -->
+                {{pass}}
         {{pass}}
         </div>
 

@@ -50,6 +50,7 @@ $(document).ready(function(){
                 selectorSortable = selector + '> *';
 
             } else if (obj.page === "product_backlog") {
+                $("#backlog .project-items").load(window.location.href + ' #backlog .project-items > *');
                 selector = '#sprint .project-items';
                 selectorSortable = selector;
             }
