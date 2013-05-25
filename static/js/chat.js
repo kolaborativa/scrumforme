@@ -1,16 +1,3 @@
-$(".call_chat").click(function () {
-    var chatElement = $("#chat");
-
-    if (chatElement.is(":hidden")) {
-        $("#chat").show();
-        // set this user online
-        usersOnlineNow();
-
-    } else {
-        $("#chat").hide();
-    }
-});
-
 function callChat() {
     var html = "",
         user_data = "",
@@ -41,14 +28,93 @@ function callChat() {
     });
 }
 
+function usersOnlineNow () {
+
+    querystring = "&online=true" + "&person_id=" + info.person_id + "&project_id=" + info.project_id;
+    $.post(url.user_online_now,
+        querystring,
+        function(data, status) {
+            if(status === "success") {
+                console.log("user online");
+            }
+      //data contains the JSON object
+    }, "json");
+
+}
+
+
+(function () {
+$(".call_chat").click(function () {
+    var chatElement = $("#chat");
+
+    if (chatElement.is(":hidden")) {
+        $("#chat").show();
+        // set this user online
+        usersOnlineNow();
+
+    } else {
+        $("#chat").hide();
+    }
+});
+
 // send message
-$("#chat_message").keypress(function(e){
-    if (e.keyCode == 13 && !e.shiftKey)
-    {
+var messageHistory = [],
+    currentIndex,
+    lastIndex;
+$("#chat_message").on('keydown', function(e) {
+    var element = $(this),
+        mymessage = element.val();
+
+    // remove last messages history
+    if (messageHistory.length >= 50) {
+        for(var i = 40, arr = messageHistory.length - 1; i < arr; i++) {
+         messageHistory.shift();
+        }
+    }
+
+    if (e.keyCode == 13 && !e.shiftKey) {
         e.preventDefault();
-        sendMessage(this);
+        //emtpy message?
+        if(mymessage == "" ){
+            return false;
+        }
+        messageHistory.push(mymessage);
+        currentIndex = messageHistory.length - 1;
+        // send message
+        sendMessage(element);
         return;
     }
+
+    //Move selection up
+    if(e.keyCode == 38 && e.ctrlKey) {
+        element.val(messageHistory[currentIndex]);
+        if (currentIndex === 0) {
+            return
+        } else {
+            currentIndex -= 1;
+        }
+        lastIndex = false;
+    }
+
+    //Move selection down
+    if(e.keyCode == 40 && e.ctrlKey) {
+        if (lastIndex === true) {
+            element.val("");
+            return
+        }
+        if (currentIndex === 0) {
+            currentIndex += 1;
+        }
+
+        element.val(messageHistory[currentIndex]);
+        if (currentIndex === messageHistory.length - 1) {
+            lastIndex = true;
+        } else {
+            lastIndex = false;
+            currentIndex += 1;
+        }
+    }
+
 });
 
 function sendMessage(object) {
@@ -62,10 +128,6 @@ function sendMessage(object) {
     // clean box message
     element.val("");
 
-    if(mymessage == "\n" ){ //emtpy message?
-        return false;
-    }
-
     querystring = "&chat=true&message=" + mymessage + "&name=" + myname + "&project_id=" + info.project_id + "&avatar=" + avatar;
 
     $.post(url.send_message_chat_group,
@@ -76,20 +138,6 @@ function sendMessage(object) {
             }
       //data contains the JSON object
     }, "json");
-}
-
-function usersOnlineNow () {
-
-    querystring = "&online=true" + "&person_id=" + info.person_id + "&project_id=" + info.project_id;
-    $.post(url.user_online_now,
-        querystring,
-        function(data, status) {
-            if(status === "success") {
-                console.log("user online");
-            }
-      //data contains the JSON object
-    }, "json");
-
 }
 
 // set focus on textarea
@@ -183,3 +231,5 @@ function notify(avatar, titleNotify, message) {
         show(avatar, titleNotify, message);
     }
 }
+
+})();

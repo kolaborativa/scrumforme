@@ -1193,6 +1193,7 @@ img.thumbnail {
 }
 #chat-messages-inner .msg {
     display: block;
+    text-align: left;
     margin-top: 10px;
     font-size: 13px;
 }

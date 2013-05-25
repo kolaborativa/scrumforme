@@ -68,9 +68,7 @@ $(document).ready(function(){
                 bottomChat = $("#bottom-chat"),
                 titleNotify = txtGlobal.titleNotification + " " + obj.name + ":",
                 atBottom = (chat_timeline[0].scrollHeight - chat_timeline.scrollTop() + 1 == chat_timeline.outerHeight());
-            console.log(chat_timeline.outerHeight());
             chat_timeline.append(html);
-            console.log(chat_timeline.outerHeight());
 
             if (atBottom) {
                 chat_timeline.scrollTop(chat_timeline[0].scrollHeight);
