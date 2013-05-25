@@ -42,9 +42,12 @@ function callChat() {
 }
 
 // send message
-$('#chat_message').on('keyup', function(e) {
-    if (e.which == 13 && ! e.shiftKey) {
+$("#chat_message").keypress(function(e){
+    if (e.keyCode == 13 && !e.shiftKey)
+    {
+        e.preventDefault();
         sendMessage(this);
+        return;
     }
 });
 
@@ -56,8 +59,10 @@ function sendMessage(object) {
         querystring = "",
         avatar = $("#user_container").find("img").attr("src");
 
+    // clean box message
+    element.val("");
+
     if(mymessage == "\n" ){ //emtpy message?
-        element.val("");
         return false;
     }
 
@@ -67,7 +72,6 @@ function sendMessage(object) {
         querystring,
         function(data, status) {
             if(status === "success") {
-                element.val("");
                 console.log("message sended");
             }
       //data contains the JSON object

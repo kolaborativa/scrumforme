@@ -36,11 +36,26 @@ margin-top: 0px;
 }
 
 .no_permission .text_container {
-    width: 66%;
+    width: 70%;
 }
 
 .no_permission .buttons_container {
-    width: 34%;
+    width: 30%;
+}
+
+.no_permission .definition_ready .text_container, .no_permission .task .text_container {
+    width: 90%;
+}
+
+.no_permission .definition_ready .buttons_container, .no_permission .task .buttons_container {
+    width: 10%;
+}
+
+.no_perm_itens {
+    padding: 5px 7px;
+    background-color: #fff;
+    border-radius: 2px;
+    margin: 0 5px;
 }
 
 
