@@ -83,6 +83,14 @@ def g_format_number(number):
     return number
 
 
+def g_person_id():
+    """returns the person_id of logged user"""
+    user_relationship = db(db.user_relationship.auth_user_id==auth.user.id).select().first()
+    person_id = user_relationship.person_id
+
+    return person_id
+
+
 class G_projects(object):
     """header projects"""
 

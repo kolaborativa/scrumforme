@@ -1,7 +1,7 @@
 {{extend 'default/layout_base.html'}}
 
 <script>
-    // OBS: other global variables are generated on the page project
+    // OBS: other global variables for this page
     var url = {
         create_or_update_itens : '{{=URL("create_or_update_itens.json")}}',
         move_tasks : '{{=URL("move_tasks")}}',
@@ -13,9 +13,6 @@
         card_new_comment_or_update : '{{=URL(r=request,f="call",args=["json","_card_new_comment_or_update"])}}',
         card_delete_comment : '{{=URL(r=request,f="call",args=["json","_card_delete_comment"])}}',
         update_task_date : '{{=URL(r=request,f="call",args=["json","_update_task_date"])}}',
-        chat_all_users : '{{=URL(r=request,f="call",args=["json","chat_all_users"])}}',
-        send_message_chat_group : '{{=URL(r=request,f="call",args=["json","send_message_chat_group"])}}',
-        user_online_now : '{{=URL(r=request,f="call",args=["json","user_online_now"])}}',
     },
     msg = {
         field_empty : '{{=T("Click to write")}}',
@@ -59,9 +56,6 @@
 
 <div id="target_ajax"></div>
 <div id="mask"></div>
-<!-- chat -->
-{{include "default/chat.html"}}
-<button class="call_chat button_chat btn btn-success" alt="Chat" title="Chat"><i class="icon-comment-alt"></i> Chat</button>
 
 <div id="content-header">
     <div id="breadcrumb">

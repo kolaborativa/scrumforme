@@ -24,7 +24,7 @@ def nojs():
 
 @auth.requires_login()
 def _get_person():
-    """Function that get data of relationship person of the user logged. Projects and person_id.
+    """Function that get data of relationship person of the user logged. Projects, person_id and shared.
     """
     user_relationship = db(db.user_relationship.auth_user_id==auth.user.id).select().first()
     person_id = user_relationship.person_id
@@ -107,11 +107,11 @@ def product_backlog():
 
     if project.created_by == person_id or shared.person_id == person_id:
 
-        have_permissitions = False
+        have_permission = False
         # if user is a PO or Scrum Master
         role = [1,2]
         if shared.role_id in role or shared.project_admin == True or project.created_by == person_id:
-            have_permissitions = True
+            have_permission = True
 
         # response message for view
         response.flash = session.message
@@ -165,14 +165,14 @@ def product_backlog():
                         tasks=tasks,
                         form_sprint=form_sprint,
                         sprint=sprint,
-                        have_permissitions=have_permissitions,
+                        have_permission=have_permission,
                         )
         else:
             return dict(
                         project=project,
                         form_sprint=form_sprint,
                         sprint=sprint,
-                        have_permissitions=have_permissitions,
+                        have_permission=have_permission,
                         )
 
     else:

@@ -1,3 +1,19 @@
+<script>
+    // OBS: other global variables for this page
+    var urlChat = {
+            chat_all_users : '{{=URL(r=request,f="call",args=["json","chat_all_users"])}}',
+            send_message_chat_group : '{{=URL(r=request,f="call",args=["json","send_message_chat_group"])}}',
+            user_online_now : '{{=URL(r=request,f="call",args=["json","user_online_now"])}}',
+        },
+        txtChat = {
+            titleNotification : '{{=T("New message from")}}',
+        },
+        infoChat = {
+            project_id : '{{=request.args(0)}}',
+            person_id : '{{=g_person_id()}}',
+        };
+</script>
+
 <aside id="chat">
     <!--chat-control-->
     <div class="loading"></div>

@@ -25,8 +25,7 @@ $(function() {
 // ====================================
 //  IF THE USER HAS PERMISSION TO EDIT
 // ====================================
-
-if (info.have_permissitions === true) {
+if (info.have_permission === true) {
     // sprint stories itens
     var sortableOptions = {
             placeholder: 'placeholder_item',

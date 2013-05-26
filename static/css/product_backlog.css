@@ -2,7 +2,7 @@ a {
     color: #000;
 }
 
-span {
+span.no_perm_itens {
     color: rgb(134, 134, 134);
 }
 

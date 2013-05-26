@@ -4,18 +4,18 @@ function callChat() {
         first_name,
         user_container = $("#user_container"),
         all_users = $(".contact-list"),
-        query = "?project_id=" + info.project_id + '&person_id=' + info.person_id;
+        query = "?project_id=" + infoChat.project_id + '&person_id=' + infoChat.person_id;
 
     user_container.empty();
     all_users.empty();
-    $.getJSON(url.chat_all_users + query,
+    $.getJSON(urlChat.chat_all_users + query,
     function (data, status) {
         if (status === "success") {
             $(".loading").hide();
             $("#chat-container").show();
 
             for (i in data) {
-                if (data[i]["person_id"] === parseInt(info.person_id)) {
+                if (data[i]["person_id"] === parseInt(infoChat.person_id)) {
                     first_name = data[i]["person_name"].split(" ");
                     user_data = '<div class="user_online" data-id="' + data[i]["person_id"] + '"><div class="pull-left"><img class="avatar-chat" src="' + data[i]["avatar"] + '"></div><div class="contact-item-body pull-left"><h5 class="user_name">' + first_name[0] + '</h5></div><div class="clearfix"></div></div><hr>';
                 } else {
@@ -30,8 +30,8 @@ function callChat() {
 
 function usersOnlineNow () {
 
-    querystring = "&online=true" + "&person_id=" + info.person_id + "&project_id=" + info.project_id;
-    $.post(url.user_online_now,
+    querystring = "&online=true" + "&person_id=" + infoChat.person_id + "&project_id=" + infoChat.project_id;
+    $.post(urlChat.user_online_now,
         querystring,
         function(data, status) {
             if(status === "success") {
@@ -43,7 +43,6 @@ function usersOnlineNow () {
 }
 
 
-(function () {
 $(".call_chat").click(function () {
     var chatElement = $("#chat");
 
@@ -128,9 +127,9 @@ function sendMessage(object) {
     // clean box message
     element.val("");
 
-    querystring = "&chat=true&message=" + mymessage + "&name=" + myname + "&project_id=" + info.project_id + "&avatar=" + avatar;
+    querystring = "&chat=true&message=" + mymessage + "&name=" + myname + "&project_id=" + infoChat.project_id + "&avatar=" + avatar;
 
-    $.post(url.send_message_chat_group,
+    $.post(urlChat.send_message_chat_group,
         querystring,
         function(data, status) {
             if(status === "success") {
@@ -191,14 +190,15 @@ function isAuth() {
     return authorized
 };
 
-function show(avatar, titleNotify, message) {
-  var notification = new Notification(titleNotify, {
-      dir: "auto",
-      lang: "",
-      icon: avatar,
-      body: message,
-      tag: "sometag",
-  });
+function show(avatar, name, message) {
+    var titleNotify = txtChat.titleNotification + " " + name + ":",
+        notification = new Notification(titleNotify, {
+            dir: "auto",
+            lang: "",
+            icon: avatar,
+            body: message,
+            tag: "sometag",
+        });
 
   // notification.onclose = …
   // notification.onshow = …
@@ -226,10 +226,9 @@ $('#authorize_notification').click(function() {
 
 
 // call the notification
-function notify(avatar, titleNotify, message) {
+function notify(avatar, name, message) {
     if (this.isAuth()) {
-        show(avatar, titleNotify, message);
+        show(avatar, name, message);
     }
 }
 
-})();

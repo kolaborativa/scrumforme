@@ -3,7 +3,7 @@ $(document).ready(function(){
 
     var host = window.location.host,
         window_focus = true,
-        myGroup = "project" + project_id,
+        myGroup = "project" + infoGlobal.project_id,
         wsUri,
         ws,
         obj,
@@ -66,7 +66,6 @@ $(document).ready(function(){
                 html = '<p style="display: block;"><img src="' + obj.avatar + '" alt=""><span class="msg-block"><strong>' + obj.name + '</strong> <span class="time">- ' + obj.time + '</span><span class="msg">' + message + '</span></span></p>',
                 chat_timeline = $(".chat-content"),
                 bottomChat = $("#bottom-chat"),
-                titleNotify = txtGlobal.titleNotification + " " + obj.name + ":",
                 atBottom = (chat_timeline[0].scrollHeight - chat_timeline.scrollTop() + 1 == chat_timeline.outerHeight());
             chat_timeline.append(html);
 
@@ -85,7 +84,7 @@ $(document).ready(function(){
             if(!window_focus) {
                 // play sound on message
                 $('#chatAudio')[0].play();
-                notify(obj.avatar, titleNotify, message);
+                notify(obj.avatar, obj.name, message);
             }
 
         } else if (obj.hasOwnProperty("online")) {

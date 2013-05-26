@@ -1,7 +1,7 @@
 {{extend 'default/layout_base.html'}}
 
 <script>
-    // OBS: other global variables are generated on the page project
+    // OBS: other global variables for this page
     var msg = {
             field_empty : '{{=T("Click to write")}}',
             validation_error : '{{=T("Can not be empty")}}',
@@ -20,7 +20,7 @@
         info = {
             project_id : '{{=project.id}}',
             page : '{{=request.function}}',
-            have_permissitions : JSON.parse('{{="true" if have_permissitions else "false"}}'),
+            have_permission : JSON.parse('{{="true" if have_permission else "false"}}'),
         },
         buttons = {
             DR : '{{=T("DR")}}',
@@ -57,7 +57,7 @@
                 <div id="project_content">
                     <p><strong>{{=project.name}}</strong> - {{=project.description}}</p>
                     <p><a href="{{=project.url}}" target="_blank">{{=project.url}}</a>
-                        {{if have_permissitions:}}
+                        {{if have_permission:}}
                         <!-- if the user has permission to edit items -->
                         <button id="create_story" class="btn btn-primary pull-right">{{=T('Create Story')}}</button>
                         {{pass}}
@@ -81,7 +81,7 @@
                                             <button class="btn btn-nostyle expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
                                                 <i class="icon-circle-arrow-down"></i></button>
 
-                                        {{if have_permissitions:}}
+                                        {{if have_permission:}}
                                         <!-- if the user has permission to edit items -->
                                             <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
                                             <select class="pull-right benefit tip-bottom" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>
@@ -130,7 +130,7 @@
                                                     </div>
                                                     <div class="buttons_container">
                                                         <button class="btn btn-nostyle expand_definition_ready pull-right" alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'><i class="icon-circle-arrow-up"></i></button>
-                                                    {{if have_permissitions:}}
+                                                    {{if have_permission:}}
                                                     <!-- if the user has permission to edit items -->
                                                         <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
                                                         <button class="btn create_task pull-right" alt='{{=T("Create Tast")}}' title='{{=T("Create Task")}}'>+ {{=T("Task")}}</button>
@@ -146,7 +146,7 @@
                                                             <div class="text_container">
                                                                 <a href="#" class="editable-click editable" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_or_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                                             </div>
-                                                        {{if have_permissitions:}}
+                                                        {{if have_permission:}}
                                                         <!-- if the user has permission to edit items -->
                                                             <div class="buttons_container">
                                                                 <button class="btn delete_item pull-right" alt="Delete" title="Delete"><i class="icon-trash"></i></button>
@@ -166,7 +166,7 @@
                                     </div>
                                 </li><!-- story -->
                                 <div class="buttons_footer">
-                            {{if have_permissitions:}}
+                            {{if have_permission:}}
                             <!-- if the user has permission to edit items -->
                                     <button class="btn btn-primary pull-right send_story_sprint">{{=T("Send to Sprint")}} <i class="icon-circle-arrow-right icon-white"></i></button>
                                     <div class="clearfix"></div>
@@ -193,7 +193,7 @@
             <div class="span7">
                 <h5 class='pull-left'><span>{{=sprint.weeks}}</span> {{=T('Weeks')}}</h5>
                 <!-- if the user has permission to edit items -->
-                {{if have_permissitions:}}
+                {{if have_permission:}}
                     {{if sprint.started:}}
                         <a href='{{=URL(c="default",f="launch_or_end_sprint",args=[request.args(0),sprint.id])}}' class='btn btn-danger pull-right'>{{=T('End the sprint')}}</a>
                     {{else:}}
@@ -209,7 +209,7 @@
     <div id="sprint" class="span6">
         <div id="sprint-header" class="row-fluid">
         <!-- if the user has permission to edit items -->
-        {{if have_permissitions:}}
+        {{if have_permission:}}
             <h4>{{=T('New Sprint')}}</h4>
             {{=form_sprint.custom.begin}}
                 <!-- name -->
@@ -239,7 +239,7 @@
                                 <div class="buttons_container">
                                     <button class="btn btn-nostyle expand_story pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'>
                                         <i class="icon-circle-arrow-down"></i></button>
-                                {{if have_permissitions:}}
+                                {{if have_permission:}}
                                 <!-- if the user has permission to edit items -->
                                     <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
                                     <select class="pull-right benefit tip-bottom" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>
@@ -268,8 +268,8 @@
 
                                     <!-- if the user has permission to edit items -->
                                     {{else:}}
-                                        <span class="no_perm_itens pull-right tip-bottom" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>{{=story.benefit}}</span>
-                                        <span class="no_perm_itens pull-right tip-bottom" alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'>{{=g_blank_check(story.story_points)}}</span>
+                                        <span class="no_perm_itens pull-right tip-bottom" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>{{=g_blank_return_question(story.benefit)}}</span>
+                                        <span class="no_perm_itens pull-right tip-bottom" alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'>{{=g_blank_return_question(story.story_points)}}</span>
                                     {{pass}}
                                         <span class="label qtd_definition_ready pull-right tip-bottom" alt='{{=T("Number of Definitions of Ready")}}' title='{{=T("Number of Definitions of Ready")}}'>{{=len(definition_ready[story.id])}}</span>
 
@@ -289,7 +289,7 @@
                                             </div>
                                             <div class="buttons_container">
                                                 <button class="btn btn-nostyle expand_definition_ready pull-right" alt='{{=T("Expand")}}' title='{{=T("Expand")}}'><i class="icon-circle-arrow-up"></i></button>
-                                            {{if have_permissitions:}}
+                                            {{if have_permission:}}
                                             <!-- if the user has permission to edit items -->
                                                 <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
                                                 <button class="btn create_task pull-right" alt='{{=T("Create Task")}}' title='{{=T("Create Task")}}'>+ {{=T("Task")}}</button>
@@ -304,7 +304,7 @@
                                                     <div class="text_container">
                                                         <a href="#" class="editable-click editable" data-type="textarea" data-pk='{{=task["id"]}}' data-url="{{=URL('create_or_update_itens.json')}}" data-name="task" data-update="true">{{=task["title"]}}</a>
                                                     </div>
-                                                {{if have_permissitions:}}
+                                                {{if have_permission:}}
                                                 <!-- if the user has permission to edit items -->
                                                     <div class="buttons_container">
                                                         <button class="btn delete_item pull-right" alt='{{=T("Remove")}}' title='{{=T("Remove")}}'><i class="icon-trash"></i></button>
@@ -324,7 +324,7 @@
                         </div>
                         </li><!-- story -->
                         <div class="buttons_footer">
-                    {{if have_permissitions:}}
+                    {{if have_permission:}}
                     <!-- if the user has permission to edit items -->
                             <button class="btn btn-danger pull-right back_backlog"><i class="icon-circle-arrow-left icon-white"></i> {{=T("Back to Backlog")}}</button>
                             <div class="clearfix"></div>
