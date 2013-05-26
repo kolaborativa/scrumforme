@@ -45,7 +45,7 @@ if not "story" in db.tables:
         Field("benefit", "string", default=None),
         Field("story_points", "integer", default=None),
         Field("position_dom", "integer", default=None),
-        Field("concluded", "boolean", default=None),
+        Field("concluded", "boolean", default=False),
         format='%(title)s',
         migrate="story.table")
 
@@ -53,7 +53,7 @@ if not "definition_ready" in db.tables:
     Definition_ready = db.define_table("definition_ready",
         Field("story_id", db.story, default=None),
         Field("title", "string", default=None),
-        Field("concluded", "boolean", default=None),
+        Field("concluded", "boolean", default=False),
         format='%(title)s',
         migrate="definition_ready.table")
 

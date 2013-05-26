@@ -145,10 +145,10 @@ $('#create_story').click(function(){
     });
     // finds the highest rate for the new story
     if(keys.length > 0) {
-      var higherIndex = Array.max(keys),
-          indexItem = higherIndex + 1;
+      var lessIndex = Array.min(keys),
+          indexItem = lessIndex - 1;
     } else {
-      var indexItem = 1;
+      var indexItem = 0;
     }
 
     var html = '<ul class="story_container item_container"><li class="story"><div class="story_header"><div class="text_container"><a href="#" class="editable-click editable-empty story_card editable new_story" data-type="textarea" data-placeholder="Click para escrever" data-pk="'+info.project_id+'" data-index="'+indexItem+'" data-name="story">Click para escrever</a></div><div class="buttons_container"><button class="btn btn-nostyle expand_story pull-right" alt="'+title.expand+'" title="'+title.expand+'" disabled="disabled"><i class="icon-circle-arrow-down"></i></button><button class="btn delete_item pull-right" alt="'+title.remove+'" title="'+title.remove+'"><i class="icon-trash"></i></button><select class="pull-right benefit" alt="'+title.benefit+'" title="'+title.benefit+'" disabled="disabled"><option value="" disabled selected>?</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option></select><input class="pull-right story_points only_numbers" type="number" placeholder="?" min="1" alt="'+title.points+'" title="'+title.points+'" disabled="disabled"><button class="btn create_definition_ready pull-right" alt="'+title.create_DR+'" title="'+title.create_DR+'" disabled="disabled">+ '+buttons.DR+'</button><span class="label qtd_definition_ready pull-right tip-bottom" alt="'+title.label_DR+'" title="'+title.label_DR+'">0</span></div><div class="clearfix"></div></div><div class="list_definition_ready"></div></li><div class="buttons_footer new_buttons_footer"><button class="btn btn-primary pull-right send_story_sprint" disabled="disabled">'+buttons.send_sprint+' <i class="icon-circle-arrow-right icon-white"></i></button><div class="clearfix"></div></div></ul>';
@@ -218,7 +218,7 @@ $(document).on("keydown", ".only_numbers", function(event){
 $(document).on("change", ".story_points", function(){
     var story = $(this).closest(".story"),
         storyID = story.find(".story_card").attr("data-pk");
-    ajax(url.changeAjaxItens+'?story_points='+this.value+'&story_id='+storyID, [''], 'target_ajax');
+    ajax(url.changeStories+'?story_points='+this.value+'&story_id='+storyID, [''], 'target_ajax');
     statusAction("","","send");
 });
 
@@ -226,7 +226,7 @@ $(document).on("change", ".story_points", function(){
 $(document).on("change", ".benefit", function(){
     var story = $(this).closest(".story"),
         storyID = story.find(".story_card").attr("data-pk");
-    ajax(url.changeAjaxItens+'?benefit='+this.value+'&story_id='+storyID, [''], 'target_ajax');
+    ajax(url.changeStories+'?benefit='+this.value+'&story_id='+storyID, [''], 'target_ajax');
     var status = statusAction("","","send");
 
     if(status) {
@@ -251,7 +251,7 @@ $(document).on("click", ".send_story_sprint", function(){
       return false
     }
 
-    ajax(url.changeAjaxItens+'?name=sprint&sprint_id='+sprintID+'&story_id='+storyID+'&project_id='+info.project_id, [''], 'target_ajax');
+    ajax(url.changeStories+'?name=sprint&sprint_id='+sprintID+'&story_id='+storyID+'&project_id='+info.project_id, [''], 'target_ajax');
     statusAction(object,"sprint","send");
 
     // update all story order in sprint
@@ -266,7 +266,7 @@ $(document).on("click", ".back_backlog", function(){
         storyID = object.find(".story_card").attr("data-pk"),
         sprintID = $(".story_container").attr("data-sprint");
 
-    ajax(url.changeAjaxItens+'?name=backlog&sprint_id='+storyID+'&story_id='+storyID+'&project_id='+info.project_id, [''], 'target_ajax');
+    ajax(url.changeStories+'?name=backlog&sprint_id='+storyID+'&story_id='+storyID+'&project_id='+info.project_id, [''], 'target_ajax');
     statusAction(object,"backlog","send");
 });
 
@@ -326,7 +326,7 @@ function updateStoryOrder(){
 
     valuesUrl = jQuery.param(allValues);
     // send to server
-    ajax(url.changeAjaxItens+'?sprint_id='+sprint_id+'&order=order'+'&project_id='+info.project_id+'&'+valuesUrl, [''], 'target_ajax');
+    ajax(url.changeStories+'?sprint_id='+sprint_id+'&order=order'+'&project_id='+info.project_id+'&'+valuesUrl, [''], 'target_ajax');
     // test server callback
     statusAction("","sprint","order");
 }

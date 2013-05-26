@@ -180,7 +180,10 @@ td {
 
 .table td:first-child{
     background-color: #fff;
-    box-shadow: 1px 0px 1px #444;
+    border: 0px;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    /*box-shadow: 1px 0px 1px #444;*/
 }
 
 .no-th {

@@ -174,7 +174,7 @@
 </row>
 <row name="concluded" null="1" autoincrement="0">
 <datatype>boolean</datatype>
-<default>NULL</default>
+<default>False</default>
 </row>
 <row name="_object_name" null="1" autoincrement="0">
 <datatype>integer</datatype>
@@ -204,7 +204,7 @@
 </row>
 <row name="concluded" null="1" autoincrement="0">
 <datatype>boolean</datatype>
-<default>NULL</default>
+<default>False</default>
 </row>
 <row name="_object_name" null="1" autoincrement="0">
 <datatype>integer</datatype>

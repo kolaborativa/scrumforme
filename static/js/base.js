@@ -1,9 +1,13 @@
 $(document).ready(function(){
 
-
 	// to find the largest index of the array
 	Array.max = function( array ){
 	  return Math.max.apply( Math, array );
+	};
+
+	// to find the largest index of the array
+	Array.min = function( array ){
+	  return Math.min.apply( Math, array );
 	};
 
 	// autogrow textarea

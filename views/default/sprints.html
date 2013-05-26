@@ -6,7 +6,32 @@
         <a href="#" class="current" title="{{=T('Sprints')}}" >{{=T('Sprints')}}</a>
     </div>
 </div>
-<div class="row-fluid">
 
 
-</div><!--/container-fluid-->
+<div class="container-fluid">
+    {{for sprint in sprints:}}
+    <div class="widget-box">
+        <div class="widget-title">
+            <h5>{{=sprint.name}} - {{=T('Started in')}}: {{=g_blank_fulldate_check(sprint.started)}} - {{=T('Closed')}}: {{=g_blank_fulldate_check(sprint.ended)}}</h5>
+        </div>
+        <div class="widget-content nopadding">
+            <table class="table table-bordered table-striped table-hover table-list">
+                <thead>
+                    <tr>
+                        <th class="span1">#</th>
+                        <th>{{=T("Name")}} {{=T("Story")}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{for n,story in enumerate(stories[sprint.id]):}}
+                    <tr>
+                        <td>{{=n}}</td>
+                        <td>{{=story.title}}</td>
+                    </tr>
+                    {{pass}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{pass}}
+</div>

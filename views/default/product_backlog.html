@@ -15,7 +15,7 @@
         url = {
             create_or_update_itens : '{{=URL(r=request,f="call",args=["json","create_or_update_itens"])}}',
             removeBacklogItens : '{{=URL("remove_backlog_itens")}}',
-            changeAjaxItens : '{{=URL("change_ajax_itens")}}',
+            changeStories : '{{=URL("change_stories")}}',
         },
         info = {
             project_id : '{{=project.id}}',
@@ -186,41 +186,45 @@
     <!-- SPRINT CONTENT -->
     {{if sprint:}}
     <div id="sprint" class="span6" data-sprint="{{=sprint.id}}">
-    {{else:}}
-    <div id="sprint" class="span6">
-    {{pass}}
         <div id="sprint-header" class="row-fluid">
-        {{if sprint:}}
             <div class="span5">
                 <h4>{{=sprint.name}}</h4>
             </div>
             <div class="span7">
                 <h5 class='pull-left'><span>{{=sprint.weeks}}</span> {{=T('Weeks')}}</h5>
-                {{if not sprint.started:}}
-                <a href="{{=URL(c='default',f='launch_sprint',args=[request.args(0),sprint.id],)}}" class='btn btn-success pull-right'>{{=T('Launch the sprint')}}</a>
+                <!-- if the user has permission to edit items -->
+                {{if have_permissitions:}}
+                    {{if sprint.started:}}
+                        <a href='{{=URL(c="default",f="launch_or_end_sprint",args=[request.args(0),sprint.id])}}' class='btn btn-danger pull-right'>{{=T('End the sprint')}}</a>
+                    {{else:}}
+                        <a href='{{=URL(c="default",f="launch_or_end_sprint",args=[request.args(0),sprint.id])}}' class='btn btn-success pull-right'>{{=T('Launch the sprint')}}</a>
+                    {{pass}}
                 {{else:}}
-                <button class='disabled btn btn-success pull-right'>{{=T('Launched')}}</button>
+                    <button class='disabled btn btn-success pull-right'>{{=T('Launched')}}</button>
                 {{pass}}
+                <!-- /if the user has permission to edit items -->
             </div>
             <div class="clearfix"></div>
-            {{else:}}
-                {{if have_permissitions:}}
-                <!-- if the user has permission to edit items -->
-                <h4>{{=T('New Sprint')}}</h4>
-                {{=form_sprint.custom.begin}}
-                    <!-- name -->
-                    {{ form_sprint.elements('#sprint_name')[0] ['_placeholder'] = T('Name') }}
-                    {{=form_sprint.custom.widget.name}}
-                    <!-- weeks -->
-                    {{ form_sprint.elements('#sprint_weeks')[0] ['_placeholder'] = T('Weeks') }}
-                    {{ form_sprint.elements('#sprint_weeks')[0] ['_class'] = "only_numbers" }}
-                    {{=form_sprint.custom.widget.weeks}}
-                    <button type="submit" class="btn btn-primary">{{=T('Create Sprint')}}</button>
-                {{=form_sprint.custom.end}}
-                <!-- if the user has permission to edit items -->
-                {{pass}}
+    {{else:}}
+    <div id="sprint" class="span6">
+        <div id="sprint-header" class="row-fluid">
+        <!-- if the user has permission to edit items -->
+        {{if have_permissitions:}}
+            <h4>{{=T('New Sprint')}}</h4>
+            {{=form_sprint.custom.begin}}
+                <!-- name -->
+                {{ form_sprint.elements('#sprint_name')[0] ['_placeholder'] = T('Name') }}
+                {{=form_sprint.custom.widget.name}}
+                <!-- weeks -->
+                {{ form_sprint.elements('#sprint_weeks')[0] ['_placeholder'] = T('Weeks') }}
+                {{ form_sprint.elements('#sprint_weeks')[0] ['_class'] = "only_numbers" }}
+                {{=form_sprint.custom.widget.weeks}}
+                <button type="submit" class="btn btn-primary">{{=T('Create Sprint')}}</button>
+            {{=form_sprint.custom.end}}
         {{pass}}
-        </div>
+        <!-- /if the user has permission to edit items -->
+    {{pass}}
+        </div><!-- /sprint-header -->
 
         <div class="project-items">
         {{if "stories" in globals():}}

@@ -72,7 +72,23 @@ def delete_project():
 
 @auth.requires_login()
 def sprints():
-    return dict()
+    project_id = request.args(0) or redirect(URL('projects'))
+    sprints = db( (Sprint.project_id == project_id) & (Sprint.ended != None) ).select()
+
+    if sprints:
+        stories = {}
+        for sprint in sprints:
+            stories[sprint.id] = db( (Story.project_id == project_id) & \
+                                     (Story.concluded == True) & \
+                                     (Story.sprint_id == sprint.id) ).select()
+
+        return dict(
+                    sprints=sprints,
+                    stories=stories,
+                    )
+    else:
+        session.message = T("No history of sprints because no sprint ended yet.")
+        redirect(URL(f='product_backlog', args=[project_id]))
 
 
 
@@ -92,6 +108,7 @@ def product_backlog():
     if project.created_by == person_id or shared.person_id == person_id:
 
         have_permissitions = False
+        # if user is a PO or Scrum Master
         role = [1,2]
         if shared.role_id in role or shared.project_admin == True or project.created_by == person_id:
             have_permissitions = True
@@ -102,8 +119,15 @@ def product_backlog():
             del session.message
         except:
             pass
-        stories = db(Story.project_id == project.id).select(orderby=Story.position_dom)
-        sprint = db(Sprint.project_id == project.id).select().first()
+        sprint = db( (Sprint.project_id == project.id) & (Sprint.ended == None) ).select().first()
+
+        if hasattr(sprint,"started"):
+            stories = db( ((Story.project_id == project.id) & (Story.sprint_id == None)) | \
+                          ((Story.project_id == project.id) & (Story.sprint_id == sprint.id)) \
+                          ).select(orderby=Story.position_dom)
+        else:
+            stories = db( (Story.project_id == project.id) & \
+                          (Story.sprint_id == None) ).select(orderby=Story.position_dom)
 
         form_sprint = SQLFORM.factory(
             Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
@@ -170,12 +194,13 @@ def board():
 
 
     if project.created_by == person_id or person_id in members_project:
-        sprint = db(Sprint.project_id == project.id).select().first()
-        stories = db((Story.project_id == project.id) & (Story.sprint_id >0)).select(orderby=Story.position_dom)
+
+        sprint = db( (Sprint.project_id == project.id) & (Sprint.ended == None) ).select().first()
 
         if hasattr(sprint,"started") and sprint.started:
+            stories = db( (Story.project_id == project.id) & \
+                          (Story.sprint_id == sprint.id) ).select(orderby=Story.position_dom)
             if stories:
-                # least_one_story = False
                 definition_ready = {}
                 for story in stories:
                     if not story.story_points:
@@ -857,15 +882,24 @@ def user_online_now():
 
 
 @auth.requires_login()
-def launch_sprint():
+def launch_or_end_sprint():
     from datetime import datetime
 
-    project_id = request.args(0) or redirect(URL('index'))
-    sprint_id = request.args(1) or redirect(URL('index'))
+    project_id = request.args(0) or redirect(URL('projects'))
+    sprint_id = request.args(1) or redirect(URL('projects'))
     sprint = db(Sprint.id==sprint_id).select().first()
 
     if not sprint.started:
         db(Sprint.id==sprint_id).update(started=datetime.today().date())
+
+    elif sprint.started:
+        stories = db( (Story.sprint_id==sprint_id) & ((Story.concluded == None) | (Story.concluded == False)) ).select()
+        for story in stories:
+            # send story to backlog
+            db(Story.id == story.id).update(sprint_id=None)
+
+        # close sprint
+        db(Sprint.id==sprint_id).update(ended=datetime.today().date())
 
     redirect(URL(f='product_backlog', args=project_id))
 
@@ -915,7 +949,7 @@ def remove_backlog_itens():
 
 
 @auth.requires_login()
-def change_ajax_itens():
+def change_stories():
 
     if request.vars:
         # update Story Points
