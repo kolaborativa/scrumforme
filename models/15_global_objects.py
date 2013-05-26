@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-'''Global objects and methods declaration.
+"""Global objects and methods declaration.
 
 Unvolatile data fits better here, than in a db table.
 Some structures are immutable. Days of week, for example.
@@ -8,12 +8,12 @@ Some structures are immutable. Days of week, for example.
 As well as methods used throughout your app.
 
 Here is their sweet home.
-'''
+"""
 
 ## Global functions
 
 def g_current_page(url, classe, empty=''):
-    '''returns a class if you are on url. Otherwise returns empty.'''
+    """returns a class if you are on url. Otherwise returns empty."""
 
     if request.args(0):
         url_server = '%s/%s/%s' % (request.controller, request.function, request.args(0))
@@ -26,7 +26,7 @@ def g_current_page(url, classe, empty=''):
         return empty
 
 def g_if_in_current_page(url, classe, anotherclass):
-    '''returns a class if you are on the page, else returns another class'''
+    """returns a class if you are on the page, else returns another class"""
 
     if request.args(0):
         url_server = '%s/%s/%s' % (request.controller, request.function, request.args(0))
@@ -40,7 +40,7 @@ def g_if_in_current_page(url, classe, anotherclass):
 
 
 def g_blank_check(item):
-    '''returns a empty string if item is empty.'''
+    """returns a empty string if item is empty."""
     if item:
         return item
     else:
@@ -48,8 +48,17 @@ def g_blank_check(item):
         return item
 
 
+def g_blank_return_question(item):
+    """returns a '?' string if item is empty."""
+    if item:
+        return item
+    else:
+        item="?"
+        return item
+
+
 def g_blank_fulldate_check(item):
-    '''returns a empty string if item is empty.'''
+    """returns a empty string if item is empty."""
     if item:
         return item.strftime("%d/%m/%Y")
     else:
@@ -58,7 +67,7 @@ def g_blank_fulldate_check(item):
 
 
 def g_blank_date_check(item):
-	'''returns a empty string if item is empty.'''
+	"""returns a empty string if item is empty."""
 	if item:
 		return item.strftime("%d/%m")
 	else:
@@ -67,7 +76,7 @@ def g_blank_date_check(item):
 
 
 def g_format_number(number):
-    '''retorna o numero formatado com 0 antes do numero se for menor que 10'''
+    """returns the number formatted with 0 before the number if less than 10"""
     if number < 10:
         number = " %s" % number
 

@@ -109,8 +109,8 @@
                                             <button class="btn create_definition_ready pull-right tip-bottom" alt='{{=T("Create Definition of Ready")}}' title='{{=T("Create Definition of Ready")}}'>+ {{=T('DR')}}</button>
                                         <!-- if the user has permission to edit items -->
                                         {{else:}}
-                                            <span class="no_perm_itens pull-right tip-bottom" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>{{=story.benefit}}</span>
-                                            <span class="no_perm_itens pull-right tip-bottom" alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'>{{=g_blank_check(story.story_points)}}</span>
+                                            <span class="no_perm_itens pull-right tip-bottom" alt='{{=T("Benefit")}}' title='{{=T("Benefit")}}'>{{=g_blank_return_question(story.benefit)}}</span>
+                                            <span class="no_perm_itens pull-right tip-bottom" alt='{{=T("Story Points")}}' title='{{=T("Story Points")}}'>{{=g_blank_return_question(story.story_points)}}</span>
                                         {{pass}}
                                             <span class="label qtd_definition_ready pull-right tip-bottom" alt='{{=T("Number of Definitions of Ready")}}' title='{{=T("Number of Definitions of Ready")}}'>{{=len(definition_ready[story.id])}}</span>
 
