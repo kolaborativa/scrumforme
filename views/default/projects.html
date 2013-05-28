@@ -25,10 +25,10 @@
             {{pass}}
         </div>
         <div class="span5">
-            {{if shared_with_person:}}
-                <h3>{{=T('Projects that I am part')}} <span class="label">{{=len(shared_with_person)}}</span></a></h3>
+            {{if all_shared_with_person:}}
+                <h3>{{=T('Projects that I am part')}} <span class="label">{{=len(all_shared_with_person)}}</span></a></h3>
                 <ul>
-                {{for i in shared_with_person:}}
+                {{for i in all_shared_with_person:}}
                     <li class='{{=g_current_page("default/product_backlog/%s" %i.project_id,"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.project_id])}}'>{{=i.project_id.name}}</a></li>
                 {{pass}}
                 </ul>
