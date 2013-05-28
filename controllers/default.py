@@ -44,7 +44,7 @@ def _get_person():
 
 @auth.requires_login()
 def projects():
-
+    response.title = T("Projects")
     person = _get_person()
     person_id = person["person_id"]
     person_projects = person["projects"]
@@ -56,6 +56,9 @@ def projects():
 def delete_project():
     """Function that delete a project
     """
+    import subprocess
+    upload_folder = '%suploads' % request.folder
+
     project_id = int(request.vars['project_id'])
     my_person_id = _get_person()['person_id']
     project = db(Project.id==project_id).select().first()
@@ -63,6 +66,8 @@ def delete_project():
     if project:
         if my_person_id == project.created_by:
             db(Project.id==project.id).delete()
+            # Delete a image of project
+            subprocess.call('rm %s/%s' % (upload_folder, project.thumbnail), shell=True)
     redirect(URL('projects'))
 
 
@@ -72,6 +77,7 @@ def delete_project():
 
 @auth.requires_login()
 def sprints():
+    response.title = T("Sprints")
     project_id = request.args(0) or redirect(URL('projects'))
     sprints = db( (Sprint.project_id == project_id) & (Sprint.ended != None) ).select()
 
@@ -98,6 +104,7 @@ def sprints():
 
 @auth.requires_login()
 def product_backlog():
+    response.title = T("Product Backlog")
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
     person = _get_person()
@@ -185,6 +192,7 @@ def product_backlog():
 
 @auth.requires_login()
 def board():
+    response.title = T("Board")
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
     person = _get_person()
@@ -245,6 +253,7 @@ def board():
 # =================
 
 def statistics():
+    response.title = T("Statistics")
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
 
@@ -447,6 +456,7 @@ def _edit_role(project_id, person_id, role_id, project_admin=False):
 
 @auth.requires_login()
 def team():
+    response.title = T("Team")
     project_id=request.args(0) or redirect(URL('projects'))
     person = _get_person()
     person_id = person["person_id"]

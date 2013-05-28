@@ -14,7 +14,7 @@
         <!-- Always force latest IE rendering engine
            (even in intranet) & Chrome Frame
            Remove this if you use the .htaccess -->
-        <title>Scrumforme - Ferramenta Scrum e Kanban simplificando o trabalho em equipe.</title>
+        <title>Scrumforme | {{=response.title or request.function}}</title>
         <meta name="description" content="Aprenda a usar uma ferramenta de metodologia Agile para gestão de projetos em equipe Scrum." />
         <meta name="keywords" content="scrum, kanban, metodologia scrum, equipe scrum, scrum online, scrum board, scrum tool, scrum master, agile, sprint, backlog, burndown, lean." />
 
@@ -47,6 +47,9 @@
         <link rel="stylesheet" href='{{=URL("static","css/base.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/base.grey.css")}}' class="skin-color" />
         <link rel="stylesheet" href='{{=URL("static","css/bootstrap-editable.css")}}' />
+        <!-- image upload -->
+        <link rel="stylesheet" href='{{=URL("static","css/imgareaselect-default.css")}}' />
+        <link rel="stylesheet" href='{{=URL("static","css/jquery.awesome-cropper.css")}}' />
 
         {{ if request.function == "product_backlog": }}
         <link rel="stylesheet" href='{{=URL("static","css/product_backlog.css")}}' />
@@ -73,7 +76,7 @@
         <div class="loading_item">
             <h4>
             <img src='{{=URL("static", "img/ajax-loader.gif")}}'>
-            Carregando...</h4>
+            {{=T("Loading")}}...</h4>
         </div>
 
 
@@ -103,21 +106,12 @@
         </div>
 
         <div id="content" class="container">
-            <div class="content">
-                <div class="wrapper">
-                    <div class="proper-content">
-                        {{include}}
-                    </div><!-- /.proper-content -->
+            {{include "default/breadcrumb.html"}}
 
-                    <div class="push"></div>
-                </div><!-- /.wrapper -->
-
-                <div class="footer-wrapper">
-                    <div class="row-fluid">
-                        <div id="footer" class="span12">
-                            {{=T('Copyleft')}} <span style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">&copy;</span> {{=request.now.year}} Scrumforme. {{=T('Developed by')}} <a href="http://agenciax4.com.br">AgenciaX4</a>
-                        </div>
-                    </div>
+            {{include}}
+            <div class="row-fluid">
+                <div id="footer" class="span12">
+                    {{=T('Copyleft')}} <span style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">&copy;</span> {{=request.now.year}} Scrumforme. {{=T('Developed by')}} <a href="http://agenciax4.com.br">AgenciaX4</a>
                 </div>
             </div>
         </div>
@@ -135,6 +129,9 @@
             <script src="{{=URL('static','js/jquery-ui-1.10.3.custom.min.js')}}"></script>
             <script src='{{=URL("static","js/bootstrap.min.js")}}'></script>
             <script src='{{=URL("static","js/base.js")}}'></script>
+            <!-- image upload -->
+            <script src="{{=URL('static','js/jquery.imgareaselect.min.js')}}"></script>
+            <script src="{{=URL('static','js/jquery.awesome-cropper.js')}}"></script>
             {{ if not request.function == "projects": }}
             <script src='{{=URL("static","js/bootstrap-editable.min.js")}}'></script>
             <script async defer src="{{=URL('static','js/jquery.ui.touch-punch.min.js')}}"></script>

@@ -1,15 +1,15 @@
 <div id="header">
-    <a href="{{=URL('index')}}" alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
+    <a href="{{=URL('index')}}" id="logo" alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
     {{ if auth.is_logged_in(): }}
         <ul id="projects">
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'><i class="icon-plus"></i></a>
-
-                <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                <a href="#" class="new_project list-projects" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'><i class="icon-plus"></i></a>
 
                 {{ g_project = G_projects() }}
                 {{ new_project = g_project.new_project() }}
                 {{ all_projects = g_project.projects() }}
+
+                <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
 
                 {{=new_project.custom.begin}}
                     <!-- name -->
@@ -23,7 +23,15 @@
                     {{ new_project.elements('#projects_url')[0] ['_placeholder'] = T('Url') }}
                     {{ new_project.elements('#projects_url')[0] ['_type'] = T('url') }}
                     {{=new_project.custom.widget.url}}
-                    <button type="submit" class="btn btn-primary btn-block">{{=T('Create Project')}}</button>
+                    <!-- thumbnail -->
+                    <div class="new_image">
+                        {{ new_project.elements('#projects_thumbnail')[0] ['_type'] = "hidden" }}
+                        {{=new_project.custom.widget.thumbnail}}
+                    </div>
+                    <button class="btn btn-info btn-mini btn_file" type="button">{{=T('Choose an image')}}</button>
+                    <br>
+                    <button type="submit" class="btn btn-primary">{{=T('Create')}}</button>
+                    <button type="submit" class="btn btn-danger new_project">{{=T('Cancel')}}</button>
                 {{=new_project.custom.end}}
                 <br>
                 </div>
@@ -32,13 +40,13 @@
             {{p_count = 1}}
             {{for i in all_projects["person_projects"]:}}
                 {{if p_count <= 6:}}
-                    <li class='{{=g_current_page("default/%s/%s" %(request.function,i.id),"active")}}'><a href='{{=URL(c="default",f="board",args=[i.id])}}' class="tip-bottom" alt='{{=i.name}}' title='{{=i.name}}'>{{=p_count}}</a></li>
+                    <li class='{{=g_current_page("default/%s/%s" %(request.function,i.id),"active")}}'><a href='{{=URL(c="default",f="board",args=[i.id])}}' class="list-projects tip-bottom" alt='{{=i.name}}' title='{{=i.name}}'>{{=p_count}}</a></li>
                 {{p_count += 1}}
                 {{pass}}
             {{pass}}
             {{for i in all_projects["shared_with_person"]:}}
                 {{if p_count <= 10:}}
-                    <li class='{{=g_current_page("default/%s/%s" %(request.function,i.project_id),"active")}}'><a href='{{=URL(c="default",f="board",args=[i.project_id])}}' class="tip-bottom" alt='{{=i.project_id.name}}' title='{{=i.project_id.name}}'>{{=p_count}}</a></li>
+                    <li class='{{=g_current_page("default/%s/%s" %(request.function,i.project_id),"active")}}'><a href='{{=URL(c="default",f="board",args=[i.project_id])}}' class="list-projects tip-bottom" alt='{{=i.project_id.name}}' title='{{=i.project_id.name}}'>{{=p_count}}</a></li>
                 {{p_count += 1}}
                 {{pass}}
             {{pass}}

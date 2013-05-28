@@ -7,17 +7,12 @@
 $(function() {
 
     // catch size dynamically to increase the size of content
-    var firstHeight = $('#header').outerHeight(),
-        secondHeight = $('#sub-header-content').outerHeight(),
-        thirdHeight = $('#backlog_story_buttons').outerHeight(),
-        fourthHeight = $('.footer-wrapper').outerHeight(),
-        wrapperHeight = $('.wrapper').outerHeight();
+    var windowHeight = $(window).height(),
+        scrollTop = $(".container-fluid").offset().top,
+        height = windowHeight - scrollTop;
 
-    var StoryContentBacklog = wrapperHeight - (firstHeight+secondHeight+thirdHeight+(2*fourthHeight)),
-        StoryContentSprint = wrapperHeight - (firstHeight+thirdHeight+(2*fourthHeight));
-
-    $("#backlog").find(".project-items").height(StoryContentBacklog);
-    $("#sprint").find(".project-items").height(StoryContentSprint);
+    $("#backlog").find(".project-items").height(height);
+    $("#sprint").find(".project-items").height(height);
 
 });
 

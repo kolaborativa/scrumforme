@@ -1,12 +1,6 @@
 {{extend 'default/layout_base.html'}}
 
-<div id="content-header">
-    <div id="breadcrumb">
-        <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
-        <a href="#" class="current" title="{{=T('Sprints')}}" >{{=T('Sprints')}}</a>
-    </div>
-</div>
-
+<title>{{=T('Sprints')}}</title>
 
 <div class="container-fluid">
     {{for sprint in sprints:}}

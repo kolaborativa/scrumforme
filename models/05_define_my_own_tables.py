@@ -24,6 +24,7 @@ if not "project" in db.tables:
         Field("date_", "date", default=None),
         Field("description", "string", length=256, default=None),
         Field("url", "string", length=128, default=None),
+        Field("thumbnail", "upload", default=None),
         format='%(name)s',
         migrate="project.table")
 

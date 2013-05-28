@@ -95,25 +95,31 @@ class G_projects(object):
     """header projects"""
 
     def new_project(self):
+        import os
         from datetime import datetime
         person = _get_person()
         person_id = person["person_id"]
 
+        folder = 'uploads/'
         form = SQLFORM.factory(
             Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
             Field('description', label= T('Description')),
             Field('url', label= 'Url'),
+            Field('thumbnail', type='upload',
+            uploadfolder=os.path.join(request.folder, folder)),
             table_name='projects',
             submit_button=T('CREATE')
             )
 
         if form.accepts(request.vars):
+            image_name = self.convertImage(form.vars.thumbnail,folder)
             project_id = Project.insert(
                             created_by=person_id,
                             name=form.vars.name,
                             description=form.vars.description,
                             url=form.vars.url,
                             date_=datetime.now(),
+                            thumbnail=image_name,
                             )
             Sharing.insert(project_id=project_id,
                            person_id=person_id,
@@ -125,6 +131,28 @@ class G_projects(object):
             response.flash = T('form has errors')
 
         return form
+
+    def convertImage(self,base64txt,folder):
+        import os
+        import base64
+
+        arglen = len(base64txt)
+        if arglen > 1:
+            uploadfolder=os.path.join(request.folder,folder)
+            b64file = open(uploadfolder+base64txt, 'rb').read()
+            if b64file.startswith("data:image/png;base64,"):
+                b64file = b64file[22:]
+            imgData = base64.b64decode(b64file)
+            file_name = os.path.splitext(base64txt)
+            fname = file_name[0] + '.png'
+
+            # write image on filesystem
+            imgFile = open(uploadfolder+fname, 'wb')
+            imgFile.write(imgData)
+            os.remove(uploadfolder+base64txt)
+            return fname
+        else:
+            return False
 
     def projects(self):
 

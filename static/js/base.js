@@ -1,11 +1,13 @@
 $(document).ready(function(){
+	// sidebar height
+	$(".sidebar-fixed").height($(window).height());
 
 	// to find the largest index of the array
 	Array.max = function( array ){
 	  return Math.max.apply( Math, array );
 	};
 
-	// to find the largest index of the array
+	// to find the less index of the array
 	Array.min = function( array ){
 	  return Math.min.apply( Math, array );
 	};
@@ -27,6 +29,19 @@ $(document).ready(function(){
             element.height(element.height()+1);
         };
     }
+
+	// === New project === //
+
+	$('.new_project').on("click", function() {
+		$(".dropdown-menu").toggle();
+	});
+
+	$('#projects_thumbnail').awesomeCropper(
+		{ width: 150, height: 150 }
+	);
+	$(".btn_file").on('click', function() {
+	   $('.input_file').click();
+	});
 
 	// === Sidebar navigation === //
 

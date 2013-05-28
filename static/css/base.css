@@ -28,10 +28,9 @@ a:hover {
     /*width: 100%;*/
     /*z-index: -9;*/
 	width: 100%;
-    position: absolute;
-	position: absolute;
+	/*position: absolute;*/
 	background-color: #444444;
-	z-index: 9999;
+	/*z-index: 1000;*/
 }
 
 #header h1 {
@@ -82,82 +81,6 @@ div.flash #closeflash {
 	color: inherit;
 	float: right;
 	margin-left: 15px;
-}
-
-.loading_item {
-    position:fixed;
-    padding: 20px;
-    background-color: #282828;
-    color: rgb(231, 231, 231);
-    display: none;
-    border-radius: 1px;
-    box-shadow: 0px 0px 20px #000;
-    top:50%;
-    left:50%;
-    margin-left: -100px;
-    margin-top: -50px;
-    z-index: 999999;
-}
-
-#projects {
-position: relative;
-top: 10px;
-left: 75px;
-float: left;
-	/*padding-top: 20px;*/
-}
-
-#projects li {
-	position: relative;
-	top: 5px;
-	list-style: none;
-	float: left;
-	margin-left: 8px;
-	width: 55px;
-	height: 40px;
-	background-color: #fff;
-	border-radius: 5px 5px 0 0;
-	margin-top: 5px;
-	text-align: center;
-}
-
-#projects li.active {
-	height: 45px;
-	margin-top: 0px;
-}
-
-
-#projects li.active a {
-	font-weight: bold;
-	color: #0088cc;
-}
-
-#projects li a {
-	font-size: 20px;
-	color: rgb(134, 134, 134);
-	position: relative;
-	top: 12px;
-	left: 0px;
-	/*padding: 0px 18px;*/
-    text-decoration: none;
-}
-
-#projects li a:hover {
-    color: #00A0B1;
-}
-
-#all_projects_link {
-    font-size: 40px!important;
-    font-weight: bold;
-    top: 0px!important;
-}
-
-#all_projects {
-    width: 800px;
-}
-
-.color-logo{
-    color: #00A0B1;
 }
 
 /* Search input */
@@ -257,12 +180,12 @@ float: left;
 
 /* Sidebar Navigation */
 #sidebar {
-    display: block;
+/*    display: block;
     float: left;
     position: relative;
     width: 220px;
     z-index: 16;
-    margin-top: 90px;
+    margin-top: 90px;*/
 }
 
 #sidebar > ul {
@@ -338,6 +261,10 @@ float: left;
     width: auto;
     background-clip: padding-box;
     border-top-left-radius: 10px;
+}
+
+#container-header {
+    background-color: #444444;
 }
 
 #content-header {
@@ -456,7 +383,7 @@ float: left;
     background-repeat: no-repeat;
     font-size: 11px;
     color: #666666;
-    float: left;
+    /*float: left;*/
 }
 #breadcrumb a:hover {
 	color: #333333;
@@ -517,6 +444,7 @@ float: left;
 	text-align: center;
 	color: #777777;
 	padding: 0 30px;
+    margin-top: 20px;
 }
 /* Stat boxes and quick actions */
 .stat-boxes, .quick-actions, .quick-actions-horizontal, .stats-plain {
@@ -1552,20 +1480,6 @@ div.dataTables_wrapper .ui-widget-header {
     display: block;
     height: 8px;
 }
-.modal {
-	z-index: 9999999 !important;
-}
-.modal-backdrop {
-	z-index: 999999 !important;
-}
-/*.modal-header {
-	height: auto;
-	padding: 8px 15px 5px;
-}
-.modal-header h3 {
-	font-size: 12px;
-	text-shadow: 0 1px 0 #ffffff;
-}*/
 
 .notify-ui ul {
 	list-style: none;
@@ -1667,37 +1581,122 @@ html, body, .container, .content {
     background-color:#888;
 }
 
-.container, .content {
+.loading_item {
+    position:fixed;
+    padding: 20px;
+    background-color: #282828;
+    color: rgb(231, 231, 231);
+    display: none;
+    border-radius: 1px;
+    box-shadow: 0px 0px 20px #000;
+    top:50%;
+    left:50%;
+    margin-left: -100px;
+    margin-top: -50px;
+    z-index: 999999;
+}
+
+#projects {
     position: relative;
+    top: 10px;
+    left: 220px;
+    float: left;
+    /*padding-top: 20px;*/
 }
 
-.proper-content {
-	padding-top: 57px; /* >= navbar height */
-	border-radius: 5px;
-    background-color: #444;
-}
-
-.wrapper {
-	background: #fff;
-	/*border-radius: 5px;*/
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 auto -30px; /* same as the footer */
-}
-
-.push {
-    height: 30px; /* same as the footer */
-}
-.footer-wrapper {
+#projects li {
     position: relative;
-    height: 30px;
-    padding: 0 50px;
+    top: 5px;
+    list-style: none;
+    float: left;
+    margin-left: 8px;
+    width: 55px;
+    height: 40px;
+    background-color: #fff;
+    border-radius: 5px 5px 0 0;
+    margin-top: 5px;
+    text-align: center;
 }
 
+#projects li.active {
+    height: 45px;
+    margin-top: 0px;
+}
+
+
+#projects li.active a.list-projects {
+    font-weight: bold;
+    color: #0088cc;
+}
+
+#projects li a.list-projects {
+    font-size: 20px;
+    color: rgb(134, 134, 134);
+    position: relative;
+    top: 12px;
+    left: 0px;
+    /*padding: 0px 18px;*/
+    text-decoration: none;
+}
+
+#projects li a.list-projects:hover {
+    color: #00A0B1;
+}
+
+#projects .input_file {
+    display: none;
+}
+
+#projects button[type=submit] {
+    width: 49%;
+}
+
+#all_projects_link {
+    font-size: 40px!important;
+    font-weight: bold;
+    top: 0px!important;
+}
+
+#all_projects {
+    width: 800px;
+}
+
+.color-logo{
+    color: #00A0B1;
+}
+
+.btn_file {
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.new_image {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    background: url("../img/no-image_project.jpg") 50% no-repeat;
+    display: block;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 3px rgb(141, 141, 141);
+    -moz-box-shadow: 0 1px 3px rgb(141, 141, 141);
+    box-shadow: 0 1px 3px rgb(141, 141, 141);
+    box-shadow: 0 1px 3px rgb(141, 141, 141);
+}
+
+#logo {
+    position: absolute;
+    z-index: 99;
+}
 
 .sidebar-fixed {
+    background-color: #444444;
 	position: fixed!important;
+    padding-top: 90px!important;
+    top: 0;
+    left: 0;
 }
 
 .icon-comment-custom,.icon-config-custom,
@@ -1750,6 +1749,21 @@ html, body, .container, .content {
     border: none;
     box-shadow: none;
 }
+
+/*PLUGIN HACKS*/
+.modal-backdrop {
+    z-index: 999!important;
+}
+
+.awesome-cropper .preview {
+    width: 80px;
+}
+
+.modal .preview {
+    width: 100%;
+    margin-top: 0px;
+}
+
 
 
 /* Responsive design */

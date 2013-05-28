@@ -44,7 +44,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="132" y="11" name="project">
+<table x="132" y="12" name="project">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -68,6 +68,10 @@
 </row>
 <row name="url" null="1" autoincrement="0">
 <datatype>string(128)</datatype>
+<default>NULL</default>
+</row>
+<row name="thumbnail" null="1" autoincrement="0">
+<datatype>upload</datatype>
 <default>NULL</default>
 </row>
 <row name="_object_name" null="1" autoincrement="0">
