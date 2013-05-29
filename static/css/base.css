@@ -920,7 +920,8 @@ img.thumbnail {
     padding: 5px;
     background-color: #fff;
     display: block;
-    line-height: 20px;
+    margin: 0 auto;
+    /*line-height: 20px;*/
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -1597,11 +1598,10 @@ html, body, .container, .content {
 }
 
 #projects {
-    position: relative;
-    top: 10px;
-    left: 220px;
+    margin: 14px 0px 0px 20px!important;
     float: left;
-    /*padding-top: 20px;*/
+    position: relative;
+    left: 220px;
 }
 
 #projects li {
@@ -1610,17 +1610,21 @@ html, body, .container, .content {
     list-style: none;
     float: left;
     margin-left: 8px;
-    width: 55px;
-    height: 40px;
-    background-color: #fff;
+    /*background-color: #fff;*/
     border-radius: 5px 5px 0 0;
     margin-top: 5px;
     text-align: center;
 }
 
 #projects li.active {
-    height: 45px;
     margin-top: 0px;
+}
+
+
+#projects li#new_project {
+    width: 55px;
+    height: 45px;
+    background-color: #fff;
 }
 
 
@@ -1641,6 +1645,40 @@ html, body, .container, .content {
 
 #projects li a.list-projects:hover {
     color: #00A0B1;
+}
+
+#projects li a img {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    top: -19px;
+    padding: 0px;
+    border-radius: 5px 5px 0 0;
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    -ms-transition: all .2s linear;
+    -o-transition: all .2s linear;
+    transition: all .2s linear;
+}
+
+#projects li a img:hover {
+    top: -20px;
+   -moz-transform: scale(1.1);
+   -webkit-transform: scale(1.1);
+   -o-transform: scale(1.1);
+   transform: scale(1.1);
+   -ms-transform: scale(1.1);
+}
+
+#projects li.active a img {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    top: -24px;
+}
+
+#projects li.active a img:hover {
+    top: -25px;
 }
 
 #projects .input_file {
@@ -1688,6 +1726,7 @@ html, body, .container, .content {
 
 #logo {
     position: absolute;
+    left: 0;
     z-index: 99;
 }
 

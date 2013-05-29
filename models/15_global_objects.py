@@ -100,7 +100,7 @@ class G_projects(object):
         person = _get_person()
         person_id = person["person_id"]
 
-        folder = 'uploads/'
+        folder = 'static/uploads/'
         form = SQLFORM.factory(
             Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
             Field('description', label= T('Description')),

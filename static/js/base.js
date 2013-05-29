@@ -32,7 +32,7 @@ $(document).ready(function(){
 
 	// === New project === //
 
-	$('.new_project').on("click", function() {
+	$('.dropdown_new_project').on("click", function() {
 		$(".dropdown-menu").toggle();
 	});
 

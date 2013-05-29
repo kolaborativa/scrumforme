@@ -17,4 +17,7 @@ errors/*
 sessions/*
 
 # project ignored files
+static/uploads/*.png
+static/uploads/*.jpg
+static/uploads/*.gif
 

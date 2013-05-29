@@ -69,14 +69,17 @@ def delete_project():
     """Function that delete a project
     """
     import subprocess
-    upload_folder = '%suploads' % request.folder
+    upload_folder = '%sstatic/uploads' % request.folder
 
     project_id = int(request.vars['project_id'])
-    my_person_id = _get_person(project_id)
+    # my_person_id = _get_person(project_id)
+    person = _get_person(project_id)
+    person_id = person["person_id"]
+    print person_id
     project = db(Project.id==project_id).select().first()
 
     if project:
-        if my_person_id == project.created_by:
+        if person_id == project.created_by:
             db(Project.id==project.id).delete()
             # Delete a image of project
             subprocess.call('rm %s/%s' % (upload_folder, project.thumbnail), shell=True)
