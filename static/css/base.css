@@ -322,13 +322,13 @@ div.flash #closeflash {
     background-image: -o-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
     background-image: linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
     border: 1px solid rgb(189, 189, 189);
-    min-height: 90px;
+    min-height: 104px;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
 #project_info {
-    padding: 10px;
+    padding-left: 10px;
 }
 
 #project_info strong {

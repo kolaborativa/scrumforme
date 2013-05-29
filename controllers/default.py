@@ -32,15 +32,16 @@ def _get_person(project_id=''):
     projects = db(Project.created_by==person_id).select()
 
     shared = db(Sharing.person_id==person_id).select()
-    no_projects = [i.id for i in projects]
-    all_shared = [i for i in shared if not i.project_id in no_projects]
+    id_projects = [i.id for i in projects]
+    all_shared = [i for i in shared if not i.project_id in id_projects]
 
     if project_id:
-        for shared in all_shared:
-            if int(project_id) == shared.project_id:
-                shared = True
+        id_shareds = [i.project_id for i in all_shared]
+        if int(project_id) in id_shareds:
+            shared = i
     else:
         shared = False
+
 
     return dict(
                 person_id=person_id,
@@ -99,11 +100,12 @@ def product_backlog():
 
 
     if project.created_by == person_id or shared.person_id == person_id:
+        # print shared
 
         have_permission = False
         # if user is a PO or Scrum Master
         role = [1,2]
-        if shared.role_id in role or shared.project_admin == True or project.created_by == person_id:
+        if project.created_by == person_id or shared.project_admin == True or shared.role_id in role:
             have_permission = True
 
         # response message for view

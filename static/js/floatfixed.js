@@ -69,7 +69,7 @@ jQuery.fn.floatfixed = function (settings) {
                         "position": "fixed",
                         "top": options.topx,
                         "left": options.leftx,
-                        "z-index": "99999"
+                        "z-index": "999"
                     }).addClass("fixed-nav");
 
                 } else {
