@@ -36,9 +36,10 @@ def _get_person(project_id=''):
     all_shared = [i for i in shared if not i.project_id in id_projects]
 
     if project_id:
-        id_shareds = [i.project_id for i in all_shared]
-        if int(project_id) in id_shareds:
-            shared = i
+        for i in all_shared:
+            if int(project_id) == i.project_id:
+                shared = i
+                break
     else:
         shared = False
 
@@ -97,7 +98,6 @@ def product_backlog():
     person = _get_person(project_id)
     person_id = person["person_id"]
     shared = person["shared"]
-
 
     if project.created_by == person_id or shared.person_id == person_id:
         # print shared
