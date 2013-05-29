@@ -72,10 +72,8 @@ def delete_project():
     upload_folder = '%sstatic/uploads' % request.folder
 
     project_id = int(request.vars['project_id'])
-    # my_person_id = _get_person(project_id)
     person = _get_person(project_id)
     person_id = person["person_id"]
-    print person_id
     project = db(Project.id==project_id).select().first()
 
     if project:
@@ -98,8 +96,7 @@ def product_backlog():
     person = _get_person(project_id)
     person_id = person["person_id"]
     shared = person["shared"]
-    # shared = db( (Sharing.project_id == project.id) & \
-                 # (Sharing.person_id == person_id) ).select().first()
+
 
     if project.created_by == person_id or shared.person_id == person_id:
 
@@ -701,7 +698,6 @@ def _edit_owner_task():
 @service.json
 def _card_modal():
     if request.vars.task_id:
-        # print request.vars
         task = db( (Task.id == request.vars.task_id) & \
                    (User_relationship.person_id == Task.owner_task) & \
                    (Sharing.person_id == Task.owner_task) ) \

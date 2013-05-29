@@ -42,21 +42,64 @@
 
 <div id="target_ajax"></div>
 
+<div id="sub-header-content" class="row-fluid">
+    {{include "default/project_info.html"}}
+
+    <div id="sprint_info" class="span6">
+        {{if sprint:}}
+            <div id="current_sprint">
+                <div class="span5">
+                    <h4>{{=sprint.name}}</h4>
+                </div>
+                <div class="span7">
+                    <h5 class='pull-left'><span>{{=sprint.weeks}}</span> {{=T('Weeks')}}</h5>
+                    <!-- if the user has permission to edit items -->
+                    {{if have_permission:}}
+                        {{if sprint.started:}}
+                            <a href='{{=URL(c="default",f="launch_or_end_sprint",args=[request.args(0),sprint.id])}}' class='btn btn-danger pull-right'>{{=T('End the sprint')}}</a>
+                        {{else:}}
+                            <a href='{{=URL(c="default",f="launch_or_end_sprint",args=[request.args(0),sprint.id])}}' class='btn btn-success pull-right'>{{=T('Launch the sprint')}}</a>
+                        {{pass}}
+                    {{else:}}
+                        <button class='disabled btn btn-success pull-right'>{{=T('Launched')}}</button>
+                    {{pass}}
+                    <!-- /if the user has permission to edit items -->
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        {{else:}}
+            <!-- if the user has permission to edit items -->
+            {{if have_permission:}}
+            <div id="new_sprint">
+                <h4>{{=T('New Sprint')}}</h4>
+                {{=form_sprint.custom.begin}}
+                    <!-- name -->
+                    {{ form_sprint.elements('#sprint_name')[0] ['_placeholder'] = T('Name') }}
+                    {{=form_sprint.custom.widget.name}}
+                    <!-- weeks -->
+                    {{ form_sprint.elements('#sprint_weeks')[0] ['_placeholder'] = T('Weeks') }}
+                    {{ form_sprint.elements('#sprint_weeks')[0] ['_class'] = "only_numbers" }}
+                    {{=form_sprint.custom.widget.weeks}}
+                    <button type="submit" class="btn btn-primary">{{=T('Create Sprint')}}</button>
+                {{=form_sprint.custom.end}}
+            </div>
+            {{pass}}
+        {{pass}}
+        <!-- /if the user has permission to edit items -->
+    </div><!-- /sprint-header -->
+    <div class="clearfix"></div>
+
+    <p>
+        {{if have_permission:}}
+        <!-- if the user has permission to edit items -->
+        <button id="create_story" class="btn btn-primary">{{=T('Create Story')}}</button>
+        {{pass}}
+    </p>
+
+</div>
+
 <div id="backlog_content" class="row-fluid">
     <div id="backlog" class="span6">
-        <div id="sub-header-content" class="row-fluid">
-            <div id="project_info" class="span11">
-                <div id="project_content">
-                    <p><strong>{{=project.name}}</strong> - {{=project.description}}</p>
-                    <p><a href="{{=project.url}}" target="_blank">{{=project.url}}</a>
-                        {{if have_permission:}}
-                        <!-- if the user has permission to edit items -->
-                        <button id="create_story" class="btn btn-primary pull-right">{{=T('Create Story')}}</button>
-                        {{pass}}
-                    </p>
-                </div>
-            </div>
-        </div>
         <div class="container-fluid">
             <div class="project-items">
                 <!-- STORY CONTENT -->
@@ -176,48 +219,7 @@
 
 
     <!-- SPRINT CONTENT -->
-    {{if sprint:}}
-    <div id="sprint" class="span6" data-sprint="{{=sprint.id}}">
-        <div id="sprint-header" class="row-fluid">
-            <div class="span5">
-                <h4>{{=sprint.name}}</h4>
-            </div>
-            <div class="span7">
-                <h5 class='pull-left'><span>{{=sprint.weeks}}</span> {{=T('Weeks')}}</h5>
-                <!-- if the user has permission to edit items -->
-                {{if have_permission:}}
-                    {{if sprint.started:}}
-                        <a href='{{=URL(c="default",f="launch_or_end_sprint",args=[request.args(0),sprint.id])}}' class='btn btn-danger pull-right'>{{=T('End the sprint')}}</a>
-                    {{else:}}
-                        <a href='{{=URL(c="default",f="launch_or_end_sprint",args=[request.args(0),sprint.id])}}' class='btn btn-success pull-right'>{{=T('Launch the sprint')}}</a>
-                    {{pass}}
-                {{else:}}
-                    <button class='disabled btn btn-success pull-right'>{{=T('Launched')}}</button>
-                {{pass}}
-                <!-- /if the user has permission to edit items -->
-            </div>
-            <div class="clearfix"></div>
-    {{else:}}
-    <div id="sprint" class="span6">
-        <div id="sprint-header" class="row-fluid">
-        <!-- if the user has permission to edit items -->
-        {{if have_permission:}}
-            <h4>{{=T('New Sprint')}}</h4>
-            {{=form_sprint.custom.begin}}
-                <!-- name -->
-                {{ form_sprint.elements('#sprint_name')[0] ['_placeholder'] = T('Name') }}
-                {{=form_sprint.custom.widget.name}}
-                <!-- weeks -->
-                {{ form_sprint.elements('#sprint_weeks')[0] ['_placeholder'] = T('Weeks') }}
-                {{ form_sprint.elements('#sprint_weeks')[0] ['_class'] = "only_numbers" }}
-                {{=form_sprint.custom.widget.weeks}}
-                <button type="submit" class="btn btn-primary">{{=T('Create Sprint')}}</button>
-            {{=form_sprint.custom.end}}
-        {{pass}}
-        <!-- /if the user has permission to edit items -->
-    {{pass}}
-        </div><!-- /sprint-header -->
-
+    <div id="sprint" class="span6" data-sprint='{{=sprint.id if sprint else ""}}'>
         <div class="project-items">
         {{if "stories" in globals():}}
             {{for story in stories:}}

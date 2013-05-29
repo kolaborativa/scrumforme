@@ -64,35 +64,42 @@ margin-top: 0px;
  ITENS
 =======
 */
+#create_story {
+    margin-left: 30px;
+}
 
 #backlog_content {
     background-color: #fff;
 }
 
-#sprint-header {
-    padding-top: 10px;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #ccc;
-}
-
-#sprint-header h4:first-letter {
+#sprint_info h4:first-letter {
     text-transform: capitalize;
 }
 
-#sprint-header h4 {
+#sprint_info h4 {
     color: #ccc;
     font-style:italic;
     font-size: 20px;
+    margin-left: 20px;
 }
 
-#sprint-header h5 span {
+#sprint_info h5 span {
     padding: 6px;
     border: 2px solid #ccc;
     border-radius: 5px;
 }
 
-#sprint-header button[type="submit"] {
+#sprint_info button[type="submit"] {
     margin-bottom: 10px;
+}
+
+#new_sprint input {
+    width: 30%;
+    margin-left: 20px;
+}
+
+#current_sprint {
+    margin-top: 20px;
 }
 
 .text_container {

@@ -58,12 +58,8 @@
 <div id="mask"></div>
 
 <div id="sub-header-content" class="row-fluid">
-    <div id="project_info" class="span6">
-        <div id="project_content">
-            <p><strong>{{=project.name}}</strong> - {{=project.description}}</p>
-            <p><a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
-        </div>
-    </div>
+    {{include "default/project_info.html"}}
+
     <div id="sprint_info" class="span6">
         <div id="clock" class="pull-left">
             <p id="sprint_name">{{=sprint.name}}</p>

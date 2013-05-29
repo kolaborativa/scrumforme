@@ -2,15 +2,17 @@
     <a href="{{=URL('index')}}" id="logo" alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
     {{ if auth.is_logged_in(): }}
         <ul id="projects">
-            <li id="new_project" class="dropdown">
-                <a href="#" class="dropdown_new_project list-projects" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'><i class="icon-plus"></i></a>
+            <a href="#" id="new_project" class="dropdown_new_project" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'>
+                <li class="dropdown">
+                    {{=T("New Project")}}
 
-                {{ g_project = G_projects() }}
-                {{ new_project = g_project.new_project() }}
-                {{ all_projects = g_project.projects() }}
+                    {{ g_project = G_projects() }}
+                    {{ new_project = g_project.new_project() }}
+                    {{ all_projects = g_project.projects() }}
 
-                <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-
+                </li>
+            </a>
+            <div class="dropdown-menu">
                 {{=new_project.custom.begin}}
                     <!-- name -->
                     {{ new_project.elements('#projects_name')[0] ['_placeholder'] = T('Name') }}
@@ -30,22 +32,20 @@
                     </div>
                     <button class="btn btn-info btn-mini btn_file" type="button">{{=T('Choose an image')}}</button>
                     <br>
-                    <button type="submit" class="btn btn-primary">{{=T('Create')}}</button>
-                    <button type="submit" class="btn btn-danger dropdown_new_project">{{=T('Cancel')}}</button>
+                    <input type="submit" class="btn btn-primary btn_new_project" value='{{=T("Create")}}'>
+                    <button class="btn btn-danger btn_new_project dropdown_new_project">{{=T('Cancel')}}</button>
                 {{=new_project.custom.end}}
-                <br>
-                </div>
-            </li>
+            </div>
 
             {{p_count = 1}}
-            {{for project in all_projects["person_projects"]:}}
+            {{for my_project in all_projects["person_projects"]:}}
                 {{if p_count <= 6:}}
-                    <li class='{{=g_current_page("default/%s/%s" %(request.function,project.id),"active")}}'>
-                        <a href='{{=URL(c="default",f="board",args=[project.id])}}' class="list-projects">
-                            {{ if project.thumbnail:}}
-                            <img class="tip-bottom" src='{{=URL("static","uploads/%s" %project.thumbnail)}}' width="55px" height="55px" alt="{{=project.name}}" title="{{=project.name}}">
+                    <li class='{{=g_current_page("default/%s/%s" %(request.function,my_project.id),"active")}}'>
+                        <a href='{{=URL(c="default",f="board",args=[my_project.id])}}' class="list-projects">
+                            {{ if my_project.thumbnail:}}
+                            <img class="tip-bottom" src='{{=URL("static","uploads/%s" %my_project.thumbnail)}}' width="50px" height="50px" alt="{{=my_project.name}}" title="{{=my_project.name}}">
                             {{else:}}
-                            <img class="tip-bottom" src='{{=URL("static","/img/no-image_project.jpg")}}' width="55px" height="55px" alt="{{=project.name}}" title="{{=project.name}}">
+                            <img class="tip-bottom" src='{{=URL("static","/img/no-image_project.jpg")}}' width="50px" height="50px" alt="{{=my_project.name}}" title="{{=my_project.name}}">
                             {{pass}}
                         </a>
                     </li>
@@ -57,9 +57,9 @@
                     <li class='{{=g_current_page("default/%s/%s" %(request.function,shared_project.project_id),"active")}}'>
                         <a href='{{=URL(c="default",f="board",args=[shared_project.project_id])}}' class="list-projects">
                             {{ if shared_project.project_id.thumbnail:}}
-                            <img class="tip-bottom" src='{{=URL("static","uploads/%s" %shared_project.project_id.thumbnail)}}' width="55px" height="55px" alt='{{=shared_project.project_id.name}}' title='{{=shared_project.project_id.name}}'>
+                            <img class="tip-bottom" src='{{=URL("static","uploads/%s" %shared_project.project_id.thumbnail)}}' width="50px" height="50px" alt='{{=shared_project.project_id.name}}' title='{{=shared_project.project_id.name}}'>
                             {{else:}}
-                            <img class="tip-bottom" src='{{=URL("static","/img/no-image_project.jpg")}}' width="55px" height="55px" alt='{{=shared_project.project_id.name}}' title='{{=shared_project.project_id.name}}'>
+                            <img class="tip-bottom" src='{{=URL("static","/img/no-image_project.jpg")}}' width="50px" height="50px" alt='{{=shared_project.project_id.name}}' title='{{=shared_project.project_id.name}}'>
                             {{pass}}
                         </a>
                     </li>

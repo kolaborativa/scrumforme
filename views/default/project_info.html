@@ -1,0 +1,11 @@
+<div id="project_info" class="span6">
+        {{ if project.thumbnail:}}
+        <img class="thumbnail pull-left" src='{{=URL("static","uploads/%s" %project.thumbnail)}}' width="50px" height="50px" alt="{{=project.name}}" title="{{=project.name}}">
+        {{else:}}
+        <img class="thumbnail pull-left" src='{{=URL("static","/img/no-image_project.jpg")}}' width="50px" height="50px" alt="{{=project.name}}" title="{{=project.name}}">
+        {{pass}}
+    <div id="project_content">
+        <p><strong>{{=project.name}}</strong> - <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
+        <p alt="{{=project.description}}" title="{{=project.description}}">{{=project.description}}</p>
+    </div>
+</div>

@@ -97,8 +97,6 @@ class G_projects(object):
     def new_project(self):
         import os
         from datetime import datetime
-        person = _get_person()
-        person_id = person["person_id"]
 
         folder = 'static/uploads/'
         form = SQLFORM.factory(
@@ -112,6 +110,8 @@ class G_projects(object):
             )
 
         if form.accepts(request.vars):
+            person = _get_person()
+            person_id = person["person_id"]
             image_name = self.convertImage(form.vars.thumbnail,folder)
             project_id = Project.insert(
                             created_by=person_id,

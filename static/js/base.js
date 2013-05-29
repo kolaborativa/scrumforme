@@ -34,6 +34,7 @@ $(document).ready(function(){
 
 	$('.dropdown_new_project').on("click", function() {
 		$(".dropdown-menu").toggle();
+		// event.preventDefault();
 	});
 
 	$('#projects_thumbnail').awesomeCropper(
