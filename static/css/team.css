@@ -95,12 +95,21 @@ li {
 
 img.thumbnail_owner_project {
     background-color: #8ac401;
-    padding-bottom: 20px;
+    box-shadow: 0px 1px 1px 1px #bb;
+    webkit-box-shadow: 0px 1px 1px 1px #bb;
+    /*padding-bottom: 20px; */
+}
+
+
+.avatar-frame,.avatar-frame img{
+    -webkit-border-radius: 50px !important;
+    border-radius: 50px !important;
+    -moz-border-radius: 50px !important;
 }
 
 #owner_project {
     position: relative;
-    bottom: 20px;
+    bottom: 30px;
     color: #fff;
 }
 
@@ -111,7 +120,7 @@ img.thumbnail_owner_project {
 
 .users_container {
     position: relative;
-    top: 15px;
+    /*top: 15px;*/
 }
 
 .users_container h5 {

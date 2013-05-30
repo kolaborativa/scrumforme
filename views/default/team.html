@@ -46,11 +46,11 @@
     {{ for member in team_members: }}
       <li class="span2 users">
         {{if member.sharing.person_id == owner_project_person_id: }}
-          <img class="thumbnail thumbnail_owner_project" alt="{{=member.sharing.person_id.name}}" title="{{=member.sharing.person_id.name}}" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}'>
+          <img class="thumbnail thumbnail_owner_project avatar-frame" alt="{{=member.sharing.person_id.name}}" title="{{=member.sharing.person_id.name}}" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}'>
           <p id="owner_project"><i class="icon-star"></i> {{=T("Owner")}}</p>
           <div id="owner_container">
         {{else:}}
-          <img class="thumbnail" alt="{{=member.sharing.person_id.name}}"  title="{{=member.sharing.person_id.name}}" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}'>
+          <img class="thumbnail avatar-frame" alt="{{=member.sharing.person_id.name}}"  title="{{=member.sharing.person_id.name}}" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}'>
           <div class="users_container">
         {{pass}}
             <h5>{{=member.sharing.person_id.name}}</h5>
