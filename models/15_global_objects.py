@@ -160,5 +160,6 @@ class G_projects(object):
         person_id = person["person_id"]
         person_projects = person["projects"]
         all_shared_with_person = person['all_shared_with_person']
+        print all_shared_with_person
 
         return dict(person_projects=person_projects, all_shared_with_person=all_shared_with_person)

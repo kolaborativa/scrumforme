@@ -312,7 +312,7 @@ div.flash #closeflash {
 
 }
 
-#project_info, #sprint_info {
+.project_bar_info {
     padding: 5px 0px;
     background-color: #444444;
     background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#FFFFFF), to(#EEEEEE));
@@ -322,7 +322,7 @@ div.flash #closeflash {
     background-image: -o-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
     background-image: linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
     border: 1px solid rgb(189, 189, 189);
-    min-height: 104px;
+    min-height: 104px!important;
     margin-top: 5px;
     margin-bottom: 5px;
 }
