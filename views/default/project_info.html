@@ -5,7 +5,18 @@
         <img class="thumbnail pull-left" src='{{=URL("static","/img/no-image_project.jpg")}}' width="80px" height="80px" alt="{{=project.name}}" title="{{=project.name}}">
         {{pass}}
     <div id="project_content">
-        <p><strong>{{=project.name}}</strong> - <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
-        <p alt="{{=project.description}}" title="{{=project.description}}">{{=project.description}}</p>
+        {{if "have_permission" in globals():}}
+            {{if have_permission:}}
+                <p class="project_content-text"><strong><a href="#" class="editable-click editable" data-type="textarea" data-placeholder='{{=T("Click to write")}}' data-pk="{{=project.id}}" data-url="{{=URL('create_or_update_itens')}}" data-name="project_name" data-update="true">{{=project.name}}</a></strong> - <a href="{{=project.url}}" class="editable-click editable" data-type="textarea" data-placeholder='{{=T("Click to write")}}' data-pk="{{=project.id}}" data-url="{{=URL('create_or_update_itens')}}" data-name="project_url" data-update="true">{{=project.url}}</a></p>
+
+                <p class="project_content-text"><a href="#" class="editable-click editable" data-type="textarea" data-placeholder='{{=T("Click to write")}}' data-pk="{{=project.id}}" data-url="{{=URL('create_or_update_itens')}}" data-name="project_description" data-update="true" alt="{{=project.description}}" title="{{=project.description}}">{{=project.description}}</a></p>
+            {{else:}}
+                <p class="project_content-text"><strong>{{=project.name}}</strong> - <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
+                <p  class="project_content-text" alt="{{=project.description}}" title="{{=project.description}}">{{=project.description}}</p>
+            {{pass}}
+        {{else:}}
+            <p class="project_content-text"><strong>{{=project.name}}</strong> - <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
+            <p  class="project_content-text" alt="{{=project.description}}" title="{{=project.description}}">{{=project.description}}</p>
+        {{pass}}
     </div>
 </div>

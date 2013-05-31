@@ -1024,6 +1024,110 @@ def change_stories():
 # =============================
 
 @auth.requires_login()
+def _edit_project_name():
+    db(Project.id == request.vars.dbID).update(
+        name=request.vars.value,
+    )
+    return dict(success="success",msg="successfully saved!")
+
+
+@auth.requires_login()
+def _edit_project_description():
+    db(Project.id == request.vars.dbID).update(
+        description=request.vars.value,
+    )
+    return dict(success="success",msg="successfully saved!")
+
+
+@auth.requires_login()
+def _edit_project_url():
+    db(Project.id == request.vars.dbID).update(
+        url=request.vars.value,
+    )
+    return dict(success="success",msg="successfully saved!")
+
+
+@auth.requires_login()
+def _create_story():
+    database_id = Story.insert(
+            project_id=request.vars.pk,
+            title=request.vars.value,
+            position_dom=request.vars.order
+            )
+    return dict(success="success",msg="successfully saved!",name=request.vars.name,database_id=database_id)
+
+
+@auth.requires_login()
+def _create_definition_ready():
+    database_id = Definition_ready.insert(
+            story_id=request.vars.pk,
+            title=request.vars.value
+            )
+    return dict(success="success",msg="successfully saved!",name=request.vars.name,database_id=database_id)
+
+
+@auth.requires_login()
+def _create_task():
+    database_id = Task.insert(
+            definition_ready_id=request.vars.pk,
+            title=request.vars.value,
+            status="todo"
+            )
+    # updates the status of story
+    _test_story_completed(request.vars.definitionready, "todo")
+    _create_task_realtime()
+    return dict(success="success",msg="successfully saved!",name=request.vars.name,database_id=database_id)
+
+
+@auth.requires_login()
+def _edit_story():
+    db(Story.id == request.vars.dbID).update(
+        title=request.vars.value,
+    )
+    _update_item_realtime()
+    return dict(success="success",msg="successfully saved!")
+
+
+@auth.requires_login()
+def _edit_definition_ready():
+    db(Definition_ready.id == request.vars.dbID).update(
+        title=request.vars.value,
+    )
+    _update_item_realtime()
+    return dict(success="success",msg="successfully saved!")
+
+
+@auth.requires_login()
+def _edit_task():
+    db(Task.id == request.vars.dbID).update(
+        title=request.vars.value,
+    )
+    _update_item_realtime()
+    return dict(success="success",msg="successfully saved!")
+
+
+@auth.requires_login()
+def _create_task_realtime():
+    data_realtime = dict(
+                page=request.vars.page,
+                definition_ready_id=request.vars.definitionready,
+                project_id=request.vars.project_id,
+                )
+
+    _realtime_update(data_realtime)
+
+
+@auth.requires_login()
+def _update_item_realtime():
+    data_realtime = dict(
+                page=request.vars.page,
+                project_id=request.vars.project_id,
+                )
+
+    _realtime_update(data_realtime)
+
+
+@auth.requires_login()
 @service.json
 def create_or_update_itens():
     """Function that creates or updates items. Receive updates if request.vars.dbUpdate
@@ -1033,60 +1137,29 @@ def create_or_update_itens():
     if request.vars:
          # updating tasks
         if request.vars.dbUpdate == "true":
-            data_itens = dict(
-                        page = request.vars.page,
-                        iten_name = request.vars.name,
-                        value = request.vars.value,
-                        iten_id = request.vars.dbID,
-                        project_id = request.vars.project_id,
-                    )
-            return _update_values(data_itens)
+            update = {
+                "story" : _edit_story,
+                "definition_ready" : _edit_definition_ready,
+                "task" : _edit_task,
+                "project_name" : _edit_project_name,
+                "project_description" : _edit_project_description,
+                "project_url" : _edit_project_url,
+            }
+
+            return update[request.vars.name]()
 
         # creating tasks
         elif request.vars.dbUpdate == "false":
-            if request.vars.name == "story":
-                database_id = Story.insert(
-                        project_id=request.vars.pk,
-                        title=request.vars.value,
-                        position_dom=request.vars.order
-                        )
+            create = {
+                "story" : _create_story,
+                "definition_ready" : _create_definition_ready,
+                "task" : _create_task,
+            }
 
-            elif request.vars.name == "definition_ready":
-                database_id = Definition_ready.insert(
-                            story_id=request.vars.pk,
-                            title=request.vars.value
-                            )
+            return create[request.vars.name]()
 
-
-            elif request.vars.name == "task":
-                database_id = Task.insert(
-                            definition_ready_id=request.vars.pk,
-                            title=request.vars.value,
-                            status="todo"
-                            )
-                # updates the status of story
-                _test_story_completed(request.vars.definitionready, "todo")
-
-                # call realtime
-                data_realtime = dict(
-                            page=request.vars.page,
-                            definition_ready_id=request.vars.definitionready,
-                            project_id=request.vars.project_id,
-                            )
-
-                _realtime_update(data_realtime)
-
-            # realtime only for create itens in backlog page
-            if request.vars.page == "product_backlog":
-                # call realtime
-                data_realtime = dict(
-                            page=request.vars.page,
-                            project_id=request.vars.project_id,
-                            )
-
-                _realtime_update(data_realtime)
-
-            return dict(success="success",msg="successfully saved!",name=request.vars.name,database_id=database_id)
+        else:
+            return dict(error="error",msg="error writing!")
 
     else:
         return dict(error="error",msg="error writing!")
@@ -1118,40 +1191,6 @@ def _remove_task(data):
         return True
     else:
         return False
-
-
-@auth.requires_login()
-def _update_values(data):
-    if data:
-        if data["iten_name"] == "story":
-            db(Story.id == data["iten_id"]).update(
-                title=data["value"],
-            )
-
-        elif data["iten_name"] == "definition_ready":
-            db(Definition_ready.id == data["iten_id"]).update(
-                title=data["value"],
-            )
-
-        elif data["iten_name"] == "task":
-            db(Task.id == data["iten_id"]).update(
-                title=data["value"],
-            )
-
-        # realtime only for update backlog page
-        if data["page"] == "product_backlog":
-            # call realtime
-            data_realtime = dict(
-                        page=data["page"],
-                        project_id=data["project_id"],
-                        )
-
-            _realtime_update(data_realtime)
-
-        return dict(success="success",msg="successfully saved!")
-
-    else:
-        return dict(error="error",msg="error writing!")
 
 
 @auth.requires_login()

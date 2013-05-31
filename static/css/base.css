@@ -333,8 +333,7 @@ div.flash #closeflash {
 
 #project_info strong {
     text-transform: uppercase;
-    background-color: #ccc;
-    padding: 5px 10px;
+    /*padding: 5px 10px;*/
 }
 
 #project_info a {
@@ -351,8 +350,11 @@ div.flash #closeflash {
     float: left;
     width: 80%;
     white-space: nowrap;
-    overflow: hidden;
+}
+
+.project_content-text {
     text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 #sprint_info {
