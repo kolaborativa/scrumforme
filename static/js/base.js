@@ -42,8 +42,19 @@ $(document).ready(function(){
 		{ width: 150, height: 150 }
 	);
 
-	$(".btn_file").on('click', function() {
+	$(".btn_file, #change_thumbnail").on('click', function() {
 	   $(this).parent().find('.input_file').click();
+	});
+
+	$("#update_thumbnail_project").on('click', function() {
+		var thumb = $('#update_thumbnail').val();
+
+		if(thumb != "") {
+			$(".loading_item").fadeIn("fast");
+
+		} else {
+			return false
+		}
 	});
 
 	// === Sidebar navigation === //

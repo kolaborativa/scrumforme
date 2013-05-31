@@ -111,7 +111,12 @@ class G_projects(object):
         if form.accepts(request.vars):
             person = _get_person()
             person_id = person["person_id"]
-            image_name = self.convertImage(form.vars.thumbnail,folder)
+
+            if form.vars.thumbnail:
+                image_name = self.convertImage(form.vars.thumbnail,folder)
+            else:
+                image_name = None
+
             project_id = Project.insert(
                             created_by=person_id,
                             name=form.vars.name,
@@ -143,11 +148,16 @@ class G_projects(object):
             import subprocess
 
             folder = 'static/uploads/'
-            upload_folder = '%sstatic/uploads/' % request.folder
+            upload_folder = '%s%s' % (request.folder,folder)
+            if form_thumbnail.vars.thumbnail:
+                image_name = self.convertImage(form_thumbnail.vars.thumbnail,folder)
+            else:
+                redirect(URL(f='product_backlog', args=[project_id]))
+
             project_update = db(Project.id == project_id).select().first()
             subprocess.call('rm %s/%s' % (upload_folder, project_update.thumbnail), shell=True)
 
-            image_name = self.convertImage(form_thumbnail.vars.thumbnail,folder)
+
             db(Project.id == project_id).update(thumbnail=image_name)
             redirect(URL(f='product_backlog', args=[project_id]))
 
