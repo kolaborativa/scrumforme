@@ -94,8 +94,7 @@ def g_person_id():
 class G_projects(object):
     """header projects"""
 
-    def new_project(self):
-        import os
+    def newProject(self):
         from datetime import datetime
 
         folder = 'static/uploads/'
@@ -104,7 +103,7 @@ class G_projects(object):
             Field('description', label= T('Description')),
             Field('url', label= 'Url'),
             Field('thumbnail', type='upload',
-            uploadfolder=os.path.join(request.folder, folder)),
+            uploadfolder='%s%s' % (request.folder,folder)),
             table_name='projects',
             submit_button=T('CREATE')
             )
@@ -131,6 +130,32 @@ class G_projects(object):
             response.flash = T('form has errors')
 
         return form
+
+    def updateThumbnail(self):
+        project_id = request.args(0)
+        folder = 'static/uploads/'
+        form_thumbnail = SQLFORM.factory(
+            Field('thumbnail', type='upload',
+            uploadfolder='%s%s' % (request.folder,folder)),
+            table_name='update',
+            )
+        if form_thumbnail.process().accepted:
+            import subprocess
+
+            folder = 'static/uploads/'
+            upload_folder = '%sstatic/uploads/' % request.folder
+            project_update = db(Project.id == project_id).select().first()
+            subprocess.call('rm %s/%s' % (upload_folder, project_update.thumbnail), shell=True)
+
+            image_name = self.convertImage(form_thumbnail.vars.thumbnail,folder)
+            db(Project.id == project_id).update(thumbnail=image_name)
+            redirect(URL(f='product_backlog', args=[project_id]))
+
+        elif form_thumbnail.errors:
+            response.flash = T('form has errors')
+
+        return form_thumbnail
+
 
     def convertImage(self,base64txt,folder):
         import os

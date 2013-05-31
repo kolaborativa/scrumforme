@@ -336,25 +336,25 @@ div.flash #closeflash {
     /*padding: 5px 10px;*/
 }
 
-#project_info a {
-    color: #444444;
-}
-
-#project_info a:hover {
-    text-decoration: underline;
-    color: #000;
-}
-
 #project_content {
     margin: 10px 0 0 10px;
     float: left;
-    width: 80%;
+    width: 75%;
     white-space: nowrap;
 }
 
 .project_content-text {
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.project_content-text a {
+    color: #444444;
+}
+
+.project_content-text a:hover {
+    text-decoration: underline;
+    color: #000;
 }
 
 #sprint_info {
@@ -1634,10 +1634,6 @@ html, body, .container, .content {
     text-align: center;
 }
 
-#projects .dropdown-menu .input_file {
-    display: none;
-}
-
 #projects .dropdown-menu .btn_new_project {
     width: 49%;
 }
@@ -1698,7 +1694,6 @@ html, body, .container, .content {
 
 .btn_file {
     margin: 0 auto;
-    margin-bottom: 20px;
 }
 
 .new_image {
@@ -1794,6 +1789,24 @@ html, body, .container, .content {
 .modal .preview {
     width: 100%;
     margin-top: 0px;
+}
+
+/*thumbnail*/
+.awesome-cropper .control-group {
+    margin-bottom: 0px;
+}
+
+#project_info .awesome-cropper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    display: block;
+    margin-top: -85px;
+}
+
+.input_file {
+    display: none;
 }
 
 

@@ -96,7 +96,6 @@ if (info.have_permission === true) {
       success: function(value,response) {
         // enables the buttons
         var story = $(this).closest(".story");
-        console.log(value);
 
         if(value.name === "story") {
             story.find(".new_story").removeClass("new_story");

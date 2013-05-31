@@ -7,9 +7,8 @@
                     {{=T("New Project")}}
 
                     {{ g_project = G_projects() }}
-                    {{ new_project = g_project.new_project() }}
+                    {{ new_project = g_project.newProject() }}
                     {{ person = g_project.projects() }}
-
                 </li>
             </a>
             <div class="dropdown-menu">
@@ -32,8 +31,10 @@
                     </div>
                     <button class="btn btn-info btn-mini btn_file" type="button">{{=T('Choose an image')}}</button>
                     <br>
+                    <br>
                     <input type="submit" class="btn btn-primary btn_new_project" value='{{=T("Create")}}'>
                     <button class="btn btn-danger btn_new_project dropdown_new_project">{{=T('Cancel')}}</button>
+                    <br>
                 {{=new_project.custom.end}}
             </div>
 

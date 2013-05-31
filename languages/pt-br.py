@@ -347,6 +347,7 @@
 'Twitter': 'Twitter',
 'Type your message': 'Digite sua mensagem',
 'unable to parse csv file': 'não foi possível analisar arquivo csv',
+'Update': 'Atualizar',
 'Update:': 'Atualizar:',
 'Upload': 'Upload',
 'Url': 'Url',

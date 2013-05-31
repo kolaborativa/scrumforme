@@ -37,11 +37,13 @@ $(document).ready(function(){
 		// event.preventDefault();
 	});
 
-	$('#projects_thumbnail').awesomeCropper(
+	// create or update thumbnail
+	$('#projects_thumbnail, #update_thumbnail').awesomeCropper(
 		{ width: 150, height: 150 }
 	);
+
 	$(".btn_file").on('click', function() {
-	   $('.input_file').click();
+	   $(this).parent().find('.input_file').click();
 	});
 
 	// === Sidebar navigation === //

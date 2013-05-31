@@ -99,6 +99,25 @@ def product_backlog():
 
     if project.created_by == person_id or shared.person_id == person_id:
 
+        form_sprint = SQLFORM.factory(
+            Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
+            Field('weeks', label=T('Weeks'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
+            table_name='sprint',
+            submit_button=T('CREATE')
+            )
+
+        if form_sprint.process().accepted:
+            name = form_sprint.vars['name']
+            weeks = form_sprint.vars['weeks']
+
+            sprint_id = Sprint.insert(
+                                    project_id=project_id,
+                                    name=name,
+                                    weeks=weeks
+                                    )
+
+            redirect(URL(f='product_backlog', args=[project_id]))
+
         have_permission = False
         # if user is a PO or Scrum Master
         role = [1,2]
@@ -120,25 +139,6 @@ def product_backlog():
         else:
             stories = db( (Story.project_id == project.id) & \
                           (Story.sprint_id == None) ).select(orderby=Story.position_dom)
-
-        form_sprint = SQLFORM.factory(
-            Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
-            Field('weeks', label=T('Weeks'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
-            table_name='sprint',
-            submit_button=T('CREATE')
-            )
-
-        if form_sprint.process().accepted:
-            name = form_sprint.vars['name']
-            weeks = form_sprint.vars['weeks']
-
-            sprint_id = Sprint.insert(
-                                    project_id=project_id,
-                                    name=name,
-                                    weeks=weeks
-                                    )
-
-            redirect(URL(f='product_backlog', args=[project_id]))
 
         if stories:
             definition_ready = {}

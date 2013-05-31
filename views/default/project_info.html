@@ -1,10 +1,30 @@
 <div id="project_info" class="project_bar_info span6">
-        {{ if project.thumbnail:}}
-        <img class="thumbnail pull-left" src='{{=URL("static","uploads/%s" %project.thumbnail)}}' width="80px" height="80px" alt="{{=project.name}}" title="{{=project.name}}">
-        {{else:}}
-        <img class="thumbnail pull-left" src='{{=URL("static","/img/no-image_project.jpg")}}' width="80px" height="80px" alt="{{=project.name}}" title="{{=project.name}}">
+    <div class="pull-left">
+    {{ if project.thumbnail:}}
+        <img class="thumbnail" src='{{=URL("static","uploads/%s" %project.thumbnail)}}' width="80px" height="80px" alt="{{=project.name}}" title="{{=project.name}}">
+    {{else:}}
+        <img class="thumbnail" src='{{=URL("static","/img/no-image_project.jpg")}}' width="80px" height="80px" alt="{{=project.name}}" title="{{=project.name}}">
+    {{pass}}
+    {{if "have_permission" in globals():}}
+        {{if have_permission:}}
+
+                {{ project_thumb = G_projects() }}
+                {{ update_project = project_thumb.updateThumbnail() }}
+
+                {{=update_project.custom.begin}}
+                    <!-- thumbnail -->
+                    {{ update_project.elements('#update_thumbnail')[0] ['_type'] = "hidden" }}
+                    {{=update_project.custom.widget.thumbnail}}
+                    <button class="btn btn-info btn-mini btn_file" type="button">{{=T('Choose an image')}}</button>
+                    <br>
+                    <br>
+                    <input type="submit" class="btn btn-success btn-mini btn-block" value='{{=T("Update")}}'>
+                {{=update_project.custom.end}}
+
         {{pass}}
-    <div id="project_content">
+    {{pass}}
+    </div>
+    <div id="project_content" class="pull-left">
         {{if "have_permission" in globals():}}
             {{if have_permission:}}
                 <p class="project_content-text"><strong><a href="#" class="editable-click editable" data-type="textarea" data-placeholder='{{=T("Click to write")}}' data-pk="{{=project.id}}" data-url="{{=URL('create_or_update_itens')}}" data-name="project_name" data-update="true">{{=project.name}}</a></strong> - <a href="{{=project.url}}" class="editable-click editable" data-type="textarea" data-placeholder='{{=T("Click to write")}}' data-pk="{{=project.id}}" data-url="{{=URL('create_or_update_itens')}}" data-name="project_url" data-update="true">{{=project.url}}</a></p>
