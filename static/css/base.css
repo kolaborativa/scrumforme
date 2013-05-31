@@ -1668,10 +1668,11 @@ html, body, .container, .content {
     width: 40px;
     height: 40px;
     position: relative;
-    top: -19px;
+    top: -30px;
     padding: 0px;
-    border-radius: 5px 5px 0 0;
+    border-radius: 5px;
     border: solid 2px transparent;
+    background-color: #fff;
 }
 
 #projects li a img:hover {
