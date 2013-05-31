@@ -42,7 +42,14 @@ $(document).ready(function(){
 		{ width: 150, height: 150 }
 	);
 
-	$(".btn_file, #change_thumbnail").on('click', function() {
+	$(".btn_file").on('click', function() {
+		$('#update_thumbnail').val("");
+	   $(this).parent().find('.input_file').click();
+	});
+
+	$(".preview, #change_thumbnail").on('click', function() {
+		$('#update_thumbnail').val("");
+		$('.preview').removeAttr("src");
 	   $(this).parent().find('.input_file').click();
 	});
 

@@ -1,9 +1,9 @@
 <div id="project_info" class="project_bar_info span6">
     <div class="pull-left">
     {{ if project.thumbnail:}}
-        <img id="change_thumbnail" class="thumbnail" src='{{=URL("static","uploads/%s" %project.thumbnail)}}' width="80px" height="80px" alt="{{=project.name}}" title="{{=project.name}}">
+        <img id="change_thumbnail" src='{{=URL("static","uploads/%s" %project.thumbnail)}}' width="80px" height="80px" alt="{{=project.name}}" title="{{=project.name}}">
     {{else:}}
-        <img id="change_thumbnail" class="thumbnail" src='{{=URL("static","/img/no-image_project.jpg")}}' width="80px" height="80px" alt="{{=project.name}}" title="{{=project.name}}">
+        <img id="change_thumbnail" src='{{=URL("static","/img/no-image_project.jpg")}}' width="80px" height="80px" alt="{{=project.name}}" title="{{=project.name}}">
     {{pass}}
     {{if "have_permission" in globals():}}
         {{if have_permission:}}
@@ -15,9 +15,7 @@
                     <!-- thumbnail -->
                     {{ update_project.elements('#update_thumbnail')[0] ['_type'] = "hidden" }}
                     {{=update_project.custom.widget.thumbnail}}
-                    <!-- <button class="btn btn-info btn-mini btn_file" type="button">{{=T('Choose an image')}}</button> -->
-                    <!-- <br> -->
-                    <!-- <br> -->
+
                     <input id="update_thumbnail_project" type="submit" class="btn btn-success btn-mini btn-block" value='{{=T("Update Image")}}'>
                 {{=update_project.custom.end}}
 
@@ -39,4 +37,5 @@
             <p  class="project_content-text" alt="{{=project.description}}" title="{{=project.description}}">{{=project.description}}</p>
         {{pass}}
     </div>
+    <div class="clearfix"></div>
 </div>

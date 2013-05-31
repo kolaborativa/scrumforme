@@ -1668,15 +1668,14 @@ html, body, .container, .content {
     width: 40px;
     height: 40px;
     position: relative;
-    top: -30px;
+    top: -28px;
     padding: 0px;
     border-radius: 5px;
-    border: solid 2px transparent;
     background-color: #fff;
 }
 
 #projects li a img:hover {
-    border: solid 2px #ccc;
+    opacity: 0.8;
 }
 
 #all_projects_link {
@@ -1713,8 +1712,23 @@ html, body, .container, .content {
     box-shadow: 0 1px 3px rgb(141, 141, 141);
 }
 
-#change_thumbnail {
+#change_thumbnail, #project_info .preview {
     cursor: pointer;
+
+}
+
+#change_thumbnail {
+    background-color: #fff;
+    padding: 4px;
+    line-height: 20px;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+
 }
 
 #logo {
@@ -1789,6 +1803,7 @@ html, body, .container, .content {
 
 .awesome-cropper .preview {
     width: 80px;
+    background-color: #fff;
 }
 
 .modal .preview {
@@ -1807,7 +1822,7 @@ html, body, .container, .content {
     margin: 0 auto;
     margin-bottom: 10px;
     display: block;
-    margin-top: -86px;
+    margin-top: -85px;
 }
 
 .input_file {
