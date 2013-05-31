@@ -8,7 +8,7 @@
 
                     {{ g_project = G_projects() }}
                     {{ new_project = g_project.new_project() }}
-                    {{ all_projects = g_project.projects() }}
+                    {{ person = g_project.projects() }}
 
                 </li>
             </a>
@@ -37,62 +37,18 @@
                 {{=new_project.custom.end}}
             </div>
 
-            {{p_count = 1}}
-            {{for my_project in all_projects["person_projects"]:}}
-                {{if p_count <= 6:}}
-                    <li class='{{=g_current_page("default/%s/%s" %(request.function,my_project.id),"active")}}'>
-                        <a href='{{=URL(c="default",f="board",args=[my_project.id])}}' class="list-projects">
-                            {{ if my_project.thumbnail:}}
-                            <img class="tip-bottom" src='{{=URL("static","uploads/%s" %my_project.thumbnail)}}' width="50px" height="50px" alt="{{=my_project.name}}" title="{{=my_project.name}}">
-                            {{else:}}
-                            <img class="tip-bottom" src='{{=URL("static","/img/no-image_project.jpg")}}' width="50px" height="50px" alt="{{=my_project.name}}" title="{{=my_project.name}}">
-                            {{pass}}
-                        </a>
-                    </li>
-                {{p_count += 1}}
-                {{pass}}
-            {{pass}}
-            {{for shared_project in all_projects["all_shared_with_person"]:}}
-                {{if p_count <= 10:}}
-                    <li class='{{=g_current_page("default/%s/%s" %(request.function,shared_project.project_id),"active")}}'>
-                        <a href='{{=URL(c="default",f="board",args=[shared_project.project_id])}}' class="list-projects">
-                            {{ if shared_project.project_id.thumbnail:}}
-                            <img class="tip-bottom" src='{{=URL("static","uploads/%s" %shared_project.project_id.thumbnail)}}' width="50px" height="50px" alt='{{=shared_project.project_id.name}}' title='{{=shared_project.project_id.name}}'>
-                            {{else:}}
-                            <img class="tip-bottom" src='{{=URL("static","/img/no-image_project.jpg")}}' width="50px" height="50px" alt='{{=shared_project.project_id.name}}' title='{{=shared_project.project_id.name}}'>
-                            {{pass}}
-                        </a>
-                    </li>
-                {{p_count += 1}}
-                {{pass}}
-            {{pass}}
-<!--             <li class="dropdown">
-                <a href="#" id="all_projects_link" class="dropdown-toggle" data-toggle="dropdown" alt='{{=T("All Projects")}}' title='{{=T("All Projects")}}'>...</a>
-
-                <div id="all_projects" class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-
-                    {{if all_projects["person_projects"]:}}
-                        <h3>{{=T('My Projects')}} <span class="label">{{=len(all_projects["person_projects"])}}</span></a></h3>
-                        <ul>
-                        {{for i in all_projects["person_projects"]:}}
-                            <li>
-                                <a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}'>{{=i.name}}</a>
-                                <button data-project="{{=i.id}}" class="delete_project btn btn-danger btn-mini">{{=T("delete")}}</button>
-                            </li>
-                        {{pass}}
-                        </ul>
+        {{for my_project in person["all_projects"]:}}
+            <li>
+                <a href='{{=URL(c="default",f="board",args=[my_project["project"].id])}}' class="list-projects">
+                    {{ if my_project["project"].thumbnail:}}
+                    <img class="tip-bottom" src='{{=URL("static","uploads/%s" %my_project["project"].thumbnail)}}' width="50px" height="50px" alt="{{=my_project["project"].name}}" title="{{=my_project["project"].name}}">
+                    {{else:}}
+                    <img class="tip-bottom" src='{{=URL("static","/img/no-image_project.jpg")}}' width="50px" height="50px" alt="{{=my_project["project"].name}}" title="{{=my_project["project"].name}}">
                     {{pass}}
-                    {{if all_projects["all_shared_with_person"]:}}
-                        <h3>{{=T('Projects that I am part')}} <span class="label">{{=len(all_projects["all_shared_with_person"])}}</span></a></h3>
-                        <ul>
-                        {{for i in all_projects["all_shared_with_person"]:}}
-                            <li><a href='{{=URL(c="default",f="product_backlog",args=[i.project_id])}}'>{{=i.project_id.name}}</a></li>
-                        {{pass}}
-                        </ul>
-                    {{pass}}
+                </a>
+            </li>
+        {{pass}}
 
-                </div>
-            </li> -->
         </ul>
         <div id="user-nav" class="navbar navbar-inverse">
             <ul class="nav">

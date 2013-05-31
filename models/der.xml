@@ -44,7 +44,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="132" y="12" name="project">
+<table x="166" y="7" name="project">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -73,6 +73,10 @@
 <row name="thumbnail" null="1" autoincrement="0">
 <datatype>upload</datatype>
 <default>NULL</default>
+</row>
+<row name="position_dom" null="1" autoincrement="0">
+<datatype>integer</datatype>
+<default>0</default>
 </row>
 <row name="_object_name" null="1" autoincrement="0">
 <datatype>integer</datatype>
@@ -174,7 +178,7 @@
 </row>
 <row name="position_dom" null="1" autoincrement="0">
 <datatype>integer</datatype>
-<default>NULL</default>
+<default>0</default>
 </row>
 <row name="concluded" null="1" autoincrement="0">
 <datatype>boolean</datatype>

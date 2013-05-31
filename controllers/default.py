@@ -29,26 +29,24 @@ def _get_person(project_id=''):
     user_relationship = db(db.user_relationship.auth_user_id==auth.user.id).select().first()
     person_id = user_relationship.person_id
 
-    projects = db(Project.created_by==person_id).select()
+    own_projects = db(Project.created_by==person_id).select(orderby=Project.position_dom)
+    all_person_shared = db(Sharing.person_id==person_id).select()
 
-    shared = db(Sharing.person_id==person_id).select()
-    id_projects = [i.id for i in projects]
-    all_shared = [i for i in shared if not i.project_id in id_projects]
+    id_own_projects = [i.id for i in own_projects]
+    all_shared = [i for i in all_person_shared if not i.project_id in id_own_projects]
 
+    shared_with = False
     if project_id:
         for i in all_shared:
             if int(project_id) == i.project_id:
-                shared = i
+                shared_with = i
                 break
-    else:
-        shared = False
-
 
     return dict(
                 person_id=person_id,
-                projects=projects,
-                all_shared_with_person=all_shared,
-                shared=shared
+                own_projects=own_projects,
+                all_shared_with=all_shared,
+                shared_with=shared_with
                 )
 
 
@@ -58,13 +56,13 @@ def _get_person(project_id=''):
 
 @auth.requires_login()
 def projects():
-    response.title = T("Projects")
+    """This function receives the data used in the global class G_projects in
+    this header on all pages
+    """
     person = _get_person()
-    person_id = person["person_id"]
-    person_projects = person["projects"]
-    all_shared_with_person = person['all_shared_with_person']
-
-    return dict(person_projects=person_projects, all_shared_with_person=all_shared_with_person)
+    own_projects = person["own_projects"]
+    all_shared_with = person["all_shared_with"]
+    return dict(own_projects=own_projects,all_shared_with=all_shared_with)
 
 
 def delete_project():
@@ -97,10 +95,9 @@ def product_backlog():
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
     person = _get_person(project_id)
     person_id = person["person_id"]
-    shared = person["shared"]
+    shared = person["shared_with"]
 
     if project.created_by == person_id or shared.person_id == person_id:
-        # print shared
 
         have_permission = False
         # if user is a PO or Scrum Master
@@ -186,7 +183,7 @@ def board():
 
     person = _get_person(project_id)
     person_id = person["person_id"]
-    shared = person["shared"]
+    shared = person["shared_with"]
 
     if project.created_by == person_id or shared.person_id == person_id:
 
@@ -272,7 +269,7 @@ def statistics():
 
     person = _get_person(project_id)
     person_id = person["person_id"]
-    shared = person["shared"]
+    shared = person["shared_with"]
 
     if project.created_by == person_id or shared.person_id == person_id:
         sprint = db(Sprint.project_id == project.id).select().first()
@@ -324,7 +321,7 @@ def team():
     project_id=request.args(0) or redirect(URL('projects'))
     person = _get_person(project_id)
     person_id = person["person_id"]
-    shared = person["shared"]
+    shared = person["shared_with"]
 
     project = db(Project.id==project_id).select().first()
     roles = db(Role).select()

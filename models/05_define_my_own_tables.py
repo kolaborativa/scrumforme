@@ -25,6 +25,7 @@ if not "project" in db.tables:
         Field("description", "string", length=256, default=None),
         Field("url", "string", length=128, default=None),
         Field("thumbnail", "upload", default=None),
+        Field("position_dom", "integer", default=0),
         format='%(name)s',
         migrate="project.table")
 
@@ -45,7 +46,7 @@ if not "story" in db.tables:
         Field("title", "string", length=128, default=None),
         Field("benefit", "string", default=None),
         Field("story_points", "integer", default=None),
-        Field("position_dom", "integer", default=None),
+        Field("position_dom", "integer", default=0),
         Field("concluded", "boolean", default=False),
         format='%(title)s',
         migrate="story.table")

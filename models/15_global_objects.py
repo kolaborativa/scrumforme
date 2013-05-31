@@ -156,10 +156,31 @@ class G_projects(object):
 
     def projects(self):
 
-        person = _get_person()
-        person_id = person["person_id"]
-        person_projects = person["projects"]
-        all_shared_with_person = person['all_shared_with_person']
-        print all_shared_with_person
 
-        return dict(person_projects=person_projects, all_shared_with_person=all_shared_with_person)
+        user_relationship = db(db.user_relationship.auth_user_id==auth.user.id).select().first()
+        person_id = user_relationship.person_id
+
+        if request.args(0):
+            project_id = int(request.args(0))
+            limit_b = 5
+            db(Project.id == project_id).update(position_dom=0)
+        else:
+            limit_b = 4
+
+        all_projects = db( (Sharing.person_id == person_id) &
+                        (Project.id == Sharing.project_id ) ).select(orderby=Project.position_dom, limitby=(0, limit_b))
+
+        if request.args(0):
+            for project in all_projects:
+                if project["project"].id == project_id and project["project"].position_dom == 0:
+                    break
+                else:
+                    if (project["project"].position_dom + 1) < len(all_projects):
+                        value = project["project"].position_dom + 1
+                    else:
+                        value = project["project"].position_dom - 1
+
+                    db(Project.id == project["project"].id).update(position_dom=value)
+            all_projects = [f for f in all_projects if f["project"].id != project_id]
+
+        return dict(all_projects=all_projects)

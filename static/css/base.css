@@ -1620,16 +1620,6 @@ html, body, .container, .content {
     margin-top: 5px;
 }
 
-#projects li.active {
-    margin-top: 0px;
-}
-
-
-#projects li.active a.list-projects {
-    font-weight: bold;
-    color: #0088cc;
-}
-
 #projects li a.list-projects {
     position: relative;
     top: 12px;
@@ -1674,20 +1664,6 @@ html, body, .container, .content {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff2f96b4', GradientType=0);
     border-color: #2f96b4 #2f96b4 #1f6377;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-    -webkit-transition: all .2s linear;
-    -moz-transition: all .2s linear;
-    -ms-transition: all .2s linear;
-    -o-transition: all .2s linear;
-    transition: all .2s linear;
-}
-
-#new_project li:hover {
-   -moz-transform: scale(1.1);
-   -webkit-transform: scale(1.1);
-   -o-transform: scale(1.1);
-   transform: scale(1.1);
-   -ms-transform: scale(1.1);
 }
 
 #projects li a img {
@@ -1697,33 +1673,11 @@ html, body, .container, .content {
     top: -19px;
     padding: 0px;
     border-radius: 5px 5px 0 0;
-    -webkit-transition: all .2s linear;
-    -moz-transition: all .2s linear;
-    -ms-transition: all .2s linear;
-    -o-transition: all .2s linear;
-    transition: all .2s linear;
+    border: solid 2px transparent;
 }
 
 #projects li a img:hover {
-    top: -20px;
-   -moz-transform: scale(1.1);
-   -webkit-transform: scale(1.1);
-   -o-transform: scale(1.1);
-   transform: scale(1.1);
-   -ms-transform: scale(1.1);
-}
-
-#projects li.active a img {
-    width: 50px;
-    height: 50px;
-    position: relative;
-    top: -26px;
-    padding: 2px;
-    background-color: #fff;
-}
-
-#projects li.active a img:hover {
-    top: -28px;
+    border: solid 2px #ccc;
 }
 
 #all_projects_link {
