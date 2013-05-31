@@ -1717,10 +1717,6 @@ html, body, .container, .content {
     cursor: pointer;
 }
 
-#change_thumbnail:hover {
-    background-color: #006dcc;
-}
-
 #logo {
     position: absolute;
     left: 0;
