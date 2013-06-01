@@ -38,7 +38,7 @@
                 {{=new_project.custom.end}}
             </div>
 
-        {{for my_project in person["all_projects"]:}}
+        {{for my_project in person["last_projects"]:}}
             <li>
                 <a href='{{=URL(c="default",f="board",args=[my_project["project"].id])}}' class="list-projects">
                     {{ if my_project["project"].thumbnail:}}

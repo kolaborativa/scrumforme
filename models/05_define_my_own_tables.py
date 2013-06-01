@@ -1,6 +1,7 @@
 if not "person" in db.tables:
     Person = db.define_table("person",
         Field("name", "string", length=128, default=""),
+        Field("last_projects", "string", default=None),
         format='%(name)s',
         migrate="person.table")
 
@@ -25,7 +26,6 @@ if not "project" in db.tables:
         Field("description", "string", length=256, default=None),
         Field("url", "string", length=128, default=None),
         Field("thumbnail", "upload", default=None),
-        Field("position_dom", "integer", default=0),
         format='%(name)s',
         migrate="project.table")
 

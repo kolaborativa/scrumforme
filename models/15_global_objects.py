@@ -190,32 +190,80 @@ class G_projects(object):
             return False
 
     def projects(self):
-
+        import json
 
         user_relationship = db(db.user_relationship.auth_user_id==auth.user.id).select().first()
         person_id = user_relationship.person_id
 
-        if request.args(0):
+        person = db(Person.id == person_id).select().first()
+
+        if request.args(0) and person.last_projects:
+            # on page project
             project_id = int(request.args(0))
-            limit_b = 5
-            db(Project.id == project_id).update(position_dom=0)
+            order = json.loads(person.last_projects)
+
+            if order[0] == project_id:
+                final_order = order
+            else:
+                final_order = [project_id]
+                for project in order:
+                    if project != project_id and len(final_order) < 5:
+                        final_order.append(project)
+
+                jsonstring = json.dumps(final_order)
+                db(Person.id == person_id).update(last_projects=jsonstring)
+
+            last_projects = self.lastProjectsData(final_order, project_id)
+
+        elif request.args(0):
+            # on page project
+            project_id = int(request.args(0))
+            last_projects = self.withouOrder(person_id, project_id)
+
+        elif person.last_projects:
+            # on index
+            order = json.loads(person.last_projects)
+            last_projects = self.lastProjectsData(order)
+
         else:
-            limit_b = 4
+            # on index
+            last_projects = db( (Sharing.person_id == person_id) &
+                        (Project.id == Sharing.project_id ) ).select(orderby=~Project.id,limitby=(0, 4))
 
-        all_projects = db( (Sharing.person_id == person_id) &
-                        (Project.id == Sharing.project_id ) ).select(orderby=Project.position_dom, limitby=(0, limit_b))
 
-        if request.args(0):
-            for project in all_projects:
-                if project["project"].id == project_id and project["project"].position_dom == 0:
-                    break
-                else:
-                    if (project["project"].position_dom + 1) < len(all_projects):
-                        value = project["project"].position_dom + 1
-                    else:
-                        value = project["project"].position_dom - 1
+        return dict(last_projects=last_projects)
 
-                    db(Project.id == project["project"].id).update(position_dom=value)
-            all_projects = [f for f in all_projects if f["project"].id != project_id]
 
-        return dict(all_projects=all_projects)
+    def lastProjectsData(self, final_order, project_id=""):
+        if project_id == "" and len(final_order) == 5:
+            final_order.pop()
+
+        last_projects = []
+        for i in final_order:
+            if i != project_id:
+                last_projects.append({"project":db(Project.id == i).select().first(), \
+                                    "sharing":db(Sharing.project_id == i).select().first()})
+
+        return last_projects
+
+
+    def withouOrder(self, person_id, project_id):
+        import json
+
+        last_projects = db( (Sharing.person_id == person_id) &
+                        (Project.id == Sharing.project_id ) ).select(orderby=~Project.id,limitby=(0, 5))
+
+        order = [project_id]
+        for project in last_projects:
+            if project["project"]["id"] != project_id:
+                order.append(project["project"]["id"])
+
+        jsonstring = json.dumps(order)
+        db(Person.id == person_id).update(last_projects=jsonstring)
+
+        reordered_projects = []
+        for n,i in enumerate(last_projects):
+            if n < 4:
+                reordered_projects.append(i)
+
+        return reordered_projects

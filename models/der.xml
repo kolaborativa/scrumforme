@@ -23,7 +23,7 @@
 		<type label="Password" length="0" sql="password" quote=""/>
 		<type label="List:reference" length="0" sql="list:reference" quote=""/>
 	</group>
-</datatypes><table x="376" y="332" name="person">
+</datatypes><table x="377" y="302" name="person">
 <row name="id" null="1" autoincrement="1">
 <datatype>integer</datatype>
 <default>NULL</default>
@@ -31,6 +31,10 @@
 <row name="name" null="1" autoincrement="0">
 <datatype>string(128)</datatype>
 <default>""</default>
+</row>
+<row name="last_projects" null="1" autoincrement="0">
+<datatype>string</datatype>
+<default>NULL</default>
 </row>
 <row name="_object_name" null="1" autoincrement="0">
 <datatype>integer</datatype>
@@ -73,10 +77,6 @@
 <row name="thumbnail" null="1" autoincrement="0">
 <datatype>upload</datatype>
 <default>NULL</default>
-</row>
-<row name="position_dom" null="1" autoincrement="0">
-<datatype>integer</datatype>
-<default>0</default>
 </row>
 <row name="_object_name" null="1" autoincrement="0">
 <datatype>integer</datatype>

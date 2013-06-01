@@ -29,7 +29,8 @@ def _get_person(project_id=''):
     user_relationship = db(db.user_relationship.auth_user_id==auth.user.id).select().first()
     person_id = user_relationship.person_id
 
-    own_projects = db(Project.created_by==person_id).select(orderby=Project.position_dom)
+    own_projects = db(Project.created_by==person_id).select()
+    # own_projects = db(Project.created_by==person_id).select(orderby=Project.position_dom)
     all_person_shared = db(Sharing.person_id==person_id).select()
 
     id_own_projects = [i.id for i in own_projects]
