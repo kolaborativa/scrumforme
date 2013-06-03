@@ -244,6 +244,7 @@ class G_projects(object):
                 last_projects.append({"project":db(Project.id == i).select().first(), \
                                     "sharing":db(Sharing.project_id == i).select().first()})
 
+        print last_projects
         return last_projects
 
 

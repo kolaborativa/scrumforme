@@ -1,45 +1,53 @@
+{{ g_project = G_projects() }}
+{{ new_project = g_project.newProject() }}
+{{ person = g_project.projects() }}
+
 <div id="header">
     <a href="{{=URL('index')}}" id="logo" alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
     {{ if auth.is_logged_in(): }}
         <ul id="projects">
-            <a href="#" id="new_project" class="dropdown_new_project" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'>
-                <li class="dropdown">
-                    {{=T("New Project")}}
 
-                    {{ g_project = G_projects() }}
-                    {{ new_project = g_project.newProject() }}
-                    {{ person = g_project.projects() }}
-                </li>
-            </a>
-            <div class="dropdown-menu">
-                {{=new_project.custom.begin}}
-                    <!-- name -->
-                    {{ new_project.elements('#projects_name')[0] ['_placeholder'] = T('Name') }}
-                    {{ new_project.elements('#projects_name')[0] ['_required'] = "required" }}
-                    {{=new_project.custom.widget.name}}
-                    <!-- description -->
-                    {{ new_project.elements('#projects_description')[0] ['_placeholder'] = T('Description') }}
-                    {{=new_project.custom.widget.description}}
-                    <!-- url -->
-                    {{ new_project.elements('#projects_url')[0] ['_placeholder'] = T('Url') }}
-                    {{ new_project.elements('#projects_url')[0] ['_type'] = T('url') }}
-                    {{=new_project.custom.widget.url}}
-                    <!-- thumbnail -->
-                    <div class="new_image">
-                        {{ new_project.elements('#projects_thumbnail')[0] ['_type'] = "hidden" }}
-                        {{=new_project.custom.widget.thumbnail}}
+            <div class="navbar pull-left">
+              <ul class="nav">
+                <li>
+                    <a href="#" id="new_project" class="dropdown_new_project dropdown-toggle btn btn-primary pull-left" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'>
+                            {{=T("New Project")}}
+
+                    </a>
+
+                    <div class="dropdown-menu">
+                        {{=new_project.custom.begin}}
+                            <!-- name -->
+                            {{ new_project.elements('#projects_name')[0] ['_placeholder'] = T('Name') }}
+                            {{ new_project.elements('#projects_name')[0] ['_required'] = "required" }}
+                            {{=new_project.custom.widget.name}}
+                            <!-- description -->
+                            {{ new_project.elements('#projects_description')[0] ['_placeholder'] = T('Description') }}
+                            {{=new_project.custom.widget.description}}
+                            <!-- url -->
+                            {{ new_project.elements('#projects_url')[0] ['_placeholder'] = T('Url') }}
+                            {{ new_project.elements('#projects_url')[0] ['_type'] = T('url') }}
+                            {{=new_project.custom.widget.url}}
+                            <!-- thumbnail -->
+                            <div class="new_image">
+                                {{ new_project.elements('#projects_thumbnail')[0] ['_type'] = "hidden" }}
+                                {{=new_project.custom.widget.thumbnail}}
+                            </div>
+                            <button class="btn btn-info btn-mini btn_file" type="button">{{=T('Choose an image')}}</button>
+                            <br>
+                            <br>
+                            <input type="submit" class="btn btn-primary btn_new_project" value='{{=T("Create")}}'>
+                            <button class="btn btn-danger btn_new_project dropdown_new_project">{{=T('Cancel')}}</button>
+                            <br>
+                        {{=new_project.custom.end}}
                     </div>
-                    <button class="btn btn-info btn-mini btn_file" type="button">{{=T('Choose an image')}}</button>
-                    <br>
-                    <br>
-                    <input type="submit" class="btn btn-primary btn_new_project" value='{{=T("Create")}}'>
-                    <button class="btn btn-danger btn_new_project dropdown_new_project">{{=T('Cancel')}}</button>
-                    <br>
-                {{=new_project.custom.end}}
+                </li>
+              </ul>
             </div>
 
         {{for my_project in person["last_projects"]:}}
-            <li>
+            {{if my_project["project"]:}}
+            <li class="last_projects">
                 <a href='{{=URL(c="default",f="board",args=[my_project["project"].id])}}' class="list-projects">
                     {{ if my_project["project"].thumbnail:}}
                     <img class="tip-bottom" src='{{=URL("static","uploads/%s" %my_project["project"].thumbnail)}}' width="50px" height="50px" alt="{{=my_project["project"].name}}" title="{{=my_project["project"].name}}">
@@ -48,6 +56,7 @@
                     {{pass}}
                 </a>
             </li>
+            {{pass}}
         {{pass}}
 
         </ul>

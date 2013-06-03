@@ -62,11 +62,12 @@ ul {
     display: none;
 }
 
-#sprint_name {
-    text-align: center;
+#clock p#sprint_name {
+    text-align: left;
     font-size: 16px;
     text-transform: capitalize;
     font-weight: bold;
+    margin-left: 10px;
 }
 
 #clock {
