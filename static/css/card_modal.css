@@ -1,0 +1,147 @@
+/*
+=======
+ MODAL
+=======
+*/
+
+/*Modal hack*/
+#card_modal {
+    /*remove static position*/
+    position: absolute;
+    /* new custom width */
+    /*min-width: 750px;*/
+    /* must be half of the width, minus scrollbar on the left (30px) */
+    /*margin-left: -375px;*/
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff4d8',endColorstr='#fce8c6');
+    background-image: -webkit-gradient(linear,center top,center bottom,from(#fff4d8),to(#fce8c6));
+    background-image: -moz-linear-gradient(center top,#fff4d8,#fce8c6);
+    background-color: #fff5e3;
+    padding-bottom: 20px;
+}
+
+#card_modal #modal_sidebar {
+    width: 19.5%;
+}
+
+#member_modal img {
+    padding-bottom: 10px;
+}
+
+#member_modal p {
+    margin: 0px;
+}
+
+#modal_role_name {
+    font-style: italic;
+}
+
+.color_light {
+    color: rgb(109, 109, 109);
+}
+
+#modal_sidebar i {
+    color: #444444;
+}
+
+#card_modal .well {
+    margin-bottom: 0px;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(224, 202, 146)',endColorstr='#fce8c6');
+    background-image: -webkit-gradient(linear,center top,center bottom,from(rgb(224, 202, 146)),to(#fce8c6));
+    background-image: -moz-linear-gradient(center top,rgb(224, 202, 146),#fce8c6);
+    background-color: rgb(224, 202, 146);
+    border: none;
+}
+
+#card_modal button.close {
+    padding-top: 10px;
+    position: relative;
+    left: 15px;
+}
+
+#card_modal .nav {
+    padding: 10px 0 0 0;
+}
+
+#card_modal .nav i {
+    float: right;
+    position: relative;
+    top: 4px;
+}
+
+#card_modal .nav-list a {
+    color: #000;
+    padding: 3px 6px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 5px;
+    background-color: #eeeeee;
+    border: 1px solid #444444;
+}
+
+#card_modal .nav-list a:hover {
+    background-color: #ccc;
+}
+
+#card_modal #date_started {
+    padding-left: 5px;
+}
+
+.comment_content {
+    width: 90%;
+    margin-left: 5px;
+}
+
+#modal_comments hr {
+    margin: 10px 0;
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #ccc;
+}
+
+.the_comment {
+    word-wrap: break-word;
+}
+
+.comment_buttons {
+    float: right;
+    font-size: 12px;
+}
+
+.comment_buttons li {
+    list-style: none;
+    float: left;
+    margin-left: 10px;
+}
+
+.cancel-edit {
+    margin-left: 20px;
+}
+
+.delete_comment, .edit_comment {
+    cursor: pointer;
+}
+
+.delete_comment:hover, .edit_comment:hover {
+    color: #000;
+}
+
+
+@media (min-width: 768px) and (max-width: 1919px) {
+    /*Modal hack*/
+    #card_modal {
+        /* new custom width */
+        width: 750px;
+        /* must be half of the width, minus scrollbar on the left (30px) */
+        margin-left: -375px;
+    }
+}
+
+@media (max-width: 767px){
+    #modal_sidebar {
+        float: left!important;
+    }
+    #modal_content {
+        float: left!important;
+        width: 74.46808510638297%!important;
+
+    }
+}

@@ -1,31 +1,124 @@
 {{extend 'default/layout_base.html'}}
 
-<title>{{=T('Sprints')}}</title>
+<script>
+    // OBS: other global variables for this page
+    var url = {
+        create_or_update_itens : '{{=URL("create_or_update_itens.json")}}',
+        move_tasks : '{{=URL("move_tasks")}}',
+        removeTask : '{{=URL("remove_board_task")}}',
+        edit_owner_task : '{{=URL("_edit_owner_task")}}',
+        team_page : '{{=URL(f="team",args=[request.args(0)])}}',
+        team_project : '{{=URL(r=request,f="call",args=["json","_team_project"], vars={"project_id": request.args(0)})}}',
+        card_modal : '{{=URL(r=request,f="call",args=["json","_card_modal"])}}',
+        card_new_comment_or_update : '{{=URL(r=request,f="call",args=["json","_card_new_comment_or_update"])}}',
+        card_delete_comment : '{{=URL(r=request,f="call",args=["json","_card_delete_comment"])}}',
+        update_task_date : '{{=URL(r=request,f="call",args=["json","_update_task_date"])}}',
+    },
+    msg = {
+        field_empty : '{{=T("Click to write")}}',
+        validation_error : '{{=T("Can not be empty")}}',
+        confirm : '{{=T("Are you sure you want to continue?")}}',
+        task_undated : '{{=T("You must first put a start date or move to IN PROGRESS column")}}',
+        task_no_belong : '{{=T("This task does not belong to another definition of ready")}}',
+        remove_sucess : '{{=T("Removed Successfully!")}}',
+        remove_error : '{{=T("Error in removal!")}}',
+        no_role : '{{=T("Some members of the team are without a paper, go TEAM PAGE and add their respective roles.")}}',
+        no_team : '{{=T("There are not members on the team, go TEAM PAGE and add new members.")}}',
+        task_no_exist : '{{=T("first insert the card content.")}}',
+        card_assign : '{{=T("Assign this card to a member of team before moving it")}}',
+    },
+    txt = {
+        team_page : '{{=T("Team Page")}}',
+        started_in : '{{=T("Started in")}}',
+        activities : '{{=T("Activities")}}',
+        upload : '{{=T("Upload")}}',
+        labels : '{{=T("Labels")}}',
+        delete_card : '{{=T("Delete")}}',
+        type_message : '{{=T("Type your message")}}',
+    },
+    button = {
+        comment : '{{=T("Comment")}}',
+        edit : '{{=T("Edit")}}',
+        save : '{{=T("Save")}}',
+        cancel : '{{=T("Cancel")}}',
+        delete : '{{=T("Delete")}}',
+    },
+    info = {
+        project_id : '{{=project.id}}',
+        page : '{{=request.function}}',
+    }
+</script>
+
+<div id="sub-header-content" class="row-fluid">
+    {{include "default/project_info.html"}}
+    <div id="sprint_info" class="project_bar_info span6">
+
+    </div>
+</div>
 
 <div class="container-fluid">
     {{for sprint in sprints:}}
-    <div class="widget-box">
-        <div class="widget-title">
-            <h5>{{=sprint.name}} - {{=T('Started in')}}: {{=g_blank_fulldate_check(sprint.started)}} - {{=T('Closed')}}: {{=g_blank_fulldate_check(sprint.ended)}}</h5>
+    <div class="widget-box sprint_container">
+        <div class="widget-title sprint_header">
+            <div class="pull-left">
+                <h5>{{=sprint.name}} - {{=T('Started in')}}: {{=g_blank_fulldate_check(sprint.started)}} - {{=T('Closed')}}: {{=g_blank_fulldate_check(sprint.ended)}}</h5>
+            </div>
+            <div id="expand_close_btns" class="pull-right">
+                <button class="btn btn-nostyle expand_all_stories pull-left" alt='{{=T("Open Stories")}}' title='{{=T("Open Stories")}}'>
+                    {{=T("Open Stories")}}
+                    <i class="icon-circle-arrow-down"></i>
+                </button>
+                <button class="btn btn-nostyle close_all_stories pull-left" alt='{{=T("Close Stories")}}' title='{{=T("Close Stories")}}'>
+                    {{=T("Close Stories")}}
+                    <i class="icon-circle-arrow-up"></i>
+                </button>
+                <div class="clearfix"></div>
+            </div>
         </div>
-        <div class="widget-content nopadding">
-            <table class="table table-bordered table-striped table-hover table-list">
-                <thead>
-                    <tr>
-                        <th class="span1">#</th>
-                        <th>{{=T("Name")}} {{=T("Story")}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{for n,story in enumerate(stories[sprint.id]):}}
-                    <tr>
-                        <td>{{=n}}</td>
-                        <td>{{=story.title}}</td>
-                    </tr>
-                    {{pass}}
-                </tbody>
-            </table>
-        </div>
-    </div>
+        {{for story in stories[sprint.id]:}}
+        <div class="widget-content">
+            <div class="story_header">
+                <div class="pull-left">
+                    <h5>{{=story.title}}</h5>
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-nostyle expand_story pull-right" alt="Expandir" title="Expandir">
+                        <i class="icon-circle-arrow-down"></i>
+                    </button>
+                </div>
+                <div class="clearfix"></div>
+            </div> <!-- /story_header -->
+            <div class="story_content">
+                {{for n,df in enumerate(definition_ready[story.id]):}}
+                <div class="list_definition_ready">
+                    <div class="definition_ready">
+                        <p>{{=definition_ready[story.id][n].title}}</p>
+                    </div>
+                    <div class="tasks">
+                        {{for task in tasks[definition_ready[story.id][n].id]:}}
+                        <a href="#" class="card-modal" data-pk='{{=task["id"]}}' onclick="">
+                            <p>
+                                {{ for member in team_members: }}
+                                    {{ if task["owner_task"] == member.sharing.person_id: }}
+                                        <img class="user_card " src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' data-owner="true">
+                                    {{pass}}
+                                {{pass}}
+                                {{=task["title"]}}
+                                {{if len(card_comments[task["id"]]) > 0:}}
+                                    <span class="comment"><i class="icon-comment"><span class="number_comment">{{ =g_format_number( len(card_comments[task["id"]]) ) }}</span></i></span>
+                                {{pass}}
+                            </p>
+                        </a>
+                        {{pass}}
+                    </div>
+                </div> <!-- /list_definition_ready -->
+                <hr>
+                {{pass}}
+            </div>
+
+        </div> <!-- /widget-content -->
+        {{pass}}
+    </div> <!-- /widget-box -->
     {{pass}}
-</div>
+</div> <!-- /container-fluid -->
+

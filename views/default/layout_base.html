@@ -57,11 +57,15 @@
         <link rel="stylesheet" href='{{=URL("static","css/datepicker.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/floatfixed.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/board.css")}}' />
+        <link rel="stylesheet" href='{{=URL("static","css/card_modal.css")}}' />
         {{ elif request.function == "statistics": }}
         <link rel="stylesheet" href='{{=URL("static","css/statistics.css")}}' />
         {{ elif request.function == "team": }}
         <link rel="stylesheet" href='{{=URL("static","css/select2.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/team.css")}}' />
+        {{ elif request.function == "sprints": }}
+        <link rel="stylesheet" href='{{=URL("static","css/sprints.css")}}' />
+        <link rel="stylesheet" href='{{=URL("static","css/card_modal.css")}}' />
         {{pass}}
 
         {{ if not request.function == "projects": }}
@@ -173,6 +177,10 @@
             {{ elif request.function == "team": }}
             <script src='{{=URL("static","js/select2.min.js")}}'></script>
             <script src='{{=URL("static","js/team.js")}}'></script>
+
+            {{ elif request.function == "sprints": }}
+            <script src='{{=URL("static","js/sprints-modal.js")}}'></script>
+            <script src='{{=URL("static","js/sprints.js")}}'></script>
             {{ pass }}
 
 

@@ -211,7 +211,9 @@ def board():
                     for task in tasks[row]:
                         card_comments[task["id"]] = db(Task_comment.task_id == task["id"]).select()
 
-                team_members = db( (db.user_relationship.person_id==Sharing.person_id) & (Sharing.project_id == project_id) ).select(Sharing.ALL, db.user_relationship.auth_user_id)
+                team_members = db( (db.user_relationship.person_id==Sharing.person_id) & \
+                                   (Sharing.project_id == project_id) ) \
+                                   .select(Sharing.ALL, db.user_relationship.auth_user_id)
 
                 return dict(project=project,
                             person_id=person_id,
@@ -241,22 +243,55 @@ def board():
 def sprints():
     response.title = T("Sprints")
     project_id = request.args(0) or redirect(URL('projects'))
-    sprints = db( (Sprint.project_id == project_id) & (Sprint.ended != None) ).select()
+    sprints = db( (Sprint.project_id == project_id) & (Sprint.ended != None) ).select(orderby=~Sprint.ended)
+    person = _get_person(project_id)
+    person_id = person["person_id"]
+    shared = person["shared_with"]
+    project = db(Project.id==project_id).select().first()
 
-    if sprints:
-        stories = {}
-        for sprint in sprints:
-            stories[sprint.id] = db( (Story.project_id == project_id) & \
-                                     (Story.concluded == True) & \
-                                     (Story.sprint_id == sprint.id) ).select()
+    if project.created_by == person_id or shared.person_id == person_id:
+        if sprints:
+            stories = {}
+            for sprint in sprints:
+                stories[sprint.id] = db( (Story.project_id == project_id) & \
+                                         (Story.concluded == True) & \
+                                         (Story.sprint_id == sprint.id) ).select()
 
-        return dict(
-                    sprints=sprints,
-                    stories=stories,
-                    )
-    else:
-        session.message = T("No history of sprints because no sprint ended yet.")
-        redirect(URL(f='product_backlog', args=[project_id]))
+            definition_ready = {}
+            for story in stories:
+                for i in stories[story]:
+                    definition_ready[i.id] = db(Definition_ready.story_id == i.id).select()
+
+            tasks = {}
+            for row in definition_ready:
+                for df in definition_ready[row]:
+                    tasks[df.id] = db(Task.definition_ready_id == df.id).select(orderby=~Task.id)
+
+            card_comments = {}
+            for row in tasks:
+                for task in tasks[row]:
+                    card_comments[task["id"]] = db(Task_comment.task_id == task["id"]).select()
+
+            team_members = db( (db.user_relationship.person_id==Sharing.person_id) & \
+                               (Sharing.project_id == project_id) ) \
+                               .select(Sharing.ALL, db.user_relationship.auth_user_id)
+
+            return dict(
+                        project=project,
+                        sprints=sprints,
+                        stories=stories,
+                        definition_ready=definition_ready,
+                        tasks=tasks,
+                        card_comments=card_comments,
+                        team_members=team_members,
+                        )
+
+        else:
+            session.message = T("No history of sprints because no sprint ended yet.")
+            redirect(URL(f='product_backlog', args=[project_id]))
+
+
+    redirect(URL('projects'))
 
 
 # =================
