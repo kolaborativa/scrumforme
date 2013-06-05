@@ -24,7 +24,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgb(243, 243, 243)', endColorstr='rgb(187, 187, 187)',GradientType=0 );
 }
 
-.story_content {
+.story_container {
     display: none;
 }
 
@@ -83,4 +83,13 @@
     right: 17px;
     bottom: 8px;
     font-weight: bold;
+}
+
+#live_search {
+    margin: 2% 5%;
+}
+
+#nothingfound {
+    display: none;
+    color: red;
 }

@@ -16,7 +16,10 @@
 <div id="sub-header-content" class="row-fluid">
     {{include "default/project_info.html"}}
     <div id="sprint_info" class="project_bar_info span6">
-
+        <div id="live_search">
+            <input type="text" name="livesearch" placeholder='{{=T("Make a search in")}} {{=T("stories")}}'>
+            <p id="nothingfound">{{=T("No name match your search!")}}</p>
+        </div>
     </div>
 </div>
 
@@ -52,33 +55,35 @@
                 </div>
                 <div class="clearfix"></div>
             </div> <!-- /story_header -->
-            <div class="story_content">
+            <div class="story_container">
                 {{for n,df in enumerate(definition_ready[story.id]):}}
-                <div class="list_definition_ready">
-                    <div class="definition_ready">
-                        <p>{{=definition_ready[story.id][n].title}}</p>
-                    </div>
-                    <div class="tasks">
-                        {{for task in tasks[definition_ready[story.id][n].id]:}}
-                        <a href="#" class="card-modal" data-pk='{{=task["id"]}}' onclick="">
-                            <p>
-                                {{ for member in team_members: }}
-                                    {{ if task["owner_task"] == member.sharing.person_id: }}
-                                        <img class="user_card " src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' data-owner="true">
+                <div class="story_content">
+                    <div class="list_definition_ready">
+                        <div class="definition_ready">
+                            <p>{{=definition_ready[story.id][n].title}}</p>
+                        </div>
+                        <div class="tasks">
+                            {{for task in tasks[definition_ready[story.id][n].id]:}}
+                            <a href="#" class="card-modal" data-pk='{{=task["id"]}}' onclick="">
+                                <p>
+                                    {{ for member in team_members: }}
+                                        {{ if task["owner_task"] == member.sharing.person_id: }}
+                                            <img class="user_card " src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' data-owner="true">
+                                        {{pass}}
                                     {{pass}}
-                                {{pass}}
-                                {{=task["title"]}}
-                                {{if len(card_comments[task["id"]]) > 0:}}
-                                    <span class="comment"><i class="icon-comment"><span class="number_comment">{{ =g_format_number( len(card_comments[task["id"]]) ) }}</span></i></span>
-                                {{pass}}
-                            </p>
-                        </a>
-                        {{pass}}
-                    </div>
-                </div> <!-- /list_definition_ready -->
-                <hr>
+                                    {{=task["title"]}}
+                                    {{if len(card_comments[task["id"]]) > 0:}}
+                                        <span class="comment"><i class="icon-comment"><span class="number_comment">{{ =g_format_number( len(card_comments[task["id"]]) ) }}</span></i></span>
+                                    {{pass}}
+                                </p>
+                            </a>
+                            {{pass}}
+                        </div>
+                    </div> <!-- /list_definition_ready -->
+                    <hr>
+                </div> <!-- /story_content -->
                 {{pass}}
-            </div> <!-- /story_content -->
+            </div> <!-- /story_container -->
 
         </div> <!-- /widget-content -->
         {{pass}}
