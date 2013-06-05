@@ -1,5 +1,5 @@
 $(".card-modal").on("click", function(event) {
-    event.prevenstDefault();
+    event.preventDefault();
 });
 
 // click expand story
