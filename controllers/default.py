@@ -1111,7 +1111,9 @@ def _create_task():
             )
     # updates the status of story
     _test_story_completed(request.vars.definitionready, "todo")
+    # call realtime
     _create_task_realtime()
+
     return dict(success="success",msg="successfully saved!",name=request.vars.name,database_id=database_id)
 
 
@@ -1231,12 +1233,15 @@ def _remove_task(data):
 
 @auth.requires_login()
 def _realtime_update(element):
-    from gluon.contrib.websocket_messaging import websocket_send
-    import json
+    try:
+        from gluon.contrib.websocket_messaging import websocket_send
+        import json
 
-    data = json.dumps(element)
-    projectID = "project%s" %element["project_id"]
-    websocket_send('http://localhost:8888', data, 'mykey', projectID)
+        data = json.dumps(element)
+        projectID = "project%s" %element["project_id"]
+        websocket_send('http://localhost:8888', data, 'mykey', projectID)
+    except:
+        pass
 
 
 @auth.requires_login()
