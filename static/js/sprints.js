@@ -40,7 +40,6 @@ $('input[name="livesearch"]').search('.list_definition_ready', function(on) {
     on.reset(function(ui) {
         nofound.hide();
         story_container.hide();
-        story_content.closest(".story_content").hide();
     });
 
     on.empty(function() {
