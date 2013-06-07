@@ -1,0 +1,99 @@
+<div class="container">
+    <section id="register">
+        <div class="hgroup">
+            <h1>{{=T("Register or Sign in")}}</h1>
+        </div>
+        <div class="row">
+            <div class="signin span6">
+
+                <div class="social_sign">
+                    <h3>{{=T("Sign in with your social account")}}</h3>
+                    <a class="fb" href="#facebook"><i class="icon icon-facebook"></i></a> <a class="tw" href="#twitter"><i class="icon icon-twitter"></i></a> <a class="gp" href="#googleplus"><i class="icon icon-google-plus"></i></a>
+                </div>
+
+                <div class="or">
+                    <div class="or_l"></div>
+                        <span>{{=T("or")}}</span>
+                    <div class="or_r"></div>
+                </div>
+
+                <p class="sign_title">{{=T("Log in with your scrumforme account")}}</p>
+
+                <div class="form">
+                        {{=form_login.custom.begin}}
+                            <!-- email -->
+                            {{ form_login.elements('#auth_user_email')[0] ['_placeholder'] = T("Email") }}
+                            {{ form_login.elements('#auth_user_email')[0] ['_type'] = "email" }}
+                            {{ form_login.elements('#auth_user_email')[0] ['_class'] = "input-xlarge" }}
+                            {{ form_login.elements('#auth_user_email')[0] ['_required'] = "required" }}
+                            {{=form_login.custom.widget.email}}
+
+                            <!-- senha -->
+                            {{ form_login.elements('#auth_user_password')[0] ['_placeholder'] = T("Password") }}
+                            {{ form_login.elements('#auth_user_password')[0] ['_class'] = "input-xlarge" }}
+                            {{ form_login.elements('#auth_user_password')[0] ['_required'] = "required" }}
+                            {{=form_login.custom.widget.password}}
+
+                            <div class="forgot">
+                                <label for="auth_user_remember" class="checkbox">
+                                <input class="checkbox" id="auth_user_remember" name="remember" type="checkbox" value="on" /> {{=T("Remember me (for 30 days)")}}
+                                </label><a id="reset_password" href="{{=URL(f='user',args='request_reset_password')}}">{{=T("Lost password?")}}</a>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-large">{{=T("Sign in")}}</button>
+                        {{=form_login.custom.end}}
+                </div>
+
+            </div>
+
+            <div class="signup span6">
+                {{=form_register.custom.begin}}
+                    <fieldset>
+                        <div class="social_sign">
+                            <h3>{{=T("Don't have a account yet? Create one now!")}}</h3>
+                            <a><i class="icon-user"></i></a>
+                        </div>
+
+                            <!-- primeiro nome -->
+                            {{ form_register.elements('#auth_user_first_name')[0] ['_placeholder'] = T("First name") }}
+                            {{ form_register.elements('#auth_user_first_name')[0] ['_class'] = "input-xlarge" }}
+                            {{ form_register.elements('#auth_user_first_name')[0] ['_required'] = "required" }}
+                            {{=form_register.custom.widget.first_name}}
+
+                            <!-- ultimo nome -->
+                            {{ form_register.elements('#auth_user_last_name')[0] ['_placeholder'] = T("Last name") }}
+                            {{ form_register.elements('#auth_user_last_name')[0] ['_class'] = "input-xlarge" }}
+                            {{=form_register.custom.widget.last_name}}
+
+                            <!-- email -->
+                            {{ form_register.elements('#auth_user_email')[0] ['_placeholder'] = T("Email") }}
+                            {{ form_register.elements('#auth_user_email')[0] ['_type'] = "email" }}
+                            {{ form_register.elements('#auth_user_email')[0] ['_class'] = "input-xlarge" }}
+                            {{ form_register.elements('#auth_user_email')[0] ['_required'] = "required" }}
+                            {{=form_register.custom.widget.email}}
+
+                            <!-- senha -->
+                            {{ form_register.elements('#auth_user_password')[0] ['_placeholder'] = T("Password") }}
+                            {{ form_register.elements('#auth_user_password')[0] ['_class'] = "input-xlarge" }}
+                            {{ form_register.elements('#auth_user_password')[0] ['_required'] = "required" }}
+                            {{=form_register.custom.widget.password}}
+
+                            <!-- confirmacao da senha -->
+                            {{ form_register.element(_name='password_two')['_placeholder'] = T("Verify Password") }}
+                            {{ form_register.element(_name='password_two')['_class'] = "input-xlarge" }}
+                            {{ form_register.element(_name='password_two')['_required'] = "required" }}
+                            {{=form_register.custom.widget.password_two}}
+
+                        <label class="checkbox">
+                            <input name="checkboxes" value="Option one" type="checkbox" required>
+                            {{=T("I agree to the")}} <a href="#">{{=T("terms and conditions")}}</a>
+                        </label>
+
+                        <button type="submit" class="btn btn-success btn-large">{{=T("Create your account")}}</button>
+
+                    </fieldset>
+                {{=form_register.custom.end}}
+            </div>
+        </div>
+    </section>
+</div>

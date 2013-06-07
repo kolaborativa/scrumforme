@@ -1,23 +1,91 @@
-{{extend 'layout.html'}}
-<h2>{{=T( request.args(0).replace('_',' ').capitalize() )}}</h2>
-<div id="web2py_user_form">
-{{
-if request.args(0)=='login':
-    if not 'register' in auth.settings.actions_disabled:
-        form.add_button(T('Register'),URL(args='register', vars={'_next': request.vars._next} if request.vars._next else None),_class='btn')
-    pass
-    if not 'request_reset_password' in auth.settings.actions_disabled:
-        form.add_button(T('Lost Password'),URL(args='request_reset_password'),_class='btn')
-    pass
-pass
-=form
-}}
-</div>
-<script language="javascript"><!--
-jQuery("#web2py_user_form input:visible:enabled:first").focus();
-{{if request.args(0)=='register':}}
-    web2py_validate_entropy(jQuery('#auth_user_password'),100);
-{{elif request.args(0)=='change_password':}}
-    web2py_validate_entropy(jQuery('#no_table_new_password'),100);
-{{pass}}
-//--></script>
+<!--[if HTML5]><![endif]-->
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]><html class="ie ie6 ie-lte9 ie-lte8 ie-lte7 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
+<!--[if IE 7]><html class="ie ie7 ie-lte9 ie-lte8 ie-lte7 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
+<!--[if IE 8]><html class="ie ie8 ie-lte9 ie-lte8 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
+<!--[if IE 9]><html class="ie9 ie-lte9 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{=T.accepted_language or 'en'}}"> <!--<![endif]-->
+<head>
+  <!--[if !HTML5]>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge{{=not request.is_local and ',chrome=1' or ''}}">
+  <![endif]-->
+  <!-- www.phpied.com/conditional-comments-block-downloads/ -->
+  <!-- Always force latest IE rendering engine
+       (even in intranet) & Chrome Frame
+       Remove this if you use the .htaccess -->
+  <title>Scrumforme | {{=response.title or request.function}}</title>
+
+  <meta name="description" content="Aprenda a usar uma ferramenta de metodologia Agile para gestão de projetos em equipe Scrum." />
+  <meta name="keywords" content="scrum, kanban, metodologia scrum, equipe scrum, scrum online, scrum board, scrum tool, scrum master, agile, sprint, backlog, burndown, lean." />
+
+  <meta charset="utf-8" />
+
+  <!-- http://dev.w3.org/html5/markup/meta.name.html -->
+  <meta name="application-name" content="{{=request.application}}" />
+
+  <!-- Speaking of Google, don't forget to set your site up:
+     http://google.com/webmasters -->
+  <meta name="google-site-verification" content="" />
+
+  <!--  Mobile Viewport Fix
+        j.mp/mobileviewport & davidbcalhoun.com/2010/viewport-metatag
+        device-width: Occupy full width of the screen in its current orientation
+        initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+        user-scalable = yes allows the user to zoom in -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="shortcut icon" href="{{=URL('static','images/favicon.ico')}}" type="image/x-icon">
+  <link rel="apple-touch-icon" href="{{=URL('static','images/favicon.png')}}">
+
+  <!-- All JavaScript at the bottom, except for Modernizr which enables
+       HTML5 elements & feature detects -->
+  <script src="{{=URL('static','js/modernizr.custom.js')}}"></script>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href='{{=URL("static","css/bootstrap-combined.no-icons.min.css")}}' />
+  <link rel="stylesheet" href='{{=URL("static","css/bootstrap-responsive.min.css")}}' />
+  <link rel="stylesheet" href='{{=URL("static","css/font-awesome.css")}}' />
+
+  <link rel="stylesheet" href='{{=URL("static","css/user.css")}}' />
+
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,300italic' rel='stylesheet' type='text/css'>
+
+<!--[if IE 7]>
+  <link rel="stylesheet" href='{{=URL("static","css/font-awesome-ie7.min.css")}}' />
+<![endif]-->
+
+</head>
+
+<body>
+
+    {{if request.args(0)=='login' or request.args(0)=='register':}}
+
+        {{include "default/login_register.html"}}
+
+    {{else:}}
+        {{=form}}
+    {{pass}}
+
+
+  <!--[if lt IE 9]>
+    <script src='{{=URL("static","js/jquery-1.9.1.min.js")}}'></script>
+  <![endif]-->
+
+  <!--[if gte IE 9]><!-->
+    <script src='{{=URL("static","js/jquery-2.0.0.min.js")}}'></script>
+  <!--[endif]-->
+    <script src='{{=URL("static","js/web2py.js")}}'></script>
+    <script src='{{=URL("static","js/bootstrap-custom.min.js")}}'></script>
+
+    <script language="javascript"><!--
+    jQuery("input:visible:enabled:first").focus();
+    {{if request.args(0)=='register':}}
+        web2py_validate_entropy(jQuery('#auth_user_password'),100);
+    {{elif request.args(0)=='change_password':}}
+        web2py_validate_entropy(jQuery('#no_table_new_password'),100);
+    {{pass}}
+    //--></script>
+
+</body>
+</html>

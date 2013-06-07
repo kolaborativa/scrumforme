@@ -558,6 +558,11 @@ def user():
         @auth.requires_permission('read','table name',record_id)
     to decorate functions that need access control
     """
+    if 'login' in request.args or 'register' in request.args:
+        form_login = auth.login()
+        form_register = auth.register()
+        return dict(form_login=form_login, form_register=form_register)
+
     return dict(form=auth())
 
 
