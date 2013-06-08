@@ -68,7 +68,13 @@
                         </div>
                     </form>
                 </li>
-                <li><a href='{{=URL(f="user",args="profile",vars={"_next":"index"})}}' alt='{{=T("Profile")}}' title='{{=T("Profile")}}'><i class="icon-user"></i></a></li>
+                {{if request.args(0):}}
+                    {{args = request.args(0) }}
+                    {{args = "%s/%s" %(request.function, request.args(0)) }}
+                {{else:}}
+                    {{args = request.function}}
+                {{pass}}
+                <li><a href='{{=URL(f="user",args="profile",vars={"_next":args})}}' alt='{{=T("Profile")}}' title='{{=T("Profile")}}'><i class="icon-user"></i></a></li>
                 <li><a href='{{=URL(f="user",args="logout",vars={"_next":"index"})}}' alt='{{=T("Logout")}}' title='{{=T("Logout")}}'><i class="icon-logout-custom"></i></a></li>
             </ul>
         </div>

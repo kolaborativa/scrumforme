@@ -50,8 +50,17 @@ auth.settings.extra_fields['auth_user']= [
         Field("first_time", "boolean", default=True),
     ]
 
+
 ## create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
+
+# hide fields
+fields_to_hide = [
+'type_network', 'token', 'first_time']
+
+for fieldname in fields_to_hide:
+    field = db.auth_user[fieldname]
+    field.readable = field.writable = False
 
 ## imported variables
 from data_config import EMAIL_SERVER, CLIENT_EMAIL, CLIENT_LOGIN

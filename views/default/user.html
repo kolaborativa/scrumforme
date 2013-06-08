@@ -64,7 +64,60 @@
         {{include "default/login_register.html"}}
 
     {{else:}}
-        {{=form}}
+
+        <div class="container">
+            <div class="span6 offset3">
+                <div class="row">
+                    {{if request.args(0)=='profile':}}
+                        <div class="hgroup">
+                            <h1>{{=T("Profile")}}</h1>
+                        </div>
+                        <div class="signin">
+                            <div class="social_sign">
+                                <img src='{{=Gravatar(auth.user.email).thumb}}' class="thumbnails">
+                            </div>
+                            <br>
+
+                            {{=form}}
+                        </div>
+                    {{elif request.args(0)=='request_reset_password':}}
+                        <div class="hgroup">
+                            <h1>{{=T("Lost password?")}}</h1>
+                        </div>
+                        <div class="signin">
+                            <div class="social_sign">
+                                <a><i class="icon-key"></i></a>
+                            </div>
+                            <p class="sign_title">{{=T("Enter your e-mail address. You will receive a link to create a new password via email.")}}</p>
+
+                            {{=form}}
+                        </div>
+                    {{elif request.args(0)=='change_password':}}
+                        <div class="hgroup">
+                            <h1>{{=T("Change password?")}}</h1>
+                        </div>
+                        <div class="signin">
+                            <div class="social_sign">
+                                <a><i class="icon-key"></i></a>
+                            </div>
+
+                            {{=form}}
+                        </div>
+                    {{elif request.args(0)=='reset_password':}}
+                        <div class="hgroup">
+                            <h1>{{=T("Reset password")}}</h1>
+                        </div>
+                        <div class="signin">
+                            <div class="social_sign">
+                                <a><i class="icon-key"></i></a>
+                            </div>
+
+                            {{=form}}
+                        </div>
+                    {{pass}}
+                </div>
+            </div>
+        </div>
     {{pass}}
 
 
@@ -76,7 +129,7 @@
     <script src='{{=URL("static","js/jquery-2.0.0.min.js")}}'></script>
   <!--[endif]-->
     <script src='{{=URL("static","js/web2py.js")}}'></script>
-    <script src='{{=URL("static","js/bootstrap-custom.min.js")}}'></script>
+    <script src='{{=URL("static","js/bootstrap-custom-modal.min.js")}}'></script>
 
     <script language="javascript"><!--
     jQuery("input:visible:enabled:first").focus();
