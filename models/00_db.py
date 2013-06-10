@@ -73,15 +73,15 @@ mail.settings.login = CLIENT_LOGIN
 auth.settings.mailer = mail
 
 ## configure auth policy
-auth.settings.registration_requires_verification = False
+auth.settings.registration_requires_verification = True
 auth.settings.registration_requires_approval = False
 auth.settings.reset_password_requires_verification = True
-auth.settings.register_next= URL('_create_person')
-auth.settings.register_fields = ['first_name', 'last_name', 'email', 'password']
 
-auth.settings.login_next = URL('projects')
+#
+# see file 'auth_settings' for more details
+#
 
-# import Gravatar
+# import the gravatar
 try:
     from gravatar import Gravatar
 except ImportError:

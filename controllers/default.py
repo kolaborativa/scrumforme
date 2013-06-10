@@ -22,6 +22,10 @@ def nojs():
     return dict(message=T("JavaScript must be enabled for you to use Scrumforme"))
 
 
+def check_your_email():
+    return dict()
+
+
 @auth.requires_login()
 def _get_person(project_id=''):
     """Function that get data of relationship person of the user logged. Projects, person_id and shared.
@@ -462,16 +466,6 @@ def burndown_chart_test(story_project_id, definition_ready_story):
             )
 
         return False
-
-
-@auth.requires_login()
-def _create_person():
-    """Function that creates a person
-    """
-    name = '%s %s' % (auth.user.first_name, auth.user.last_name)
-    person_id = Person.insert(name=name)
-    db.user_relationship.insert(auth_user_id=auth.user.id, person_id=person_id)
-    redirect(URL('projects'))
 
 
 @auth.requires_login()

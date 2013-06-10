@@ -79,6 +79,9 @@
                             <br>
 
                             {{=form}}
+                            <br>
+                            <a href='{{=URL(request.vars["_next"])}}' class="btn">{{=T("Return")}}</a>
+                            <a href='{{=URL(f="user", args="change_password")}}' class="btn btn-primary">{{=T("Change password")}}</a>
                         </div>
                     {{elif request.args(0)=='request_reset_password':}}
                         <div class="hgroup">
@@ -94,12 +97,13 @@
                         </div>
                     {{elif request.args(0)=='change_password':}}
                         <div class="hgroup">
-                            <h1>{{=T("Change password?")}}</h1>
+                            <h1>{{=T("Change password")}}</h1>
                         </div>
                         <div class="signin">
                             <div class="social_sign">
                                 <a><i class="icon-key"></i></a>
                             </div>
+                            <br>
 
                             {{=form}}
                         </div>
@@ -111,6 +115,16 @@
                             <div class="social_sign">
                                 <a><i class="icon-key"></i></a>
                             </div>
+                            <br>
+
+                            {{=form}}
+                        </div>
+                    {{else:}}
+                        <div class="hgroup">
+                            <h1>{{=response.title or request.function}}</h1>
+                        </div>
+                        <div class="signin">
+                            <br>
 
                             {{=form}}
                         </div>
@@ -133,9 +147,9 @@
 
     <script language="javascript"><!--
     jQuery("input:visible:enabled:first").focus();
-    {{if request.args(0)=='register':}}
-        web2py_validate_entropy(jQuery('#auth_user_password'),100);
-    {{elif request.args(0)=='change_password':}}
+    {{if request.args(0)=='login' or request.args(0)=='register':}}
+        web2py_validate_entropy(jQuery('.register_password'),100);
+    {{elif request.args(0)=='change_password' or request.args(0)=='reset_password':}}
         web2py_validate_entropy(jQuery('#no_table_new_password'),100);
     {{pass}}
     //--></script>
