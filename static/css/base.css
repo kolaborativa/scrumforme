@@ -839,7 +839,6 @@ div.flash #closeflash {
 }
 .widget-title h5 {
     color: #666666;
-	text-shadow: 0 1px 0 #ffffff;
     float: left;
     /*font-size: 12px;*/
     font-weight: bold;

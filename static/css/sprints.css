@@ -1,16 +1,10 @@
-#expand_close_btns button {
-    margin-top: 4px;
-    margin-right: 4px;
-    border-radius: 0px;
-}
 
-#expand_close_btns button:hover {
-    background-color: rgb(202, 202, 202);
-}
-
-.widget-title h5 {
+.widget-title h5:first-letter {
     text-transform: uppercase;
+}
+.widget-title h5 {
     font-size: 18px;
+    color: #444444;
 }
 
 .sprint_header {
@@ -24,10 +18,92 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgb(243, 243, 243)', endColorstr='rgb(187, 187, 187)',GradientType=0 );
 }
 
-.story_container {
+#clock p#sprint_name {
+    text-align: left;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+#clock {
+    width:40%;
+    padding: 5px 0;
+    background-color: #444444;
+    color: #fff;
+    margin: 5px 5px 5px 10px;
+}
+
+#clock i {
+    font-size: 40px;
+    position: relative;
+    top: 5px;
+    left: 10px
+}
+
+#clock p {
+    margin: 0px;
+    margin-left: 20px;
+    padding: 0px;
+}
+
+#clock strong {
+    margin-left: 10px;
+}
+
+#live_search {
+    width: 53%;
+    margin-left: 2%;
+}
+
+#live_search input {
+    width: 95%;
+    margin: 5px 0px 0px 0px;
+    border: 2px solid rgb(179, 179, 179);
+    border-radius: 0px;
+    background: url(../img/serach_icon_gray.png) no-repeat top left;
+    background-position: 98% 5px;
+}
+
+#expand_close_btns {
+    margin-top: 10px;
+}
+
+#expand_close_btns button {
+    width: 49%;
+    text-align: left;
+    border: 2px solid rgb(179, 179, 179);
+    border-radius: 0px;
+    background-color: rgb(228, 223, 223);
+}
+
+#expand_close_btns button:hover {
+    background-color: rgb(202, 202, 202);
+}
+
+#expand_close_btns i {
+    float: right;
+    font-size: 18px;
+    position: relative;
+    top: 3px;
+}
+
+.close_all_sprints {
+    margin-left: 2%;
+}
+
+#nothingfound {
+    display: none;
+    color: red;
+}
+
+.widget-content {
     display: none;
 }
 
+.expand_story, .expand_sprint {
+    font-size: 18px;
+    position: relative;
+    top: 5px;
+}
 
 .list_definition_ready {
     display: -moz-box;
@@ -83,13 +159,4 @@
     right: 17px;
     bottom: 8px;
     font-weight: bold;
-}
-
-#live_search {
-    margin: 2% 5%;
-}
-
-#nothingfound {
-    display: none;
-    color: red;
 }

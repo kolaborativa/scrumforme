@@ -15,11 +15,34 @@
 
 <div id="sub-header-content" class="row-fluid">
     {{include "default/project_info.html"}}
+
     <div id="sprint_info" class="project_bar_info span6">
-        <div id="live_search">
-            <input type="text" name="livesearch" placeholder='{{=T("Make a search in")}} {{=T("stories")}}'>
-            <p id="nothingfound">{{=T("No name match your search!")}}</p>
+        <div id="clock" class="pull-left">
+            <p id="sprint_name">{{=T("Historic of Sprints")}}</p>
+            <div class="clearfix"></div>
+            <i class="icon-time pull-left"></i>
+            <div class="pull-left">
+                <p>{{=T('Since')}}: <strong>{{=g_blank_fulldate_check(sprints[-1].ended)}}</strong></p>
+                <p>{{=T('Until')}}: <strong>{{=g_blank_fulldate_check(sprints[0].ended)}}</strong></p>
+            </div>
+            <!-- <div class="clearfix"></div> -->
         </div>
+        <div id="live_search" class="pull-left">
+            <input type="text" name="livesearch" placeholder='{{=T("Search for")}} {{=T("Tasks")}} {{=T("or")}} {{=T("Definitions of Ready")}}'>
+            <p id="nothingfound">{{=T("No name match your search!")}}</p>
+            <div id="expand_close_btns">
+                <button class="btn btn-nostyle expand_all_sprints pull-left" alt='{{=T("Open Stories")}}' title='{{=T("Open Stories")}}'>
+                    {{=T("Open")}} {{=T("Sprints")}}
+                    <i class="icon-circle-arrow-down"></i>
+                </button>
+                <button class="btn btn-nostyle close_all_sprints pull-left" alt='{{=T("Close Stories")}}' title='{{=T("Close Stories")}}'>
+                    {{=T("Close")}} {{=T("Sprints")}}
+                    <i class="icon-circle-arrow-up"></i>
+                </button>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
     </div>
 </div>
 
@@ -30,16 +53,10 @@
             <div class="pull-left">
                 <h5>{{=sprint.name}} - {{=T('Started in')}}: {{=g_blank_fulldate_check(sprint.started)}} - {{=T('Closed')}}: {{=g_blank_fulldate_check(sprint.ended)}}</h5>
             </div>
-            <div id="expand_close_btns" class="pull-right">
-                <button class="btn btn-nostyle expand_all_stories pull-left" alt='{{=T("Open Stories")}}' title='{{=T("Open Stories")}}'>
-                    {{=T("Open Stories")}}
+            <div class="pull-right">
+                <button class="btn btn-nostyle expand_sprint pull-right" alt="Expandir" title="Expandir">
                     <i class="icon-circle-arrow-down"></i>
                 </button>
-                <button class="btn btn-nostyle close_all_stories pull-left" alt='{{=T("Close Stories")}}' title='{{=T("Close Stories")}}'>
-                    {{=T("Close Stories")}}
-                    <i class="icon-circle-arrow-up"></i>
-                </button>
-                <div class="clearfix"></div>
             </div>
         </div>
         {{for story in stories[sprint.id]:}}
@@ -50,7 +67,7 @@
                 </div>
                 <div class="pull-right">
                     <button class="btn btn-nostyle expand_story pull-right" alt="Expandir" title="Expandir">
-                        <i class="icon-circle-arrow-down"></i>
+                        <i class="icon-circle-arrow-up"></i>
                     </button>
                 </div>
                 <div class="clearfix"></div>
