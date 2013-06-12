@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 
-auth.settings.register_fields = ['first_name', 'last_name', 'email', 'password']
-auth.settings.register_next= URL('check_your_email')
-auth.settings.login_next = URL('projects')
-
 def __afterVerify(form):
     """Function that creates a person
     """
@@ -25,3 +21,7 @@ def send_email(type_email):
 auth.settings.verify_email_onaccept = lambda form: __afterVerify(form)
 auth.messages.verify_email = send_email("verify_email")
 auth.messages.reset_password = send_email("reset_password")
+
+auth.settings.register_fields = ['first_name', 'last_name', 'email', 'password']
+auth.settings.register_next= URL('check_your_email')
+auth.settings.login_next = URL('projects')

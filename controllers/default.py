@@ -23,6 +23,9 @@ def nojs():
 
 
 def check_your_email():
+    if auth.is_logged_in():
+        redirect(URL("projects"))
+
     return dict()
 
 
