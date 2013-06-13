@@ -8,5 +8,5 @@ FACEBOOK_SECRET = ''
 ## Authentication for sending mail
 
 EMAIL_SERVER = 'smtp.gmail.com:587'
-CLIENT_EMAIL = 'you@gmail.com'
-CLIENT_LOGIN = 'username:password'
+CLIENT_EMAIL = 'contato@scrumfor.me'
+CLIENT_LOGIN = 'contato@scrumfor.me:developerx4you'

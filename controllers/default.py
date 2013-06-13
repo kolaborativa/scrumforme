@@ -499,8 +499,27 @@ def add_member():
                 Sharing.insert(project_id=project_id,
                                person_id=int(person),
                                )
+                db.commit()
+                user_data = db(User_relationship.person_id == person).select().first()
+                _invite_project(user_data, project)
 
     redirect(URL(f='team', args=[request.vars['project_id']]))
+
+
+def _invite_project(user_data, project):
+
+    context = dict(person=user_data, project=project)
+    message = response.render("invite_project_email.html", context)
+
+    status = mail.send(
+                to=[user_data.auth_user_id.email],
+                subject=T("You have been invited for the project") + " %s" %project.name,
+                reply_to=CLIENT_EMAIL,
+                message=[None,message]
+                )
+
+    if status != True:
+        _invite_project(user_data, project)
 
 
 @auth.requires_login()
