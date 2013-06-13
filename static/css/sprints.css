@@ -1,12 +1,3 @@
-
-.widget-title h5:first-letter {
-    text-transform: uppercase;
-}
-.widget-title h5 {
-    font-size: 18px;
-    color: #444444;
-}
-
 .sprint_header {
     background-color: rgb(187, 187, 187);
     background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(rgb(243, 243, 243)), to(rgb(187, 187, 187)));
@@ -16,6 +7,19 @@
     background-image: -o-linear-gradient(top, rgb(243, 243, 243) 0%, rgb(187, 187, 187) 100%);
     background-image: -linear-gradient(top, #rgb(243, 243, 243) 0%, rgb(187, 187, 187) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgb(243, 243, 243)', endColorstr='rgb(187, 187, 187)',GradientType=0 );
+    padding: 3px 2px;
+}
+
+.sprint_header h5 {
+    text-transform: uppercase;
+    font-size: 16px;
+    color: #444444;
+    margin-left: 10px;
+}
+
+.sprint_header span {
+    color: rgb(131, 131, 131);
+    font-style: italic;
 }
 
 #clock p#sprint_name {
@@ -95,39 +99,77 @@
     color: red;
 }
 
-.widget-content {
+.sprint_container {
+    border: 1px solid rgb(201, 201, 201);
+    margin: 10px 0;
+}
+
+.sprint_content {
     display: none;
+}
+
+.story_header {
+    background-color: #eee;
+    border-bottom: 2px solid rgb(201, 201, 201);
+}
+
+.story_header h5 {
+    padding: 10px;
+    margin: 0 15px;
+}
+
+.story_header h5:first-letter {
+    text-transform: uppercase;
 }
 
 .expand_story, .expand_sprint {
     font-size: 18px;
     position: relative;
-    top: 5px;
+    top: 10px;
 }
 
-.list_definition_ready {
+.story_content {
     display: -moz-box;
     display: -ms-box;
     display: -webkit-box;
     margin: 0 auto;
     width: 100%;
+    border-bottom: 1px solid rgb(201, 201, 201);
 }
-.definition_ready, .tasks {
-    padding: 10px;
-    width: 100px;
+.definition_ready:first-letter {
+    text-transform: uppercase;
 }
 .definition_ready {
-    background-color: #eee;
+    word-break: break-word;
+    background-color: #fff;
     -moz-box-flex: 1;
     -ms-box-flex: 1;
     -webkit-box-flex: 1;
-    text-transform: capitalize;
+    border-right: 1px solid rgb(201, 201, 201);
+    padding-top: 5px;
+}
+.definition_ready_label {
+    width: 92%;
+    padding: 5px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: rgb(202, 202, 202);
+}
+.definition_ready {
+    width: 100px;
+}
+.definition_ready p {
+    padding: 20px;
+}
+.tasks {
+    padding: 10px;
+    width: 100px;
 }
 .tasks {
     background-color: #fff;
-    -moz-box-flex: 2;
-    -ms-box-flex: 2;
-    -webkit-box-flex: 2;
+    -moz-box-flex: 6;
+    -ms-box-flex: 6;
+    -webkit-box-flex: 6;
 }
 
 .user_card {
@@ -135,14 +177,83 @@
     height: 40px;
 }
 
-.card-modal:hover p {
-    background-color: #eee;
+.task_container {
+    width: 23%;
+    word-break: break-word;
+    list-style-type: none;
+    padding: 2px 0px;
+    float: left;
+    margin: 0 15px 0 0;
+}
+.task_container li {
+    line-height: 1.2em;
+    padding-right: 5px;
+}
+.task_container li:first-letter {
+    text-transform: capitalize;
+}
+
+.task {
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff4d8',endColorstr='#fce8c6');
+    background-image: -webkit-gradient(linear,center top,center bottom,from(#fff4d8),to(#fce8c6));
+    background-image: -moz-linear-gradient(center top,#fff4d8,#fce8c6);
+    background-color: #fff5e3;
+    border: 1px solid #ddd  9;
+    -moz-box-shadow: 0 1px 3px #bbb;
+    -webkit-box-shadow: 0 1px 3px #bbb;
+    box-shadow: 0 1px 3px #bbb;
+    margin-bottom: 1px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.avatar_container {
+    width: 25%;
+    float: left;
+    padding: 20px 0px;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(224, 202, 146)',endColorstr='#fce8c6');
+    background-image: -webkit-gradient(linear,center top,center bottom,from(rgb(224, 202, 146)),to(#fce8c6));
+    background-image: -moz-linear-gradient(center top,rgb(224, 202, 146),#fce8c6);
+    background-color: rgb(224, 202, 146);
+}
+
+.user_card {
+    position: relative;
+    bottom: 10px;
+    margin-left: 10%;
+    border: 1px solid rgb(92, 92, 92);
+    width: 80%;
+    height: auto;
+}
+
+.task_item {
+    position: relative;
+    left: 2%;
+    top: 5px;
+    font-size: 14px;
+    color: #444;
+}
+
+.task_item:hover {
+    color: #444;
+}
+
+.icons_card {
+    text-align: right;
+    position: relative;
+    right: 3%;
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
+
+.icons_card i {
+    margin: 0 4px;
 }
 
 .comment {
     display: inline;
     position: relative;
-    left: 5px;
+    bottom: 5px;
 }
 
 .comment i {
@@ -150,6 +261,7 @@
     position: relative;
     top: 5px;
     margin: 0px!important;
+    opacity: .7;
 }
 
 .number_comment {
