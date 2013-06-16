@@ -20,4 +20,5 @@ sessions/*
 static/uploads/*.png
 static/uploads/*.jpg
 static/uploads/*.gif
+static/uploads/*.txt
 

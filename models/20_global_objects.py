@@ -97,13 +97,13 @@ class G_projects(object):
     def newProject(self):
         from datetime import datetime
 
-        folder = 'static/uploads/'
+        uploadfolder = '%sstatic/uploads/' % request.folder
         form = SQLFORM.factory(
             Field('name', label=T('Name'), requires=IS_NOT_EMPTY(error_message=T('The field name can not be empty!'))),
             Field('description', label= T('Description')),
             Field('url', label= 'Url'),
             Field('thumbnail', type='upload',
-            uploadfolder='%s%s' % (request.folder,folder)),
+            uploadfolder=uploadfolder),
             table_name='projects',
             submit_button=T('CREATE')
             )
@@ -113,7 +113,7 @@ class G_projects(object):
             person_id = person["person_id"]
 
             if form.vars.thumbnail:
-                image_name = self.convertImage(form.vars.thumbnail,folder)
+                image_name = self.convertImage(form.vars.thumbnail,uploadfolder)
             else:
                 image_name = None
 
@@ -136,44 +136,13 @@ class G_projects(object):
 
         return form
 
-    def updateThumbnail(self):
-        project_id = request.args(0)
-        folder = 'static/uploads/'
-        form_thumbnail = SQLFORM.factory(
-            Field('thumbnail', type='upload',
-            uploadfolder='%s%s' % (request.folder,folder)),
-            table_name='update',
-            )
-        if form_thumbnail.process().accepted:
-            import subprocess
 
-            folder = 'static/uploads/'
-            upload_folder = '%s%s' % (request.folder,folder)
-            if form_thumbnail.vars.thumbnail:
-                image_name = self.convertImage(form_thumbnail.vars.thumbnail,folder)
-            else:
-                redirect(URL(f='product_backlog', args=[project_id]))
-
-            project_update = db(Project.id == project_id).select().first()
-            subprocess.call('rm %s/%s' % (upload_folder, project_update.thumbnail), shell=True)
-
-
-            db(Project.id == project_id).update(thumbnail=image_name)
-            redirect(URL(f='product_backlog', args=[project_id]))
-
-        elif form_thumbnail.errors:
-            response.flash = T('form has errors')
-
-        return form_thumbnail
-
-
-    def convertImage(self,base64txt,folder):
+    def convertImage(self,base64txt,uploadfolder):
         import os
         import base64
 
         arglen = len(base64txt)
         if arglen > 1:
-            uploadfolder=os.path.join(request.folder,folder)
             b64file = open(uploadfolder+base64txt, 'rb').read()
             if b64file.startswith("data:image/png;base64,"):
                 b64file = b64file[22:]

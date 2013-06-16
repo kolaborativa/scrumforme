@@ -955,6 +955,33 @@ def user_online_now():
 #  BACKLOG FUNCTIONS
 # ===================
 
+@service.json
+@auth.requires_login()
+def ajax_upload():
+    if request.vars.image64 and request.vars.project_id:
+        import subprocess
+        from convertImage import convertBase64String
+
+        project_id = request.vars.project_id
+        base64Img = request.vars.image64
+        uploadfolder = '%sstatic/uploads/' % request.folder
+
+        image_name = convertBase64String(base64Img,uploadfolder)
+
+        if image_name:
+
+            project_update = db(Project.id == project_id).select().first()
+            subprocess.call('rm %s/%s' % (uploadfolder, project_update.thumbnail), shell=True)
+            db(Project.id == project_id).update(thumbnail=image_name)
+
+            return True
+
+        else:
+            return False
+
+    else:
+        return False
+
 
 @auth.requires_login()
 def launch_or_end_sprint():

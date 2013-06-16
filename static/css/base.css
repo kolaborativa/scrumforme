@@ -1696,11 +1696,6 @@ html, body, .container, .content {
     box-shadow: 0 1px 3px rgb(141, 141, 141);
 }
 
-#change_thumbnail, #project_info .preview {
-    cursor: pointer;
-
-}
-
 #change_thumbnail {
     background-color: #fff;
     padding: 4px;
@@ -1715,10 +1710,31 @@ html, body, .container, .content {
 
 }
 
+#change_image_label {
+    background-color: rgba(3, 3, 3, 0.69);
+    position: relative;
+    bottom: 40px;
+    padding: 2px 0;
+    color: #fff;
+    font-size: 13px;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+}
+
+#change_image_label:hover {
+    background-color: rgba(58, 58, 58, 0.69);
+}
+
 #logo {
     position: absolute;
     left: 0;
     z-index: 99;
+}
+
+#multilanguage {
+    top: 5px;
+    margin-right: 20px!important;
 }
 
 .sidebar-fixed {

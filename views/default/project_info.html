@@ -1,3 +1,7 @@
+{{if not "have_permission" in globals():}}
+    {{have_permission = False}}
+{{pass}}
+
 <div id="project_info" class="project_bar_info span6">
     <div class="pull-left">
     {{ if project.thumbnail:}}
@@ -5,33 +9,19 @@
     {{else:}}
         <img id="change_thumbnail" src='{{=URL("static","/img/no-image_project.jpg")}}' width="80px" height="80px" alt="{{=project.name}}" title="{{=project.name}}">
     {{pass}}
-    {{if "have_permission" in globals():}}
         {{if have_permission:}}
 
-                {{ project_thumb = G_projects() }}
-                {{ update_project = project_thumb.updateThumbnail() }}
-
-                {{=update_project.custom.begin}}
-                    <!-- thumbnail -->
-                    {{ update_project.elements('#update_thumbnail')[0] ['_type'] = "hidden" }}
-                    {{=update_project.custom.widget.thumbnail}}
-
-                    <input id="update_thumbnail_project" type="submit" class="btn btn-success btn-mini btn-block" value='{{=T("Update Image")}}'>
-                {{=update_project.custom.end}}
+            <span id="change_image_label">{{=T("Change image")}}</span>
+            <input class="upload" id="update_thumbnail" name="thumbnail" type="hidden">
+            <input id="update_thumbnail_project" type="submit" class="btn btn-success btn-mini btn-block" value='{{=T("Update Image")}}'>
 
         {{pass}}
-    {{pass}}
     </div>
     <div id="project_content" class="pull-left">
-        {{if "have_permission" in globals():}}
-            {{if have_permission:}}
-                <p class="project_content-text"><strong><a href="#" class="editable-click editable" data-type="textarea" data-placeholder='{{=T("Click to write")}}' data-pk="{{=project.id}}" data-url="{{=URL('create_or_update_itens')}}" data-name="project_name" data-update="true">{{=project.name}}</a></strong> - <a href="{{=project.url}}" class="editable-click editable" data-type="textarea" data-placeholder='{{=T("Click to write")}}' data-pk="{{=project.id}}" data-url="{{=URL('create_or_update_itens')}}" data-name="project_url" data-update="true">{{=project.url}}</a></p>
+        {{if have_permission:}}
+            <p class="project_content-text"><strong><a href="#" class="editable-click editable" data-type="textarea" data-placeholder='{{=T("Click to write")}}' data-pk="{{=project.id}}" data-url="{{=URL('create_or_update_itens')}}" data-name="project_name" data-update="true">{{=project.name}}</a></strong> - <a href="{{=project.url}}" class="editable-click editable" data-type="textarea" data-placeholder='{{=T("Click to write")}}' data-pk="{{=project.id}}" data-url="{{=URL('create_or_update_itens')}}" data-name="project_url" data-update="true">{{=project.url}}</a></p>
 
-                <p class="project_content-text"><a href="#" class="editable-click editable" data-type="textarea" data-placeholder='{{=T("Click to write")}}' data-pk="{{=project.id}}" data-url="{{=URL('create_or_update_itens')}}" data-name="project_description" data-update="true" alt="{{=project.description}}" title="{{=project.description}}">{{=project.description}}</a></p>
-            {{else:}}
-                <p class="project_content-text"><strong>{{=project.name}}</strong> - <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
-                <p  class="project_content-text" alt="{{=project.description}}" title="{{=project.description}}">{{=project.description}}</p>
-            {{pass}}
+            <p class="project_content-text"><a href="#" class="editable-click editable" data-type="textarea" data-placeholder='{{=T("Click to write")}}' data-pk="{{=project.id}}" data-url="{{=URL('create_or_update_itens')}}" data-name="project_description" data-update="true" alt="{{=project.description}}" title="{{=project.description}}">{{=project.description}}</a></p>
         {{else:}}
             <p class="project_content-text"><strong>{{=project.name}}</strong> - <a href="{{=project.url}}" target="_blank">{{=project.url}}</a></p>
             <p  class="project_content-text" alt="{{=project.description}}" title="{{=project.description}}">{{=project.description}}</p>

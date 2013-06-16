@@ -66,6 +66,7 @@
 'Can not be empty': 'Não pode ser vazio',
 'Cancel': 'Cancelar',
 'Cannot be empty': 'Não pode ser vazio',
+'Change image': 'Alterar imagem',
 'Change password': 'Modificar senha',
 'chat here': 'escreva aqui',
 'Check to delete': 'Marque para apagar',
