@@ -8,6 +8,13 @@ Demo online [scrumfor.me](http://scrumfor.me/ "Scrumforme")
 
 ---------------------------------------
 
+ScreenShots
+--------------
+
+![alt tag](https://raw.github.com/gustavox4ids/scrumforme/master/static/img/scrum_screen1.png)
+![alt tag](https://raw.github.com/gustavox4ids/scrumforme/master/static/img/scrum_screen2.png)
+![alt tag](https://raw.github.com/gustavox4ids/scrumforme/master/static/img/scrum_screen3.png)
+
 Dependencies
 --------------
 
