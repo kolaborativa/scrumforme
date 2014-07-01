@@ -1,4 +1,4 @@
-# coding: utf8
+# coding: utf-8
 {
 '!langcode!': 'pt-br',
 '!langname!': 'Português (do Brasil)',
@@ -21,6 +21,7 @@
 '1 second ago': '1 segundo atrás',
 '1 week ago': '1 semana atrás',
 '1 year ago': '1 ano atrás',
+'<html>\n<head>\n    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n</head>\n    <body style=\'font-family: Arial;\'>\n        <div style=\'width: 600px; height: 250px; margin:0 auto; background-color: #F9FBFC; border-bottom:solid 10px #3b3b3b;\'>\n            <div style=\'background-color:#3b3b3b;\'>\n                <a href="http://www.scrumfor.me/" target="_blank" title="Scrumforme" alt="Scrumforme"><img style=\'padding-top: 22px;padding: 20px;float:left\' title="Scrumforme" alt="Scrumforme" src=http://127.0.0.1:8000/scrumforme/static/img/scrumformelogo.png></a>\n                <div style=\'clear:both\'></div>\n            </div>\n            <div style=\'width: 550px;margin:20px;font-size: 16px;line-height: 20px;\'>\n                <h4 style=\'padding-top: 20px;text-align: left;height: 25px;margin-bottom: 0;font-size: 22px;font-weight: normal; margin-top: 0px;\'>Ative seu cadastro!</h4>\n                <section>\n                        <p style="text-align: left;">Clique no link http://127.0.0.1:8000/scrumforme/default/user/verify_email/%(key)s  para verificar seu e-mail</p>\n                </section>\n            </div>\n        </div>\n    </body>\n</html>\n': '<html>\n<head>\n    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n</head>\n    <body style=\'font-family: Arial;\'>\n        <div style=\'width: 600px; height: 250px; margin:0 auto; background-color: #F9FBFC; border-bottom:solid 10px #3b3b3b;\'>\n            <div style=\'background-color:#3b3b3b;\'>\n                <a href="http://www.scrumfor.me/" target="_blank" title="Scrumforme" alt="Scrumforme"><img style=\'padding-top: 22px;padding: 20px;float:left\' title="Scrumforme" alt="Scrumforme" src=http://127.0.0.1:8000/scrumforme/static/img/scrumformelogo.png></a>\n                <div style=\'clear:both\'></div>\n            </div>\n            <div style=\'width: 550px;margin:20px;font-size: 16px;line-height: 20px;\'>\n                <h4 style=\'padding-top: 20px;text-align: left;height: 25px;margin-bottom: 0;font-size: 22px;font-weight: normal; margin-top: 0px;\'>Ative seu cadastro!</h4>\n                <section>\n                        <p style="text-align: left;">Clique no link http://127.0.0.1:8000/scrumforme/default/user/verify_email/%(key)s  para verificar seu e-mail</p>\n                </section>\n            </div>\n        </div>\n    </body>\n</html>\n',
 'About': 'About',
 'Access Control': 'Access Control',
 'Activate your registration!': 'Ative seu cadastro!',
@@ -147,6 +148,7 @@
 'Edit This App': 'Edit This App',
 'Email': 'Email',
 'Email and SMS': 'Email and SMS',
+'Email inválido': 'Email inválido',
 'Email sent': 'Email enviado',
 'Email verification': 'Scrumforme - Ativação de conta',
 'Email verified': 'Email verificado',
@@ -195,6 +197,7 @@
 'insert new': 'inserir novo',
 'insert new %s': 'inserir novo %s',
 'Inspired by Agile methodology using Scrum and Kanban simplifying teamwork.': 'Inspirado pela metodologia Agile, utilizando Scrum e Kanban simplificando o trabalho em equipe.',
+'INSPIRED BY AGILE METHODOLOGY USING SCRUM AND KANBAN SIMPLIFYING TEAMWORK.': 'INSPIRED BY AGILE METHODOLOGY USING SCRUM AND KANBAN SIMPLIFYING TEAMWORK.',
 'Internal State': 'Estado Interno',
 'Introduction': 'Introdução',
 'Invalid email': 'Email inválido',
@@ -379,9 +382,11 @@
 'The output of the file is a dictionary that was rendered by the view %s': 'The output of the file is a dictionary that was rendered by the view %s',
 'The Scrumforme': 'O Scrumforme',
 'The Scrumforme meant to be easy, organized and accessible.': 'Scrumforme pretende ser fácil, organizado e acessível.',
+'THE SCRUMFORME MEANT TO BE EASY, ORGANIZED AND ACCESSIBLE.': 'THE SCRUMFORME MEANT TO BE EASY, ORGANIZED AND ACCESSIBLE.',
 'The Views': 'The Views',
 'There are not members on the team, go TEAM PAGE and add new members.': 'Não há membros na equipe, vá na PÁGINA EQUIPE e adicione novos membros.',
 'This App': 'This App',
+'This email already has an account': 'This email already has an account',
 'This field can not be empty!': 'Este campo não pode ser vazio!',
 'This is a copy of the scaffolding application': 'This is a copy of the scaffolding application',
 'This task does not belong to another definition of ready': 'Essa tarefa não pertence a outro Critério de Pronto',

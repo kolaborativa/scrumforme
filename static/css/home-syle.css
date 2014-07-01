@@ -1,22 +1,21 @@
 html, body {
     height: 100%;
-    background-color: #3b3b3b;
+    background-color: #34abbd;
+    background-image: url('../img/login_register_background.png');
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 header {
-    width: 70%!important;
+    width: 80%;
     margin: 0  auto;
 }
 
-h1 {
-    font-family: 'Playball', cursive;
-    color: #F1F1F1;
-    text-shadow: 0px 1px 1px #4d4d4d;
-    position: relative;
-    top: 5px;
-    left: 10px;
-    font-size: 30px;
-    float: left;
+p {
+    font-family: 'Helvetica', cursive;
+    color: #197a8b;
+    font-size: 20px;
+    text-align: center;
 }
 
 .color-logo{
@@ -73,4 +72,70 @@ footer, .push {
 footer img {
     margin: 0 auto;
     display: block;
+}
+#texto-logo {
+    width: 390px;
+    margin-top: 45px;
+    }
+@media (max-width: 480px) {
+    body{
+        margin: 0px;
+        border: 0px;
+        padding: 0px;
+    }
+    #texto-logo img{
+        width: 294px;
+        height: 54px;
+        margin: 0 auto;
+    }
+    html,body {
+        background-image: none;
+    }
+    #texto-logo{
+        width: 305px;
+        margin: 0 auto;
+    }
+    #texto-logo p{
+        font-size: 14px;
+    }
+    .bloco_grande{
+        width: 275px;
+        margin: 0 auto;
+        margin-top: 30px;
+        float: none;
+        }
+    header{
+        width: 100%;
+    }
+    
+}
+@media (min-width: 481px) and (max-width: 768px) {
+    body{
+        margin: 0px;
+        border: 0px;
+        padding: 0px;
+    }
+    #texto-logo img{
+        width: 80%;
+        margin: 0 auto;
+    }
+    html,body {
+        background-image: none;
+    }
+    #texto-logo{
+        width: 80%;
+        margin: 0 auto;
+    }
+    #texto-logo p{
+        font-size: 18px;
+    }
+    .bloco_grande{
+        width: 350px;
+        margin: 0 auto;
+        margin-top: 30px;
+        float: none;
+        }
+    header{
+        width: 100%;
+    }
 }

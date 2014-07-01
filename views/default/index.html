@@ -46,7 +46,9 @@
   <link rel="stylesheet" href='{{=URL("static","css/bootstrap.min.css")}}' />
   <link rel="stylesheet" href='{{=URL("static","css/bootstrap-responsive.min.css")}}' />
 
+  <link rel="stylesheet" href='{{=URL("static","css/tela-login-registro.css")}}' />
   <link rel="stylesheet" href='{{=URL("static","css/home-syle.css")}}' />
+  
 
   <!-- Google Web Fonts -->
   <link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>
@@ -76,65 +78,57 @@
 
 
   <script src='{{=URL("static","js/web2py.js")}}'></script>
+  <script src='{{=URL("static","js/tela-login-registro.js")}}'></script>
 </head>
 
 <body>
-<a href="https://github.com/gustavox4ids/scrumforme" target="_blank" class="navbar-fixed-top"><img style="-webkit-user-select: none; position: absolute; top: 0; left: 0; border: 0; z-index:9999;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" width="127" height="127"></a>
+<!--<a href="https://github.com/gustavox4ids/scrumforme" target="_blank" class="navbar-fixed-top"><img style="-webkit-user-select: none; position: absolute; top: 0; left: 0; border: 0; z-index:9999;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" width="127" height="127"></a>-->
 
-    <div class="container">
-      <header class="row-fluid">
-        <a href="{{=URL('index')}}" class="pull-left"  alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
-
-        {{ if not auth.is_logged_in(): }}
-          <ul id="login" class="pull-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">{{=T("Sign in")}}<b class="caret"></b></a>
-              <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-                {{=form.custom.begin}}
-                    <!-- email -->
-                    {{ form.elements('#auth_user_email')[0] ['_placeholder'] = T("Email") }}
-                    {{ form.elements('#auth_user_email')[0] ['_type'] = "email" }}
-                    {{ form.elements('#auth_user_email')[0] ['_required'] = "required" }}
-                    {{ form.elements('#auth_user_email')[0] ['_style'] = "margin-bottom: 15px;" }}
-                    {{=form.custom.widget.email}}
-
-                    <!-- senha -->
-                    {{ form.elements('#auth_user_password')[0] ['_placeholder'] = T("Password") }}
-                    {{ form.elements('#auth_user_password')[0] ['_required'] = "required" }}
-                    {{ form.elements('#auth_user_password')[0] ['_style'] = "margin-bottom: 15px;" }}
-                    {{=form.custom.widget.password}}
-                    <input style="float: left; margin-right: 10px; position: relative; bottom: 3px;" class="checkbox" id="auth_user_remember" name="remember" type="checkbox" value="on" />
-                    <label for="auth_user_remember">{{=T("Remember me (for 30 days)")}}</label>
-                    <input class="btn btn-primary btn-block" type="submit" id="sign-in" value='{{=T("Sign in")}}'>
-                    <!-- <label style="text-align:center;margin-top:5px">{{=T("or")}}</label>
-                    <input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Sign In with Google">
-                    <input class="btn btn-primary btn-block" type="button" id="sign-in-twitter" value="Sign In with Twitter"> -->
-                    <br>
-                    <div class="right">
-                        <a id="reset_password" href="{{=URL(f='user',args='request_reset_password')}}">Esqueceu a senha?</a>
-                    </div>
-                {{=form.custom.end}}
-              </div>
-            </li>
-          </ul>
-        {{pass}}
-      </header>
-      <section class="content-center">
-            <h2>{{=T("Coming Soon")}}</h2>
-            <p>{{=T("The Scrumforme meant to be easy, organized and accessible.")}}</p>
-            <p>{{=T("Inspired by Agile methodology using Scrum and Kanban simplifying teamwork.")}}</p>
-            {{ if not auth.is_logged_in(): }}
-            <!-- <a href='{{=URL(c="default", f="user", args="register")}}' id="register" class="btn btn-large btn-primary">{{=T("Sign up")}}</a> -->
-
-            <a id="register" class="btn btn-large btn-primary lightbox-31161179003645">{{=T("Join the waiting list for the BETA")}}</a>
-            {{else:}}
-            <a href='{{=URL("projects")}}' id="register" class="btn btn-large btn-primary">{{=T("My Projects")}}</a>
-            {{pass}}
-       </section>
-       <div class="push"></div>
+    <div>
+      <header>
+        <div id="texto-logo"><a href="{{=URL('index')}}" alt='Scrumforme Logo' title='Scrumforme Logo'><h1><p><img src='{{=URL("static","img/scrumfor-me.png")}}'></p></h1></a>
+        <p>{{=T("THE SCRUMFORME MEANT TO BE EASY, ORGANIZED AND ACCESSIBLE.")}}</p><br>
+        <p>{{=T("INSPIRED BY AGILE METHODOLOGY USING SCRUM AND KANBAN SIMPLIFYING TEAMWORK.")}}</p>
+        </div>
+      
+      
+            <div class="bloco_grande">
+  <div class="menu">
+    <a href="#" id="login_index"><div>LOGIN</div></a>
+    <a href="#" id="registro_index"><div>REGISTRO</div></a>
+  </div>
+  <div class="conteudo">
+    <div id="entrar">
+      <ul class="menu_login">
+        <li><img src='{{=URL("static","img/g219.png")}}' alt=""><input type="email" placeholder="Email"></li>
+        <li><img src='{{=URL("static","img/g177.png")}}' alt=""><input type="password" placeholder="Senha"></li>
+        <li><input type="checkbox"><small>Lembrar-me por 30 dias</small></li>
+        <li><a href="">Esqueceu a senha</a></li>
+        <li><button>Acessar</button></li>
+      </ul>
+    </div>
+    <div id="registro">
+      <ul class="menu_registro">
+        <li><img src='{{=URL("static","img/g219.png")}}' alt=""><input type="text" placeholder="Usuário"></li>
+        <li><img src='{{=URL("static","img/g219.png")}}' alt=""><input type="email" placeholder="Email"></li>
+        <li><img src='{{=URL("static","img/g177.png")}}' alt=""><input type="password" placeholder="Senha"></li>
+        <li><img src='{{=URL("static","img/g177.png")}}' alt=""><input type="password" placeholder="Confirme a senha"></li>
+        <li><button class="btn-registrar">Registrar-se</button></li>
+      </ul>
+    </div>
+  </div>
+  <div class="redes_sociais">
+    <img src='{{=URL("static","img/kolaborativa_registrar.png")}}' width="42%" alt="">
+    <img src='{{=URL("static","img/kolaborativa.png")}}' width="12%" alt="">
+    <img src='{{=URL("static","img/kolaborativa_facebook.png")}}' width="12%" alt="">
+    <img src='{{=URL("static","img/kolaborativa_twitter.png")}}' width="12%" alt="">
+  </div>
+</div>
+       </header>
+       
   </div>
     <footer>
-      <a href='http://agenciax4.com.br' id="agenciax4-logo" alt="AgenciaX4 Logo" title="AgenciaX4 Logo"><img src='{{=URL("static","img/agenciax4-signature.png")}}' alt="AgenciaX4 Logo" title="AgenciaX4 Logo"></a>
+      <!--<a href='http://agenciax4.com.br' id="agenciax4-logo" alt="AgenciaX4 Logo" title="AgenciaX4 Logo"><img src='{{=URL("static","img/agenciax4-signature.png")}}' alt="AgenciaX4 Logo" title="AgenciaX4 Logo"></a>-->
     </footer>
 
 <script src='{{=URL("static","js/bootstrap-custom.min.js")}}'></script>
