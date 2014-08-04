@@ -139,3 +139,25 @@ footer img {
         width: 100%;
     }
 }
+@media (min-width: 769px) and (max-width: 1024px) {
+    #texto-logo{
+        margin-left: -50px;
+    }
+    .bloco_grande {
+        height: 349px;
+        margin-top: -221px;
+        float: right;
+        margin-right: -60px;
+    }
+}
+@media (min-width: 1025px){
+    #texto-logo{
+        margin-left: 50px;
+    }
+    .bloco_grande {
+        height: 349px;
+        margin-top: -221px;
+        float: right;
+        margin-right: 0px;
+    }
+}
