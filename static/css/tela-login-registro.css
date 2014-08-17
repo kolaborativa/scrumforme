@@ -77,13 +77,12 @@
 		small{
 			color: #197a8b;
 		}
-		button{
-			margin-left: 43%;
+		.button{
 			padding: 5px;
 			background-color: #197a8b;
 			color: #FFF;
 			cursor: pointer;
 		}
 		.btn-registrar{
-			margin-left: 33%
+			margin-left: 43%
 		}
