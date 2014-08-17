@@ -99,15 +99,31 @@
   </div>
   <div class="conteudo">
     <div id="entrar">
+      {{=form.custom.begin}}
       <ul class="menu_login">
-        <li><img src='{{=URL("static","img/g219.png")}}' alt=""><input type="email" placeholder="Email"></li>
-        <li><img src='{{=URL("static","img/g177.png")}}' alt=""><input type="password" placeholder="Senha"></li>
+        <!-- email -->
+        <li><img src='{{=URL("static","img/g219.png")}}' alt="">
+          {{ form.elements('#auth_user_email')[0] ['_placeholder'] = T("Email") }}
+          {{ form.elements('#auth_user_email')[0] ['_type'] = "email" }}
+          {{ form.elements('#auth_user_email')[0] ['_required'] = "required" }}
+          {{ form.elements('#auth_user_email')[0] ['_style'] = "margin-bottom: 15px;" }}
+          {{=form.custom.widget.email}}
+        </li>
+        <!-- password -->
+        <li><img src='{{=URL("static","img/g177.png")}}' alt="">
+          {{ form.elements('#auth_user_password')[0] ['_placeholder'] = T("Password") }}
+          {{ form.elements('#auth_user_password')[0] ['_required'] = "required" }}
+          {{ form.elements('#auth_user_password')[0] ['_style'] = "margin-bottom: 15px;" }}
+          {{=form.custom.widget.password}}
+        </li>
         <li><input type="checkbox"><small>{{=T("Remember me (for 30 days)")}}</small></li>
         <li><a href="{{=URL(f='user',args='request_reset_password')}}">{{=T("Lost password?")}}</a></li>
         <li><input class="button" type="submit" id="sign-in" value='{{=T("Sign in")}}'></li>
       </ul>
+      {{=form.custom.end}}
     </div>
     <div id="registro">
+      <!-- Since register not working this is not a form. Will change in near future -->
       <ul class="menu_registro">
         <li><img src='{{=URL("static","img/g219.png")}}' alt=""><input type="text" placeholder="Usuário"></li>
         <li><img src='{{=URL("static","img/g219.png")}}' alt=""><input type="email" placeholder="Email"></li>
