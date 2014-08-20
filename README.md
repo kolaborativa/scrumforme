@@ -47,16 +47,7 @@ Installation
 
 *5.*  Insert the Role of users in db.role.
 
-```bash
-+---------+---------------+
-| role.id | role.name     |
-+---------+---------------+
-| 1       | Product Owner |
-| 2       | Scrum Master  |
-| 3       | Team          |
-| 4       | Guest         |
-+---------+---------------+
-```
+    http://localhost:8000/scrumforme/setup/install
 
 
 Changelog

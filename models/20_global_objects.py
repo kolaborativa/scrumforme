@@ -204,6 +204,8 @@ class G_projects(object):
 
 
     def lastProjectsData(self, final_order, project_id=""):
+        if not isinstance(final_order, (list, tuple)):
+            final_order = list()
         if project_id == "" and len(final_order) == 5:
             final_order.pop()
 

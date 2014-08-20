@@ -22,3 +22,5 @@ static/uploads/*.jpg
 static/uploads/*.gif
 static/uploads/*.txt
 
+# ide files
+.idea

@@ -48,7 +48,7 @@
 
   <link rel="stylesheet" href='{{=URL("static","css/tela-login-registro.css")}}' />
   <link rel="stylesheet" href='{{=URL("static","css/home-syle.css")}}' />
-  
+
 
   <!-- Google Web Fonts -->
   <link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>
@@ -90,8 +90,8 @@
         <p>{{=T("THE SCRUMFORME MEANT TO BE EASY, ORGANIZED AND ACCESSIBLE.")}}</p><br>
         <p>{{=T("INSPIRED BY AGILE METHODOLOGY USING SCRUM AND KANBAN SIMPLIFYING TEAMWORK.")}}</p>
         </div>
-      
-      
+
+
             <div class="bloco_grande">
   <div class="menu">
     <a href="#" id="login_index"><div>LOGIN</div></a>
@@ -99,21 +99,37 @@
   </div>
   <div class="conteudo">
     <div id="entrar">
+      {{=form.custom.begin}}
       <ul class="menu_login">
-        <li><img src='{{=URL("static","img/g219.png")}}' alt=""><input type="email" placeholder="Email"></li>
-        <li><img src='{{=URL("static","img/g177.png")}}' alt=""><input type="password" placeholder="Senha"></li>
-        <li><input type="checkbox"><small>Lembrar-me por 30 dias</small></li>
-        <li><a href="">Esqueceu a senha</a></li>
-        <li><button>Acessar</button></li>
+        <!-- email -->
+        <li><img src='{{=URL("static","img/g219.png")}}' alt="">
+          {{ form.elements('#auth_user_email')[0] ['_placeholder'] = T("Email") }}
+          {{ form.elements('#auth_user_email')[0] ['_type'] = "email" }}
+          {{ form.elements('#auth_user_email')[0] ['_required'] = "required" }}
+          {{ form.elements('#auth_user_email')[0] ['_style'] = "margin-bottom: 15px;" }}
+          {{=form.custom.widget.email}}
+        </li>
+        <!-- password -->
+        <li><img src='{{=URL("static","img/g177.png")}}' alt="">
+          {{ form.elements('#auth_user_password')[0] ['_placeholder'] = T("Password") }}
+          {{ form.elements('#auth_user_password')[0] ['_required'] = "required" }}
+          {{ form.elements('#auth_user_password')[0] ['_style'] = "margin-bottom: 15px;" }}
+          {{=form.custom.widget.password}}
+        </li>
+        <li><input type="checkbox"><small>{{=T("Remember me (for 30 days)")}}</small></li>
+        <li><a href="{{=URL(f='user',args='request_reset_password')}}">{{=T("Lost password?")}}</a></li>
+        <li><input class="button" type="submit" id="sign-in" value='{{=T("Sign in")}}'></li>
       </ul>
+      {{=form.custom.end}}
     </div>
     <div id="registro">
+      <!-- Since register not working this is not a form. Will change in near future -->
       <ul class="menu_registro">
         <li><img src='{{=URL("static","img/g219.png")}}' alt=""><input type="text" placeholder="Usuário"></li>
         <li><img src='{{=URL("static","img/g219.png")}}' alt=""><input type="email" placeholder="Email"></li>
         <li><img src='{{=URL("static","img/g177.png")}}' alt=""><input type="password" placeholder="Senha"></li>
         <li><img src='{{=URL("static","img/g177.png")}}' alt=""><input type="password" placeholder="Confirme a senha"></li>
-        <li><button class="btn-registrar">Registrar-se</button></li>
+        <li><a href='{{=URL(c="default", f="user", args="register")}}' id="register" class="button btn-registrar">{{=T("Sign up")}}</a></li>
       </ul>
     </div>
   </div>
@@ -125,7 +141,7 @@
   </div>
 </div>
        </header>
-       
+
   </div>
     <footer>
       <!--<a href='http://agenciax4.com.br' id="agenciax4-logo" alt="AgenciaX4 Logo" title="AgenciaX4 Logo"><img src='{{=URL("static","img/agenciax4-signature.png")}}' alt="AgenciaX4 Logo" title="AgenciaX4 Logo"></a>-->
