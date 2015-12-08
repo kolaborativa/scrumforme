@@ -108,7 +108,7 @@
                     {{for story in stories:}}
                         {{if story.sprint_id == None: }}
                             <ul class="story_container item_container">
-                                <li class="story">
+                                <li class="story item-backlog">
                                     <div class="story_header">
                                         <div class="text_container">
                                             <a href="#" class="editable-click story_card editable" data-type="textarea" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-index="{{=story.position_dom}}" data-url="{{=URL('create_or_update_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
@@ -226,7 +226,7 @@
             {{for story in stories:}}
                 {{if story.sprint_id: }}
                     <ul class="story_container item_container">
-                        <li class="story">
+                        <li class="story item-sprint">
                             <div class="story_header">
                                 <div class="text_container">
                                     <a href="#" class="editable-click story_card editable" data-type="textarea" data-placeholder="Click para escrever" data-pk="{{=story.id}}" data-index="{{=story.position_dom}}" data-url="{{=URL('create_or_update_itens.json')}}" data-name="story" data-update="true">{{=story.title}}</a>
