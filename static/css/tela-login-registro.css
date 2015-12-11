@@ -36,6 +36,7 @@ input[type="text"] , input[type="email"] , input[type="password"]{
 	background-color: orange;
 }
 .menu a{
+	text-decoration: none;
 	display: inline-block;
 	background-color: #34abbd;
 	text-align: center;
@@ -81,7 +82,7 @@ input[type="text"] , input[type="email"] , input[type="password"]{
 .menu_login li , .menu_registro li{
 	margin-bottom: 10px;
 }
-small{
+.small{
 	color: #197a8b;
 }
 .button{
