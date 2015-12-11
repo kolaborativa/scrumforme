@@ -5,7 +5,7 @@
 	list-style: none;
 	font-family: Helvetica;
 }
-a{
+a, a:hover{
 	text-decoration: none;
 	color: #fff;
 	font-size: 10px;
