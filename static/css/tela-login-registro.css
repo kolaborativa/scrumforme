@@ -15,7 +15,7 @@ a, a:hover{
 input[type="text"] , input[type="email"] , input[type="password"]{
 	background-color: #a8d9e0;
 	height: 20px;
-	width: 150px;
+	width: 70%;
 }
 
 .form-homepage-icon {
@@ -25,7 +25,7 @@ input[type="text"] , input[type="email"] , input[type="password"]{
 }
 
 .bloco_grande {
-	height: 349px;
+	width: 309px;
 	box-shadow: 0px 0px 50px black;
 	margin-top: 20px;
 	float: right;
@@ -46,19 +46,15 @@ input[type="text"] , input[type="email"] , input[type="password"]{
 }
 .conteudo{
 	width: 100%;
-	height: 284px;
 	background-color: #34abbd;
 }
-.redes_sociais{
-	width: 100%;
-	height: 47px;
-	background-color: #197a8b;
-}
+
 #entrar{
 	display: block;
 }
 #registro{
 	display: none;
+	padding-bottom:1.2em;
 }
 .menu_registro{
 	margin: 0 auto;
@@ -79,18 +75,14 @@ input[type="text"] , input[type="email"] , input[type="password"]{
 .menu_login img , .menu_registro img , input[type="checkbox"]{
 	vertical-align: middle;
 }
-.menu_login li , .menu_registro li{
-	margin-bottom: 10px;
-}
+
 .small{
 	color: #197a8b;
 }
-.button{
-	padding: 5px;
+.scrumforme-button-success{
+	padding: .5em 2em;
+	font-size: 14px;
 	background-color: #197a8b;
 	color: #FFF;
 	cursor: pointer;
-}
-.btn-registrar{
-	margin-left: 43%
 }

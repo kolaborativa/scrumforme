@@ -6,6 +6,10 @@ html, body {
     background-position: center;
 }
 
+ul {
+    margin: 0;
+}
+
 header {
     width: 80%;
     margin: 0  auto;
@@ -30,12 +34,12 @@ p {
  list-style: none;
 }
 
-#register {
+/*#register {
     width: 40%;
     margin-top: 20px;
     text-transform: uppercase;
     font-weight: bold;
-}
+}*/
 
 .container {
     min-height: 100%;
@@ -76,7 +80,8 @@ footer img {
 #texto-logo {
     width: 390px;
     margin-top: 45px;
-    }
+    display: inline-block;
+}
 @media (max-width: 480px) {
     body{
         margin: 0px;
@@ -145,19 +150,7 @@ footer img {
     }
     .bloco_grande {
         height: 349px;
-        margin-top: -221px;
         float: right;
         margin-right: -60px;
-    }
-}
-@media (min-width: 1025px){
-    #texto-logo{
-        margin-left: 50px;
-    }
-    .bloco_grande {
-        height: 349px;
-        margin-top: -221px;
-        float: right;
-        margin-right: 0px;
     }
 }

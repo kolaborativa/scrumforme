@@ -105,7 +105,7 @@
                 </li>
                 <li><input type="checkbox"><small>{{=T("Remember me (for 30 days)")}}</small></li>
                 <li><a href="{{=URL(f='user',args='request_reset_password')}}">{{=T("Lost password?")}}</a></li>
-                <li><input class="button" type="submit" id="sign-in" value='{{=T("Sign in")}}'></li>
+                <li><input class="scrumforme-button-success" type="submit" id="sign-in" value='{{=T("Sign in")}}'></li>
               </ul>
               {{=form.custom.end}}
             </div>
@@ -116,17 +116,11 @@
                 <li><i class="form-homepage-icon icon-envelope"></i><input type="email" placeholder="Email"></li>
                 <li><i class="form-homepage-icon icon-key"></i><input type="password" placeholder="Senha"></li>
                 <li><i class="form-homepage-icon icon-key"></i><input type="password" placeholder="Confirme a senha"></li>
-                <li><a href='{{=URL(c="default", f="user", args="register")}}' id="register" class="button btn-registrar">{{=T("Sign up")}}</a></li>
+                <li><input id="register" type="submit" class="scrumforme-button-success" value="{{=T("Sign up")}}"></li>
               </ul>
             </div>
           </div>
 
-          <div class="redes_sociais">
-            <img src='{{=URL("static","img/kolaborativa_registrar.png")}}' width="42%" alt="">
-            <img src='{{=URL("static","img/kolaborativa.png")}}' width="12%" alt="">
-            <img src='{{=URL("static","img/kolaborativa_facebook.png")}}' width="12%" alt="">
-            <img src='{{=URL("static","img/kolaborativa_twitter.png")}}' width="12%" alt="">
-          </div>
 
       </div> <!-- bloco grande -->
     </header>
