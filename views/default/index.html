@@ -98,7 +98,7 @@
                       {{=form.custom.widget.password}}
                     </li>
 
-                    <li>{{=form.custom.widget.remember_me}}<small> {{=T("Remember me (for 30 days)")}}</small></li>
+                    <li><input class="checkbox" id="auth_user_remember" name="remember" type="checkbox" value="on" /><small> {{=T("Remember me (for 30 days)")}}</small></li>
                     <div class="menu_login--links">
                         <li class="link"><a class="link-color" href="{{=URL(f='user',args='request_reset_password')}}">{{=T("Lost password?")}}</a></li>
                         <li class="link"><input class="scrumforme-button-success" type="submit" id="sign-in" value='{{=T("Sign in")}}'></li>
