@@ -1,9 +1,12 @@
 html, body {
     height: 100%;
     background-color: #34abbd;
-    background-image: url('../img/login_register_background.png');
     background-repeat: no-repeat;
     background-position: center;
+}
+
+ul {
+    margin: 0;
 }
 
 header {
@@ -30,12 +33,12 @@ p {
  list-style: none;
 }
 
-#register {
+/*#register {
     width: 40%;
     margin-top: 20px;
     text-transform: uppercase;
     font-weight: bold;
-}
+}*/
 
 .container {
     min-height: 100%;
@@ -65,7 +68,38 @@ p {
     font-family:'Oswald',Arial,Helvetica,sans-serif;
 }
 
-footer, .push {
+footer {
+    background-color: #18798a;
+    height: 3em;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+footer p {
+    color: #ffffff;
+    font-size: .8rem;
+    margin-top: 12px;
+    text-align: center;
+}
+
+footer p a, footer p a:visited{
+    color: #c2e6eb;
+    font-size: .8rem;
+    margin-top: 12px;
+    text-align: center;
+}
+
+footer p a:hover{
+    text-decoration: underline;
+    color: #c2e6eb;
+    font-size: .8rem;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.push {
     height: 96px; /* .push must be the same height as .footer */
 }
 
@@ -76,7 +110,8 @@ footer img {
 #texto-logo {
     width: 390px;
     margin-top: 45px;
-    }
+    display: inline-block;
+}
 @media (max-width: 480px) {
     body{
         margin: 0px;
@@ -107,7 +142,7 @@ footer img {
     header{
         width: 100%;
     }
-    
+
 }
 @media (min-width: 481px) and (max-width: 768px) {
     body{
@@ -145,19 +180,7 @@ footer img {
     }
     .bloco_grande {
         height: 349px;
-        margin-top: -221px;
         float: right;
         margin-right: -60px;
-    }
-}
-@media (min-width: 1025px){
-    #texto-logo{
-        margin-left: 50px;
-    }
-    .bloco_grande {
-        height: 349px;
-        margin-top: -221px;
-        float: right;
-        margin-right: 0px;
     }
 }

@@ -45,28 +45,11 @@
   <!-- Bootstrap -->
   <link rel="stylesheet" href='{{=URL("static","css/bootstrap.min.css")}}' />
   <link rel="stylesheet" href='{{=URL("static","css/bootstrap-responsive.min.css")}}' />
+  <link rel="stylesheet" href='{{=URL("static","css/elusive-webfont.css")}}'>
 
   <link rel="stylesheet" href='{{=URL("static","css/tela-login-registro.css")}}' />
   <link rel="stylesheet" href='{{=URL("static","css/home-syle.css")}}' />
 
-
-  <!-- Google Web Fonts -->
-  <link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-
-  <script src="http://cdn.jotfor.ms/static/feedback2.js?3.1.117" type="text/javascript">
-    new JotformFeedback({
-    formId:'31161179003645',
-    base:'http://jotformz.com/',
-    windowTitle:'{{=T("Join the waiting list for the BETA")}}',
-    background:'#FFA500',
-    fontColor:'#FFFFFF',
-    type:false,
-    height:500,
-    width:700
-    });
-  </script>
 
   <!--[if lt IE 9]>
       <script src='{{=URL("static","js/jquery-1.9.1.min.js")}}'></script>
@@ -82,69 +65,71 @@
 </head>
 
 <body>
-<!--<a href="https://github.com/gustavox4ids/scrumforme" target="_blank" class="navbar-fixed-top"><img style="-webkit-user-select: none; position: absolute; top: 0; left: 0; border: 0; z-index:9999;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" width="127" height="127"></a>-->
-
+    <a href="https://github.com/kolaborativa/scrumforme" target="_blank"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/c6625ac1f3ee0a12250227cf83ce904423abf351/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png"></a>
     <div>
       <header>
         <div id="texto-logo"><a href="{{=URL('index')}}" alt='Scrumforme Logo' title='Scrumforme Logo'><h1><p><img src='{{=URL("static","img/scrumfor-me.png")}}'></p></h1></a>
-        <p>{{=T("THE SCRUMFORME MEANT TO BE EASY, ORGANIZED AND ACCESSIBLE.")}}</p><br>
-        <p>{{=T("INSPIRED BY AGILE METHODOLOGY USING SCRUM AND KANBAN SIMPLIFYING TEAMWORK.")}}</p>
+            <p>{{=T("THE SCRUMFORME MEANT TO BE EASY, ORGANIZED AND ACCESSIBLE.")}}</p><br>
+            <p>{{=T("INSPIRED BY AGILE METHODOLOGY USING SCRUM AND KANBAN SIMPLIFYING TEAMWORK.")}}</p>
         </div>
 
-
+        {{ if not auth.is_logged_in(): }}
             <div class="bloco_grande">
-  <div class="menu">
-    <a href="#" id="login_index"><div>LOGIN</div></a>
-    <a href="#" id="registro_index"><div>REGISTRO</div></a>
-  </div>
-  <div class="conteudo">
-    <div id="entrar">
-      {{=form.custom.begin}}
-      <ul class="menu_login">
-        <!-- email -->
-        <li><img src='{{=URL("static","img/g219.png")}}' alt="">
-          {{ form.elements('#auth_user_email')[0] ['_placeholder'] = T("Email") }}
-          {{ form.elements('#auth_user_email')[0] ['_type'] = "email" }}
-          {{ form.elements('#auth_user_email')[0] ['_required'] = "required" }}
-          {{ form.elements('#auth_user_email')[0] ['_style'] = "margin-bottom: 15px;" }}
-          {{=form.custom.widget.email}}
-        </li>
-        <!-- password -->
-        <li><img src='{{=URL("static","img/g177.png")}}' alt="">
-          {{ form.elements('#auth_user_password')[0] ['_placeholder'] = T("Password") }}
-          {{ form.elements('#auth_user_password')[0] ['_required'] = "required" }}
-          {{ form.elements('#auth_user_password')[0] ['_style'] = "margin-bottom: 15px;" }}
-          {{=form.custom.widget.password}}
-        </li>
-        <li><input type="checkbox"><small>{{=T("Remember me (for 30 days)")}}</small></li>
-        <li><a href="{{=URL(f='user',args='request_reset_password')}}">{{=T("Lost password?")}}</a></li>
-        <li><input class="button" type="submit" id="sign-in" value='{{=T("Sign in")}}'></li>
-      </ul>
-      {{=form.custom.end}}
-    </div>
-    <div id="registro">
-      <!-- Since register not working this is not a form. Will change in near future -->
-      <ul class="menu_registro">
-        <li><img src='{{=URL("static","img/g219.png")}}' alt=""><input type="text" placeholder="Usuário"></li>
-        <li><img src='{{=URL("static","img/g219.png")}}' alt=""><input type="email" placeholder="Email"></li>
-        <li><img src='{{=URL("static","img/g177.png")}}' alt=""><input type="password" placeholder="Senha"></li>
-        <li><img src='{{=URL("static","img/g177.png")}}' alt=""><input type="password" placeholder="Confirme a senha"></li>
-        <li><a href='{{=URL(c="default", f="user", args="register")}}' id="register" class="button btn-registrar">{{=T("Sign up")}}</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="redes_sociais">
-    <img src='{{=URL("static","img/kolaborativa_registrar.png")}}' width="42%" alt="">
-    <img src='{{=URL("static","img/kolaborativa.png")}}' width="12%" alt="">
-    <img src='{{=URL("static","img/kolaborativa_facebook.png")}}' width="12%" alt="">
-    <img src='{{=URL("static","img/kolaborativa_twitter.png")}}' width="12%" alt="">
-  </div>
-</div>
-       </header>
+              <div class="menu">
+                <a href="#" id="login_index"><div>LOGIN</div></a>
+                <a href="#" id="registro_index"><div>REGISTRO</div></a>
+              </div>
+
+              <div class="conteudo">
+                <div id="entrar">
+                  {{=form.custom.begin}}
+                  <ul class="menu_login">
+                    <!-- email -->
+                    <li><i class="form-homepage-icon icon-envelope"></i>
+                      {{ form.elements('#auth_user_email')[0] ['_placeholder'] = T("Email") }}
+                      {{ form.elements('#auth_user_email')[0] ['_type'] = "email" }}
+                      {{ form.elements('#auth_user_email')[0] ['_required'] = "required" }}
+                      {{=form.custom.widget.email}}
+                    </li>
+                    <!-- password -->
+                    <li><i class="form-homepage-icon icon-key"></i>
+                      {{ form.elements('#auth_user_password')[0] ['_placeholder'] = T("Password") }}
+                      {{ form.elements('#auth_user_password')[0] ['_required'] = "required" }}
+                      {{=form.custom.widget.password}}
+                    </li>
+                    <li><input type="checkbox"><small>{{=T("Remember me (for 30 days)")}}</small></li>
+                    <li><a href="{{=URL(f='user',args='request_reset_password')}}">{{=T("Lost password?")}}</a></li>
+                    <li><input class="scrumforme-button-success" type="submit" id="sign-in" value='{{=T("Sign in")}}'></li>
+                  </ul>
+                  {{=form.custom.end}}
+                </div>
+                <div id="registro">
+                  <!-- Since register not working this is not a form. Will change in near future -->
+                  <ul class="menu_registro">
+                    <li><i class="form-homepage-icon icon-user"></i><input type="text" placeholder="Usuário"></li>
+                    <li><i class="form-homepage-icon icon-envelope"></i><input type="email" placeholder="Email"></li>
+                    <li><i class="form-homepage-icon icon-key"></i><input type="password" placeholder="Senha"></li>
+                    <li><i class="form-homepage-icon icon-key"></i><input type="password" placeholder="Confirme a senha"></li>
+                    <li><input id="register" type="submit" class="scrumforme-button-success" value="{{=T("Sign up")}}"></li>
+                  </ul>
+                </div>
+              </div>
+
+
+          </div> <!-- bloco grande -->
+        {{else:}}
+            <div class="button-chamada-meus-projetos">
+                <a href="{{=URL('projects')}}" class="scrumforme-button-success scrumforme-button-success__big-button">{{=T('My Projects')}}</a>
+            </div>
+        {{pass}}
+    </header>
 
   </div>
+
     <footer>
-      <!--<a href='http://agenciax4.com.br' id="agenciax4-logo" alt="AgenciaX4 Logo" title="AgenciaX4 Logo"><img src='{{=URL("static","img/agenciax4-signature.png")}}' alt="AgenciaX4 Logo" title="AgenciaX4 Logo"></a>-->
+      <p>
+        Copyleft © 2015 Scrumforme. Desenvolvido por <a href="http://x4start.com" target="_blank">X4 Start</a> & <a href="http://kolaborativa.com" target="_blank">Kolaborativa</a>
+      </p>
     </footer>
 
 <script src='{{=URL("static","js/bootstrap-custom.min.js")}}'></script>
@@ -179,4 +164,3 @@ UserVoice.push(['showTab', 'classic_widget', {
 
 </body>
 </html>
-

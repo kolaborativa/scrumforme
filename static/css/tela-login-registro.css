@@ -1,88 +1,105 @@
-		*{
-			padding: 0px;
-			margin: 0px;
-			border: none;
-			list-style: none;
-			font-family: Helvetica;
-		}
-		a{
-			text-decoration: none;
-			color: #fff;
-			font-size: 10px;
-			padding-top: 5px;
-			padding-bottom: 5px;
-		}
-		input[type="text"] , input[type="email"] , input[type="password"]{
-			background-color: #a8d9e0;
-			height: 20px;
-			width: 150px;
-		}
-		.bloco_grande {
-			height: 349px;
-			box-shadow: 0px 0px 50px black;
-			margin-top: 20px;
-			float: right;
-		}
-		.menu{
-			width: 100%;
-			height: 18px;
-			background-color: orange;
-		}
-		.menu a{
-			display: inline-block;
-			background-color: #34abbd;
-			text-align: center;
-			float: left;
-			width: 50%;
-			padding: 10px 0px;
-		}
-		.conteudo{
-			width: 100%;
-			height: 284px;
-			background-color: #34abbd;
-		}
-		.redes_sociais{
-			width: 100%;
-			height: 47px;
-			background-color: #197a8b;
-		}
-		#entrar{
-			display: block;
-		}
-		#registro{
-			display: none;
-		}
-		.menu_registro{
-			margin: 0 auto;
-			text-align: center;
-		}
-		.menu_login{
-			text-align: center;
-		}
-		#registro_index{
-			background-color: #197a8b;
-		}
-		.conteudo ul{
-			padding-top: 15%;
-		}
-		.redes_sociais img{
-			padding: 6px;
-		}
-		.menu_login img , .menu_registro img , input[type="checkbox"]{
-			vertical-align: middle;
-		}
-		.menu_login li , .menu_registro li{
-			margin-bottom: 10px;
-		}
-		small{
-			color: #197a8b;
-		}
-		.button{
-			padding: 5px;
-			background-color: #197a8b;
-			color: #FFF;
-			cursor: pointer;
-		}
-		.btn-registrar{
-			margin-left: 43%
-		}
+*{
+	padding: 0px;
+	margin: 0px;
+	border: none;
+	list-style: none;
+	font-family: Helvetica;
+}
+a, a:hover{
+	text-decoration: none;
+	color: #fff;
+	font-size: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+input[type="text"] , input[type="email"] , input[type="password"]{
+	background-color: #a8d9e0;
+	height: 20px;
+	width: 70%;
+}
+
+.form-homepage-icon {
+    padding-right: .5em;
+    font-size: 1.2em;
+    color: #197a8b;
+}
+
+.bloco_grande {
+	width: 309px;
+	box-shadow: 0px 0px 50px black;
+	margin-top: 4em;
+	float: right;
+}
+.menu{
+	width: 100%;
+	height: 18px;
+	background-color: orange;
+}
+.menu a{
+	text-decoration: none;
+	display: inline-block;
+	background-color: #34abbd;
+	text-align: center;
+	float: left;
+	width: 50%;
+	padding: 10px 0px;
+}
+.conteudo{
+	width: 100%;
+	background-color: #34abbd;
+}
+
+#entrar{
+	display: block;
+}
+#registro{
+	display: none;
+	padding-bottom:1.2em;
+}
+.menu_registro{
+	margin: 0 auto;
+	text-align: center;
+}
+.menu_login{
+	text-align: center;
+}
+#registro_index{
+	background-color: #197a8b;
+}
+.conteudo ul{
+	padding-top: 15%;
+}
+.redes_sociais img{
+	padding: 6px;
+}
+.menu_login img , .menu_registro img , input[type="checkbox"]{
+	vertical-align: middle;
+}
+
+.small{
+	color: #197a8b;
+}
+
+.button-chamada-meus-projetos {
+	width: 309px;
+	margin-top: 6em;
+	margin-right: 5em;
+	padding-top: 4em;
+	float: right;
+}
+
+.button-chamada-meus-projetos a, .button-chamada-meus-projetos a:hover {
+	font-size: 14px;
+	background-color: #197a8b;
+	color: #FFF;
+	cursor: pointer;
+	padding: 3em 6em;
+}
+
+.scrumforme-button-success{
+	padding: .5em 2em;
+	font-size: 14px;
+	background-color: #197a8b;
+	color: #FFF;
+	cursor: pointer;
+}
