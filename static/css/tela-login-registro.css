@@ -12,6 +12,11 @@ a, a:hover{
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
+
+.link-color, small {
+	color: #0b5b69;
+}
+
 input[type="text"] , input[type="email"] , input[type="password"]{
 	background-color: #a8d9e0;
 	height: 20px;
@@ -44,6 +49,21 @@ input[type="text"] , input[type="email"] , input[type="password"]{
 	width: 50%;
 	padding: 10px 0px;
 }
+
+.menu_login--links {
+	width: 66%;
+	margin: 1em auto 0;
+}
+
+.menu_login--links .link{
+	float: left;
+	padding: .2em;
+}
+
+.menu_login--links .link:first-child{
+	margin-top: .5em;
+}
+
 .conteudo{
 	width: 100%;
 	background-color: #34abbd;
@@ -76,10 +96,6 @@ input[type="text"] , input[type="email"] , input[type="password"]{
 	vertical-align: middle;
 }
 
-.small{
-	color: #197a8b;
-}
-
 .button-chamada-meus-projetos {
 	width: 309px;
 	margin-top: 6em;
@@ -100,6 +116,6 @@ input[type="text"] , input[type="email"] , input[type="password"]{
 	padding: .5em 2em;
 	font-size: 14px;
 	background-color: #197a8b;
-	color: #FFF;
+	color: #0b5b69;
 	cursor: pointer;
 }
