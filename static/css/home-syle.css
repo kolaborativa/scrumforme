@@ -1,7 +1,6 @@
 html, body {
     height: 100%;
     background-color: #34abbd;
-    background-image: url('../img/login_register_background.png');
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -69,7 +68,38 @@ p {
     font-family:'Oswald',Arial,Helvetica,sans-serif;
 }
 
-footer, .push {
+footer {
+    background-color: #18798a;
+    height: 3em;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+footer p {
+    color: #ffffff;
+    font-size: .8rem;
+    margin-top: 12px;
+    text-align: center;
+}
+
+footer p a, footer p a:visited{
+    color: #c2e6eb;
+    font-size: .8rem;
+    margin-top: 12px;
+    text-align: center;
+}
+
+footer p a:hover{
+    text-decoration: underline;
+    color: #c2e6eb;
+    font-size: .8rem;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.push {
     height: 96px; /* .push must be the same height as .footer */
 }
 
