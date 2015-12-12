@@ -73,50 +73,55 @@
             <p>{{=T("INSPIRED BY AGILE METHODOLOGY USING SCRUM AND KANBAN SIMPLIFYING TEAMWORK.")}}</p>
         </div>
 
+        {{ if not auth.is_logged_in(): }}
+            <div class="bloco_grande">
+              <div class="menu">
+                <a href="#" id="login_index"><div>LOGIN</div></a>
+                <a href="#" id="registro_index"><div>REGISTRO</div></a>
+              </div>
 
-        <div class="bloco_grande">
-          <div class="menu">
-            <a href="#" id="login_index"><div>LOGIN</div></a>
-            <a href="#" id="registro_index"><div>REGISTRO</div></a>
-          </div>
+              <div class="conteudo">
+                <div id="entrar">
+                  {{=form.custom.begin}}
+                  <ul class="menu_login">
+                    <!-- email -->
+                    <li><i class="form-homepage-icon icon-envelope"></i>
+                      {{ form.elements('#auth_user_email')[0] ['_placeholder'] = T("Email") }}
+                      {{ form.elements('#auth_user_email')[0] ['_type'] = "email" }}
+                      {{ form.elements('#auth_user_email')[0] ['_required'] = "required" }}
+                      {{=form.custom.widget.email}}
+                    </li>
+                    <!-- password -->
+                    <li><i class="form-homepage-icon icon-key"></i>
+                      {{ form.elements('#auth_user_password')[0] ['_placeholder'] = T("Password") }}
+                      {{ form.elements('#auth_user_password')[0] ['_required'] = "required" }}
+                      {{=form.custom.widget.password}}
+                    </li>
+                    <li><input type="checkbox"><small>{{=T("Remember me (for 30 days)")}}</small></li>
+                    <li><a href="{{=URL(f='user',args='request_reset_password')}}">{{=T("Lost password?")}}</a></li>
+                    <li><input class="scrumforme-button-success" type="submit" id="sign-in" value='{{=T("Sign in")}}'></li>
+                  </ul>
+                  {{=form.custom.end}}
+                </div>
+                <div id="registro">
+                  <!-- Since register not working this is not a form. Will change in near future -->
+                  <ul class="menu_registro">
+                    <li><i class="form-homepage-icon icon-user"></i><input type="text" placeholder="Usuário"></li>
+                    <li><i class="form-homepage-icon icon-envelope"></i><input type="email" placeholder="Email"></li>
+                    <li><i class="form-homepage-icon icon-key"></i><input type="password" placeholder="Senha"></li>
+                    <li><i class="form-homepage-icon icon-key"></i><input type="password" placeholder="Confirme a senha"></li>
+                    <li><input id="register" type="submit" class="scrumforme-button-success" value="{{=T("Sign up")}}"></li>
+                  </ul>
+                </div>
+              </div>
 
-          <div class="conteudo">
-            <div id="entrar">
-              {{=form.custom.begin}}
-              <ul class="menu_login">
-                <!-- email -->
-                <li><i class="form-homepage-icon icon-envelope"></i>
-                  {{ form.elements('#auth_user_email')[0] ['_placeholder'] = T("Email") }}
-                  {{ form.elements('#auth_user_email')[0] ['_type'] = "email" }}
-                  {{ form.elements('#auth_user_email')[0] ['_required'] = "required" }}
-                  {{=form.custom.widget.email}}
-                </li>
-                <!-- password -->
-                <li><i class="form-homepage-icon icon-key"></i>
-                  {{ form.elements('#auth_user_password')[0] ['_placeholder'] = T("Password") }}
-                  {{ form.elements('#auth_user_password')[0] ['_required'] = "required" }}
-                  {{=form.custom.widget.password}}
-                </li>
-                <li><input type="checkbox"><small>{{=T("Remember me (for 30 days)")}}</small></li>
-                <li><a href="{{=URL(f='user',args='request_reset_password')}}">{{=T("Lost password?")}}</a></li>
-                <li><input class="scrumforme-button-success" type="submit" id="sign-in" value='{{=T("Sign in")}}'></li>
-              </ul>
-              {{=form.custom.end}}
+
+          </div> <!-- bloco grande -->
+        {{else:}}
+            <div class="button-chamada-meus-projetos">
+                <a href="{{=URL('projects')}}" class="scrumforme-button-success scrumforme-button-success__big-button">{{=T('My Projects')}}</a>
             </div>
-            <div id="registro">
-              <!-- Since register not working this is not a form. Will change in near future -->
-              <ul class="menu_registro">
-                <li><i class="form-homepage-icon icon-user"></i><input type="text" placeholder="Usuário"></li>
-                <li><i class="form-homepage-icon icon-envelope"></i><input type="email" placeholder="Email"></li>
-                <li><i class="form-homepage-icon icon-key"></i><input type="password" placeholder="Senha"></li>
-                <li><i class="form-homepage-icon icon-key"></i><input type="password" placeholder="Confirme a senha"></li>
-                <li><input id="register" type="submit" class="scrumforme-button-success" value="{{=T("Sign up")}}"></li>
-              </ul>
-            </div>
-          </div>
-
-
-      </div> <!-- bloco grande -->
+        {{pass}}
     </header>
 
   </div>

@@ -79,6 +79,23 @@ input[type="text"] , input[type="email"] , input[type="password"]{
 .small{
 	color: #197a8b;
 }
+
+.button-chamada-meus-projetos {
+	width: 309px;
+	margin-top: 6em;
+	margin-right: 5em;
+	padding-top: 4em;
+	float: right;
+}
+
+.button-chamada-meus-projetos a, .button-chamada-meus-projetos a:hover {
+	font-size: 14px;
+	background-color: #197a8b;
+	color: #FFF;
+	cursor: pointer;
+	padding: 3em 6em;
+}
+
 .scrumforme-button-success{
 	padding: .5em 2em;
 	font-size: 14px;
