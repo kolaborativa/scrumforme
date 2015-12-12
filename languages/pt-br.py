@@ -1,4 +1,4 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
 {
 '!langcode!': 'pt-br',
 '!langname!': 'Português (do Brasil)',
@@ -153,6 +153,7 @@
 'Email verification': 'Scrumforme - Ativação de conta',
 'Email verified': 'Email verificado',
 'End the sprint': 'Finalizar o sprint',
+'Enter an integer between %(min)g and %(max)g': 'Enter an integer between %(min)g and %(max)g',
 'enter an integer between %(min)g and %(max)g': 'enter an integer between %(min)g and %(max)g',
 'enter date and time as %(format)s': 'enter date and time as %(format)s',
 'enter date as %(format)s': 'enter date as %(format)s',
@@ -220,6 +221,7 @@
 'Live chat': 'Live chat',
 'Live Chat': 'Live Chat',
 'Loading': 'Carregando',
+'Log In': 'Log In',
 'Log in with your scrumforme account': 'Entrar com sua conta do scrumforme',
 'Logged in': 'Logado',
 'Logged out': 'Deslogado',

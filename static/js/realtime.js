@@ -19,7 +19,7 @@ $(document).ready(function(){
     if (host === "localhost:8000") {
         host = "127.0.0.1";
     } else {
-        host = "realtime.agenciax4.com.br";
+        host = "scrumfor.me";
     }
     //create a new WebSocket object.
     wsUri = 'ws://' + host + ':8888/realtime/' + myGroup;
