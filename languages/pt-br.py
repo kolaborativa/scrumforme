@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf8
 {
 '!langcode!': 'pt-br',
 '!langname!': 'Português (do Brasil)',
@@ -21,7 +21,7 @@
 '1 second ago': '1 segundo atrás',
 '1 week ago': '1 semana atrás',
 '1 year ago': '1 ano atrás',
-'<html>\n<head>\n    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n</head>\n    <body style=\'font-family: Arial;\'>\n        <div style=\'width: 600px; height: 250px; margin:0 auto; background-color: #F9FBFC; border-bottom:solid 10px #3b3b3b;\'>\n            <div style=\'background-color:#3b3b3b;\'>\n                <a href="http://www.scrumfor.me/" target="_blank" title="Scrumforme" alt="Scrumforme"><img style=\'padding-top: 22px;padding: 20px;float:left\' title="Scrumforme" alt="Scrumforme" src=http://127.0.0.1:8000/scrumforme/static/img/scrumformelogo.png></a>\n                <div style=\'clear:both\'></div>\n            </div>\n            <div style=\'width: 550px;margin:20px;font-size: 16px;line-height: 20px;\'>\n                <h4 style=\'padding-top: 20px;text-align: left;height: 25px;margin-bottom: 0;font-size: 22px;font-weight: normal; margin-top: 0px;\'>Ative seu cadastro!</h4>\n                <section>\n                        <p style="text-align: left;">Clique no link http://127.0.0.1:8000/scrumforme/default/user/verify_email/%(key)s  para verificar seu e-mail</p>\n                </section>\n            </div>\n        </div>\n    </body>\n</html>\n': '<html>\n<head>\n    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n</head>\n    <body style=\'font-family: Arial;\'>\n        <div style=\'width: 600px; height: 250px; margin:0 auto; background-color: #F9FBFC; border-bottom:solid 10px #3b3b3b;\'>\n            <div style=\'background-color:#3b3b3b;\'>\n                <a href="http://www.scrumfor.me/" target="_blank" title="Scrumforme" alt="Scrumforme"><img style=\'padding-top: 22px;padding: 20px;float:left\' title="Scrumforme" alt="Scrumforme" src=http://127.0.0.1:8000/scrumforme/static/img/scrumformelogo.png></a>\n                <div style=\'clear:both\'></div>\n            </div>\n            <div style=\'width: 550px;margin:20px;font-size: 16px;line-height: 20px;\'>\n                <h4 style=\'padding-top: 20px;text-align: left;height: 25px;margin-bottom: 0;font-size: 22px;font-weight: normal; margin-top: 0px;\'>Ative seu cadastro!</h4>\n                <section>\n                        <p style="text-align: left;">Clique no link http://127.0.0.1:8000/scrumforme/default/user/verify_email/%(key)s  para verificar seu e-mail</p>\n                </section>\n            </div>\n        </div>\n    </body>\n</html>\n',
+'<html>\n<head>\n    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n</head>\n    <body style=\'font-family: Arial;\'>\n        <div style=\'width: 600px; height: 250px; margin:0 auto; background-color: #F9FBFC; border-bottom:solid 10px #3b3b3b;\'>\n            <div style=\'background-color:#3b3b3b;\'>\n                <a href="http://www.scrumfor.me/" target="_blank" title="Scrumforme" alt="Scrumforme"><img style=\'padding-top: 22px;padding: 20px;float:left\' title="Scrumforme" alt="Scrumforme" src=http://127.0.0.1:8000/scrumforme/static/img/scrumformelogo.png></a>\n                <div style=\'clear:both\'></div>\n            </div>\n            <div style=\'width: 550px;margin:20px;font-size: 16px;line-height: 20px;\'>\n                <h4 style=\'padding-top: 20px;text-align: left;height: 25px;margin-bottom: 0;font-size: 22px;font-weight: normal; margin-top: 0px;\'>Ative seu cadastro!</h4>\n                <section>\n                        <p style="text-align: left;">Clique no link http://127.0.0.1:8000/scrumforme/default/user/verify_email/%(key)s  para verificar seu e-mail</p>\n                </section>\n            </div>\n        </div>\n    </body>\n</html>\n': '<html>\r\n<head>\r\n    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">\r\n</head>\r\n    <body style=\'font-family: Arial;\'>\r\n        <div style=\'width: 600px; height: 250px; margin:0 auto; background-color: #F9FBFC; border-bottom:solid 10px #3b3b3b;\'>\r\n            <div style=\'background-color:#3b3b3b;\'>\r\n                <a href="http://www.scrumfor.me/" target="_blank" title="Scrumforme" alt="Scrumforme"><img style=\'padding-top: 22px;padding: 20px;float:left\' title="Scrumforme" alt="Scrumforme" src=http://127.0.0.1:8000/scrumforme/static/img/scrumformelogo.png></a>\r\n                <div style=\'clear:both\'></div>\r\n            </div>\r\n            <div style=\'width: 550px;margin:20px;font-size: 16px;line-height: 20px;\'>\r\n                <h4 style=\'padding-top: 20px;text-align: left;height: 25px;margin-bottom: 0;font-size: 22px;font-weight: normal; margin-top: 0px;\'>Ative seu cadastro!</h4>\r\n                <section>\r\n                        <p style="text-align: left;">Clique no link http://127.0.0.1:8000/scrumforme/default/user/verify_email/%(key)s  para verificar seu e-mail</p>\r\n                </section>\r\n            </div>\r\n        </div>\r\n    </body>\r\n</html>\r\n',
 'About': 'About',
 'Access Control': 'Access Control',
 'Activate your registration!': 'Ative seu cadastro!',
@@ -191,6 +191,8 @@
 'Home': 'Home',
 'How did you get here?': 'How did you get here?',
 'I agree to the': 'Eu concordo com o',
+'Ideal for startups , communities, and corporate teams.': 'Ideal for startups , communities, and corporate teams.',
+'Ideal for startups, communities, and corporate teams.': 'Ideal para startups, comunidades, e equipes corporativas.',
 'import': 'import',
 'Import/Export': 'Importar/Exportar',
 'In Progress': 'Em Andamento',
@@ -413,6 +415,9 @@
 'Url': 'Url',
 'url': 'url',
 'Use (...)&(...) for AND, (...)|(...) for OR, and ~(...)  for NOT to build more complex queries.': 'Use (...)&(...) para AND, (...)|(...) para OR, e ~(...)  para NOT para construir consultas mais complexas.',
+'Use Scrum in an easy and organized way.': 'Use Scrum de um jeito fácil e organizado. ',
+'Use the power of Scrum and agile methods , in all simplicity.': 'Utilize o poder do Scrum e dos métodos ágeis, com toda simplicidade. ',
+'Use the power of Scrum and agile methods, in all simplicity.': 'Utilize o poder do Scrum e dos métodos ágeis, com toda simplicidade. ',
 'User %(id)s Logged-in': 'User %(id)s Logged-in',
 'User %(id)s Logged-out': 'User %(id)s Logged-out',
 'User %(id)s Password changed': 'User %(id)s Password changed',
