@@ -110,14 +110,18 @@
                   {{=form.custom.end}}
                 </div>
                 <div id="registro">
+                  {{=form_register.custom.begin}}
                   <!-- Since register not working this is not a form. Will change in near future -->
                   <ul class="menu_registro">
-                    <li><i class="form-homepage-icon icon-user"></i><input type="text" placeholder="Usuário"></li>
-                    <li><i class="form-homepage-icon icon-envelope"></i><input type="email" placeholder="Email"></li>
-                    <li><i class="form-homepage-icon icon-key"></i><input type="password" placeholder="Senha"></li>
-                    <li><i class="form-homepage-icon icon-key"></i><input type="password" placeholder="Confirme a senha"></li>
-                    <li><input id="register" type="submit" class="scrumforme-button-success" value="{{=T("Sign up")}}"></li>
+
+                      <li><i class="form-homepage-icon icon-user"></i><input type="text" name="first_name" placeholder="Nome"></li>
+                      <li><i class="form-homepage-icon icon-user"></i><input type="text" name="last_name" placeholder="Sobrenome"></li>
+                      <li><i class="form-homepage-icon icon-envelope"></i><input type="email" name="email" placeholder="Email"></li>
+                      <li><i class="form-homepage-icon icon-key"></i><input type="password" name="password" placeholder="Senha"></li>
+                      <li><i class="form-homepage-icon icon-key"></i><input type="password" name="password_two" placeholder="Confirme a senha"></li>
+                      <li><input id="register" type="submit" class="scrumforme-button-success" value="{{=T("Sign up")}}"></li>
                   </ul>
+                  {{=form_register.custom.end}}
                 </div>
               </div>
 
