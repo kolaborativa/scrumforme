@@ -576,13 +576,9 @@ def user():
     """
 
     if 'login' in request.args or 'register' in request.args:
-        # form_login = auth.login()
-        # form_register = auth.register()
-        # return dict(form_login=form_login, form_register=form_register)
         redirect(URL('index'))
     else:
         form = auth()
-        # print dir(form)
         form.element('input[type=submit]')['_class'] = 'scrumforme-button-success'
 
     return dict(form=form)
