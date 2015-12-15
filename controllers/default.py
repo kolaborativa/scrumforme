@@ -580,8 +580,12 @@ def user():
         # form_register = auth.register()
         # return dict(form_login=form_login, form_register=form_register)
         redirect(URL('index'))
+    else:
+        form = auth()
+        # print dir(form)
+        form.element('input[type=submit]')['_class'] = 'scrumforme-button-success'
 
-    return dict(form=auth())
+    return dict(form=form)
 
 
 def download():
