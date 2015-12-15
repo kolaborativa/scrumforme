@@ -15,7 +15,7 @@
 # ===========
 
 def index():
-    return dict(form=auth.login())
+    return dict(form=auth.login(), form_register=auth.register())
 
 
 def nojs():
