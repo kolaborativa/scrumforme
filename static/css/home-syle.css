@@ -112,6 +112,13 @@ footer img {
     margin-top: 45px;
     display: inline-block;
 }
+
+#texto-logo p {
+    text-align: left;
+    font-size: 1.5em;
+    line-height: 25px;
+}
+
 @media (max-width: 480px) {
     body{
         margin: 0px;
