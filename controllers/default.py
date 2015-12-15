@@ -576,11 +576,16 @@ def user():
     """
 
     if 'login' in request.args or 'register' in request.args:
-        form_login = auth.login()
-        form_register = auth.register()
-        return dict(form_login=form_login, form_register=form_register)
+        # form_login = auth.login()
+        # form_register = auth.register()
+        # return dict(form_login=form_login, form_register=form_register)
+        redirect(URL('index'))
+    else:
+        form = auth()
+        # print dir(form)
+        form.element('input[type=submit]')['_class'] = 'scrumforme-button-success'
 
-    return dict(form=auth())
+    return dict(form=form)
 
 
 def download():
@@ -1350,4 +1355,3 @@ def _test_story_completed(definition_ready_id, status):
         burndown_chart_test(story.project_id, False)
 
         return False
-
