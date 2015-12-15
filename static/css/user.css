@@ -185,15 +185,7 @@ input[type="text"] , input[type="email"] , input[type="password"]{
 }
 
 input[type='submit'] {
-    padding: .5em 2em;
-	font-size: 14px;
-	background-color: #197a8b;
-	color: #0b5b69;
-	cursor: pointer;
-    font-size: 14px;
-	background-color: #197a8b;
-	color: #FFF;
-	cursor: pointer;
+	color: #fff;
 }
 
 .signup form .btn {
