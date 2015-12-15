@@ -19,9 +19,13 @@ h1, h2, h3, h4, h5, h6 {
   color: inherit;
   text-rendering: optimizelegibility;
   font-family: 'Helvetica', cursive;
-  color: #197a8b;
+  color: #FFF;
   font-size: 20px;
   text-align: center;
+}
+
+form table {
+    margin: 0 auto;
 }
 
 .error {
@@ -185,15 +189,7 @@ input[type="text"] , input[type="email"] , input[type="password"]{
 }
 
 input[type='submit'] {
-    padding: .5em 2em;
-	font-size: 14px;
-	background-color: #197a8b;
-	color: #0b5b69;
-	cursor: pointer;
-    font-size: 14px;
-	background-color: #197a8b;
-	color: #FFF;
-	cursor: pointer;
+	color: #fff;
 }
 
 .signup form .btn {
