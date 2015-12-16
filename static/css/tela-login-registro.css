@@ -116,6 +116,6 @@ input[type="text"] , input[type="email"] , input[type="password"]{
 	padding: .5em 2em;
 	font-size: 14px;
 	background-color: #197a8b;
-	color: #0b5b69;
+	color: #FFF;
 	cursor: pointer;
 }
