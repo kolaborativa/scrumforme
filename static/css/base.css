@@ -790,18 +790,6 @@ div.flash #closeflash {
     height: 36px;
 }*/
 
-.widget-title {
-	background-color: #efefef;
-	background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#fdfdfd), to(#eaeaea));
-	background-image: -webkit-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
-    background-image: -moz-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
-    background-image: -ms-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
-    background-image: -o-linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
-    background-image: -linear-gradient(top, #fdfdfd 0%, #eaeaea 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', endColorstr='#eaeaea',GradientType=0 );
-    border-bottom: 1px solid #CDCDCD;
-    height: 36px;
-}
 .widget-title .nav-tabs {
     border-bottom: 0 none;
 }
@@ -839,7 +827,6 @@ div.flash #closeflash {
 }
 .widget-title h5 {
     color: #666666;
-	text-shadow: 0 1px 0 #ffffff;
     float: left;
     /*font-size: 12px;*/
     font-weight: bold;
@@ -1709,11 +1696,6 @@ html, body, .container, .content {
     box-shadow: 0 1px 3px rgb(141, 141, 141);
 }
 
-#change_thumbnail, #project_info .preview {
-    cursor: pointer;
-
-}
-
 #change_thumbnail {
     background-color: #fff;
     padding: 4px;
@@ -1728,10 +1710,31 @@ html, body, .container, .content {
 
 }
 
+#change_image_label {
+    background-color: rgba(3, 3, 3, 0.69);
+    position: relative;
+    bottom: 40px;
+    padding: 2px 0;
+    color: #fff;
+    font-size: 13px;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+}
+
+#change_image_label:hover {
+    background-color: rgba(58, 58, 58, 0.69);
+}
+
 #logo {
     position: absolute;
     left: 0;
     z-index: 99;
+}
+
+#multilanguage {
+    top: 5px;
+    margin-right: 20px!important;
 }
 
 .sidebar-fixed {

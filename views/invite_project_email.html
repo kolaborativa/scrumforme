@@ -1,0 +1,22 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+    <body style='font-family: Arial;'>
+        <div style='width: 600px; height: 350px; margin:0 auto; background-color: #F9FBFC; border-bottom:solid 10px #3b3b3b;'>
+            <div style='background-color:#3b3b3b;'>
+                <a href="http://www.scrumfor.me/" target="_blank" title="Scrumforme" alt="Scrumforme"><img src={{="http://"+request.env.http_host+URL("static", "img/scrumformelogo.png")}} style='padding-top: 22px;padding: 20px;float:left' title="Scrumforme" alt="Scrumforme"></a>
+                <div style='clear:both'></div>
+            </div>
+            <div style='width: 550px;margin:20px;font-size: 16px;line-height: 20px;'>
+                <h4 style='padding-top: 20px;text-align: left;height: 25px;margin-bottom: 0;font-size: 22px;font-weight: normal; margin-top: 0px;'>{{=T("Hello")}} {{=person.auth_user_id.first_name}},</h4>
+                <section>
+                        <p style="text-align: left;">{{=T("You have been invited for the project")}} {{=project.name}}.</p>
+                        <div style='clear:both'></div>
+                        <img src={{="http://"+request.env.http_host+URL("static","uploads/%s" %project.thumbnail)}} style='float:left; margin: 10px 10px 0 10px; padding: 5px;' title='{{=T("Project")}} {{=project.name}}' alt='{{=T("Project")}} {{=project.name}}' height="100px" width="100px">
+                        <p style="float: left; margin-top: 30px; width: 75%; word-wrap: break-word;">{{=T("Click on the link")}} {{="http://"+request.env.http_host+URL(f="team",args=project.id)}} {{=T("to access the project")}}.</p>
+                </section>
+            </div>
+        </div>
+    </body>
+</html>

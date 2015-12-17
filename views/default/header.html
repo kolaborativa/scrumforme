@@ -61,6 +61,18 @@
         </ul>
         <div id="user-nav" class="navbar navbar-inverse">
             <ul class="nav">
+                <li id="multilanguage">
+                    <!-- support for multiple language -->
+                    {{if hasattr(T,'get_possible_languages'):}}
+                        <span class="pull-right">
+                            <select name="siteLanguage" style="width:70px;margin-left:10px;" onchange="var date = new Date();cookieDate=date.setTime(date.getTime()+(100*24*60*60*1000));document.cookie='siteLanguage='+this.options[this.selectedIndex].value+'; expires='+cookieDate+'; path=/';window.location.reload()">
+                                {{for language in T.get_possible_languages():}}
+                                    <option {{=T.accepted_language==language and 'selected' or ''}} >{{=language}}</option>
+                                {{pass}}
+                            </select>
+                       </span>
+                     {{pass}}
+                </li>
                 <li>
                     <form action="">
                         <div id="search">
@@ -75,7 +87,7 @@
                     {{args = request.function}}
                 {{pass}}
                 <li><a href='{{=URL(f="user",args="profile",vars={"_next":args})}}' alt='{{=T("Profile")}}' title='{{=T("Profile")}}'><i class="icon-user"></i></a></li>
-                <li><a href='{{=URL(f="user",args="logout",vars={"_next":"index"})}}' alt='{{=T("Logout")}}' title='{{=T("Logout")}}'><i class="icon-logout-custom"></i></a></li>
+                <li><a href='{{=URL(f="user",args="logout")}}' alt='{{=T("Logout")}}' title='{{=T("Logout")}}'><i class="icon-logout-custom"></i></a></li>
             </ul>
         </div>
     {{ pass }}

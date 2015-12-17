@@ -4,7 +4,12 @@
             <h1>{{=T("Register or Sign in")}}</h1>
         </div>
         <div class="row">
-            <div class="signin span6">
+            <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab1" data-toggle="tab">signin</a></li>
+            <li><a href="#tab2" data-toggle="tab">signup</a></li>
+            </ul>
+            <div class="tab-content"> 
+            <div class="tab-pane active signin span6" id="tab1">
 
                 <div class="social_sign">
                     <h3>{{=T("Sign in with your social account")}}</h3>
@@ -46,7 +51,7 @@
 
             </div>
 
-            <div class="signup span6">
+            <div class="tab-pane signup span6" id="tab2">
                 {{=form_register.custom.begin}}
                     <fieldset>
                         <div class="social_sign">
@@ -94,6 +99,7 @@
                     </fieldset>
                 {{=form_register.custom.end}}
             </div>
+            </div>  
         </div>
     </section>
 </div>

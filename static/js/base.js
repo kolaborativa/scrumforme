@@ -37,17 +37,28 @@ $(document).ready(function(){
 		// event.preventDefault();
 	});
 
-	// create or update thumbnail
-	$('#projects_thumbnail, #update_thumbnail').awesomeCropper(
+	// create thumbnail
+	$('#projects_thumbnail').awesomeCropper(
 		{ width: 150, height: 150 }
 	);
+
+	// update thumbnail
+	try {
+		$('#update_thumbnail').ajaxAwesomeCropper(
+			{ width: 150, height: 150 }
+		);
+	}
+	catch (e) {
+	   // statements to handle any exceptions
+	   // console.log(e); // pass exception object to error handler
+	}
 
 	$(".btn_file").on('click', function() {
 		$('#update_thumbnail').val("");
 	   $(this).parent().find('.input_file').click();
 	});
 
-	$(".preview, #change_thumbnail").on('click', function() {
+	$(".preview, #change_image_label").on('click', function() {
 		$('#update_thumbnail').val("");
 		$('.preview').removeAttr("src");
 	   $(this).parent().find('.input_file').click();
