@@ -87,6 +87,10 @@ try:
 except ImportError:
     from gluon.contrib.gravatar import Gravatar
 
+# multiples languages
+if 'siteLanguage' in request.cookies and not (request.cookies['siteLanguage'] is None):
+    T.force(request.cookies['siteLanguage'].value)
+
 ## if you need to use OpenID, Facebook, MySpace, Twitter, Linkedin, etc.
 ## register with janrain.com, write your domain:api_key in private/janrain.key
 from gluon.contrib.login_methods.rpx_account import use_janrain

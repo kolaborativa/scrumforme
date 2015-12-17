@@ -1,22 +1,24 @@
 html, body {
     height: 100%;
-    background-color: #3b3b3b;
+    background-color: #34abbd;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+ul {
+    margin: 0;
 }
 
 header {
-    width: 70%!important;
+    width: 80%;
     margin: 0  auto;
 }
 
-h1 {
-    font-family: 'Playball', cursive;
-    color: #F1F1F1;
-    text-shadow: 0px 1px 1px #4d4d4d;
-    position: relative;
-    top: 5px;
-    left: 10px;
-    font-size: 30px;
-    float: left;
+p {
+    font-family: 'Helvetica', cursive;
+    color: #197a8b;
+    font-size: 20px;
+    text-align: center;
 }
 
 .color-logo{
@@ -31,12 +33,12 @@ h1 {
  list-style: none;
 }
 
-#register {
+/*#register {
     width: 40%;
     margin-top: 20px;
     text-transform: uppercase;
     font-weight: bold;
-}
+}*/
 
 .container {
     min-height: 100%;
@@ -66,11 +68,126 @@ h1 {
     font-family:'Oswald',Arial,Helvetica,sans-serif;
 }
 
-footer, .push {
+footer {
+    background-color: #18798a;
+    height: 3em;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+footer p {
+    color: #ffffff;
+    font-size: .8rem;
+    margin-top: 12px;
+    text-align: center;
+}
+
+footer p a, footer p a:visited{
+    color: #c2e6eb;
+    font-size: .8rem;
+    margin-top: 12px;
+    text-align: center;
+}
+
+footer p a:hover{
+    text-decoration: underline;
+    color: #c2e6eb;
+    font-size: .8rem;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.push {
     height: 96px; /* .push must be the same height as .footer */
 }
 
 footer img {
     margin: 0 auto;
     display: block;
+}
+#texto-logo {
+    width: 390px;
+    margin-top: 45px;
+    display: inline-block;
+}
+
+#texto-logo p {
+    text-align: left;
+    font-size: 1.5em;
+    line-height: 25px;
+}
+
+@media (max-width: 480px) {
+    body{
+        margin: 0px;
+        border: 0px;
+        padding: 0px;
+    }
+    #texto-logo img{
+        width: 294px;
+        height: 54px;
+        margin: 0 auto;
+    }
+    html,body {
+        background-image: none;
+    }
+    #texto-logo{
+        width: 305px;
+        margin: 0 auto;
+    }
+    #texto-logo p{
+        font-size: 14px;
+    }
+    .bloco_grande{
+        width: 275px;
+        margin: 0 auto;
+        margin-top: 30px;
+        float: none;
+        }
+    header{
+        width: 100%;
+    }
+
+}
+@media (min-width: 481px) and (max-width: 768px) {
+    body{
+        margin: 0px;
+        border: 0px;
+        padding: 0px;
+    }
+    #texto-logo img{
+        width: 80%;
+        margin: 0 auto;
+    }
+    html,body {
+        background-image: none;
+    }
+    #texto-logo{
+        width: 80%;
+        margin: 0 auto;
+    }
+    #texto-logo p{
+        font-size: 18px;
+    }
+    .bloco_grande{
+        width: 350px;
+        margin: 0 auto;
+        margin-top: 30px;
+        float: none;
+        }
+    header{
+        width: 100%;
+    }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    #texto-logo{
+        margin-left: -50px;
+    }
+    .bloco_grande {
+        height: 349px;
+        float: right;
+        margin-right: -60px;
+    }
 }

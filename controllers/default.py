@@ -15,7 +15,7 @@
 # ===========
 
 def index():
-    return dict(form=auth.login())
+    return dict(form=auth.login(), form_register=auth.register())
 
 
 def nojs():
@@ -499,8 +499,27 @@ def add_member():
                 Sharing.insert(project_id=project_id,
                                person_id=int(person),
                                )
+                db.commit()
+                user_data = db(User_relationship.person_id == person).select().first()
+                _invite_project(user_data, project)
 
     redirect(URL(f='team', args=[request.vars['project_id']]))
+
+
+def _invite_project(user_data, project):
+
+    context = dict(person=user_data, project=project)
+    message = response.render("invite_project_email.html", context)
+
+    status = mail.send(
+                to=[user_data.auth_user_id.email],
+                subject=T("You have been invited for the project") + " %s" %project.name,
+                reply_to=CLIENT_EMAIL,
+                message=[None,message]
+                )
+
+    if status != True:
+        _invite_project(user_data, project)
 
 
 @auth.requires_login()
@@ -557,11 +576,12 @@ def user():
     """
 
     if 'login' in request.args or 'register' in request.args:
-        form_login = auth.login()
-        form_register = auth.register()
-        return dict(form_login=form_login, form_register=form_register)
+        redirect(URL('index'))
+    else:
+        form = auth()
+        form.element('input[type=submit]')['_class'] = 'scrumforme-button-success'
 
-    return dict(form=auth())
+    return dict(form=form)
 
 
 def download():
@@ -936,6 +956,33 @@ def user_online_now():
 #  BACKLOG FUNCTIONS
 # ===================
 
+@service.json
+@auth.requires_login()
+def ajax_upload():
+    if request.vars.image64 and request.vars.project_id:
+        import subprocess
+        from convertImage import convertBase64String
+
+        project_id = request.vars.project_id
+        base64Img = request.vars.image64
+        uploadfolder = '%sstatic/uploads/' % request.folder
+
+        image_name = convertBase64String(base64Img,uploadfolder)
+
+        if image_name:
+
+            project_update = db(Project.id == project_id).select().first()
+            subprocess.call('rm %s/%s' % (uploadfolder, project_update.thumbnail), shell=True)
+            db(Project.id == project_id).update(thumbnail=image_name)
+
+            return True
+
+        else:
+            return False
+
+    else:
+        return False
+
 
 @auth.requires_login()
 def launch_or_end_sprint():
@@ -1304,4 +1351,3 @@ def _test_story_completed(definition_ready_id, status):
         burndown_chart_test(story.project_id, False)
 
         return False
-

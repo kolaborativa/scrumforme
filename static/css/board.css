@@ -203,7 +203,6 @@ td {
     padding: 2px 0px;
 }
 .task_container li {
-    /*margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em;*/
     line-height: 1.2em;
 }
 .task_container li:first-letter {
@@ -310,7 +309,6 @@ td {
 */
 
 .task {
-    /*padding: 7px;*/
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff4d8',endColorstr='#fce8c6');
     background-image: -webkit-gradient(linear,center top,center bottom,from(#fff4d8),to(#fce8c6));
     background-image: -moz-linear-gradient(center top,#fff4d8,#fce8c6);

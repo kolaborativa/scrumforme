@@ -10,10 +10,9 @@
     $(document).on("click", ".card-modal", function () {
         $(".loading_item").fadeIn("fast");
 
-        var card_element = $(this),
-            task_id = card_element.attr("data-pk");
+        var task_id = $(this).find(".task_item").attr("data-pk");
         // store card element
-        body.data('card_element', card_element);
+        // body.data('card_element', card_element);
 
         // remove last append modal in body
         $("#card_modal").remove();

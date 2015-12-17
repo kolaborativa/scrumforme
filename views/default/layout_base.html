@@ -156,6 +156,7 @@
 
             {{ if request.function == "product_backlog": }}
             <script src='{{=URL("static","js/product_backlog.js")}}'></script>
+            <script src="{{=URL('static','js/jquery.ajax-awesome-cropper.js')}}"></script>
             {{ elif request.function == "board": }}
             <script src='{{=URL("static","js/board.js")}}'></script>
             <script src='{{=URL("static","js/board-editable.js")}}'></script>

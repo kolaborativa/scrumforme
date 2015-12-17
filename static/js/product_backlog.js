@@ -3,7 +3,6 @@
  GENERAL CHANGES
 =================
 */
-
 $(function() {
 
     // catch size dynamically to increase the size of content
@@ -34,15 +33,21 @@ if (info.have_permission === true) {
 
             },
             stop: function( event, ui ) {
-
+                var areasStories = {
+                    'item-backlog': 'backlog',
+                    'item-sprint': 'sprint'
+                };
                 setTimeout(function () {
                     // call the function
-                    updateStoryOrder()
+                    areaStory = areasStories[ui.item[0].firstElementChild.classList[1]];
+                    updateStoryOrder(areaStory)
                 }, 1000); // Enable after 1000 ms.
 
             }
     }
     $( "#sprint .project-items" ).sortable(sortableOptions);
+    $( "#backlog .project-items" ).sortable(sortableOptions);
+
 
     /*
     ==============
@@ -250,7 +255,7 @@ $(document).on("click", ".send_story_sprint", function(){
 
     // update all story order in sprint
     setTimeout(function(){
-        updateStoryOrder();
+        updateStoryOrder('sprint');
     },1000); // Enable after 1000 ms.
 });
 
@@ -262,6 +267,12 @@ $(document).on("click", ".back_backlog", function(){
 
     ajax(url.changeStories+'?name=backlog&sprint_id='+storyID+'&story_id='+storyID+'&project_id='+info.project_id, [''], 'target_ajax');
     statusAction(object,"backlog","send");
+
+    //update all story order in backlog
+    setTimeout(function(){
+        updateStoryOrder('backlog');
+    },1000); // Enable after 1000 ms.
+
 });
 
 // remove item
@@ -300,8 +311,8 @@ function removeItem(pk,name,object,action) {
 }
 
 // update order position of dom
-function updateStoryOrder(){
-    var story = $("#sprint"),
+function updateStoryOrder(area_stories){
+    var story = $("#"+area_stories),
         stories_container = story.find(".project-items"),
         sprint_id = story.attr("data-sprint"),
         allValues = {},

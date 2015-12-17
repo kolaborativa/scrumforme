@@ -15,42 +15,60 @@
 
 <div id="sub-header-content" class="row-fluid">
     {{include "default/project_info.html"}}
-    <div id="sprint_info" class="project_bar_info span6">
-        <div id="live_search">
-            <input type="text" name="livesearch" placeholder='{{=T("Make a search in")}} {{=T("stories")}}'>
-            <p id="nothingfound">{{=T("No name match your search!")}}</p>
-        </div>
-    </div>
-</div>
 
-<div class="container-fluid">
-    {{for sprint in sprints:}}
-    <div class="widget-box sprint_container">
-        <div class="widget-title sprint_header">
+    <div id="sprint_info" class="project_bar_info span6">
+        <div id="clock" class="pull-left">
+            <p id="sprint_name">{{=T("Historic of Sprints")}}</p>
+            <div class="clearfix"></div>
+            <i class="icon-time pull-left"></i>
             <div class="pull-left">
-                <h5>{{=sprint.name}} - {{=T('Started in')}}: {{=g_blank_fulldate_check(sprint.started)}} - {{=T('Closed')}}: {{=g_blank_fulldate_check(sprint.ended)}}</h5>
+                <p>{{=T('Since')}}: <strong>{{=g_blank_fulldate_check(sprints[-1].ended)}}</strong></p>
+                <p>{{=T('Until')}}: <strong>{{=g_blank_fulldate_check(sprints[0].ended)}}</strong></p>
             </div>
-            <div id="expand_close_btns" class="pull-right">
-                <button class="btn btn-nostyle expand_all_stories pull-left" alt='{{=T("Open Stories")}}' title='{{=T("Open Stories")}}'>
-                    {{=T("Open Stories")}}
+            <!-- <div class="clearfix"></div> -->
+        </div>
+        <div id="live_search" class="pull-left">
+            <input type="text" name="livesearch" placeholder='{{=T("Search for")}} {{=T("Tasks")}} {{=T("or")}} {{=T("Definitions of Ready")}}'>
+            <p id="nothingfound">{{=T("No name match your search!")}}</p>
+            <div id="expand_close_btns">
+                <button class="btn btn-nostyle expand_all_sprints pull-left" alt='{{=T("Open Stories")}}' title='{{=T("Open Stories")}}'>
+                    {{=T("Open")}} {{=T("Sprints")}}
                     <i class="icon-circle-arrow-down"></i>
                 </button>
-                <button class="btn btn-nostyle close_all_stories pull-left" alt='{{=T("Close Stories")}}' title='{{=T("Close Stories")}}'>
-                    {{=T("Close Stories")}}
+                <button class="btn btn-nostyle close_all_sprints pull-left" alt='{{=T("Close Stories")}}' title='{{=T("Close Stories")}}'>
+                    {{=T("Close")}} {{=T("Sprints")}}
                     <i class="icon-circle-arrow-up"></i>
                 </button>
                 <div class="clearfix"></div>
             </div>
         </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    {{for sprint in sprints:}}
+    <div class="sprint_container">
+        <div class="sprint_header">
+            <div class="pull-left">
+                <h5>{{=sprint.name}} - <span>{{=T('Started in')}}: {{=g_blank_fulldate_check(sprint.started)}}</span> - <span>{{=T('Closed')}}: {{=g_blank_fulldate_check(sprint.ended)}}</span></h5>
+            </div>
+            <div class="pull-right">
+                <button class="btn btn-nostyle expand_sprint pull-right" alt="Expandir" title="Expandir">
+                    <i class="icon-circle-arrow-down"></i>
+                </button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
         {{for story in stories[sprint.id]:}}
-        <div class="widget-content">
+        <div class="sprint_content">
             <div class="story_header">
                 <div class="pull-left">
                     <h5>{{=story.title}}</h5>
                 </div>
                 <div class="pull-right">
                     <button class="btn btn-nostyle expand_story pull-right" alt="Expandir" title="Expandir">
-                        <i class="icon-circle-arrow-down"></i>
+                        <i class="icon-circle-arrow-up"></i>
                     </button>
                 </div>
                 <div class="clearfix"></div>
@@ -58,36 +76,45 @@
             <div class="story_container">
                 {{for n,df in enumerate(definition_ready[story.id]):}}
                 <div class="story_content">
-                    <div class="list_definition_ready">
-                        <div class="definition_ready">
-                            <p>{{=definition_ready[story.id][n].title}}</p>
-                        </div>
-                        <div class="tasks">
-                            {{for task in tasks[definition_ready[story.id][n].id]:}}
-                            <a href="#" class="card-modal" data-pk='{{=task["id"]}}' onclick="">
-                                <p>
-                                    {{ for member in team_members: }}
-                                        {{ if task["owner_task"] == member.sharing.person_id: }}
-                                            <img class="user_card " src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' data-owner="true">
-                                        {{pass}}
+                    <div class="definition_ready">
+                        {{if definition_ready[story.id][n] == definition_ready[story.id][0]:}}
+                        <h5 class="definition_ready_label">{{=T("Definitions of Ready")}}</h5>
+                        {{pass}}
+                        <p>{{=definition_ready[story.id][n].title}}</p>
+                    </div>
+                    <div class="tasks">
+                        {{for task in tasks[definition_ready[story.id][n].id]:}}
+
+                        <ul class="task_container card-modal">
+                          <li class="task">
+                            <div class="avatar_container">
+                                {{ for member in team_members: }}
+                                    {{ if task["owner_task"] == member.sharing.person_id: }}
+                                        <img class="user_card" src='{{=Gravatar(member.user_relationship.auth_user_id.email).thumb}}' alt='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' title='{{=member.sharing.person_id.name}} - {{=member.sharing.role_id.name}}' data-owner="true">
                                     {{pass}}
-                                    {{=task["title"]}}
+                                {{pass}}
+                            </div>
+                            <div class="card_container">
+                                <a href="#" class="task_item" data-pk='{{=task["id"]}}'>{{=task["title"]}}</a>
+                                <div class="icons_card">
                                     {{if len(card_comments[task["id"]]) > 0:}}
                                         <span class="comment"><i class="icon-comment"><span class="number_comment">{{ =g_format_number( len(card_comments[task["id"]]) ) }}</span></i></span>
                                     {{pass}}
-                                </p>
-                            </a>
-                            {{pass}}
-                        </div>
-                    </div> <!-- /list_definition_ready -->
-                    <hr>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                          </li>
+                        </ul>
+
+                        {{pass}}
+                    </div>
                 </div> <!-- /story_content -->
                 {{pass}}
             </div> <!-- /story_container -->
 
-        </div> <!-- /widget-content -->
+        </div> <!-- /sprint_content -->
         {{pass}}
-    </div> <!-- /widget-box -->
+    </div> <!-- /sprint_container -->
     {{pass}}
 </div> <!-- /container-fluid -->
 
