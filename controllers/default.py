@@ -15,7 +15,12 @@
 # ===========
 
 def index():
-    return dict(form=auth.login(), form_register=auth.register())
+
+    if auth.is_logged_in():
+        return dict()
+
+    else:
+        return dict(form=auth.login(), form_register=auth.register())
 
 
 def nojs():
