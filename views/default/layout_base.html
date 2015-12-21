@@ -183,6 +183,11 @@
             <script src='{{=URL("static","js/board-livesearch.js")}}'></script>
             <script src='{{=URL("static","js/floatfixed.js")}}'></script>
             <script async defer src="{{=URL('static','js/bootstrap-datepicker.js')}}"></script>
+            <script type="text/javascript">
+                $('.the_comment').each(function(e){$(this).html(
+                    urlize($(this).text(), {nofollow: true, autoescape: true, target: "_blank"})
+                )});
+            </script>
 
             {{ elif request.function == "projects": }}
             <script async defer src='{{=URL("static","js/delete_project.js")}}'></script>

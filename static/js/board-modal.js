@@ -18,8 +18,6 @@
         var url_card = url.card_page + '/' + task_id;
         window.history.pushState("", "", url_card);
 
-
-
         // store card element
         body.data('card_element', card_element);
 

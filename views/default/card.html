@@ -91,7 +91,9 @@ info = {
                             <hr><img class="pull-left" src="{{ =task.comments[comment]['avatar'] }}" width="50" height="50">
                             <div class="comment_content pull-left">
                                 <p><strong>{{ =task.comments[comment]['name'] }}</strong><span class="color_light"> - {{ =task.comments[comment]['role'] }}</span></p>
-                                <p class="the_comment">{{ =task.comments[comment]['text'] }}</p>
+                                <p class="the_comment">
+                                    {{ =task.comments[comment]['text'] }}
+                                </p>
                             </div>
                             <div class="clearfix"></div>
                             <ul class="comment_buttons color_light">
@@ -108,3 +110,4 @@ info = {
                 </div>
             </div>
         </div>
+        
