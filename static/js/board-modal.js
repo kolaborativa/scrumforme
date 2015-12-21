@@ -104,6 +104,7 @@
                 $("form#send_comment").submit(function(e){
                     e.preventDefault();
                     // call function
+                    console.log('teste');
                     sendComments(this, info.project_id, task_id, card_element);
                 });
 

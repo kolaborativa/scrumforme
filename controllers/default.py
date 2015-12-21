@@ -756,6 +756,7 @@ def _edit_owner_task():
     else:
         return False
 
+
 @auth.requires_login()
 def card():
     task_id = request.args(0) or None
@@ -773,6 +774,12 @@ def card():
             task.user_relationship.member_name = "%s %s" \
                             %(task.user_relationship.auth_user_id.first_name, \
                             task.user_relationship.auth_user_id.last_name)
+
+
+            # project
+            project_id = task.task.definition_ready_id.story_id.project_id
+            person_id = task.user_relationship.auth_user_id
+
 
             # comments of this card
             task_comments = db(Task_comment.task_id == task_id).select()
@@ -795,7 +802,7 @@ def card():
                             }
 
             task["comments"] = comments
-            return dict(task=task)
+            return dict(task=task, project_id=project_id, person_id=person_id)
 
         else:
             return False
