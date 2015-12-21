@@ -184,17 +184,6 @@
             <script src='{{=URL("static","js/floatfixed.js")}}'></script>
             <script async defer src="{{=URL('static','js/bootstrap-datepicker.js')}}"></script>
 
-            <script type="text/javascript">
-                $('#card_modal').modal();
-
-                $('#card_modal').on('hidden', function () {
-                  alert('ir para pagina da historia');
-
-                // ao abrir o cartão pelo board diretamente
-                //   window.history.pushState("", "", '/url-cartao');
-                })
-            </script>
-
             {{ elif request.function == "projects": }}
             <script async defer src='{{=URL("static","js/delete_project.js")}}'></script>
 

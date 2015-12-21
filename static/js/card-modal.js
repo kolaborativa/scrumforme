@@ -308,3 +308,9 @@ $("form#send_comment").submit(function(e){
     console.log('teste');
     sendComments(this, info.project_id, task_id, card_element);
 });
+
+$('#card_modal').modal();
+
+$('#card_modal').on('hidden', function () {
+    window.location = url.board_page + '/' + info.project_id;
+})
