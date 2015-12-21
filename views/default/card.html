@@ -77,7 +77,7 @@ info = {
                         <div class="clearfix"></div>
                     </div>
                     <div id="modal_comment_box">
-                        <form id="send_comment" accept-charset="UTF-8" action="" method="POST">
+                        <form id="send_comment" accept-charset="UTF-8" action="" method="POST" data-task-id={{=task.task.id}}>
                             <textarea class="span12 autoheight" id="new_comment" name="new_comment" placeholder="Digite sua mensagem" rows="2" required=""></textarea>
                             <br>
                             <button class="btn btn-success" type="submit">Comentar</button>
@@ -107,47 +107,3 @@ info = {
                 </div>
             </div>
         </div>
-        {{=task}}
-        <hr>
-        task <br>
-        {{=task.task}}
-        <hr>
-        user_relationship <br>
-        {{=task.user_relationship}}
-        <hr>
-        sharing <br>
-        {{=task.sharing}}
-        <hr>
-        comments <br>
-        {{ =task.comments }}
-        <hr>
-        comments <br>
-        {{ for comment in task.comments: }}
-            {{ =task.comments[comment] }}
-            {{ =task.comments[comment]['avatar'] }}
-            {{ =task.comments[comment]['name'] }}
-            {{ =task.comments[comment]['role'] }}
-            {{ =task.comments[comment]['text'] }}
-            {{ =task.comments[comment]['date'] }}
-        {{ pass }}
-
-        <script src='{{=URL("static","js/jquery-2.0.0.min.js")}}'></script>
-        <script src='{{=URL("static","js/bootstrap.min.js")}}'></script>
-        <script src='{{=URL("static","js/board.js")}}'></script>
-        <script src='{{=URL("static","js/board-editable.js")}}'></script>
-        <script src='{{=URL("static","js/board-card.js")}}'></script>
-        <script src='{{=URL("static","js/board-modal.js")}}'></script>
-        <script src='{{=URL("static","js/jquery.livesearch.js")}}'></script>
-        <script src='{{=URL("static","js/board-livesearch.js")}}'></script>
-        <script src='{{=URL("static","js/floatfixed.js")}}'></script>
-        <script async defer src="{{=URL('static','js/bootstrap-datepicker.js')}}"></script>
-        <script type="text/javascript">
-            $('#card_modal').modal();
-
-            $('#card_modal').on('hidden', function () {
-              alert('ir para pagina da historia');
-
-            // ao abrir o cartão pelo board diretamente
-            //   window.history.pushState("", "", '/url-cartao');
-            })
-        </script>
