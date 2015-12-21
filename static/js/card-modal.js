@@ -84,22 +84,6 @@ $(document).load(function () {
             // hide gif loading
             $(".loading").hide();
             // prevent link default
-            var nav = modal_element.find(".nav");
-            nav.click(function(e){
-                e.preventDefault();
-            });
-
-            // remove task
-            nav.find(".delete_item_modal").click(function(e){
-                if (confirm(msg.confirm)) {
-                    // call function
-                    removeTask(card_element);
-                    modal_element.modal('hide');
-                }
-            });
-
-            // submit a new comment
-
 
             // call calendar plugin
             calendar(date_element, card_element);
@@ -299,7 +283,7 @@ $(document).on("click",".cancel-edit",function(e){
 
 });
 
-
+// submit a new comment
 $("form#send_comment").submit(function(e){
     var card_element = $(this),
         task_id = card_element.attr("data-task-id");
@@ -309,8 +293,27 @@ $("form#send_comment").submit(function(e){
     sendComments(this, info.project_id, task_id, card_element);
 });
 
+// remove task
+var modal_element = $("#card_modal");
+var card_element = $(this);
+var nav = modal_element.find(".nav");
+nav.click(function(e){
+    e.preventDefault();
+});
+
+nav.find(".delete_item_modal").click(function(e){
+
+    if (confirm(msg.confirm)) {
+        // call function
+        removeTask(card_element);
+        modal_element.modal('hide');
+    }
+});
+
+// call modal
 $('#card_modal').modal();
 
+// go to the board to close the task
 $('#card_modal').on('hidden', function () {
     window.location = url.board_page + '/' + info.project_id;
 })
