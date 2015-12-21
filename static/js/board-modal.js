@@ -2,6 +2,7 @@
     "use strict";
 
     var body = $("body");
+
     /*
       ============
        OPEN MODAL
@@ -12,6 +13,13 @@
 
         var card_element = $(this),
             task_id = card_element.closest(".card_container").find(".task_item").attr("data-pk");
+
+        // changes the url for the task path
+        var url_card = url.card_page + '/' + task_id;
+        window.history.pushState("", "", url_card);
+
+
+
         // store card element
         body.data('card_element', card_element);
 
@@ -98,6 +106,11 @@
                         removeTask(card_element);
                         modal_element.modal('hide');
                     }
+                });
+
+                // back the url for the board path
+                $("#card_modal").on('hidden', function () {
+                    window.history.back()
                 });
 
                 // submit a new comment
@@ -305,5 +318,4 @@
         });
 
     });
-
 })();
