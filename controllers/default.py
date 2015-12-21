@@ -805,7 +805,7 @@ def card():
             return dict(task=task, project_id=project_id, person_id=person_id)
 
         else:
-            return False
+            redirect(URL('projects'))
 
     else:
         return False
