@@ -758,6 +758,60 @@ def _edit_owner_task():
 
 
 @auth.requires_login()
+def card():
+    task_id = request.args(0) or None
+
+    if task_id:
+        task = db( (Task.id == task_id) & \
+                   (User_relationship.person_id == Task.owner_task) & \
+                   (Sharing.person_id == Task.owner_task) ) \
+                   .select(Task.ALL, User_relationship.auth_user_id, Sharing.role_id).first()
+
+        if task:
+            task.user_relationship.avatar = Gravatar(task.user_relationship.auth_user_id.email, size=120).thumb
+            task.task.started = g_blank_fulldate_check(task.task.started)
+            task.sharing.role_name = task.sharing.role_id.name
+            task.user_relationship.member_name = "%s %s" \
+                            %(task.user_relationship.auth_user_id.first_name, \
+                            task.user_relationship.auth_user_id.last_name)
+
+
+            # project
+            project_id = task.task.definition_ready_id.story_id.project_id
+            person_id = task.user_relationship.auth_user_id
+
+
+            # comments of this card
+            task_comments = db(Task_comment.task_id == task_id).select()
+            comments ={}
+            if task_comments:
+                for i in task_comments:
+                    person = db( (User_relationship.person_id == i.owner_comment) & \
+                           (Sharing.person_id == i.owner_comment) ) \
+                           .select(User_relationship.auth_user_id, Sharing.role_id).first()
+
+                    name = "%s %s" %(person.user_relationship.auth_user_id.first_name, \
+                                    person.user_relationship.auth_user_id.last_name)
+                    comments[i.id] = {
+                            "role":T(person.sharing.role_id.name),
+                            "avatar":Gravatar(person.user_relationship.auth_user_id.email, size=120).thumb,
+                            "name":name,
+                            "text":i.text_,
+                            "date":i.date_.strftime("%d/%m/%Y %H:%M"),
+                            "person_id":i.owner_comment,
+                            }
+
+            task["comments"] = comments
+            return dict(task=task, project_id=project_id, person_id=person_id)
+
+        else:
+            redirect(URL('projects'))
+
+    else:
+        return False
+
+
+@auth.requires_login()
 @service.json
 def _card_modal():
     if request.vars.task_id:

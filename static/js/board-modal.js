@@ -2,6 +2,7 @@
     "use strict";
 
     var body = $("body");
+
     /*
       ============
        OPEN MODAL
@@ -12,6 +13,7 @@
 
         var card_element = $(this),
             task_id = card_element.closest(".card_container").find(".task_item").attr("data-pk");
+
         // store card element
         body.data('card_element', card_element);
 
@@ -25,6 +27,10 @@
                     alert(msg.no_team);
 
                 } else {
+                    // changes the url for the task path\
+                    var url_card = url.card_page + '/' + task_id + '/' + gerarNomeURLTask(data.task.title);
+                    window.history.pushState("", "", url_card);
+
                     // console.log(data);
                     $(".loading_item").fadeOut("fast");
                     var modal = '<div id="card_modal" class="modal hide" data-task="' + task_id + '"><div class="row-fluid"><div id="modal_sidebar" class="span3"><div class="well sidebar-nav"><div id="member_modal"></div><ul class="nav nav-list"><li id="started_calendar"><a href="#">' + txt.activities + '<i class="icon-calendar"></i></a></li><li><a href="#">' + txt.upload + '<i class="icon-paper-clip"></i></a></li><li><a href="#">' + txt.labels + '<i class="icon-tag"></i></a></li><li class="delete_item_modal"><a href="#">' + txt.delete_card + '<i class="icon-trash"></i></a></li></ul></div></div><div id="modal_content" class="span9"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button></div></div></div>';
@@ -100,10 +106,16 @@
                     }
                 });
 
+                // back the url for the board path
+                $("#card_modal").on('hidden', function () {
+                    window.history.back()
+                });
+
                 // submit a new comment
                 $("form#send_comment").submit(function(e){
                     e.preventDefault();
                     // call function
+                    console.log('teste');
                     sendComments(this, info.project_id, task_id, card_element);
                 });
 
@@ -112,6 +124,40 @@
 
             }); // end getJSON
     });
+
+
+    function _trocarEspacoPorHifen(str) {
+        var new_str = str.replace(/\s+/g, '-').toLowerCase();
+        return(new_str);
+    };
+
+
+    function _removerAcentos( newStringComAcento ) {
+      var string = newStringComAcento;
+    	var mapaAcentosHex 	= {
+    		a : /[\xE0-\xE6]/g,
+    		e : /[\xE8-\xEB]/g,
+    		i : /[\xEC-\xEF]/g,
+    		o : /[\xF2-\xF6]/g,
+    		u : /[\xF9-\xFC]/g,
+    		c : /\xE7/g,
+    		n : /\xF1/g
+    	};
+
+    	for ( var letra in mapaAcentosHex ) {
+    		var expressaoRegular = mapaAcentosHex[letra];
+    		string = string.replace( expressaoRegular, letra );
+    	}
+
+    	return string;
+    };
+
+    function gerarNomeURLTask(str) {
+        var strSemAcentos = _removerAcentos(str);
+        var strFinal = _trocarEspacoPorHifen(strSemAcentos);
+
+        return strFinal.replace(',', '');
+    };
 
     function calendar(date_element, card_element) {
         // datepicker
@@ -304,5 +350,4 @@
         });
 
     });
-
 })();
