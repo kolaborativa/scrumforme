@@ -51,9 +51,11 @@
             <div id="current_sprint">
                 <div class="span5">
                     <h4>{{=sprint.name}}</h4>
+                    <h5 class='pull-left sprint-story-points'><span>{{=sprint.story_points}}</span> {{=T('Story Points')}}</h5>
                 </div>
                 <div class="span7">
                     <h5 class='pull-left'><span>{{=sprint.weeks}}</span> {{=T('Weeks')}}</h5>
+
                     <!-- if the user has permission to edit items -->
                     {{if have_permission:}}
                         {{if sprint.started:}}
