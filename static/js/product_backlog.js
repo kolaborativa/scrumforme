@@ -3,6 +3,17 @@
  GENERAL CHANGES
 =================
 */
+
+var calcStoryPoints = function() {
+    var count_points = 0;
+    $('#sprint').find('input.story_points').each(function(i, v) { count_points += parseInt(v.value) })
+
+    var total_points = parseInt($('#total-story-points').text());
+
+    $('#story-points-remaining').text(total_points - count_points);
+};
+calcStoryPoints();
+
 $(function() {
 
     // catch size dynamically to increase the size of content
