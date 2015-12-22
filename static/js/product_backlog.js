@@ -315,12 +315,15 @@ $(document).on("click", ".back_backlog", function(){
         storyID = object.find(".story_card").attr("data-pk"),
         sprintID = $(".story_container").attr("data-sprint");
 
+
+
     ajax(url.changeStories+'?name=backlog&sprint_id='+storyID+'&story_id='+storyID+'&project_id='+info.project_id, [''], 'target_ajax');
     statusAction(object,"backlog","send");
 
     //update all story order in backlog
     setTimeout(function(){
         updateStoryOrder('backlog');
+        calcStoryPoints();
     },1000); // Enable after 1000 ms.
 
 });
