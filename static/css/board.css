@@ -62,6 +62,10 @@ ul {
     display: none;
 }
 
+.board-story-points {
+    margin-left: 10px;
+}
+
 #clock p#sprint_name {
     text-align: left;
     font-size: 16px;
