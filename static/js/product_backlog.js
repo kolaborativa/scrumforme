@@ -10,7 +10,18 @@ var calcStoryPoints = function() {
 
     var total_points = parseInt($('#total-story-points').text());
 
-    $('#story-points-remaining').text(total_points - count_points);
+    var balance_points = total_points - count_points;
+
+    if (balance_points < 0) {
+        $('#story-points-remaining').text(balance_points);
+        $('#story-points-remaining').css('color', 'red');
+        return false
+    } else {
+        $('#story-points-remaining').text(balance_points);
+        return true
+    }
+
+
 };
 calcStoryPoints();
 
@@ -226,10 +237,17 @@ $(document).on("keydown", ".only_numbers", function(event){
 
 // update Story Points
 $(document).on("change", ".story_points", function(){
-    var story = $(this).closest(".story"),
-        storyID = story.find(".story_card").attr("data-pk");
-    ajax(url.changeStories+'?story_points='+this.value+'&story_id='+storyID, [''], 'target_ajax');
-    statusAction("","","send");
+    var validPoints = calcStoryPoints();
+
+    if (validPoints) {
+        var story = $(this).closest(".story"),
+            storyID = story.find(".story_card").attr("data-pk");
+        ajax(url.changeStories+'?story_points='+this.value+'&story_id='+storyID, [''], 'target_ajax');
+        statusAction("","","send");
+    } else {
+        alert(msg.number_story_points_exceeded);
+    }
+
 });
 
 // update Benefit

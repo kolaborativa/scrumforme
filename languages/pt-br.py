@@ -264,6 +264,7 @@
 'Notifications': 'Notificações',
 'now': 'agora',
 'Number of Definitions of Ready': 'Número de Critérios de Pronto',
+'Number of story points is being exceeded': 'Número de Pontos de História foi excedido',
 'Não pode ser vazio': 'Não pode ser vazio',
 'Object or table name': 'Object or table name',
 'Old password': 'Senha atual',
