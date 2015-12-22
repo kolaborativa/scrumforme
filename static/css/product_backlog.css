@@ -89,6 +89,10 @@ margin-top: 0px;
     border-radius: 5px;
 }
 
+#sprint_info .sprint-story-points {
+    margin-left: 20px;
+}
+
 #sprint_info button[type="submit"] {
     margin-bottom: 10px;
 }
