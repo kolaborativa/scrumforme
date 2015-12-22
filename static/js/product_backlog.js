@@ -3,6 +3,30 @@
  GENERAL CHANGES
 =================
 */
+
+var calcStoryPoints = function(storyPointCurrent) {
+    var count_points = 0;
+    if (storyPointCurrent) {
+        count_points += parseInt(storyPointCurrent);
+    };
+
+    $('#sprint').find('input.story_points').each(function(i, v) { count_points += parseInt(v.value) });
+
+    var total_points = parseInt($('#total-story-points').text());
+    var balance_points = total_points - count_points;
+
+    if (balance_points < 0) {
+        $('#story-points-remaining').text(balance_points);
+        $('#story-points-remaining').css('color', 'red');
+        return false
+    } else {
+        $('#story-points-remaining').text(balance_points);
+        $('#story-points-remaining').css('color', '#000');
+        return true
+    }
+};
+calcStoryPoints();
+
 $(function() {
 
     // catch size dynamically to increase the size of content
@@ -215,10 +239,18 @@ $(document).on("keydown", ".only_numbers", function(event){
 
 // update Story Points
 $(document).on("change", ".story_points", function(){
-    var story = $(this).closest(".story"),
-        storyID = story.find(".story_card").attr("data-pk");
-    ajax(url.changeStories+'?story_points='+this.value+'&story_id='+storyID, [''], 'target_ajax');
-    statusAction("","","send");
+    var validPoints = calcStoryPoints(null);
+
+    if (validPoints) {
+        var story = $(this).closest(".story"),
+            storyID = story.find(".story_card").attr("data-pk");
+        ajax(url.changeStories+'?story_points='+this.value+'&story_id='+storyID, [''], 'target_ajax');
+        statusAction("","","send");
+    } else {
+        alert(msg.number_story_points_exceeded);
+        return false;
+    }
+
 });
 
 // update Benefit
@@ -243,11 +275,24 @@ $(document).on("change", ".benefit", function(){
 $(document).on("click", ".send_story_sprint", function(){
     var object = $(this).closest(".story_container"),
         storyID = object.find(".story_card").attr("data-pk"),
-        sprintID = $("#sprint").attr("data-sprint");
+        sprintID = $("#sprint").attr("data-sprint"),
+        storyPoints = object.find('input.story_points')[0].value;
+
+
+    if (!storyPoints) {
+      alert(msg.need_story_points);
+      return false
+    }
 
     if(sprintID === undefined) {
       alert(msg.move_sprint_error);
       return false
+    }
+
+    var validPoints = calcStoryPoints(storyPoints);
+    if (!validPoints) {
+        alert(msg.number_story_points_exceeded);
+        return false;
     }
 
     ajax(url.changeStories+'?name=sprint&sprint_id='+sprintID+'&story_id='+storyID+'&project_id='+info.project_id, [''], 'target_ajax');
@@ -265,12 +310,15 @@ $(document).on("click", ".back_backlog", function(){
         storyID = object.find(".story_card").attr("data-pk"),
         sprintID = $(".story_container").attr("data-sprint");
 
+
+
     ajax(url.changeStories+'?name=backlog&sprint_id='+storyID+'&story_id='+storyID+'&project_id='+info.project_id, [''], 'target_ajax');
     statusAction(object,"backlog","send");
 
     //update all story order in backlog
     setTimeout(function(){
         updateStoryOrder('backlog');
+        calcStoryPoints();
     },1000); // Enable after 1000 ms.
 
 });
