@@ -390,6 +390,7 @@
 'The Scrumforme': 'O Scrumforme',
 'The Scrumforme meant to be easy, organized and accessible.': 'Scrumforme pretende ser fácil, organizado e acessível.',
 'THE SCRUMFORME MEANT TO BE EASY, ORGANIZED AND ACCESSIBLE.': 'THE SCRUMFORME MEANT TO BE EASY, ORGANIZED AND ACCESSIBLE.',
+'The story needs to story points': 'A História precisa ter Pontos de História',
 'The Views': 'The Views',
 'There are not members on the team, go TEAM PAGE and add new members.': 'Não há membros na equipe, vá na PÁGINA EQUIPE e adicione novos membros.',
 'This App': 'This App',

@@ -24,16 +24,6 @@ var calcStoryPoints = function(storyPointCurrent) {
         $('#story-points-remaining').css('color', '#000');
         return true
     }
-
-
-// Leila
-// Chocomorango pequena
-// 26/12 - 9:30 da manhã
-// Rua Leny Everson 141 - casa 2
-// Ref. Fica na 800 da outeiro santo
-// (21) 2456-0884
-
-
 };
 calcStoryPoints();
 
@@ -288,6 +278,11 @@ $(document).on("click", ".send_story_sprint", function(){
         sprintID = $("#sprint").attr("data-sprint"),
         storyPoints = object.find('input.story_points')[0].value;
 
+
+    if (!storyPoints) {
+      alert(msg.need_story_points);
+      return false
+    }
 
     if(sprintID === undefined) {
       alert(msg.move_sprint_error);
