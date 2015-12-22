@@ -7,10 +7,10 @@
 var calcStoryPoints = function(storyPointCurrent) {
     var count_points = 0;
     if (storyPointCurrent) {
-        count_points += storyPointCurrent;
+        count_points += parseInt(storyPointCurrent);
     };
 
-    $('#sprint').find('input.story_points').each(function(i, v) { count_points += parseInt(v.value) })
+    $('#sprint').find('input.story_points').each(function(i, v) { count_points += parseInt(v.value) });
 
     var total_points = parseInt($('#total-story-points').text());
     var balance_points = total_points - count_points;
