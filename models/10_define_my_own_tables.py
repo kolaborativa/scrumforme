@@ -34,6 +34,7 @@ if not "sprint" in db.tables:
         Field("project_id", db.project, default=None),
         Field("name", "string", length=128, default=None),
         Field("weeks", "integer", default=None),
+        Field("story_points", "integer", default=None),
         Field("started", "date", default=None),
         Field("ended", "date", default=None),
         format='%(name)s',
