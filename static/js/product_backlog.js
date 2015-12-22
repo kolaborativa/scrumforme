@@ -18,6 +18,7 @@ var calcStoryPoints = function() {
         return false
     } else {
         $('#story-points-remaining').text(balance_points);
+        $('#story-points-remaining').css('color', '#000');
         return true
     }
 
@@ -246,6 +247,7 @@ $(document).on("change", ".story_points", function(){
         statusAction("","","send");
     } else {
         alert(msg.number_story_points_exceeded);
+        return false;
     }
 
 });
