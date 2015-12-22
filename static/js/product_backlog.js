@@ -4,12 +4,15 @@
 =================
 */
 
-var calcStoryPoints = function() {
+var calcStoryPoints = function(storyPointCurrent) {
     var count_points = 0;
+    if (storyPointCurrent) {
+        count_points += storyPointCurrent;
+    };
+
     $('#sprint').find('input.story_points').each(function(i, v) { count_points += parseInt(v.value) })
 
     var total_points = parseInt($('#total-story-points').text());
-
     var balance_points = total_points - count_points;
 
     if (balance_points < 0) {
@@ -21,6 +24,14 @@ var calcStoryPoints = function() {
         $('#story-points-remaining').css('color', '#000');
         return true
     }
+
+
+// Leila
+// Chocomorango pequena
+// 26/12 - 9:30 da manhã
+// Rua Leny Everson 141 - casa 2
+// Ref. Fica na 800 da outeiro santo
+// (21) 2456-0884
 
 
 };
@@ -238,7 +249,7 @@ $(document).on("keydown", ".only_numbers", function(event){
 
 // update Story Points
 $(document).on("change", ".story_points", function(){
-    var validPoints = calcStoryPoints();
+    var validPoints = calcStoryPoints(null);
 
     if (validPoints) {
         var story = $(this).closest(".story"),
@@ -274,11 +285,19 @@ $(document).on("change", ".benefit", function(){
 $(document).on("click", ".send_story_sprint", function(){
     var object = $(this).closest(".story_container"),
         storyID = object.find(".story_card").attr("data-pk"),
-        sprintID = $("#sprint").attr("data-sprint");
+        sprintID = $("#sprint").attr("data-sprint"),
+        storyPoints = object.find('input.story_points')[0].value;
+
 
     if(sprintID === undefined) {
       alert(msg.move_sprint_error);
       return false
+    }
+
+    var validPoints = calcStoryPoints(storyPoints);
+    if (!validPoints) {
+        alert(msg.number_story_points_exceeded);
+        return false;
     }
 
     ajax(url.changeStories+'?name=sprint&sprint_id='+sprintID+'&story_id='+storyID+'&project_id='+info.project_id, [''], 'target_ajax');
