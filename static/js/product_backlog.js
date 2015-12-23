@@ -245,6 +245,10 @@ $(document).on("keydown", ".only_numbers", function(event){
 
 // update Story Points
 $(document).on("change", ".story_points", function(){
+    if (this.value === "" || this.value === "0") {
+        this.value = 1;
+    }
+
     var validPoints = calcStoryPoints(null);
 
     if (validPoints) {
