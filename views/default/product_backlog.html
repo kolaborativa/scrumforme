@@ -53,11 +53,15 @@
             <div id="current_sprint">
                 <div class="span5">
                     <h4>{{=sprint.name}}</h4>
-                    <h5 class='pull-left sprint-story-points'><span id="total-story-points">{{=sprint.story_points}}</span> {{=T('Story Points')}}</h5>
-                    <h5 class='pull-left sprint-story-points'><span id="story-points-remaining">10</span> {{=T('Remaining Points')}}</h5>
+                    <h5 class='pull-left sprint-story-points'>
+                        <div class="border-num story-points-num"><a id="total-story-points" href="#" class="editable-click editable " data-type="textarea" data-placeholder='{{=T("Click to write")}}' data-pk="{{=sprint.id}}" data-url="{{=URL('create_or_update_itens')}}" data-name="sprint_story_points" data-update="true">{{=sprint.story_points}}</a></div> {{=T('Story Points')}}
+
+                    </h5>
+
+                    <h5 class='pull-left sprint-story-points'><span class="border-num" id="story-points-remaining"></span> {{=T('Remaining Points')}}</h5>
                 </div>
                 <div class="span7">
-                    <h5 class='pull-left'><span>{{=sprint.weeks}}</span> {{=T('Weeks')}}</h5>
+                    <h5 class='pull-left'><span class="border-num">{{=sprint.weeks}}</span> {{=T('Weeks')}}</h5>
 
                     <!-- if the user has permission to edit items -->
                     {{if have_permission:}}
