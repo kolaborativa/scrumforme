@@ -142,6 +142,12 @@ if (info.have_permission === true) {
             $(this).closest(".definition_ready_container").find(".expand_definition_ready").removeAttr("disabled");
         }
 
+        // recalculates story points
+        setTimeout(function () {
+           calcStoryPoints();
+        }, 100);
+
+
         // get the coming new database ID and update in DOM
         $(this).attr("data-pk", value.database_id);
         // changes the status of the created item for item update
@@ -239,6 +245,10 @@ $(document).on("keydown", ".only_numbers", function(event){
 
 // update Story Points
 $(document).on("change", ".story_points", function(){
+    if (this.value === "" || this.value === "0") {
+        this.value = 1;
+    }
+
     var validPoints = calcStoryPoints(null);
 
     if (validPoints) {
