@@ -1194,6 +1194,14 @@ def _edit_project_url():
 
 
 @auth.requires_login()
+def _edit_sprint_story_points():
+    db(Sprint.id == request.vars.dbID).update(
+        story_points=request.vars.value,
+    )
+    return dict(success="success",msg="successfully saved!")
+
+
+@auth.requires_login()
 def _create_story():
     database_id = Story.insert(
             project_id=request.vars.pk,
@@ -1292,6 +1300,7 @@ def create_or_update_itens():
                 "project_name" : _edit_project_name,
                 "project_description" : _edit_project_description,
                 "project_url" : _edit_project_url,
+                "sprint_story_points" : _edit_sprint_story_points,
             }
 
             return update[request.vars.name]()
