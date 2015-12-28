@@ -13,6 +13,7 @@
         card_new_comment_or_update : '{{=URL(r=request,f="call",args=["json","_card_new_comment_or_update"])}}',
         card_delete_comment : '{{=URL(r=request,f="call",args=["json","_card_delete_comment"])}}',
         update_task_date : '{{=URL(r=request,f="call",args=["json","_update_task_date"])}}',
+        card_page: "{{=URL('card')}}",
     },
     msg = {
         field_empty : '{{=T("Click to write")}}',
@@ -63,6 +64,7 @@
     <div id="sprint_info" class="project_bar_info span6">
         <div id="clock" class="pull-left">
             <p id="sprint_name">{{=sprint.name}}</p>
+            <span class="pull-left board-story-points">{{=sprint.story_points}} {{=T('Story Points')}}</span>
             <div class="clearfix"></div>
             <i class="icon-time pull-left"></i>
             <div class="pull-left">

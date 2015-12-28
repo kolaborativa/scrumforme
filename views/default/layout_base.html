@@ -58,6 +58,11 @@
         <link rel="stylesheet" href='{{=URL("static","css/floatfixed.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/board.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/card_modal.css")}}' />
+        {{ elif request.function == "card": }}
+        <link rel="stylesheet" href='{{=URL("static","css/datepicker.css")}}' />
+        <link rel="stylesheet" href='{{=URL("static","css/floatfixed.css")}}' />
+        <link rel="stylesheet" href='{{=URL("static","css/board.css")}}' />
+        <link rel="stylesheet" href='{{=URL("static","css/card_modal.css")}}' />
         {{ elif request.function == "statistics": }}
         <link rel="stylesheet" href='{{=URL("static","css/statistics.css")}}' />
         {{ elif request.function == "team": }}
@@ -166,6 +171,23 @@
             <script src='{{=URL("static","js/board-livesearch.js")}}'></script>
             <script src='{{=URL("static","js/floatfixed.js")}}'></script>
             <script async defer src="{{=URL('static','js/bootstrap-datepicker.js')}}"></script>
+
+            {{ elif request.function == "card": }}
+            <script src='{{=URL("static","js/jquery-2.0.0.min.js")}}'></script>
+            <script src='{{=URL("static","js/bootstrap.min.js")}}'></script>
+            <script src='{{=URL("static","js/board.js")}}'></script>
+            <script src='{{=URL("static","js/board-editable.js")}}'></script>
+            <script src='{{=URL("static","js/board-card.js")}}'></script>
+            <script src='{{=URL("static","js/card-modal.js")}}'></script>
+            <script src='{{=URL("static","js/jquery.livesearch.js")}}'></script>
+            <script src='{{=URL("static","js/board-livesearch.js")}}'></script>
+            <script src='{{=URL("static","js/floatfixed.js")}}'></script>
+            <script async defer src="{{=URL('static','js/bootstrap-datepicker.js')}}"></script>
+            <script type="text/javascript">
+                $('.the_comment').each(function(e){$(this).html(
+                    urlize($(this).text(), {nofollow: true, autoescape: true, target: "_blank"})
+                )});
+            </script>
 
             {{ elif request.function == "projects": }}
             <script async defer src='{{=URL("static","js/delete_project.js")}}'></script>

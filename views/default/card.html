@@ -1,0 +1,113 @@
+{{extend 'default/layout_base.html'}}
+<script type="text/javascript">
+
+
+var url = {
+    create_or_update_itens : '{{=URL("create_or_update_itens.json")}}',
+    move_tasks : '{{=URL("move_tasks")}}',
+    removeTask : '{{=URL("remove_board_task")}}',
+    edit_owner_task : '{{=URL("_edit_owner_task")}}',
+    team_page : '{{=URL(f="team",args=[request.args(0)])}}',
+    team_project : '{{=URL(r=request,f="call",args=["json","_team_project"], vars={"project_id": request.args(0)})}}',
+    card_modal : '{{=URL(r=request,f="call",args=["json","_card_modal"])}}',
+    card_new_comment_or_update : '{{=URL(r=request,f="call",args=["json","_card_new_comment_or_update"])}}',
+    card_delete_comment : '{{=URL(r=request,f="call",args=["json","_card_delete_comment"])}}',
+    update_task_date : '{{=URL(r=request,f="call",args=["json","_update_task_date"])}}',
+    board_page : "{{=URL('board')}}",
+},
+msg = {
+    field_empty : '{{=T("Click to write")}}',
+    validation_error : '{{=T("Can not be empty")}}',
+    confirm : '{{=T("Are you sure you want to continue?")}}',
+    task_undated : '{{=T("You must first put a start date or move to IN PROGRESS column")}}',
+    task_no_belong : '{{=T("This task does not belong to another definition of ready")}}',
+    remove_sucess : '{{=T("Removed Successfully!")}}',
+    remove_error : '{{=T("Error in removal!")}}',
+    no_role : '{{=T("Some members of the team are without a paper, go TEAM PAGE and add their respective roles.")}}',
+    no_team : '{{=T("There are not members on the team, go TEAM PAGE and add new members.")}}',
+    task_no_exist : '{{=T("first insert the card content.")}}',
+    card_assign : '{{=T("Assign this card to a member of team before moving it")}}',
+},
+txt = {
+    team_page : '{{=T("Team Page")}}',
+    started_in : '{{=T("Started in")}}',
+    activities : '{{=T("Activities")}}',
+    upload : '{{=T("Upload")}}',
+    labels : '{{=T("Labels")}}',
+    delete_card : '{{=T("Delete")}}',
+    type_message : '{{=T("Type your message")}}',
+},
+button = {
+    comment : '{{=T("Comment")}}',
+    edit : '{{=T("Edit")}}',
+    save : '{{=T("Save")}}',
+    cancel : '{{=T("Cancel")}}',
+    delete : '{{=T("Delete")}}',
+},
+info = {
+    project_id : '{{=project_id}}',
+    page : '{{=request.function}}',
+    person_id : '{{=person_id}}',
+}
+
+
+</script>
+
+
+        <!-- Modal -->
+        <div id="card_modal" class="modal hide in" data-task="{{=task.task.id}}" style="top: 30px; display: block;" aria-hidden="false">
+            <div class="row-fluid">
+                <div id="modal_sidebar" class="span3">
+                    <div class="well sidebar-nav">
+                        <div id="member_modal"><img src="{{=task.user_relationship.avatar}}">
+                            <p>{{=task.user_relationship.member_name}}</p>
+                            <p id="modal_role_name" class="color_light">{{=task.sharing.role_name}}</p>
+                        </div>
+                        <ul class="nav nav-list">
+                            <li id="started_calendar"><a href="#">Atividades<i class="icon-calendar"></i></a></li>
+                            <li><a href="#">Upload<i class="icon-paper-clip"></i></a></li>
+                            <li><a href="#">Etiquetas<i class="icon-tag"></i></a></li>
+                            <li class="delete_item_modal"><a href="#">Deletar<i class="icon-trash"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="modal_content" class="span9">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                    <div id="modal_title">
+                        <h3>{{=task.task.title}}</h3><span id="date_started" class="color_light pull-right"></span>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="modal_comment_box">
+                        <form id="send_comment" accept-charset="UTF-8" action="" method="POST" data-task-id={{=task.task.id}}>
+                            <textarea class="span12 autoheight" id="new_comment" name="new_comment" placeholder="Digite sua mensagem" rows="2" required=""></textarea>
+                            <br>
+                            <button class="btn btn-success" type="submit">Comentar</button>
+                        </form>
+                    </div>
+                    <div id="modal_comments">
+
+                        {{ for comment in task.comments: }}
+                        <div class="card_comments" data-commentid="{{=comment}}">
+                            <hr><img class="pull-left" src="{{ =task.comments[comment]['avatar'] }}" width="50" height="50">
+                            <div class="comment_content pull-left">
+                                <p><strong>{{ =task.comments[comment]['name'] }}</strong><span class="color_light"> - {{ =task.comments[comment]['role'] }}</span></p>
+                                <p class="the_comment">
+                                    {{ =task.comments[comment]['text'] }}
+                                </p>
+                            </div>
+                            <div class="clearfix"></div>
+                            <ul class="comment_buttons color_light">
+                                <li class="edit_comment"><i class="icon-pencil"></i> Editar</li>
+                                <li class="delete_comment"><i class="icon-trash"></i> Deletar</li>
+                                <li><i class="icon-calendar"></i>{{ =task.comments[comment]['date'] }}</li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        {{ pass }}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
