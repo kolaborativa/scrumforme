@@ -124,8 +124,43 @@ $(function() {
     }
 
      story_points.pop();
-     console.log(story_points);
-     console.log(parseInt(data.stories_len));
+     console.log('story points: ', story_points);
+     console.log('storylen', parseInt(data.stories_len, 10))
+     console.log('list_days', list_days)
+
+    // criar um lista de numeros range parseInt(data.stories_len)
+    // verificar se é final de semana. se for mantem o numero anterior
+    // [7, 6, 5, 4, 3, 3, 3, 0]
+    // 7 => parseInt(data.stories_len, 10)
+
+    pontosDeHistoria = parseInt(data.stories_len, 10);
+    lista = []
+    for (i=pontosDeHistoria; i >= 0; i--) {
+     lista.push(i)
+    }
+    // lista = [7, 6, 5, 4, 3, 2, 1, 0]
+
+    for (i=0; i <= pontosDeHistoria; i++) {
+        console.log('indice', i);
+        console.log(list_days[i]);
+         var dateString = list_days[i].split("/"),
+            dateParsed = new Date('2016', dateString[1] - 1, dateString[0]);
+
+        console.log(dateParsed);
+        // verifica se eh final de semana (6=sabado, 0=domingo)
+        if (dateParsed.getDay() == 1 || dateParsed.getDay() == 0) {
+            console.log('fim de semana')
+            lista[i] = lista[i-1];
+        };
+
+        console.log('------')
+
+        // se for muda a posição do lista para o anterior
+    }
+    // list_days = ["05/01", "06/01", "07/01", "08/01", "09/01", "10/01", "11/01", "12/01"]
+
+    console.log(lista);
+     //console.log(parseInt(data.stories_len));
 
 
     // chart plugin
@@ -153,6 +188,7 @@ $(function() {
             },
         },
         yAxis: {
+            allowDecimals: false,
             title: {
                 text: txt.stories_points
             },
@@ -179,10 +215,11 @@ $(function() {
             //     enabled: false
             // },
             dashStyle: 'shortdot',
-            data: [
-                [(list_days.length - 1), 0],
-                [0, parseInt(data.stories_len, 10)]
-            ],
+            //data: [
+            //    [(list_days.length - 1), 0],
+            //    [0, parseInt(data.stories_len, 10)]
+            //],
+            data: lista,
             // enableMouseTracking: false
         }, {
             name: txt.actual,
