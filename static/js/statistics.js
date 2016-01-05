@@ -123,7 +123,9 @@ $(function() {
         }
     }
 
-    // console.log(story_points);
+     story_points.pop();
+     console.log(story_points);
+     console.log(parseInt(data.stories_len));
 
 
     // chart plugin

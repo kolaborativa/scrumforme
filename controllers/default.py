@@ -321,8 +321,13 @@ def statistics():
     shared = person["shared_with"]
 
     if project.created_by == person_id or shared.person_id == person_id:
-        sprint = db(Sprint.project_id == project.id).select().first()
-        stories = db((Story.project_id == project.id) & (Story.sprint_id >0)).select()
+        # sprint = db(Sprint.project_id == project.id).select().first()
+        sprint = db((Sprint.project_id==project.id) & (Sprint.ended==None)).select(orderby=Sprint.started).first()
+
+        if not sprint:
+            session.message = T("You must create and start the sprint before accessing the Statistics")
+            redirect(URL('product_backlog', args=project_id))
+        stories = db(Story.sprint_id == sprint.id).select()
 
         if sprint != None and sprint.started:
             if stories:
@@ -426,7 +431,23 @@ def burndown_chart_test(story_project_id, definition_ready_story):
         # get the biggest task date of all definition of ready of this story
         bigger_date = max([tasks_date[x] for x in tasks_date])
         # stories = db(Story.id == story_id).select()
-        stories = db((Story.project_id == story_project_id) & (Story.sprint_id >0)).select()
+        # stories = db((Story.project_id == story_project_id) & (Story.sprint_id >0)).select()
+        from datetime import timedelta
+        bigger_date = bigger_date + timedelta(days=1) # grava no dia seguinte
+        print "bigger_date: ", bigger_date, type(bigger_date)
+
+        #mexendo r4buja
+        # BURNDOWN MEXI
+        # pegar um sprint que esta em aberto, pelo id do projeto // sprint.ended == None - OK
+        # pegar o qtdade de story_points do sprint - OK
+        # diminuir pela qtdade de pontos concluidos
+        # salvar pontos restantes no banco // tabela burndown
+
+        # sprint_ = db((db.sprint.project_id==story_project_id) & (db.sprint.ended==None)).select(orderby=Sprint.started).first()
+        sprint_ = db((Sprint.project_id==story_project_id) & (Sprint.ended==None)).select(orderby=Sprint.started).first()
+        stories = db((Story.project_id == story_project_id) & (Story.sprint_id == sprint_.id)).select()
+        print sprint_
+        story_points_sprint = sprint_.story_points
 
         sprint_id = 0
         concluded_stories = 0
@@ -435,18 +456,26 @@ def burndown_chart_test(story_project_id, definition_ready_story):
                 concluded_stories += story.story_points
                 sprint_id = story.sprint_id
 
-        db_burndown = db(Burndown.date_ == datetime.now()).select().first()
+        db_burndown = db( (Burndown.sprint_id == sprint_.id) & (Burndown.date_ == datetime.now()) ).select().first()
 
         if db_burndown:
+            print 'UPDATE'
+            print '############'
+            print 'story_points_sprint: ' + str(story_points_sprint)
+            print 'concluded_stories: ' + str(concluded_stories)
             db(Burndown.id == db_burndown.id).update(
                 date_=bigger_date,
-                points=concluded_stories,
+                points=story_points_sprint - concluded_stories,
             )
         else:
+            print 'INSERT'
+            print '############'
+            print 'story_points_sprint: ' + str(story_points_sprint)
+            print 'concluded_stories: ' + str(concluded_stories)
             Burndown.insert(
                 sprint_id=sprint_id,
                 date_=bigger_date,
-                points=concluded_stories,
+                points=story_points_sprint - concluded_stories,
             )
 
         return True
