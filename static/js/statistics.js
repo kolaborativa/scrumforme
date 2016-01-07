@@ -33,13 +33,23 @@ $(function() {
         }
 
         for (var i = initialDate.getTime(); i <= lastDate.getTime(); i = i + mil) {
-            daysLeft[count] = {
-                "date": new Date(i),
-                "points": points
-            }
-            count += 1
+            // ****** DEV
+              date_ = new Date(i);
+              if (date_.getDay() != 6 && date_.getDay() != 0) {
+                daysLeft[count] = {
+                  "date": new Date(i),
+                  "points": points
+                };
+                count += 1
+
+              }
+            // ****** /DEV
+            //daysLeft[count] = {
+            //    "date": new Date(i),
+            //    "points": points
+            //}
+            //count += 1
         }
-        // console.log(daysLeft);
 
         return daysLeft
     }
@@ -97,6 +107,7 @@ $(function() {
             story_points.push(parseInt(stories[0]["points"], 10))
         }
 
+
     } else if (Object.keys(stories).length >= 2) {
 
         // date values previous to the values ​​stored
@@ -106,9 +117,11 @@ $(function() {
         for (var i = 0, date = Object.keys(datesBefore).length - 1; date > i; i++) {
             story_points.push(parseInt(data.stories_len, 10));
         }
+        console.log('datesBefore', datesBefore);
 
         // values ​​undated between
         story_points = story_points.concat(valuesBetween());
+        console.log('story_points cacat', story_points);
 
         // last stored value
         var lastKey = Object.keys(stories).sort().reverse()[0],
@@ -121,10 +134,11 @@ $(function() {
         for (var i = 0, date = Object.keys(datesAfter).length; date >= i; i++) {
             story_points.push(parseInt(lastValue["points"], 10))
         }
+      console.log('datesAfter', Object.keys(datesAfter));
     }
 
      story_points.pop();
-     //console.log('story points: ', story_points);
+     console.log('story points: ', story_points);
      //console.log('storylen', parseInt(data.stories_len, 10))
      //console.log('list_days', list_days)
 
@@ -190,7 +204,7 @@ $(function() {
 
 
     for (i=1; i<=count_weekend; i++) {
-        console.log('ultimo dia', lista[lista.length-1]);
+        //console.log('ultimo dia', lista[lista.length-1]);
         var dateStr = lista[lista.length-1].split("/"),
             dateParse = new Date('2016', dateStr[1] - 1, dateStr[0]); // 2016 ? .getYear()
 
