@@ -324,17 +324,18 @@ def statistics():
 
     if project.created_by == person_id or shared.person_id == person_id:
         sprint = db((Sprint.project_id==project.id) & (Sprint.ended==None)).select(orderby=Sprint.started).first()
-        estimated_date = sprint.started + timedelta(days=7*sprint.weeks)
-
-        if datetime.now().date() > estimated_date:
-            redirect(URL('product_backlog', args=project_id))
 
         if not sprint:
             session.message = T("You must create and start the sprint before accessing the Statistics")
             redirect(URL('product_backlog', args=project_id))
+
         stories = db(Story.sprint_id == sprint.id).select()
 
         if sprint != None and sprint.started:
+            estimated_date = sprint.started + timedelta(days=7*sprint.weeks)
+            if datetime.now().date() > estimated_date:
+                redirect(URL('product_backlog', args=project_id))
+
             if stories:
                 least_one_story = False
                 for story in stories:
