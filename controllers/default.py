@@ -433,16 +433,14 @@ def burndown_chart_test(story_project_id, definition_ready_story):
         # stories = db(Story.id == story_id).select()
         # stories = db((Story.project_id == story_project_id) & (Story.sprint_id >0)).select()
         from datetime import timedelta
-        bigger_date = bigger_date + timedelta(days=1) # grava no dia seguinte
-        print "bigger_date: ", bigger_date, type(bigger_date)
+        bigger_date = bigger_date + timedelta(days=2) # grava no dia seguinte
 
-        #mexendo r4buja
-        # BURNDOWN MEXI
-        # pegar um sprint que esta em aberto, pelo id do projeto // sprint.ended == None - OK
-        # pegar o qtdade de story_points do sprint - OK
-        # diminuir pela qtdade de pontos concluidos
-        # salvar pontos restantes no banco // tabela burndown
+        if bigger_date.weekday() == 5: # saturday
+            bigger_date = bigger_date + timedelta(days=2)
+        elif bigger_date.weekday() == 6: # sunday
+            bigger_date = bigger_date + timedelta(days=1)
 
+            
         # sprint_ = db((db.sprint.project_id==story_project_id) & (db.sprint.ended==None)).select(orderby=Sprint.started).first()
         sprint_ = db((Sprint.project_id==story_project_id) & (Sprint.ended==None)).select(orderby=Sprint.started).first()
         stories = db((Story.project_id == story_project_id) & (Story.sprint_id == sprint_.id)).select()
@@ -459,19 +457,11 @@ def burndown_chart_test(story_project_id, definition_ready_story):
         db_burndown = db( (Burndown.sprint_id == sprint_.id) & (Burndown.date_ == datetime.now()) ).select().first()
 
         if db_burndown:
-            print 'UPDATE'
-            print '############'
-            print 'story_points_sprint: ' + str(story_points_sprint)
-            print 'concluded_stories: ' + str(concluded_stories)
             db(Burndown.id == db_burndown.id).update(
                 date_=bigger_date,
                 points=story_points_sprint - concluded_stories,
             )
         else:
-            print 'INSERT'
-            print '############'
-            print 'story_points_sprint: ' + str(story_points_sprint)
-            print 'concluded_stories: ' + str(concluded_stories)
             Burndown.insert(
                 sprint_id=sprint_id,
                 date_=bigger_date,
