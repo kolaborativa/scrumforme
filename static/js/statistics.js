@@ -124,43 +124,92 @@ $(function() {
     }
 
      story_points.pop();
-     console.log('story points: ', story_points);
-     console.log('storylen', parseInt(data.stories_len, 10))
-     console.log('list_days', list_days)
+     //console.log('story points: ', story_points);
+     //console.log('storylen', parseInt(data.stories_len, 10))
+     //console.log('list_days', list_days)
 
     // criar um lista de numeros range parseInt(data.stories_len)
     // verificar se é final de semana. se for mantem o numero anterior
     // [7, 6, 5, 4, 3, 3, 3, 0]
     // 7 => parseInt(data.stories_len, 10)
 
-    pontosDeHistoria = parseInt(data.stories_len, 10);
-    lista = []
-    for (i=pontosDeHistoria; i >= 0; i--) {
-     lista.push(i)
-    }
-    // lista = [7, 6, 5, 4, 3, 2, 1, 0]
-
-    for (i=0; i <= pontosDeHistoria; i++) {
-        console.log('indice', i);
-        console.log(list_days[i]);
-         var dateString = list_days[i].split("/"),
-            dateParsed = new Date('2016', dateString[1] - 1, dateString[0]);
-
-        console.log(dateParsed);
-        // verifica se eh final de semana (6=sabado, 0=domingo)
-        if (dateParsed.getDay() == 1 || dateParsed.getDay() == 0) {
-            console.log('fim de semana')
-            lista[i] = lista[i-1];
-        };
-
-        console.log('------')
+    //pontosDeHistoria = parseInt(data.stories_len, 10);
+    //lista = []
+    //for (i=pontosDeHistoria; i >= 0; i--) {
+    // lista.push(i)
+    //}
+    //// lista = [7, 6, 5, 4, 3, 2, 1, 0]
+    //
+    //for (i=0; i <= pontosDeHistoria; i++) {
+    //    console.log('indice', i);
+    //    console.log(list_days[i]);
+    //     var dateString = list_days[i].split("/"),
+    //        dateParsed = new Date('2016', dateString[1] - 1, dateString[0]);
+    //
+    //    console.log(dateParsed);
+    //    // verifica se eh final de semana (6=sabado, 0=domingo)
+    //    if (dateParsed.getDay() == 1 || dateParsed.getDay() == 0) {
+    //        console.log('fim de semana')
+    //        lista[i] = lista[i-1];
+    //    };
+    //
+    //    console.log('------')
 
         // se for muda a posição do lista para o anterior
-    }
+    //}
     // list_days = ["05/01", "06/01", "07/01", "08/01", "09/01", "10/01", "11/01", "12/01"]
 
-    console.log(lista);
+    //console.log(lista);
      //console.log(parseInt(data.stories_len));
+
+    // percorrer a lista de dias retirando os finais de semana
+    // list_days
+
+    var lista = [];
+    var count_weekend = 0;
+    pontosDeHistoria = parseInt(data.stories_len, 10);
+    for (i=0; i <= pontosDeHistoria; i++) {
+        //console.log('indice', i);
+        //console.log(list_days[i]);
+        var dateString = list_days[i].split("/"),
+          dateParsed = new Date('2016', dateString[1] - 1, dateString[0]); // 2016 ? .getYear()
+
+        //console.log(dateParsed);
+        // verifica se eh final de semana (6=sabado, 0=domingo)
+        //if (dateParsed.getDay() != 6 && dateParsed.getDay() != 0) {
+        //    lista.push(list_days[i]);
+        //
+        //};
+        if (dateParsed.getDay() != 6 && dateParsed.getDay() != 0) {
+            lista.push(list_days[i]);
+        } else {
+            count_weekend += 1;
+        };
+    };
+    //console.log('lista antes: ', lista);
+
+
+    for (i=1; i<=count_weekend; i++) {
+        console.log('ultimo dia', lista[lista.length-1]);
+        var dateStr = lista[lista.length-1].split("/"),
+            dateParse = new Date('2016', dateStr[1] - 1, dateStr[0]); // 2016 ? .getYear()
+
+        var next_date = new Date(dateParse.getFullYear(), dateParse.getMonth(), dateParse.getDate()+1);
+
+        if (next_date.getDay() == 6) {
+          // ERROR: se for sabado ele bota domingo e dá push
+          next_date.setDate(next_date.getDate()+2);
+        } else if (next_date.getDay() == 0) {
+          next_date.setDate(next_date.getDate()+1);
+        };
+        lista.push(next_date.format("UTC:dd/mm"));
+
+        //console.log('proxima date', next_date);
+    }
+
+    //console.log('lista depois: ', lista);
+    //console.log('dias que sao fds: ', count_weekend );
+
 
 
     // chart plugin
@@ -179,7 +228,7 @@ $(function() {
             x: -20
         },
         xAxis: {
-            categories: list_days,
+            categories: lista,
             labels: {
                 style: {
                     color: '#000',
@@ -215,11 +264,12 @@ $(function() {
             //     enabled: false
             // },
             dashStyle: 'shortdot',
-            //data: [
-            //    [(list_days.length - 1), 0],
-            //    [0, parseInt(data.stories_len, 10)]
-            //],
-            data: lista,
+            data: [
+                //[(list_days.length - 1), 0],
+                [(lista.length - 1), 0],
+                [0, parseInt(data.stories_len, 10)]
+            ],
+            //data: lista,
             // enableMouseTracking: false
         }, {
             name: txt.actual,
