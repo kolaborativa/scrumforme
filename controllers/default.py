@@ -441,7 +441,6 @@ def burndown_chart_test(story_project_id, definition_ready_story, definition_was
 
         sprint_ = db((Sprint.project_id==story_project_id) & (Sprint.ended==None)).select(orderby=Sprint.started).first()
         stories = db((Story.project_id == story_project_id) & (Story.sprint_id == sprint_.id)).select()
-        print sprint_
         story_points_sprint = sprint_.story_points
 
         sprint_id = 0
