@@ -312,6 +312,8 @@ def sprints():
 # =================
 
 def statistics():
+    from datetime import datetime, timedelta
+
     response.title = T("Statistics")
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
@@ -321,8 +323,11 @@ def statistics():
     shared = person["shared_with"]
 
     if project.created_by == person_id or shared.person_id == person_id:
-        # sprint = db(Sprint.project_id == project.id).select().first()
         sprint = db((Sprint.project_id==project.id) & (Sprint.ended==None)).select(orderby=Sprint.started).first()
+        estimated_date = sprint.started + timedelta(days=7*sprint.weeks)
+
+        if datetime.now().date() > estimated_date:
+            redirect(URL('product_backlog', args=project_id))
 
         if not sprint:
             session.message = T("You must create and start the sprint before accessing the Statistics")
