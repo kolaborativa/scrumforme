@@ -1,0 +1,22 @@
+{{extend 'default/layout_base.html'}}
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span5">
+            {{if 'brainstorm_notes' in globals():}}
+                <h3>Notas<span class="label">{{=len(brainstorm_notes)}}</span></a></h3>
+                <ul style="border:1px solid #ccc;">
+                {{for i in brainstorm_notes:}}
+                    <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}}' style="list-style: none; background-color: #f1c40f; padding: 10px ">
+                        <p>{{=i.text_}}</p>
+                        <hr>
+                        <p>Criado por: {{=i.created_by.name}}</p>
+                        <p>Criado em: {{=i.created_at}}</p>
+                    </li>
+                {{pass}}
+                </ul>
+            {{pass}}
+        </div>
+    </div><!--/row-->
+</div><!--/container-fluid-->
+

@@ -420,6 +420,23 @@ def team():
     redirect(URL('projects'))
 
 
+# ================
+#  PAGE BRAINSTORM
+# ================
+
+@auth.requires_login()
+def brainstorm():
+    """
+    Página de brainstorm.
+    DADO que um usuário entra na página indicando o id do projeto, lista todas as notas do projeto
+    """
+    project_id = request.args(0) or redirect('projects')
+
+    brainstorm_notes = db(BrainstormNotes.project_id==project_id).select()
+
+    return dict(brainstorm_notes=brainstorm_notes)
+
+
 @auth.requires_login()
 def burndown_chart_test(story_project_id, definition_ready_story, definition_was_concluded=False):
     from datetime import datetime
