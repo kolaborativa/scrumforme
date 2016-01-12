@@ -6,6 +6,7 @@
         {{story_points += i.story_points}}
         {{pass}}
     {{pass}}
+
     // Global variables
     var txt = {
         stories_points : '{{=T("Stories Points")}}',
@@ -25,7 +26,7 @@
     stories = {
         {{count = 0 }}
         {{ for item in burndown_chart: }}
-        {{=count}}:{date:"{{=g_blank_fulldate_check(item.date_)}}", points: "{{=(story_points - item.points)}}"},
+        {{=count}}:{date:"{{=g_blank_fulldate_check(item.date_)}}", points: "{{=(item.points)}}"},
         {{count += 1}}
         {{pass}}
     }

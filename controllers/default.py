@@ -312,6 +312,8 @@ def sprints():
 # =================
 
 def statistics():
+    from datetime import datetime, timedelta
+
     response.title = T("Statistics")
     project_id = request.args(0) or redirect(URL('projects'))
     project = db(Project.id == project_id).select().first() or redirect(URL('projects'))
@@ -321,10 +323,19 @@ def statistics():
     shared = person["shared_with"]
 
     if project.created_by == person_id or shared.person_id == person_id:
-        sprint = db(Sprint.project_id == project.id).select().first()
-        stories = db((Story.project_id == project.id) & (Story.sprint_id >0)).select()
+        sprint = db((Sprint.project_id==project.id) & (Sprint.ended==None)).select(orderby=Sprint.started).first()
+
+        if not sprint:
+            session.message = T("You must create and start the sprint before accessing the Statistics")
+            redirect(URL('product_backlog', args=project_id))
+
+        stories = db(Story.sprint_id == sprint.id).select()
 
         if sprint != None and sprint.started:
+            estimated_date = sprint.started + timedelta(days=7*sprint.weeks)
+            if datetime.now().date() > estimated_date:
+                redirect(URL('product_backlog', args=project_id))
+
             if stories:
                 least_one_story = False
                 for story in stories:
@@ -410,7 +421,7 @@ def team():
 
 
 @auth.requires_login()
-def burndown_chart_test(story_project_id, definition_ready_story):
+def burndown_chart_test(story_project_id, definition_ready_story, definition_was_concluded=False):
     from datetime import datetime
 
     # if story is completed
@@ -425,8 +436,18 @@ def burndown_chart_test(story_project_id, definition_ready_story):
 
         # get the biggest task date of all definition of ready of this story
         bigger_date = max([tasks_date[x] for x in tasks_date])
-        # stories = db(Story.id == story_id).select()
-        stories = db((Story.project_id == story_project_id) & (Story.sprint_id >0)).select()
+
+        from datetime import timedelta
+        bigger_date = bigger_date + timedelta(days=1) # grava no dia seguinte
+
+        if bigger_date.weekday() == 5: # saturday
+            bigger_date = bigger_date + timedelta(days=2)
+        elif bigger_date.weekday() == 6: # sunday
+            bigger_date = bigger_date + timedelta(days=1)
+
+        sprint_ = db((Sprint.project_id==story_project_id) & (Sprint.ended==None)).select(orderby=Sprint.started).first()
+        stories = db((Story.project_id == story_project_id) & (Story.sprint_id == sprint_.id)).select()
+        story_points_sprint = sprint_.story_points
 
         sprint_id = 0
         concluded_stories = 0
@@ -435,24 +456,18 @@ def burndown_chart_test(story_project_id, definition_ready_story):
                 concluded_stories += story.story_points
                 sprint_id = story.sprint_id
 
-        db_burndown = db(Burndown.date_ == datetime.now()).select().first()
-
-        if db_burndown:
-            db(Burndown.id == db_burndown.id).update(
-                date_=bigger_date,
-                points=concluded_stories,
-            )
-        else:
-            Burndown.insert(
-                sprint_id=sprint_id,
-                date_=bigger_date,
-                points=concluded_stories,
-            )
+        Burndown.insert(
+            sprint_id=sprint_id,
+            date_=bigger_date,
+            points=story_points_sprint - concluded_stories,
+        )
 
         return True
 
-    else:
-        stories = db((Story.project_id == story_project_id) & (Story.sprint_id >0)).select()
+    else: # chamado quando o definition_ready_story == False
+        sprint_ = db((Sprint.project_id==story_project_id) & (Sprint.ended==None)).select(orderby=Sprint.started).first()
+        stories = db((Story.project_id == story_project_id) & (Story.sprint_id == sprint_.id)).select()
+        story_points_sprint = sprint_.story_points
 
         sprint_id = 0
         concluded_stories = 0
@@ -461,17 +476,12 @@ def burndown_chart_test(story_project_id, definition_ready_story):
             if story.concluded == True:
                 concluded_stories += story.story_points
 
-        db_burndown = db(Burndown.date_ == datetime.now()).select().first()
-
-        if db_burndown:
-            db(Burndown.id == db_burndown.id).update(
-                points=concluded_stories,
-            )
-        else:
+        if definition_was_concluded:
+            from datetime import timedelta
             Burndown.insert(
                 sprint_id=sprint_id,
-                date_=datetime.now(),
-                points=concluded_stories,
+                date_=datetime.now() + timedelta(days=1),
+                points=story_points_sprint - concluded_stories,
             )
 
         return False
@@ -1406,7 +1416,7 @@ def _test_story_completed(definition_ready_id, status):
             else:
                 return False
 
-    elif status == "todo" or status == "inprogress":
+    elif status == "todo" or status == "inprogress" or status == "verification":
         # changes the Definition of Ready status for uncompleted
         db(Definition_ready.id == definition_ready_id).update(
             concluded=False,
@@ -1417,6 +1427,6 @@ def _test_story_completed(definition_ready_id, status):
         )
 
         # add points in the date of sprint
-        burndown_chart_test(story.project_id, False)
+        burndown_chart_test(story.project_id, False, definition.concluded)
 
         return False
