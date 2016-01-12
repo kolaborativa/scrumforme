@@ -102,6 +102,15 @@ if not "burndown" in db.tables:
         Field("points", "integer", length=128, default=None),
         migrate="burndown.table")
 
+if not "brainstorm_notes" in db.tables:
+    BrainstormNotes = db.define_table("brainstorm_notes",
+        Field("text_", "string", default=None),
+        Field("project_id", db.project, default=None),
+        Field("created_by", db.person, default=None),
+        Field("created_at", "date", default=None)
+    )
+
+
 """ Relations between tables (remove fields you don't need from requires) """
 db.project.created_by.requires = IS_IN_DB(db, 'person.id', db.person._format)
 db.sprint.project_id.requires = IS_IN_DB(db, 'project.id', db.project._format)
@@ -118,3 +127,5 @@ db.sharing.project_id.requires = IS_IN_DB(db, 'project.id', db.project._format)
 db.sharing.person_id.requires = IS_IN_DB(db, 'person.id', db.person._format)
 db.sharing.role_id.requires = IS_IN_DB(db, 'role.id', db.role._format)
 db.burndown.sprint_id.requires = IS_IN_DB(db, 'sprint.id', db.sprint._format)
+db.brainstorm_notes.project_id.requires = IS_IN_DB(db, 'project.id', db.project._format)
+db.brainstorm_notes.created_by.requires = IS_IN_DB(db, 'person.id', db.person._format)
