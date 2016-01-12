@@ -4,7 +4,6 @@ $(function() {
         dateEnd = new Date(initialDate),
         daysSprint = data.sprint_weeks * 7;
 
-    // console.log(initialDate);
     dateEnd.setDate(dateEnd.getDate() + daysSprint);
 
     function valuesBetween() {
@@ -33,13 +32,16 @@ $(function() {
         }
 
         for (var i = initialDate.getTime(); i <= lastDate.getTime(); i = i + mil) {
-            daysLeft[count] = {
-                "date": new Date(i),
-                "points": points
-            }
-            count += 1
+              date_ = new Date(i);
+              if (date_.getDay() != 6 && date_.getDay() != 0) {
+                daysLeft[count] = {
+                  "date": new Date(i),
+                  "points": points
+                };
+                count += 1
+
+              }
         }
-        // console.log(daysLeft);
 
         return daysLeft
     }
@@ -97,6 +99,7 @@ $(function() {
             story_points.push(parseInt(stories[0]["points"], 10))
         }
 
+
     } else if (Object.keys(stories).length >= 2) {
 
         // date values previous to the values ​​stored
@@ -123,15 +126,42 @@ $(function() {
         }
     }
 
-    // console.log(story_points);
+     story_points.pop();
 
+    var lista = [];
+    var count_weekend = 0;
+    pontosDeHistoria = parseInt(data.stories_len, 10);
+    for (i=0; i <= pontosDeHistoria; i++) {
+        var dateString = list_days[i].split("/"),
+          dateParsed = new Date('2016', dateString[1] - 1, dateString[0]); // 2016 ? .getYear()
+
+        if (dateParsed.getDay() != 6 && dateParsed.getDay() != 0) {
+            lista.push(list_days[i]);
+        } else {
+            count_weekend += 1;
+        };
+    };
+
+
+    for (i=1; i<=count_weekend; i++) {
+        var dateStr = lista[lista.length-1].split("/"),
+            dateParse = new Date('2016', dateStr[1] - 1, dateStr[0]); // 2016 ? .getYear()
+
+        var next_date = new Date(dateParse.getFullYear(), dateParse.getMonth(), dateParse.getDate()+1);
+
+        if (next_date.getDay() == 6) {
+          // ERROR: se for sabado ele bota domingo e dá push
+          next_date.setDate(next_date.getDate()+2);
+        } else if (next_date.getDay() == 0) {
+          next_date.setDate(next_date.getDate()+1);
+        };
+        lista.push(next_date.format("UTC:dd/mm"));
+    }
 
     // chart plugin
     $('#container').highcharts({
         chart: {
             type: 'line',
-            // marginRight: 130,
-            // marginBottom: 45
         },
         title: {
             text: txt.burndow_chart,
@@ -142,7 +172,7 @@ $(function() {
             x: -20
         },
         xAxis: {
-            categories: list_days,
+            categories: lista,
             labels: {
                 style: {
                     color: '#000',
@@ -151,6 +181,7 @@ $(function() {
             },
         },
         yAxis: {
+            allowDecimals: false,
             title: {
                 text: txt.stories_points
             },
@@ -168,9 +199,6 @@ $(function() {
             y: 50,
             borderWidth: 0
         },
-        // exporting: {
-        //     enabled: false
-        // },
         series: [{
             name: txt.estimated,
             // marker: {
@@ -178,10 +206,9 @@ $(function() {
             // },
             dashStyle: 'shortdot',
             data: [
-                [(list_days.length - 1), 0],
+                [(lista.length - 1), 0],
                 [0, parseInt(data.stories_len, 10)]
             ],
-            // enableMouseTracking: false
         }, {
             name: txt.actual,
             data: story_points
