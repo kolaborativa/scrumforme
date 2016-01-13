@@ -1,14 +1,13 @@
 
 var loadDraggable = function() {
   // draggable notes
-
   $(".note").draggable({
     containment: "#area-brainstorm",
     stop: function( event, ui ) {
-        // TODO: colocar o id da nota, na nota criada dinamicamente
         var noteId = this.dataset.id;
         var position = ui.position
 
+        // save position of the note
         $.ajax({
           method: "POST",
           url: url.savePosition +'.json',
@@ -32,8 +31,9 @@ $(document).on("click", ".add-note", function() {
       if (data.status) {
         var person_name = data.person_name;
         var created_at = new Date(data.created_at).format("UTC:dd/mm/yyyy");
+        var note_id = data.note_id;
 
-        html = '<li class="note new_note ui-draggable ui-draggable-handle">' +
+        html = '<li class="note new_note ui-draggable ui-draggable-handle" data-id='+ note_id +'>' +
                   '<p>'+ msg.note_default_text +'</p>' +
                   '<hr>' +
                   '<p>Criado por: '+ person_name +'</p>' +

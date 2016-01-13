@@ -453,14 +453,14 @@ def _create_note():
         return dict(status=False)
 
     try:
-        BrainstormNotes.insert(text_=text_,
+        note_id = BrainstormNotes.insert(text_=text_,
                                project_id=project_id,
                                created_by=person_id,
                                created_at=now,
                                )
         person = db(Person.id==person_id).select().first()
         status = True
-        return dict(status=status, person_name= person.name, created_at=now)
+        return dict(status=status, person_name= person.name, created_at=now, note_id=note_id)
     except:
         status = False
 
