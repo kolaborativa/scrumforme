@@ -1,8 +1,6 @@
 
 //$('#nota-teste').css({'top': 27, 'left' : 482});
 
-// draggable notes
-
 
 // by clicking the button to add Note
 $(document).on("click", ".add-note", function() {
@@ -28,14 +26,13 @@ $(document).on("click", ".add-note", function() {
 
       }
     });
-
-  //TODO: limitar a area de drag
-
-
 });
 
 var loadDraggable = function() {
+  // draggable notes
+
   $(".note").draggable({
+    containment: "#area-brainstorm",
     stop: function( event, ui ) {
         console.log('ui', ui);
 
