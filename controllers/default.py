@@ -426,15 +426,9 @@ def team():
 
 @auth.requires_login()
 def brainstorm():
-    """
-    Página de brainstorm.
-    DADO que um usuário entra na página indicando o id do projeto, lista todas as notas do projeto
-    """
     project_id = request.args(0) or redirect('projects')
-
     brainstorm_notes = db(BrainstormNotes.project_id==project_id).select()
     person = db(User_relationship.auth_user_id==auth.user.id).select().first()
-    print person
 
     return dict(brainstorm_notes=brainstorm_notes,
                 project_id=project_id,
