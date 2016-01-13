@@ -450,7 +450,7 @@ def _create_note():
     now = request.now
 
     if not person_id or not project_id:
-        return dict(status_=False)
+        return dict(status=False)
 
     try:
         BrainstormNotes.insert(text_=text_,
@@ -458,11 +458,13 @@ def _create_note():
                                created_by=person_id,
                                created_at=now,
                                )
-        status_ = True
+        person = db(Person.id==person_id).select().first()
+        status = True
+        return dict(status=status, person_name= person.name, created_at=now)
     except:
-        status_ = False
+        status = False
 
-    return dict(status_=status_)
+    return dict(status_=status)
 
 
 @auth.requires_login()
