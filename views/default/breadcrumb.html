@@ -5,6 +5,11 @@
             <a href='{{=URL("index")}}' title="{{=T('Go to')}} {{=T('Home')}}" class="tip-bottom"><i class="icon-home"></i> Home</a>
             <a href="#" class="current">{{=response.title or request.function}}</a>
         </div>
+        {{ if request.function == 'brainstorm': }}
+          <div>
+            <button class="btn btn-success add-note">Add note</button>
+          </div>
+        {{ pass }}
         <div class="clearfix"></div>
     </div>
 </div>

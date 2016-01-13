@@ -71,6 +71,8 @@
         {{ elif request.function == "sprints": }}
         <link rel="stylesheet" href='{{=URL("static","css/sprints.css")}}' />
         <link rel="stylesheet" href='{{=URL("static","css/card_modal.css")}}' />
+        {{ elif request.function == 'brainstorm': }}
+        <link rel="stylesheet" href="{{=URL('static', 'css/brainstorm.css')}}">
         {{pass}}
 
         {{ if not request.function == "projects": }}
@@ -171,6 +173,10 @@
             <script src='{{=URL("static","js/board-livesearch.js")}}'></script>
             <script src='{{=URL("static","js/floatfixed.js")}}'></script>
             <script async defer src="{{=URL('static','js/bootstrap-datepicker.js')}}"></script>
+
+            {{ elif request.function == 'brainstorm': }}
+            <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+            <script src='{{=URL("static","js/brainstorm.js")}}'></script>
 
             {{ elif request.function == "card": }}
             <script src='{{=URL("static","js/jquery-2.0.0.min.js")}}'></script>
