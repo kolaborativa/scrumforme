@@ -23,9 +23,9 @@ $(document).on("click", ".add-note", function() {
         var person_name = data.person_name;
         var created_at = new Date(data.created_at).format("UTC:dd/mm/yyyy");
 
-        html = '<li class="note ui-draggable ui-draggable-handle"> ' +
+        html = '<li class="note ui-draggable ui-draggable-handle">' +
                   '<p>'+ msg.note_default_text +'</p>' +
-                  '<hr> ' +
+                  '<hr>' +
                   '<p>Criado por: '+ person_name +'</p>' +
                   '<p>Criado em: '+  created_at +'</p>' +
                '</li>'

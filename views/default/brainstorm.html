@@ -30,7 +30,6 @@
     }
 
 
-  console.log(url.create_note);
 </script>
 
 <div class="container-fluid">
@@ -43,7 +42,7 @@
                         <p>{{=i.text_}}</p>
                         <hr>
                         <p>Criado por: {{=i.created_by.name}}</p>
-                        <p>Criado em: {{=i.created_at}}</p>
+                        <p>Criado em: {{=i.created_at.strftime('%d/%m/%Y')}}</p>
                     </li>
                 {{pass}}
                 </ul>
