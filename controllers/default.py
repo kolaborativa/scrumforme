@@ -464,7 +464,31 @@ def _create_note():
     except:
         status = False
 
-    return dict(status_=status)
+    return dict(status=status)
+
+
+@auth.requires_login()
+@service.json
+def _save_position():
+    """
+    Function that saves the position of the note when it is dragged (drag n drop)
+    This position is used to display the notes in the position in which the User chose
+
+    It is called via ajax . More info see file static/js/brainstorm.js
+    """
+    position = request.vars.position
+    note_id = request.vars.note_id
+
+    if not position or not note_id:
+        return dict(status=False)
+
+    try:
+        db(BrainstormNotes.id==note_id).update(position_=position)
+        status = True
+    except:
+        status = False
+
+    return dict(status=status)
 
 
 @auth.requires_login()
