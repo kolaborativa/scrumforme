@@ -107,7 +107,8 @@ if not "brainstorm_notes" in db.tables:
         Field("text_", "string", default=None),
         Field("project_id", db.project, default=None),
         Field("created_by", db.person, default=None),
-        Field("created_at", "date", default=None)
+        Field("created_at", "date", default=None),
+        Field("position_", "string", default=None),
     )
 
 

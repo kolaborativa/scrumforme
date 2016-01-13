@@ -426,15 +426,69 @@ def team():
 
 @auth.requires_login()
 def brainstorm():
-    """
-    Página de brainstorm.
-    DADO que um usuário entra na página indicando o id do projeto, lista todas as notas do projeto
-    """
     project_id = request.args(0) or redirect('projects')
-
     brainstorm_notes = db(BrainstormNotes.project_id==project_id).select()
+    person = db(User_relationship.auth_user_id==auth.user.id).select().first()
 
-    return dict(brainstorm_notes=brainstorm_notes)
+    return dict(brainstorm_notes=brainstorm_notes,
+                project_id=project_id,
+                person_id=person.person_id)
+
+
+@auth.requires_login()
+@service.json
+def _create_note():
+    """
+    Function that creates a new note to the area of brainstorm.
+    Receives two parameters : project_id and person_id
+
+    It is called via ajax . More info see file static/js/brainstorm.js
+    """
+    text_ = T('Your text')
+    project_id = request.vars.project_id
+    person_id = request.vars.person_id
+    now = request.now
+
+    if not person_id or not project_id:
+        return dict(status=False)
+
+    try:
+        note_id = BrainstormNotes.insert(text_=text_,
+                               project_id=project_id,
+                               created_by=person_id,
+                               created_at=now,
+                               )
+        person = db(Person.id==person_id).select().first()
+        status = True
+        return dict(status=status, person_name= person.name, created_at=now, note_id=note_id)
+    except:
+        status = False
+
+    return dict(status=status)
+
+
+@auth.requires_login()
+@service.json
+def _save_position():
+    """
+    Function that saves the position of the note when it is dragged (drag n drop)
+    This position is used to display the notes in the position in which the User chose
+
+    It is called via ajax . More info see file static/js/brainstorm.js
+    """
+    position = request.vars.position
+    note_id = request.vars.note_id
+
+    if not position or not note_id:
+        return dict(status=False)
+
+    try:
+        db(BrainstormNotes.id==note_id).update(position_=position)
+        status = True
+    except:
+        status = False
+
+    return dict(status=status)
 
 
 @auth.requires_login()
