@@ -461,4 +461,5 @@
 'You visited the url %s': 'You visited the url %s',
 'you will be notified by email or in your control panel': 'você será avisado por email ou em seu painel de controle',
 'Your Projects': 'Seus Projetos',
+'Your text': 'Seu texto',
 }

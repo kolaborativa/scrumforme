@@ -438,6 +438,36 @@ def brainstorm():
 
 
 @auth.requires_login()
+@service.json
+def _create_note():
+    """
+    Function that creates a new note to the area of brainstorm.
+    Receives two parameters : project_id and person_id
+
+    It is called via ajax . More info see file static/js/brainstorm.js
+    """
+    text_ = T('Your text')
+    project_id = request.vars.project_id
+    person_id = request.vars.person_id
+    now = request.now
+
+    if not person_id or not project_id:
+        return dict(status_= False)
+
+    try:
+        BrainstormNotes.insert(text_=text_,
+                               project_id=project_id,
+                               created_by=person_id,
+                               created_at=now,
+                               )
+        status_ = True
+    except:
+        status_ = False
+
+    return dict(status_=status_)
+
+
+@auth.requires_login()
 def burndown_chart_test(story_project_id, definition_ready_story, definition_was_concluded=False):
     from datetime import datetime
 

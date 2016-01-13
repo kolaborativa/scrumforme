@@ -4,10 +4,9 @@
     <div class="row-fluid">
         <div class="span5">
             {{if 'brainstorm_notes' in globals():}}
-                <h3>Notas<span class="label">{{=len(brainstorm_notes)}}</span></a></h3>
-                <ul style="border:1px solid #ccc;">
+                <ul class="notes-container">
                 {{for i in brainstorm_notes:}}
-                    <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}}' style="list-style: none; background-color: #f1c40f; padding: 10px ">
+                    <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note' style="list-style: none; background-color: #f1c40f; padding: 10px; margin: 10px">
                         <p>{{=i.text_}}</p>
                         <hr>
                         <p>Criado por: {{=i.created_by.name}}</p>
