@@ -1,5 +1,48 @@
 {{extend 'default/layout_base.html'}}
 
+<script>
+    // OBS: other global variables for this page
+    var url = {
+      create_note : '{{=URL("_create_note")}}'
+    },
+//    msg = {
+//        field_empty : '{{=T("Click to write")}}',
+//        validation_error : '{{=T("Can not be empty")}}',
+//        confirm : '{{=T("Are you sure you want to continue?")}}',
+//        task_undated : '{{=T("You must first put a start date or move to IN PROGRESS column")}}',
+//        task_no_belong : '{{=T("This task does not belong to another definition of ready")}}',
+//        remove_sucess : '{{=T("Removed Successfully!")}}',
+//        remove_error : '{{=T("Error in removal!")}}',
+//        no_role : '{{=T("Some members of the team are without a paper, go TEAM PAGE and add their respective roles.")}}',
+//        no_team : '{{=T("There are not members on the team, go TEAM PAGE and add new members.")}}',
+//        task_no_exist : '{{=T("first insert the card content.")}}',
+//        card_assign : '{{=T("Assign this card to a member of team before moving it")}}',
+//    },
+//    txt = {
+//        team_page : '{{=T("Team Page")}}',
+//        started_in : '{{=T("Started in")}}',
+//        activities : '{{=T("Activities")}}',
+//        upload : '{{=T("Upload")}}',
+//        labels : '{{=T("Labels")}}',
+//        delete_card : '{{=T("Delete")}}',
+//        type_message : '{{=T("Type your message")}}',
+//    },
+//    button = {
+//        comment : '{{=T("Comment")}}',
+//        edit : '{{=T("Edit")}}',
+//        save : '{{=T("Save")}}',
+//        cancel : '{{=T("Cancel")}}',
+//        delete : '{{=T("Delete")}}',
+//    },
+    info = {
+        project_id : '{{=project_id}}',
+        person_id : '{{=person_id}}',
+    }
+
+
+  console.log(url.create_note);
+</script>
+
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span5">

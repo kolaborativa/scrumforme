@@ -433,8 +433,12 @@ def brainstorm():
     project_id = request.args(0) or redirect('projects')
 
     brainstorm_notes = db(BrainstormNotes.project_id==project_id).select()
+    person = db(User_relationship.auth_user_id==auth.user.id).select().first()
+    print person
 
-    return dict(brainstorm_notes=brainstorm_notes)
+    return dict(brainstorm_notes=brainstorm_notes,
+                project_id=project_id,
+                person_id=person.person_id)
 
 
 @auth.requires_login()
@@ -452,7 +456,7 @@ def _create_note():
     now = request.now
 
     if not person_id or not project_id:
-        return dict(status_= False)
+        return dict(status_=False)
 
     try:
         BrainstormNotes.insert(text_=text_,
