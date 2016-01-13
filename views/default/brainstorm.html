@@ -49,7 +49,7 @@
             {{if 'brainstorm_notes' in globals():}}
                 <ul class="notes-container">
                 {{for i in brainstorm_notes:}}
-                    <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note' style="list-style: none; background-color: #f1c40f; padding: 10px; margin: 10px">
+                    <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note'>
                         <p>{{=i.text_}}</p>
                         <hr>
                         <p>Criado por: {{=i.created_by.name}}</p>

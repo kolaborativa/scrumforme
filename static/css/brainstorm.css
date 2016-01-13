@@ -1,3 +1,8 @@
-body {
-    color: #000;
+.note {
+    list-style: none;
+    padding: 10px;
+    margin: 10px;
+    position: relative;
+    background-color: #f1c40f;
 }
+
