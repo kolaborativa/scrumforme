@@ -43,13 +43,15 @@
                       {{ position = json.loads(i.position_) }}
                       <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note' data-id="{{=i.id}}" style="left: {{=position['left']}}px; top: {{=position['top']}}px;">
                     {{ else: }}
-                    <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note' data-id="{{=i.id}}">
+                      <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note' data-id="{{=i.id}}">
                     {{ pass }}
                         <p>{{=i.text_}}</p>
                         <hr>
                         <p>Criado por: {{=i.created_by.name}}</p>
                         <p>Criado em: {{=i.created_at.strftime('%d/%m/%Y')}}</p>
+                        <!--<i class="icon-note icon-trash"></i>-->
                     </li>
+
                 {{pass}}
                 </ul>
             {{pass}}

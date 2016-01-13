@@ -33,11 +33,12 @@ $(document).on("click", ".add-note", function() {
         var created_at = new Date(data.created_at).format("UTC:dd/mm/yyyy");
         var note_id = data.note_id;
 
-        html = '<li class="note new_note ui-draggable ui-draggable-handle" data-id='+ note_id +'>' +
+        html = '<li class="note new_note ui-draggable ui-draggable-handle" data-id='+ note_id +' style="top:0; left:0">' +
                   '<p>'+ msg.note_default_text +'</p>' +
                   '<hr>' +
                   '<p>Criado por: '+ person_name +'</p>' +
                   '<p>Criado em: '+  created_at +'</p>' +
+                  //'<i class="icon-note icon-trash"></i>' +
                '</li>'
 
         $(".notes-container").prepend(html);
@@ -46,6 +47,10 @@ $(document).on("click", ".add-note", function() {
       }
     });
 });
+
+//TODO: Deletar nota / soh o dono pode
+//TODO: Editar nota / soh o dono pode
+
 
 
 loadDraggable();
