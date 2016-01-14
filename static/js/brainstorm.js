@@ -23,7 +23,7 @@ var loadDraggable = function() {
 
 
 // Add new note
-$("#note").draggable({ //mudar para note-add
+$("#note-add").draggable({
   containment: "#area-brainstorm",
   stack: ".note--panel",
   cursor: "move",

@@ -1,11 +1,11 @@
 #area-brainstorm {
     min-height: 500px;
 }
-#note {
+#note-add {
     cursor: move;
 }
 
-#note p {
+#note-add p {
     color: #2A2A2A;
     text-align: center;
     line-height: 25px;
