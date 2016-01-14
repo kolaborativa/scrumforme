@@ -24,6 +24,8 @@
     float: right;
     margin-right: 1rem;
     margin-bottom: .5rem;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px #c6c6c6;
 }
 
 .note {
@@ -34,6 +36,8 @@
     min-height: 142px;
     background-color: #f1c40f;
     display: inline-block;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px #c6c6c6;
 
 }
 
@@ -41,8 +45,28 @@
     position: absolute;
 }
 
-.icon-note {
-    color: red;
+.note-header {
+    width: 100%;
+    margin-bottom: .7em;
+}
+
+.icon-note-header--delete {
+    color: #e74c3c;
     float: right;
+}
+
+.note-content {
+    height:80%;
+}
+
+.note-footer {
+    /*background-color: #00A0B1;*/
+    color: #2A2A2A;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    right: .5em;
+    text-align: right;
+    font-size: .8em;
 }
 

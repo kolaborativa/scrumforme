@@ -49,10 +49,16 @@ $("#note-add").draggable({
         var note_id = data.note_id;
 
         html = '<li class="note note--panel new_note ui-draggable ui-draggable-handle" data-id='+ note_id +' style="position: absolute; top:5; left:5">' +
-                  '<p>'+ msg.note_default_text +'</p>' +
-                  '<hr>' +
-                  '<p>Criado por: '+ person_name +'</p>' +
-                  '<p>Criado em: '+  created_at +'</p>' +
+                  '<div class="note-header">' +
+                    '<i class="icon-note-header icon-note-header--delete icon-trash"></i>' +
+                    '<div class="clearfix"></div>' +
+                  '</div>' +
+                  '<div class="note-content">' +
+                    '<p>'+ msg.note_default_text +'</p>' +
+                  '</div>' +
+                  '<div class="note-footer">' +
+                    created_at + ' - ' + person_name +
+                  '</div>' +
                   //'<i class="icon-note icon-trash"></i>' +
                '</li>'
 
