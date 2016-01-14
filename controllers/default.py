@@ -447,6 +447,7 @@ def _create_note():
     text_ = T('Your text')
     project_id = request.vars.project_id
     person_id = request.vars.person_id
+    position = request.vars.position
     now = request.now
 
     if not person_id or not project_id:
@@ -457,6 +458,7 @@ def _create_note():
                                project_id=project_id,
                                created_by=person_id,
                                created_at=now,
+                               position_ = position,
                                )
         person = db(Person.id==person_id).select().first()
         status = True

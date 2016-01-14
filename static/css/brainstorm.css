@@ -1,11 +1,44 @@
+#area-brainstorm {
+    min-height: 500px;
+}
+#note-add {
+    cursor: move;
+}
+
+#note-add p {
+    color: #2A2A2A;
+    text-align: center;
+    line-height: 25px;
+}
+
+.notes-container {
+    min-width: auto;
+}
+
+.note-add-thumb {
+    background-color: #f1c40f;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    float: right;
+    margin-right: 1rem;
+    margin-bottom: .5rem;
+}
+
 .note {
     width: 200px;
     list-style: none;
     padding: 10px;
     margin: 10px;
-    position: relative;
+    min-height: 142px;
     background-color: #f1c40f;
     display: inline-block;
+
+}
+
+.note--panel {
+    position: absolute;
 }
 
 .icon-note {

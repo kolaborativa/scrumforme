@@ -33,15 +33,15 @@
 
 </script>
 {{ import json }}
-<div id="area-brainstorm" class="container-fluid">
+<div  class="container-fluid">
     <div class="row-fluid">
-        <div class="span5">
+        <div id="area-brainstorm" class="span12">
             {{if 'brainstorm_notes' in globals():}}
                 <ul class="notes-container">
                 {{for i in brainstorm_notes:}}
                     {{ if i.position_: }}
                       {{ position = json.loads(i.position_) }}
-                      <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note' data-id="{{=i.id}}" style="left: {{=position['left']}}px; top: {{=position['top']}}px;">
+                      <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel' data-id="{{=i.id}}" style="left: {{=position['left']}}px; top: {{=position['top']}}px;">
                     {{ else: }}
                       <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note' data-id="{{=i.id}}">
                     {{ pass }}

@@ -82,7 +82,7 @@
 
     </head>
 
-    <body class='{{=g_current_page("default/board/%s" %request.args(0),"close_sidebar")}}'>
+    <body class='{{=g_current_page("default/board/%s" %request.args(0),"close_sidebar") or g_current_page("default/brainstorm/%s" %request.args(0),"close_sidebar")}}'>
         <div class="flash">{{=response.flash or ''}}</div>
         <div class="loading_item">
             <h4>
@@ -120,10 +120,16 @@
             {{include "default/breadcrumb.html"}}
 
             {{include}}
+
             <div class="row-fluid">
-                <div id="footer" class="span12">
+                <!-- <div id="footer" class="span12">
                     {{=T('Copyleft')}} <span style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">&copy;</span> {{=request.now.year}} Scrumforme. {{=T('Developed by')}} <a href="http://agenciax4.com.br">AgenciaX4</a>
-                </div>
+                </div> -->
+              <footer>
+                <p>
+                  Copyleft <span style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">&copy;</span> {{=request.now.year}} Scrumforme. Desenvolvido por <a href="http://x4start.com" target="_blank">X4 Start</a> & <a href="http://kolaborativa.com" target="_blank">Kolaborativa</a>
+                </p>
+              </footer>
             </div>
         </div>
 
