@@ -6,11 +6,8 @@
             <a href="#" class="current">{{=response.title or request.function}}</a>
         </div>
         {{ if request.function == 'brainstorm': }}
-          <div>
-            <button class="btn btn-success add-note">Add note</button>
-          </div>
-          <div id="note" class="note">
-            NOVA NOTA +
+          <div id="note" class="note-add-thumb">
+            <p>Nova Nota</p>
           </div>
         {{ pass }}
         <div class="clearfix"></div>

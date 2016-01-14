@@ -29,6 +29,10 @@ $("#note").draggable({ //mudar para note-add
   cursor: "move",
   helper: "clone",
   //revert: "invalid",
+   start: function(event, ui) {
+    $(ui.helper).addClass("note");
+   },
+
   stop: function( event, ui ) {
     console.log(ui);
     var position = ui.position;
