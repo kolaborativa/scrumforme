@@ -1,15 +1,32 @@
+#area-brainstorm {
+    min-height: 500px;
+}
+#note {
+    cursor: move;
+}
+
+.notes-container {
+    min-width: auto;
+}
+
 .note {
     width: 200px;
     list-style: none;
     padding: 10px;
     margin: 10px;
-    position: relative;
+    min-height: 142px;
     background-color: #f1c40f;
     display: inline-block;
+
+}
+
+.note--panel {
+    position: absolute;
 }
 
 .icon-note {
     color: red;
     float: right;
 }
+
 
