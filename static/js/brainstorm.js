@@ -45,7 +45,7 @@ $("#note-add").draggable({
     .success(function( data ) {
       if (data.status) {
         var person_name = data.person_name;
-        var created_at = new Date(data.created_at).format("UTC:dd/mm/yyyy");
+        var created_at = data.created_at;
         var note_id = data.note_id;
 
         html = '<li class="note note--panel new_note ui-draggable ui-draggable-handle" data-id='+ note_id +' style="position: absolute; top:5; left:5">' +

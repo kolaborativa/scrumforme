@@ -460,9 +460,10 @@ def _create_note():
                                created_at=now,
                                position_ = position,
                                )
+        create_at_str = now.strftime('%d/%m/%Y')
         person = db(Person.id==person_id).select().first()
         status = True
-        return dict(status=status, person_name= person.name, created_at=now, note_id=note_id)
+        return dict(status=status, person_name= person.name, created_at=create_at_str, note_id=note_id)
     except:
         status = False
 
