@@ -54,7 +54,7 @@ $("#note-add").draggable({
                     '<div class="clearfix"></div>' +
                   '</div>' +
                   '<div class="note-content">' +
-                    '<p>'+ msg.note_default_text +'</p>' +
+                    '<a class="editable-click editable" data-type="textarea" data-pk='+ note_id +' data-url="/_update_note.json" style="display: inline;">'+ msg.note_default_text +'</a>' +
                   '</div>' +
                   '<div class="note-footer">' +
                     created_at + ' - ' + person_name +
@@ -74,8 +74,6 @@ $("#note-add").draggable({
 //TODO: Deletar nota / soh o dono pode
 
 loadDraggable();
-
-//TODO: Editar nota / soh o dono pode
 
 
 
