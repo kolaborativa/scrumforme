@@ -4,10 +4,11 @@
     // OBS: other global variables for this page
     var url = {
       create_note : '{{=URL("_create_note")}}',
-      savePosition: '{{=URL("_save_position")}}'
+      savePosition: '{{=URL("_save_position")}}',
+      update_note : '{{=URL("_update_note.json")}}'
     },
     msg = {
-        note_default_text : '{{=T("Your text")}}',
+        note_default_text : '{{=T("Your text")}}'
     },
 //    txt = {
 //        team_page : '{{=T("Team Page")}}',
@@ -50,7 +51,8 @@
                         <div class="clearfix"></div>
                       </div>
                       <div class="note-content">
-                        <p>{{=i.text_}}</p>
+                        <a class="editable-click editable" data-type="textarea" data-pk="{{=i.id}}" data-url="/_update_note.json" style="display: inline;">{{=i.text_}}</a>
+                        <div class="clearfix"></div>
                       </div>
                       <div class="note-footer">
                         {{=i.created_at.strftime('%d/%m/%Y')}} - {{=i.created_by.name}}

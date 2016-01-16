@@ -70,3 +70,36 @@
     font-size: .8em;
 }
 
+/* Plugin Editable HACK */
+.editable-click, a.editable-click, a.editable-click:hover {
+    text-decoration: none;
+    border-bottom: none;
+    color: #444444;
+}
+
+.editable-container {
+    margin: 0 0 2em 0;
+}
+
+.input-large {
+    width: 100%;
+    margin: 5px 0px 0px 5%;
+}
+
+.editable-input {
+    width: 83%;
+}
+
+.editable-buttons {
+    display: block;
+    margin-top: 10px;
+}
+
+.editable-submit {
+    position: relative;
+    right: 12%;
+}
+
+.editable-cancel {
+    margin-left: 5%;
+}

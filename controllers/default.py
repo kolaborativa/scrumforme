@@ -495,6 +495,29 @@ def _save_position():
 
 
 @auth.requires_login()
+@service.json
+def _update_note():
+    """
+    Function that updates the text of the note
+
+    It is called via ajax . More info see file static/js/brainstorm-editable.js
+    """
+    new_text = request.vars.value
+    note_id = request.vars.pk
+
+    if not new_text or not note_id:
+        return dict(status=False)
+
+    try:
+        db(BrainstormNotes.id==note_id).update(text_=new_text)
+        status = True
+    except:
+        status = False
+
+    return dict(status=status)
+
+
+@auth.requires_login()
 def burndown_chart_test(story_project_id, definition_ready_story, definition_was_concluded=False):
     from datetime import datetime
 

@@ -72,8 +72,10 @@ $("#note-add").draggable({
 });
 
 //TODO: Deletar nota / soh o dono pode
+
+loadDraggable();
+
 //TODO: Editar nota / soh o dono pode
 
 
-loadDraggable();
 
