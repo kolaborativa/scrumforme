@@ -91,6 +91,34 @@ def g_person_id():
     return person_id
 
 
+def _get_user(person_id):
+    """
+    Function that returns the user_id getting a person_id
+    """
+    user_relationship = db(db.user_relationship.person_id==person_id).select().first()
+    user_id = user_relationship.auth_user_id
+
+    return user_id
+
+
+def user_has_permission_for_delete_note(person_note_id):
+    """
+    Function that checks whether the logged user has permission to delete a note from brainstorm area
+    Return boolean.
+    This function is used to display or not in the trash icon
+
+    More info see file views/default/brainstorm.html
+
+    """
+    user_note_id = _get_user(person_note_id)
+    resp = False
+
+    if user_note_id == auth.user.id:
+        resp = True
+
+    return resp
+
+
 class G_projects(object):
     """header projects"""
 
