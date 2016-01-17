@@ -65,10 +65,12 @@ $("#note-add").draggable({
         });
       } else {
         var btnDelete = $(new_note).find(".icon-note-header--delete")[0];
+        var link_content_note = $(new_note).find(".editable-click")[0];
         var footer_note = $(new_note).find(".note-footer")[0];
 
         new_note.dataset.id = data.note_id;
         btnDelete.dataset.pk = data.note_id;
+        link_content_note.dataset.pk = data.note_id;
         footer_note.innerHTML = data.created_at + ' - ' + data.person_name;
       }// endif data.status
     }); // ajax success create
