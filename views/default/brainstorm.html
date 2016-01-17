@@ -5,10 +5,12 @@
     var url = {
       create_note : '{{=URL("_create_note")}}',
       savePosition: '{{=URL("_save_position")}}',
-      update_note : '{{=URL("_update_note.json")}}'
+      update_note : '{{=URL("_update_note.json")}}',
+      remove_note: '{{=URL("_remove_note.json")}}'
     },
     msg = {
-        note_default_text : '{{=T("Your text")}}'
+        note_default_text : '{{=T("Your text")}}',
+        confirm : '{{=T("Are you sure you want to continue?")}}'
     },
 //    txt = {
 //        team_page : '{{=T("Team Page")}}',
@@ -47,7 +49,9 @@
                       <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note' data-id="{{=i.id}}">
                     {{ pass }}
                       <div class="note-header">
-                        <i class="icon-note-header icon-note-header--delete icon-trash"></i>
+                        {{ if user_has_permission_for_delete_note(i.created_by): }}
+                          <i class="icon-note-header icon-note-header--delete icon-trash" data-pk="{{=i.id}}"></i>
+                        {{ pass }}
                         <div class="clearfix"></div>
                       </div>
                       <div class="note-content">

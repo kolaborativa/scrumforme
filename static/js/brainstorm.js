@@ -73,7 +73,31 @@ $("#note-add").draggable({
 
 //TODO: Deletar nota / soh o dono pode
 
+$(document).on("click", ".icon-note-header--delete", function() {
+    if (confirm(msg.confirm)) {
+        removeNote(this);
+    }
+});
+
+function removeNote(element) {
+  /*
+  Function that deletes a note of the database , and remove it from the DOM tree
+  */
+  var note = $(element).closest(".note")[0],
+      noteId = element.dataset.pk;
+
+  $.ajax({
+    method: "POST",
+    url: url.remove_note +'.json',
+    data: { note_id: noteId }
+  })
+  .success(function(data) {
+    // remove the note from the DOM
+    $(note).fadeOut("fast", function() {
+      $(this).remove();
+    });
+  });
+
+}
+
 loadDraggable();
-
-
-
