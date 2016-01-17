@@ -158,6 +158,7 @@
 'enter date and time as %(format)s': 'enter date and time as %(format)s',
 'enter date as %(format)s': 'enter date as %(format)s',
 'Enter your e-mail address. You will receive a link to create a new password via email.': 'Digite seu endereço ​​de e-mail. Você receberá um link para criar uma nova senha por e-mail.',
+'Error creating note!': 'Erro ao criar nota. ',
 'Error in removal!': 'Erro na remoção!',
 'Errors': 'Erros',
 'Errors in form, please check it out.': 'Erros no formulário, por favor, verifique-o.',
