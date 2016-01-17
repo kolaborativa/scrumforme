@@ -34,7 +34,6 @@ $("#note-add").draggable({
    },
 
   stop: function( event, ui ) {
-    console.log(ui);
     var position = ui.position;
 
     $.ajax({
