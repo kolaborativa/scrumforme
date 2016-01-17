@@ -50,7 +50,7 @@ $("#note-add").draggable({
 
         html = '<li class="note note--panel new_note ui-draggable ui-draggable-handle" data-id='+ note_id +' style="position: absolute; top:5; left:5">' +
                   '<div class="note-header">' +
-                    '<i class="icon-note-header icon-note-header--delete icon-trash"></i>' +
+                    '<i class="icon-note-header icon-note-header--delete icon-trash" data-pk='+ note_id +'></i>' +
                     '<div class="clearfix"></div>' +
                   '</div>' +
                   '<div class="note-content">' +
@@ -71,8 +71,8 @@ $("#note-add").draggable({
   }
 });
 
-//TODO: Deletar nota / soh o dono pode
 
+/// Remove note
 $(document).on("click", ".icon-note-header--delete", function() {
     if (confirm(msg.confirm)) {
         removeNote(this);

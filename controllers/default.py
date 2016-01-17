@@ -526,6 +526,7 @@ def _remove_note():
     It is called via ajax . More info see file static/js/brainstorm.js
     """
     note_id = request.vars.note_id
+    print note_id
     if not note_id:
         return dict(status=False)
 
