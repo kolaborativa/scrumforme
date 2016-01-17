@@ -53,6 +53,7 @@
 .icon-note-header--delete {
     color: #e74c3c;
     float: right;
+    cursor: pointer;
 }
 
 .note-content {
