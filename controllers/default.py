@@ -991,6 +991,61 @@ def _remove_note():
 
 
 @auth.requires_login()
+@service.json
+def _create_group():
+    """
+    Function that creates the new group and returns the id of this group.
+    Receives one parameter : project_id
+
+    It is called via ajax . More info see file static/js/brainstorm.js
+    """
+    project_id = request.vars.project_id
+
+    try:
+        group_title = 'Seu Grupo'
+        group_id = BrainstormGroups.insert(title=group_title,
+                                           project_id=project_id,
+                                          )
+        status = True
+        return dict(status=status, group_id=group_id, group_title=group_title)
+    except:
+        status = False
+
+        return dict(status=status)
+
+
+@auth.requires_login()
+@service.json
+def _add_notes_in_group():
+    """
+    Function that adds notes in a group
+    Receives one parameter : list_notes, group_id and project_id
+
+    It is called via ajax . More info see file static/js/brainstorm.js
+    """
+    from json import loads
+
+    list_notes_id = loads(request.vars.list_notes)
+    group_id = request.vars.group_id
+    project_id = request.vars.project_id
+
+    if not list_notes_id or not group_id or not project_id:
+        return dict(status=False)
+
+    try:
+        for note_id in list_notes_id:
+            BrainstormRelationsNotesGroups.insert(group_id=group_id,
+                                                  note_id=note_id,
+                                                 )
+        status = True
+        return dict(status=status)
+    except:
+        status = False
+
+        return dict(status=status)
+
+
+@auth.requires_login()
 def burndown_chart_test(story_project_id, definition_ready_story, definition_was_concluded=False):
     from datetime import datetime
 

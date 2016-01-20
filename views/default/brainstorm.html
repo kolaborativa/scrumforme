@@ -27,9 +27,9 @@
                 {{for i in notes:}}
                     {{ if i.position_: }}
                       {{ position = json.loads(i.position_) }}
-                      <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel' data-id="{{=i.id}}" style="left: {{=position['left']}}px; top: {{=position['top']}}px;">
+                      <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel' data-id="{{=i.id}}" data-type="note" style="left: {{=position['left']}}px; top: {{=position['top']}}px;">
                     {{ else: }}
-                      <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note' data-id="{{=i.id}}">
+                      <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note' data-id="{{=i.id}}" data-type="note">
                     {{ pass }}
                       <div class="note-header">
                         {{ if user_has_permission_for_delete_note(i.created_by): }}
@@ -55,7 +55,7 @@
                   <ul class="notes-container group-notes">
                     <h3>{{=i.title}}</h3>
                     {{ for note in i.notes: }}
-                        <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel' data-id="{{=note.note_id}}" style="position:static;">
+                        <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel' data-id="{{=note.note_id}}" data-type='note' style="position:static;">
                         <div class="note-header">
                           {{ if user_has_permission_for_delete_note(note.note_id.created_by): }}
                             <i class="icon-note-header icon-note-header--delete icon-trash" data-pk="{{=note.note_id.id}}"></i>

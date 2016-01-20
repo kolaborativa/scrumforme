@@ -6,21 +6,60 @@ var loadDraggable = function() {
     stack: ".note--panel",
     cursor: "move",
     stop: function( event, ui ) {
-        var noteId = this.dataset.id;
-        var position = ui.position;
+      var noteId = this.dataset.id;
+      var position = ui.position;
 
-        
+      // save position of the note
+      $.ajax({
+        method: "POST",
+        url: url.savePosition +'.json',
+        data: { note_id: noteId, position: JSON.stringify(position) }
+      }).success(function( data ) {
+        console.log(data.status);
+      })// ajax
+    }
+  });
 
-        // save position of the note
+  // droppable notes
+  $(".note--panel").droppable({
+    drop: function(event, ui) {
+      var noteDrag = ui.draggable[0];
+
+      if (noteDrag.dataset.type == 'note') {
+        var noteDrop = $(this)[0];
+
+        var notesIds = [];
+        notesIds.push(noteDrag.dataset.id);
+        notesIds.push(noteDrop.dataset.id);
+
+        // create a group
         $.ajax({
           method: "POST",
-          url: url.savePosition +'.json',
-          data: { note_id: noteId, position: JSON.stringify(position) }
+          //url: url.createGroup +'.json',
+          url: 'http://localhost:8000/scrumforme/default/_create_group.json',
+          data: { project_id: info.project_id}
         }).success(function( data ) {
-          console.log(data.status);
+            // add notes in group
+            var status = _addNotesInGroup(notesIds, data.group_id)
+            if (status=true) {
+              window.location='http://localhost:8000/brainstorm/' + info.project_id;
+            }
         })// ajax
       }
-    });
+
+      // TODO: atualiza o front pra aparecer o grupo novo com as notas
+    }
+
+
+      // save position of the note
+      //  $.ajax({
+      //    method: "POST",
+      //    url: url.savePosition +'.json',
+      //    data: { note_id: noteId, position: JSON.stringify(position) }
+      //  }).success(function( data ) {
+      //    console.log(data.status);
+      //  })// ajax
+  });
 };
 
 
@@ -107,5 +146,29 @@ function removeNote(element) {
   });
 
 }
+
+
+var _addNotesInGroup = function (listNotes, groupId) {
+  /*
+  Function that deletes a note of the database , and remove it from the DOM tree
+  Receives two parameter : list de notas e o grupo
+
+*/
+
+  $.ajax({
+    method: "POST",
+    url: 'http://localhost:8000/scrumforme/default/_add_notes_in_group.json',
+    //url: url.add_notes_in_group +'.json',
+    data: { list_notes: JSON.stringify(listNotes), group_id: groupId, project_id: info.project_id }
+  })
+  .success(function(data) {
+    console.log('======= ADD NOTES GROUP ========');
+    return data.status;
+  });
+
+};
+
+
+
 
 loadDraggable();
