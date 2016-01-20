@@ -875,7 +875,6 @@ def brainstorm():
         group.notes = [ row for row in db(BrainstormRelationsNotesGroups.group_id == group.id).select() ]
 
         for i in group.notes:
-            print i # PRINT
             lista_notas_com_grupo.append(i.note_id)
 
     notes = [row for row in db( (BrainstormNotes.project_id==project_id)).select() if row.id not in lista_notas_com_grupo ]

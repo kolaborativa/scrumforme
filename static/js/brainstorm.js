@@ -24,10 +24,18 @@ var loadDraggable = function() {
   $(".note--panel").droppable({
     drop: function(event, ui) {
       var noteDrag = ui.draggable[0];
+      var noteDrop = $(this)[0];
+      var noteDragParent = $(noteDrag).parent()[0];
+      var noteDropParent = $(noteDrop).parent()[0];
+
+      // if the notes are part of the same group , do not let create another
+      if ( noteDragParent.dataset.type == 'group-notes' && noteDropParent.dataset.type == 'group-notes' ) {
+        if (noteDragParent.dataset.groupId == noteDropParent.dataset.groupId ) {
+          return false;
+        }
+      }
 
       if (noteDrag.dataset.type == 'note') {
-        var noteDrop = $(this)[0];
-
         var notesIds = [];
         notesIds.push(noteDrag.dataset.id);
         notesIds.push(noteDrop.dataset.id);
@@ -35,30 +43,18 @@ var loadDraggable = function() {
         // create a group
         $.ajax({
           method: "POST",
-          //url: url.createGroup +'.json',
-          url: 'http://localhost:8000/scrumforme/default/_create_group.json',
+          url: url.createGroup,
           data: { project_id: info.project_id}
         }).success(function( data ) {
             // add notes in group
             var status = _addNotesInGroup(notesIds, data.group_id)
             if (status=true) {
-              window.location='http://localhost:8000/brainstorm/' + info.project_id;
+              window.location=url.current + '/' +info.project_id;
             }
         })// ajax
       }
-
-      // TODO: atualiza o front pra aparecer o grupo novo com as notas
+      // TODO: atualizar o front pra aparecer o grupo novo com as notas
     }
-
-
-      // save position of the note
-      //  $.ajax({
-      //    method: "POST",
-      //    url: url.savePosition +'.json',
-      //    data: { note_id: noteId, position: JSON.stringify(position) }
-      //  }).success(function( data ) {
-      //    console.log(data.status);
-      //  })// ajax
   });
 };
 
@@ -154,21 +150,16 @@ var _addNotesInGroup = function (listNotes, groupId) {
   Receives two parameter : list de notas e o grupo
 
 */
-
   $.ajax({
     method: "POST",
-    url: 'http://localhost:8000/scrumforme/default/_add_notes_in_group.json',
-    //url: url.add_notes_in_group +'.json',
+    url: url.add_notes_in_group,
     data: { list_notes: JSON.stringify(listNotes), group_id: groupId, project_id: info.project_id }
   })
   .success(function(data) {
-    console.log('======= ADD NOTES GROUP ========');
     return data.status;
   });
-
+g
 };
-
-
 
 
 loadDraggable();
