@@ -22,9 +22,9 @@
 <div  class="container-fluid">
     <div class="row-fluid">
         <div id="area-brainstorm" class="span12">
-            {{if 'brainstorm_notes' in globals():}}
+            {{if 'notes' in globals():}}
                 <ul class="notes-container">
-                {{for i in brainstorm_notes:}}
+                {{for i in notes:}}
                     {{ if i.position_: }}
                       {{ position = json.loads(i.position_) }}
                       <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel' data-id="{{=i.id}}" style="left: {{=position['left']}}px; top: {{=position['top']}}px;">
@@ -45,10 +45,39 @@
                         {{=i.created_at.strftime('%d/%m/%Y')}} - {{=i.created_by.name}}
                       </div>
                     </li>
-
                 {{pass}}
                 </ul>
             {{pass}}
+
+            <!-- Notes with Group -->
+            {{if 'groups_notes' in globals():}}
+                {{for i in groups_notes:}}
+                  <ul class="notes-container group-notes">
+                    <h3>{{=i.title}}</h3>
+                    {{ for note in i.notes: }}
+                        <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel' data-id="{{=note.note_id}}" style="position:static;">
+                        <div class="note-header">
+                          {{ if user_has_permission_for_delete_note(note.note_id.created_by): }}
+                            <i class="icon-note-header icon-note-header--delete icon-trash" data-pk="{{=note.note_id.id}}"></i>
+                          {{ pass }}
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="note-content">
+                          <a class="editable-click editable" data-type="textarea" data-pk="{{=note.note_id.id}}" data-url="{{=URL('_update_note.json')}}" style="display: inline;">{{=note.note_id.text_}}</a>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="note-footer">
+                          {{=note.note_id.created_at.strftime('%d/%m/%Y')}} - {{=note.note_id.created_by.name}}
+                        </div>
+                      </li>
+                    {{ pass }}
+
+
+                  </ul>
+                {{pass}}
+
+            {{ pass }}
+
         </div>
     </div><!--/row-->
 </div><!--/container-fluid-->

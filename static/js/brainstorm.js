@@ -7,7 +7,9 @@ var loadDraggable = function() {
     cursor: "move",
     stop: function( event, ui ) {
         var noteId = this.dataset.id;
-        var position = ui.position
+        var position = ui.position;
+
+        
 
         // save position of the note
         $.ajax({

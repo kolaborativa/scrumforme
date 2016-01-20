@@ -56,6 +56,7 @@
 'Before moving a story to sprint, you must create a sprint!': 'Antes de mover uma história para o sprint, você deve criar um sprint!',
 'Benefit': 'Benefício',
 'Board': 'Board',
+'Brainstorm': 'Brainstorm',
 'Burndown Chart': 'Gráfico Burndown',
 'Busy': 'Ocupado',
 'but do not worry, because': 'mas não se preocupe, pois',
