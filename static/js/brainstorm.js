@@ -6,19 +6,58 @@ var loadDraggable = function() {
     stack: ".note--panel",
     cursor: "move",
     stop: function( event, ui ) {
-        var noteId = this.dataset.id;
-        var position = ui.position
+      var noteId = this.dataset.id;
+      var position = ui.position;
 
-        // save position of the note
+      // save position of the note
+      $.ajax({
+        method: "POST",
+        url: url.savePosition +'.json',
+        data: { note_id: noteId, position: JSON.stringify(position) }
+      }).success(function( data ) {
+        console.log(data.status);
+      })// ajax
+    }
+  });
+
+  // droppable notes
+  $(".note--panel").droppable({
+    drop: function(event, ui) {
+      var noteDrag = ui.draggable[0];
+      var noteDrop = $(this)[0];
+      var noteDragParent = $(noteDrag).parent()[0];
+      var noteDropParent = $(noteDrop).parent()[0];
+
+      // if the notes are part of the same group , do not let create another
+      if ( noteDragParent.dataset.type == 'group-notes' && noteDropParent.dataset.type == 'group-notes' ) {
+        if (noteDragParent.dataset.groupId == noteDropParent.dataset.groupId ) {
+          return false;
+        }
+      }
+
+      if (noteDrag.dataset.type == 'note') {
+        var notesIds = [];
+        notesIds.push(noteDrag.dataset.id);
+        notesIds.push(noteDrop.dataset.id);
+
+        // create a group
         $.ajax({
           method: "POST",
-          url: url.savePosition +'.json',
-          data: { note_id: noteId, position: JSON.stringify(position) }
+          url: url.createGroup,
+          data: { project_id: info.project_id}
         }).success(function( data ) {
-          console.log(data.status);
+            // add notes in group
+            var status = _addNotesInGroup(notesIds, data.group_id)
+            if (status=true) {
+              // TODO: atualizar o front pra aparecer o grupo novo com as notas
+              // TODO: deletar as notas atuais e enviá-las para dentro de um grupo recem criado.
+              // TODO criar um html de grupo pronto com o id que volta do banco
+              window.location=url.current + '/' +info.project_id;
+            }
         })// ajax
-      }
-    });
+      } // if dataset.type == 'note'
+    } // drop
+  });
 };
 
 
@@ -105,5 +144,24 @@ function removeNote(element) {
   });
 
 }
+
+
+var _addNotesInGroup = function (listNotes, groupId) {
+  /*
+  Function that deletes a note of the database , and remove it from the DOM tree
+  Receives two parameter : list de notas e o grupo
+
+*/
+  $.ajax({
+    method: "POST",
+    url: url.add_notes_in_group,
+    data: { list_notes: JSON.stringify(listNotes), group_id: groupId, project_id: info.project_id }
+  })
+  .success(function(data) {
+    return data.status;
+  });
+g
+};
+
 
 loadDraggable();

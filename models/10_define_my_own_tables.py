@@ -102,6 +102,14 @@ if not "burndown" in db.tables:
         Field("points", "integer", length=128, default=None),
         migrate="burndown.table")
 
+if not "brainstorm_groups" in db.tables:
+    BrainstormGroups = db.define_table("brainstorm_groups",
+        Field("title", "string", default=None),
+        Field("position_", "string", default=None),
+        Field("project_id", "string", default=None),
+        format='%(title)s',
+    )
+
 if not "brainstorm_notes" in db.tables:
     BrainstormNotes = db.define_table("brainstorm_notes",
         Field("text_", "string", default=None),
@@ -109,6 +117,13 @@ if not "brainstorm_notes" in db.tables:
         Field("created_by", db.person, default=None),
         Field("created_at", "date", default=None),
         Field("position_", "string", default=None),
+        format='%(text_)s',
+    )
+
+if not "brainstorm_relations_notes_groups" in db.tables:
+    BrainstormRelationsNotesGroups = db.define_table("brainstorm_relations_notes_groups",
+        Field("group_id", db.brainstorm_groups, default=None),
+        Field("note_id", db.brainstorm_notes, default=None),
     )
 
 
@@ -130,3 +145,5 @@ db.sharing.role_id.requires = IS_IN_DB(db, 'role.id', db.role._format)
 db.burndown.sprint_id.requires = IS_IN_DB(db, 'sprint.id', db.sprint._format)
 db.brainstorm_notes.project_id.requires = IS_IN_DB(db, 'project.id', db.project._format)
 db.brainstorm_notes.created_by.requires = IS_IN_DB(db, 'person.id', db.person._format)
+db.brainstorm_relations_notes_groups.group_id.requires = IS_IN_DB(db, 'brainstorm_groups.id', db.brainstorm_groups._format)
+db.brainstorm_relations_notes_groups.note_id.requires = IS_IN_DB(db, 'brainstorm_notes.id', db.brainstorm_notes._format)
