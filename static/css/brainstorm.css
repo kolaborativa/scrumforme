@@ -71,6 +71,15 @@
     font-size: .8em;
 }
 
+.group-notes {
+    display: inline-block;
+    float: left;
+    width: 500px;
+    padding: 10px;
+    background-color: #ecf0f1;
+
+}
+
 /* Plugin Editable HACK */
 .editable-click, a.editable-click, a.editable-click:hover {
     text-decoration: none;
