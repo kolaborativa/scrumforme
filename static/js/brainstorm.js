@@ -49,12 +49,14 @@ var loadDraggable = function() {
             // add notes in group
             var status = _addNotesInGroup(notesIds, data.group_id)
             if (status=true) {
+              // TODO: atualizar o front pra aparecer o grupo novo com as notas
+              // TODO: deletar as notas atuais e enviá-las para dentro de um grupo recem criado.
+              // TODO criar um html de grupo pronto com o id que volta do banco
               window.location=url.current + '/' +info.project_id;
             }
         })// ajax
-      }
-      // TODO: atualizar o front pra aparecer o grupo novo com as notas
-    }
+      } // if dataset.type == 'note'
+    } // drop
   });
 };
 
