@@ -79,6 +79,9 @@
     background-color: #ecf0f1;
 
 }
+.grupo-boladao {
+    background-color: red;
+}
 
 /* Plugin Editable HACK */
 .editable-click, a.editable-click, a.editable-click:hover {
