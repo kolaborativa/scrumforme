@@ -50,7 +50,7 @@ var loadDraggable = function() {
             var status = _addNotesInGroup(notesIds, data.group_id)
             if (status=true) {
               var positionNotes = ui.position;
-              var htmlGroup = $('<ul class="notes-container group-notes" data-type="group-notes" data-groupId="'+data.group_id+'" style="position:absolute; top: '+positionNotes.top+'px; left: '+(parseInt(positionNotes.left)-100).toString()+'px;">' +
+              var htmlGroup = $('<ul class="animated zoomIn notes-container group-notes" data-type="group-notes" data-groupId="'+data.group_id+'" style="position:absolute; top: '+positionNotes.top+'px; left: '+(parseInt(positionNotes.left)-100).toString()+'px;">' +
                           '<h3>'+ data.group_title +'</h3>' +
                           '</ul>');
 
@@ -77,6 +77,7 @@ var loadDraggable = function() {
 
               // Adds the group and the clones of the notes in the DOM
               var areaB = $('#area-brainstorm').append(htmlGroup);
+
             }
         })// ajax
       } // if dataset.type == 'note'
