@@ -49,10 +49,35 @@ var loadDraggable = function() {
             // add notes in group
             var status = _addNotesInGroup(notesIds, data.group_id)
             if (status=true) {
-              // TODO: atualizar o front pra aparecer o grupo novo com as notas
-              // TODO: deletar as notas atuais e enviá-las para dentro de um grupo recem criado.
-              // TODO criar um html de grupo pronto com o id que volta do banco
-              window.location=url.current + '/' +info.project_id;
+              var positionNotes = ui.position;
+              var htmlGroup = $('<ul class="animated zoomIn notes-container group-notes" data-type="group-notes" data-groupId="'+data.group_id+'" style="position:absolute; top: '+positionNotes.top+'px; left: '+(parseInt(positionNotes.left)-100).toString()+'px;">' +
+                          '<h3>'+ data.group_title +'</h3>' +
+                          '</ul>');
+
+              // Creates clone of the notes, to render the DOM without refreshing the page
+              var new_note_1 = $(noteDrag).clone();
+              var new_note_2 = $(noteDrop).clone();
+
+              new_note_1.removeAttr('style');
+              new_note_2.removeAttr('style');
+              new_note_1.css('position', 'relative');
+              new_note_2.css('position', 'relative');
+
+              // Removes the current notes from DOM
+              $(noteDrag).fadeOut("fast", function() {
+                $(this).remove();
+              });
+              $(noteDrop).fadeOut("fast", function() {
+                $(this).remove();
+              });
+
+              // Adds clones of the notes in the group created
+              htmlGroup.append(new_note_2);
+              htmlGroup.append(new_note_1);
+
+              // Adds the group and the clones of the notes in the DOM
+              var areaB = $('#area-brainstorm').append(htmlGroup);
+
             }
         })// ajax
       } // if dataset.type == 'note'
@@ -160,7 +185,6 @@ var _addNotesInGroup = function (listNotes, groupId) {
   .success(function(data) {
     return data.status;
   });
-g
 };
 
 

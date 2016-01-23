@@ -462,6 +462,7 @@
 'You must first put a start date or move to IN PROGRESS column': 'Você precisa primeiro colocar uma data de início ou mover para a coluna EM ANDAMENTO',
 'You visited the url %s': 'You visited the url %s',
 'you will be notified by email or in your control panel': 'você será avisado por email ou em seu painel de controle',
+'Your Group': 'Your Group',
 'Your Projects': 'Seus Projetos',
 'Your text': 'Seu texto',
 }
