@@ -2129,14 +2129,13 @@ def _save_position():
 
 @auth.requires_login()
 @service.json
-def _update_note():
+def _update_items():
     """
     Function that updates the text of the note
 
     It is called via ajax . More info see file static/js/brainstorm-editable.js
     """
     type_text = request.vars.type_text
-
 
     if type_text == 'group-title':
         new_title = request.vars.value
@@ -2154,12 +2153,9 @@ def _update_note():
         return dict(status=status)
 
 
-    else:
+    elif type_text == 'group-title':
         new_text = request.vars.value
         note_id = request.vars.pk
-
-        # salva o request.vars.value no banco
-        # falta pegar o Id do Grupo // request.vars.pk => tem que botar no html e no grupo criado
 
         if not new_text or not note_id:
             return dict(status=False)

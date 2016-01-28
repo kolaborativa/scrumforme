@@ -5,7 +5,7 @@
     var url = {
       create_note : '{{=URL("_create_note")}}',
       savePosition: '{{=URL("_save_position")}}',
-      update_note : '{{=URL("_update_note.json")}}',
+      update_items : '{{=URL("_update_items.json")}}',
       remove_note: '{{=URL("_remove_note.json")}}',
       createGroup: '{{=URL("_create_group.json")}}',
       add_notes_in_group: '{{=URL("_add_notes_in_group.json")}}',
@@ -56,7 +56,7 @@
             {{if 'groups_notes' in globals():}}
                 {{for i in groups_notes:}}
                   <ul class="notes-container group-notes" data-type="group-notes" data-groupId="{{=i.id}}">
-                    <h3 class="editable-click editable" data-type="textarea" data-pk="{{=i.id}}" data-url="{{=URL('_update_note.json')}}" data-type-text="group-title">
+                    <h3 class="editable-click editable" data-type="textarea" data-pk="{{=i.id}}" data-url="{{=URL('_update_items.json')}}" data-type-text="group-title">
                       {{=i.title}}
 
                     </h3>
@@ -69,7 +69,7 @@
                           <div class="clearfix"></div>
                         </div>
                         <div class="note-content">
-                          <a class="editable-click editable" data-type="textarea" data-pk="{{=note.note_id.id}}" data-url="{{=URL('_update_note.json')}}" style="display: inline;">{{=note.note_id.text_}}</a>
+                          <a class="editable-click editable" data-type="textarea" data-pk="{{=note.note_id.id}}" data-url="{{=URL('_update_items.json')}}" style="display: inline;">{{=note.note_id.text_}}</a>
                           <div class="clearfix"></div>
                         </div>
                         <div class="note-footer">
