@@ -947,25 +947,44 @@ def _save_position():
 
 @auth.requires_login()
 @service.json
-def _update_note():
+def _update_items():
     """
     Function that updates the text of the note
 
     It is called via ajax . More info see file static/js/brainstorm-editable.js
     """
-    new_text = request.vars.value
-    note_id = request.vars.pk
+    type_text = request.vars.type_text
 
-    if not new_text or not note_id:
-        return dict(status=False)
+    if type_text == 'group-title':
+        new_title = request.vars.value
+        group_id = request.vars.pk
 
-    try:
-        db(BrainstormNotes.id==note_id).update(text_=new_text)
-        status = True
-    except:
-        status = False
+        if not new_title or not group_id:
+            return dict(status=False)
 
-    return dict(status=status)
+        try:
+            db(BrainstormGroups.id==group_id).update(title=new_title)
+            status = True
+        except:
+            status = False
+
+        return dict(status=status)
+
+
+    elif type_text == 'note-text':
+        new_text = request.vars.value
+        note_id = request.vars.pk
+
+        if not new_text or not note_id:
+            return dict(status=False)
+
+        try:
+            db(BrainstormNotes.id==note_id).update(text_=new_text)
+            status = True
+        except:
+            status = False
+
+        return dict(status=status)
 
 
 @auth.requires_login()
@@ -2125,27 +2144,46 @@ def _save_position():
     return dict(status=status)
 
 
-@auth.requires_login()
-@service.json
-def _update_note():
-    """
-    Function that updates the text of the note
-
-    It is called via ajax . More info see file static/js/brainstorm-editable.js
-    """
-    new_text = request.vars.value
-    note_id = request.vars.pk
-
-    if not new_text or not note_id:
-        return dict(status=False)
-
-    try:
-        db(BrainstormNotes.id==note_id).update(text_=new_text)
-        status = True
-    except:
-        status = False
-
-    return dict(status=status)
+# @auth.requires_login()
+# @service.json
+# def _update_items():
+#     """
+#     Function that updates the text of the note
+#
+#     It is called via ajax . More info see file static/js/brainstorm-editable.js
+#     """
+#     type_text = request.vars.type_text
+#
+#     if type_text == 'group-title':
+#         new_title = request.vars.value
+#         group_id = request.vars.pk
+#
+#         if not new_title or not group_id:
+#             return dict(status=False)
+#
+#         try:
+#             db(BrainstormGroups.id==group_id).update(title=new_title)
+#             status = True
+#         except:
+#             status = False
+#
+#         return dict(status=status)
+#
+#
+#     elif type_text == 'note-text':
+#         new_text = request.vars.value
+#         note_id = request.vars.pk
+#
+#         if not new_text or not note_id:
+#             return dict(status=False)
+#
+#         try:
+#             db(BrainstormNotes.id==note_id).update(text_=new_text)
+#             status = True
+#         except:
+#             status = False
+#
+#         return dict(status=status)
 
 
 @auth.requires_login()
