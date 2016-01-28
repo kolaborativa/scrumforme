@@ -6,15 +6,22 @@ $.fn.editable.defaults.mode = 'inline';
 
 //apply editable to parent div
 $('#area-brainstorm').editable({
-    selector: 'a.editable',
+    selector: '.editable',
     url: url.update_note,
     emptytext: msg.field_empty,
     rows: 1,
     params: function(params) {
         params.project_id = info.project_id;
+
+        var attr = $(this).attr("data-type-text");
+        if(attr) {
+            params.type_text = attr;
+        }
+
         return params;
     },
     validate: function(value) {
         if (value === '') return msg.validation_error;
     }
 });
+

@@ -56,7 +56,10 @@
             {{if 'groups_notes' in globals():}}
                 {{for i in groups_notes:}}
                   <ul class="notes-container group-notes" data-type="group-notes" data-groupId="{{=i.id}}">
-                    <h3>{{=i.title}}</h3>
+                    <h3 class="editable-click editable" data-type="textarea" data-pk="{{=i.id}}" data-url="{{=URL('_update_note.json')}}" data-type-text="group-title">
+                      {{=i.title}}
+
+                    </h3>
                     {{ for note in i.notes: }}
                         <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel' data-id="{{=note.note_id}}" data-type='note' style="position:static;">
                         <div class="note-header">

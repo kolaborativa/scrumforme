@@ -956,6 +956,8 @@ def _update_note():
     new_text = request.vars.value
     note_id = request.vars.pk
 
+    print request.vars
+
     if not new_text or not note_id:
         return dict(status=False)
 
@@ -2133,19 +2135,42 @@ def _update_note():
 
     It is called via ajax . More info see file static/js/brainstorm-editable.js
     """
-    new_text = request.vars.value
-    note_id = request.vars.pk
+    type_text = request.vars.type_text
 
-    if not new_text or not note_id:
-        return dict(status=False)
 
-    try:
-        db(BrainstormNotes.id==note_id).update(text_=new_text)
-        status = True
-    except:
-        status = False
+    if type_text == 'group-title':
+        new_title = request.vars.value
+        group_id = request.vars.pk
 
-    return dict(status=status)
+        if not new_title or not group_id:
+            return dict(status=False)
+
+        try:
+            db(BrainstormGroups.id==group_id).update(title=new_title)
+            status = True
+        except:
+            status = False
+
+        return dict(status=status)
+
+
+    else:
+        new_text = request.vars.value
+        note_id = request.vars.pk
+
+        # salva o request.vars.value no banco
+        # falta pegar o Id do Grupo // request.vars.pk => tem que botar no html e no grupo criado
+
+        if not new_text or not note_id:
+            return dict(status=False)
+
+        try:
+            db(BrainstormNotes.id==note_id).update(text_=new_text)
+            status = True
+        except:
+            status = False
+
+        return dict(status=status)
 
 
 @auth.requires_login()
