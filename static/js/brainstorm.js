@@ -106,7 +106,7 @@ $("#note-add").draggable({
                 '<div class="clearfix"></div>' +
               '</div>' +
               '<div class="note-content">' +
-                '<a class="editable-click editable" data-type="textarea" data-pk="" data-url="'+ url.update_note +'" style="display: inline;">'+ msg.note_default_text +'</a>' +
+                '<a class="editable-click editable" data-type="textarea" data-pk="" data-url="'+ url.update_items +'" data-type-text="note-text" style="display: inline;">'+ msg.note_default_text +'</a>' +
               '</div>' +
               '<div class="note-footer"></div>' +
            '</li>'
