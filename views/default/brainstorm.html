@@ -30,7 +30,7 @@
                 {{for i in notes:}}
                     {{ if i.position_: }}
                       {{ position = json.loads(i.position_) }}
-                      <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel' data-id="{{=i.id}}" data-type="note" style="left: {{=position['left']}}px; top: {{=position['top']}}px;">
+                      <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel note--droppable' data-id="{{=i.id}}" data-type="note" style="left: {{=position['left']}}px; top: {{=position['top']}}px;">
                     {{ else: }}
                       <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note' data-id="{{=i.id}}" data-type="note">
                     {{ pass }}

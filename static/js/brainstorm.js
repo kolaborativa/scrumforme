@@ -21,7 +21,7 @@ var loadDraggable = function() {
   });
 
   // droppable notes
-  $(".note--panel").droppable({
+  $(".note--droppable").droppable({
     drop: function(event, ui) {
       var noteDrag = ui.draggable[0];
       var noteDrop = $(this)[0];
@@ -60,6 +60,8 @@ var loadDraggable = function() {
 
               new_note_1.removeAttr('style');
               new_note_2.removeAttr('style');
+              new_note_1.removeClass('note--droppable');
+              new_note_2.removeClass('note--droppable');
               new_note_1.css('position', 'relative');
               new_note_2.css('position', 'relative');
 
@@ -77,12 +79,32 @@ var loadDraggable = function() {
 
               // Adds the group and the clones of the notes in the DOM
               var areaB = $('#area-brainstorm').append(htmlGroup);
+              loadDraggable();
 
             }
         })// ajax
       } // if dataset.type == 'note'
     } // drop
   });
+
+  // droppable groups
+  $(".group-notes").droppable({
+    drop: function(event, ui) {
+      var noteDrag = ui.draggable[0];
+      var groupDrop = $(this)[0];
+
+      if (noteDrag.dataset.type == 'note') {
+        var notesIds = [noteDrag.dataset.id];
+        var groupId = groupDrop.dataset.groupid;
+
+        status = _addNotesInGroup(notesIds, groupId);
+      } else {
+        status = false;
+      } // if / else dataset.type == 'note'
+    } // drop
+  });
+
+
 };
 
 
@@ -100,7 +122,7 @@ $("#note-add").draggable({
   stop: function( event, ui ) {
     var position = ui.position;
 
-    html = '<li class="note note--panel new_note ui-draggable ui-draggable-handle" data-id="" style="position: absolute; top:5; left:5">' +
+    html = '<li class="note note--panel note--panel new_note ui-draggable ui-draggable-handle" data-id="" style="position: absolute; top:5; left:5">' +
               '<div class="note-header">' +
                 '<i class="icon-note-header icon-note-header--delete icon-trash" data-pk=""></i>' +
                 '<div class="clearfix"></div>' +
