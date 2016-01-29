@@ -51,7 +51,7 @@ var loadDraggable = function() {
             if (status=true) {
               var positionNotes = ui.position;
               var htmlGroup = $('<ul class="animated zoomIn notes-container group-notes" data-type="group-notes" data-groupId="'+data.group_id+'" style="position:absolute; top: '+positionNotes.top+'px; left: '+(parseInt(positionNotes.left)-100).toString()+'px;">' +
-                          '<h3 class="editable-click editable" data-type="textarea" data-pk="' + data.group_id + '" data-type-text="group-title">'+ data.group_title +'</h3>' +
+                          '<h3 class="editable-click editable title-group" data-type="textarea" data-pk="' + data.group_id + '" data-type-text="group-title">'+ data.group_title +'</h3>' +
                           '</ul>');
 
               // Creates clone of the notes, to render the DOM without refreshing the page
