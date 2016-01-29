@@ -1052,10 +1052,16 @@ def _add_notes_in_group():
 
     try:
         for note_id in list_notes_id:
-            BrainstormRelationsNotesGroups.insert(group_id=group_id,
+            count_ = db((BrainstormRelationsNotesGroups.group_id==group_id) & \
+                    (BrainstormRelationsNotesGroups.note_id==note_id) ).count()
+
+            if count_ == 0:
+                BrainstormRelationsNotesGroups.insert(group_id=group_id,
                                                   note_id=note_id,
                                                  )
-        status = True
+                status = True
+            else:
+                status = False
         return dict(status=status)
     except:
         status = False

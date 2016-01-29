@@ -104,6 +104,25 @@ var loadDraggable = function() {
     } // drop
   });
 
+   // droppable area-brainstorm
+  $("#area-brainstorm").droppable({
+    drop: function(event, ui) {
+      console.log('area do bagulho');
+
+      //var noteDrag = ui.draggable[0];
+      //var groupDrop = $(this)[0];
+      //
+      //if (noteDrag.dataset.type == 'note') {
+      //  var notesIds = [noteDrag.dataset.id];
+      //  var groupId = groupDrop.dataset.groupid;
+      //
+      //  status = _addNotesInGroup(notesIds, groupId);
+      //} else {
+      //  status = false;
+      //} // if / else dataset.type == 'note'
+    } // drop
+  });
+
 
 };
 
