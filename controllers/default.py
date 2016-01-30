@@ -1070,6 +1070,32 @@ def _add_notes_in_group():
 
 
 @auth.requires_login()
+@service.json
+def _remove_notes_from_group():
+    """
+    Function that removes a note from a group
+    Receives one parameter : note_id and group_id
+
+    It is called via ajax . More info see file static/js/brainstorm.js
+    """
+    note_id = request.vars.note_id
+    group_id = request.vars.group_id
+
+    if not note_id or not group_id:
+        return dict(status=False)
+
+    try:
+        db((BrainstormRelationsNotesGroups.group_id==group_id) & \
+            (BrainstormRelationsNotesGroups.note_id==note_id) ).delete()
+
+        status = True
+    except:
+        status = False
+
+    return dict(status=status)
+
+
+@auth.requires_login()
 def burndown_chart_test(story_project_id, definition_ready_story, definition_was_concluded=False):
     from datetime import datetime
 

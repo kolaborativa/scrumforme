@@ -89,6 +89,7 @@ var loadDraggable = function() {
 
   // droppable groups
   $(".group-notes").droppable({
+    greedy: true,
     drop: function(event, ui) {
       var noteDrag = ui.draggable[0];
       var groupDrop = $(this)[0];
@@ -104,22 +105,37 @@ var loadDraggable = function() {
     } // drop
   });
 
-   // droppable area-brainstorm
+  // droppable area-brainstorm
   $("#area-brainstorm").droppable({
+    greedy: true,
     drop: function(event, ui) {
-      console.log('area do bagulho');
+      //TODO: [outro cartao] se sobrar somente 1 exclui o grupo tb
 
-      //var noteDrag = ui.draggable[0];
-      //var groupDrop = $(this)[0];
-      //
-      //if (noteDrag.dataset.type == 'note') {
-      //  var notesIds = [noteDrag.dataset.id];
-      //  var groupId = groupDrop.dataset.groupid;
-      //
-      //  status = _addNotesInGroup(notesIds, groupId);
-      //} else {
-      //  status = false;
-      //} // if / else dataset.type == 'note'
+      var noteDrag = ui.draggable[0];
+      var group = $(noteDrag).parent()[0];
+      var noteId = noteDrag.dataset.id;
+      var groupId = group.dataset.groupid;
+      var position = $(noteDrag).position();
+
+      // if the notes are part of the same group , do not let create another
+      if (group.dataset.type == 'group-notes') {
+        // create a group
+        $.ajax({
+          method: "POST",
+          url: url.remove_notes_from_group,
+          data: { note_id: noteId, group_id: groupId}
+        }).success(function( data ) {
+            // save position of the note
+            $.ajax({
+              method: "POST",
+              url: url.savePosition +'.json',
+              data: { note_id: noteId, position: JSON.stringify(position) }
+            }).success(function( data ) {
+              console.log('position', data.status);
+            })// ajax save position
+
+        });// ajax
+      } // if dataset group-notes
     } // drop
   });
 
