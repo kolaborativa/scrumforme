@@ -109,8 +109,6 @@ var loadDraggable = function() {
   $("#area-brainstorm").droppable({
     greedy: true,
     drop: function(event, ui) {
-      //TODO: [outro cartao] se sobrar somente 1 exclui o grupo tb
-
       var noteDrag = ui.draggable[0];
       var group = $(noteDrag).parent()[0];
       var noteId = noteDrag.dataset.id;
@@ -132,13 +130,39 @@ var loadDraggable = function() {
               data: { note_id: noteId, position: JSON.stringify(position) }
             }).success(function( data ) {
               console.log('position', data.status);
-            })// ajax save position
+            });// ajax save position
+
+            // checks the amount of notes
+            $.ajax({
+                method: "GET",
+                url: url.remaining_notes +'.json',
+              data: { group_id: groupId }
+              }).success(function( data ) {
+                var count_notes = data.count;
+
+                //remove the group with 1 note
+                if (count_notes == 1) {
+                  $.ajax({
+                    method: "POST",
+                    url: url.remove_group +'.json',
+                    data: { group_id: groupId }
+                  }).success(function( data ) {
+                    console.log('position', data.status);
+                    if (data.status==true) {
+                      //TODO: deletar o grupo do DOM
+                      //TODO: colocar a nota restante pra fora
+                      //TODO: salvar position da nota restante pelo offset do grupo
+                      console.log('soh tem uma nota.. deletaaaaa');
+
+                    }
+                  });// ajax remove group
+                } // if count notes
+              });// ajax count notes
 
         });// ajax
       } // if dataset group-notes
     } // drop
   });
-
 
 };
 
