@@ -117,7 +117,7 @@ var loadDraggable = function() {
 
       // if the notes are part of the same group , do not let create another
       if (group.dataset.type == 'group-notes') {
-        // create a group
+        // removes note
         $.ajax({
           method: "POST",
           url: url.remove_notes_from_group,
@@ -140,20 +140,17 @@ var loadDraggable = function() {
               }).success(function( data ) {
                 var count_notes = data.count;
 
-                //remove the group with 1 note
                 if (count_notes == 1) {
+                  //remove the group with 1 note
                   $.ajax({
                     method: "POST",
                     url: url.remove_group +'.json',
                     data: { group_id: groupId }
                   }).success(function( data ) {
-                    console.log('position', data.status);
+                    console.log('remove the group with 1 note', data.status);
                     if (data.status==true) {
-                      //TODO: deletar o grupo do DOM
-                      //TODO: colocar a nota restante pra fora
-                      //TODO: salvar position da nota restante pelo offset do grupo
-                      console.log('soh tem uma nota.. deletaaaaa');
-
+                      // redirect for the refresh
+                      window.location=url.current+'/'+info.project_id;
                     }
                   });// ajax remove group
                 } // if count notes
@@ -250,7 +247,6 @@ function removeNote(element) {
   });
 
 }
-
 
 var _addNotesInGroup = function (listNotes, groupId) {
   /*
