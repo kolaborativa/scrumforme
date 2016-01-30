@@ -9,6 +9,7 @@
       remove_note: '{{=URL("_remove_note.json")}}',
       createGroup: '{{=URL("_create_group.json")}}',
       add_notes_in_group: '{{=URL("_add_notes_in_group.json")}}',
+      remove_notes_from_group: '{{=URL("_remove_notes_from_group.json")}}',
       current: '{{=URL("brainstorm")}}'
     },
     msg = {
@@ -61,7 +62,7 @@
 
                     </h3>
                     {{ for note in i.notes: }}
-                        <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel' data-id="{{=note.note_id}}" data-type='note' style="position:static;">
+                        <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel' data-id="{{=note.note_id}}" data-type='note' style="position:relative">
                         <div class="note-header">
                           {{ if user_has_permission_for_delete_note(note.note_id.created_by): }}
                             <i class="icon-note-header icon-note-header--delete icon-trash" data-pk="{{=note.note_id.id}}"></i>
