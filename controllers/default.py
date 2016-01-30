@@ -1095,6 +1095,41 @@ def _remove_notes_from_group():
     return dict(status=status)
 
 
+def _remaining_notes():
+    """
+    Function that returns the amount of notes that remain of a group
+    Receives one parameter : group_id
+
+    It is called via ajax . More info see file static/js/brainstorm.js
+    """
+    group_id = request.vars.group_id
+    count_ = db(BrainstormRelationsNotesGroups.group_id==group_id).count()
+
+    return dict(count=count_)
+
+
+def _remove_group():
+    """
+    Function that removes a group
+    Receives one parameter : group_id
+
+    It is called via ajax . More info see file static/js/brainstorm.js
+    """
+    group_id = request.vars.group_id
+
+    if not group_id:
+        return dict(status=False)
+
+    try:
+        db(BrainstormGroups.id==group_id).delete()
+
+        status = True
+    except:
+        status = False
+
+    return dict(status=status)
+
+
 @auth.requires_login()
 def burndown_chart_test(story_project_id, definition_ready_story, definition_was_concluded=False):
     from datetime import datetime

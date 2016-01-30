@@ -109,8 +109,6 @@ var loadDraggable = function() {
   $("#area-brainstorm").droppable({
     greedy: true,
     drop: function(event, ui) {
-      //TODO: [outro cartao] se sobrar somente 1 exclui o grupo tb
-
       var noteDrag = ui.draggable[0];
       var group = $(noteDrag).parent()[0];
       var noteId = noteDrag.dataset.id;
@@ -119,7 +117,7 @@ var loadDraggable = function() {
 
       // if the notes are part of the same group , do not let create another
       if (group.dataset.type == 'group-notes') {
-        // create a group
+        // removes note
         $.ajax({
           method: "POST",
           url: url.remove_notes_from_group,
@@ -132,13 +130,36 @@ var loadDraggable = function() {
               data: { note_id: noteId, position: JSON.stringify(position) }
             }).success(function( data ) {
               console.log('position', data.status);
-            })// ajax save position
+            });// ajax save position
+
+            // checks the amount of notes
+            $.ajax({
+                method: "GET",
+                url: url.remaining_notes +'.json',
+              data: { group_id: groupId }
+              }).success(function( data ) {
+                var count_notes = data.count;
+
+                if (count_notes == 1) {
+                  //remove the group with 1 note
+                  $.ajax({
+                    method: "POST",
+                    url: url.remove_group +'.json',
+                    data: { group_id: groupId }
+                  }).success(function( data ) {
+                    console.log('remove the group with 1 note', data.status);
+                    if (data.status==true) {
+                      // redirect for the refresh
+                      window.location=url.current+'/'+info.project_id;
+                    }
+                  });// ajax remove group
+                } // if count notes
+              });// ajax count notes
 
         });// ajax
       } // if dataset group-notes
     } // drop
   });
-
 
 };
 
@@ -226,7 +247,6 @@ function removeNote(element) {
   });
 
 }
-
 
 var _addNotesInGroup = function (listNotes, groupId) {
   /*
