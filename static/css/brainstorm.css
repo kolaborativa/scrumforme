@@ -56,6 +56,13 @@
     cursor: pointer;
 }
 
+.icon-note-header--color {
+    color: cornflowerblue;
+    float: right;
+    cursor: pointer;
+}
+
+
 .note-content {
     height:80%;
 }
@@ -120,4 +127,45 @@
 
 .editable-cancel {
     margin-left: 5%;
+}
+
+.color-palette {
+    display: none;
+    background-color: #ccc;
+    border-radius: 5px;
+    padding: 2px;
+    position: absolute;
+    top: 0;
+    right: -40px;
+}
+
+.thumb-color {
+    display: block;
+    margin: 3px;
+    width: 25px;
+    height: 25px;
+}
+
+.thumb-color:hover {
+    background-color: #00A0B1;
+}
+
+.thumb-color[data-color="#FFD180"] {
+    background-color: #FFD180;
+}
+
+.thumb-color[data-color="#FF8A80"] {
+    background-color: #FF8A80;
+}
+
+.thumb-color[data-color="#FFFF8D"] {
+    background-color: #FFFF8D;
+}
+
+.thumb-color[data-color="#80D8FF"] {
+    background-color: #80D8FF;
+}
+
+.thumb-color[data-color="#CCFF90"] {
+    background-color: #CCFF90;
 }

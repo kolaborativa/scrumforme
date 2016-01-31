@@ -1,36 +1,37 @@
-
-var loadDraggable = function() {
+var loadDraggable;
+loadDraggable = function () {
   // draggable notes
   $(".note--panel").draggable({
     containment: "#area-brainstorm",
     stack: ".note--panel",
     cursor: "move",
-    stop: function( event, ui ) {
+    stop: function (event, ui) {
       var noteId = this.dataset.id;
       var position = ui.position;
 
       // save position of the note
       $.ajax({
         method: "POST",
-        url: url.savePosition +'.json',
-        data: { note_id: noteId, position: JSON.stringify(position) }
-      }).success(function( data ) {
+        url: url.savePosition + '.json',
+        data: {note_id: noteId, position: JSON.stringify(position)}
+      }).success(function (data) {
         console.log(data.status);
       })// ajax
     }
   });
 
+
   // droppable notes
   $(".note--droppable").droppable({
-    drop: function(event, ui) {
+    drop: function (event, ui) {
       var noteDrag = ui.draggable[0];
       var noteDrop = $(this)[0];
       var noteDragParent = $(noteDrag).parent()[0];
       var noteDropParent = $(noteDrop).parent()[0];
 
       // if the notes are part of the same group , do not let create another
-      if ( noteDragParent.dataset.type == 'group-notes' && noteDropParent.dataset.type == 'group-notes' ) {
-        if (noteDragParent.dataset.groupId == noteDropParent.dataset.groupId ) {
+      if (noteDragParent.dataset.type == 'group-notes' && noteDropParent.dataset.type == 'group-notes') {
+        if (noteDragParent.dataset.groupId == noteDropParent.dataset.groupId) {
           return false;
         }
       }
@@ -44,44 +45,44 @@ var loadDraggable = function() {
         $.ajax({
           method: "POST",
           url: url.createGroup,
-          data: { project_id: info.project_id}
-        }).success(function( data ) {
-            // add notes in group
-            var status = _addNotesInGroup(notesIds, data.group_id)
-            if (status=true) {
-              var positionNotes = ui.position;
-              var htmlGroup = $('<ul class="animated zoomIn notes-container group-notes" data-type="group-notes" data-groupId="'+data.group_id+'" style="position:absolute; top: '+positionNotes.top+'px; left: '+(parseInt(positionNotes.left)-100).toString()+'px;">' +
-                          '<h3 class="editable-click editable title-group" data-type="textarea" data-pk="' + data.group_id + '" data-type-text="group-title">'+ data.group_title +'</h3>' +
-                          '</ul>');
+          data: {project_id: info.project_id}
+        }).success(function (data) {
+          // add notes in group
+          var status = _addNotesInGroup(notesIds, data.group_id)
+          if (status = true) {
+            var positionNotes = ui.position;
+            var htmlGroup = $('<ul class="animated zoomIn notes-container group-notes" data-type="group-notes" data-groupId="' + data.group_id + '" style="position:absolute; top: ' + positionNotes.top + 'px; left: ' + (parseInt(positionNotes.left) - 100).toString() + 'px;">' +
+              '<h3 class="editable-click editable title-group" data-type="textarea" data-pk="' + data.group_id + '" data-type-text="group-title">' + data.group_title + '</h3>' +
+              '</ul>');
 
-              // Creates clone of the notes, to render the DOM without refreshing the page
-              var new_note_1 = $(noteDrag).clone();
-              var new_note_2 = $(noteDrop).clone();
+            // Creates clone of the notes, to render the DOM without refreshing the page
+            var new_note_1 = $(noteDrag).clone();
+            var new_note_2 = $(noteDrop).clone();
 
-              new_note_1.removeAttr('style');
-              new_note_2.removeAttr('style');
-              new_note_1.removeClass('note--droppable');
-              new_note_2.removeClass('note--droppable');
-              new_note_1.css('position', 'relative');
-              new_note_2.css('position', 'relative');
+            new_note_1.removeAttr('style');
+            new_note_2.removeAttr('style');
+            new_note_1.removeClass('note--droppable');
+            new_note_2.removeClass('note--droppable');
+            new_note_1.css('position', 'relative');
+            new_note_2.css('position', 'relative');
 
-              // Removes the current notes from DOM
-              $(noteDrag).fadeOut("fast", function() {
-                $(this).remove();
-              });
-              $(noteDrop).fadeOut("fast", function() {
-                $(this).remove();
-              });
+            // Removes the current notes from DOM
+            $(noteDrag).fadeOut("fast", function () {
+              $(this).remove();
+            });
+            $(noteDrop).fadeOut("fast", function () {
+              $(this).remove();
+            });
 
-              // Adds clones of the notes in the group created
-              htmlGroup.append(new_note_2);
-              htmlGroup.append(new_note_1);
+            // Adds clones of the notes in the group created
+            htmlGroup.append(new_note_2);
+            htmlGroup.append(new_note_1);
 
-              // Adds the group and the clones of the notes in the DOM
-              var areaB = $('#area-brainstorm').append(htmlGroup);
-              loadDraggable();
+            // Adds the group and the clones of the notes in the DOM
+            var areaB = $('#area-brainstorm').append(htmlGroup);
+            loadDraggable();
 
-            }
+          }
         })// ajax
       } // if dataset.type == 'note'
     } // drop
@@ -90,7 +91,7 @@ var loadDraggable = function() {
   // droppable groups
   $(".group-notes").droppable({
     greedy: true,
-    drop: function(event, ui) {
+    drop: function (event, ui) {
       var noteDrag = ui.draggable[0];
       var groupDrop = $(this)[0];
 
@@ -108,7 +109,7 @@ var loadDraggable = function() {
   // droppable area-brainstorm
   $("#area-brainstorm").droppable({
     greedy: true,
-    drop: function(event, ui) {
+    drop: function (event, ui) {
       var noteDrag = ui.draggable[0];
       var group = $(noteDrag).parent()[0];
       var noteId = noteDrag.dataset.id;
@@ -121,40 +122,40 @@ var loadDraggable = function() {
         $.ajax({
           method: "POST",
           url: url.remove_notes_from_group,
-          data: { note_id: noteId, group_id: groupId}
-        }).success(function( data ) {
-            // save position of the note
-            $.ajax({
-              method: "POST",
-              url: url.savePosition +'.json',
-              data: { note_id: noteId, position: JSON.stringify(position) }
-            }).success(function( data ) {
-              console.log('position', data.status);
-            });// ajax save position
+          data: {note_id: noteId, group_id: groupId}
+        }).success(function (data) {
+          // save position of the note
+          $.ajax({
+            method: "POST",
+            url: url.savePosition + '.json',
+            data: {note_id: noteId, position: JSON.stringify(position)}
+          }).success(function (data) {
+            console.log('position', data.status);
+          });// ajax save position
 
-            // checks the amount of notes
-            $.ajax({
-                method: "GET",
-                url: url.remaining_notes +'.json',
-              data: { group_id: groupId }
-              }).success(function( data ) {
-                var count_notes = data.count;
+          // checks the amount of notes
+          $.ajax({
+            method: "GET",
+            url: url.remaining_notes + '.json',
+            data: {group_id: groupId}
+          }).success(function (data) {
+            var count_notes = data.count;
 
-                if (count_notes == 1) {
-                  //remove the group with 1 note
-                  $.ajax({
-                    method: "POST",
-                    url: url.remove_group +'.json',
-                    data: { group_id: groupId }
-                  }).success(function( data ) {
-                    console.log('remove the group with 1 note', data.status);
-                    if (data.status==true) {
-                      // redirect for the refresh
-                      window.location=url.current+'/'+info.project_id;
-                    }
-                  });// ajax remove group
-                } // if count notes
-              });// ajax count notes
+            if (count_notes == 1) {
+              //remove the group with 1 note
+              $.ajax({
+                method: "POST",
+                url: url.remove_group + '.json',
+                data: {group_id: groupId}
+              }).success(function (data) {
+                console.log('remove the group with 1 note', data.status);
+                if (data.status == true) {
+                  // redirect for the refresh
+                  window.location = url.current + '/' + info.project_id;
+                }
+              });// ajax remove group
+            } // if count notes
+          });// ajax count notes
 
         });// ajax
       } // if dataset group-notes
@@ -162,6 +163,8 @@ var loadDraggable = function() {
   });
 
 };
+
+
 
 
 // Add new note
@@ -246,7 +249,11 @@ function removeNote(element) {
     });
   });
 
-}
+};
+
+$(document).on("click", ".icon-note-header--color", function() {
+  $(this).parent().parent().find('.color-palette').toggle();
+});
 
 var _addNotesInGroup = function (listNotes, groupId) {
   /*
