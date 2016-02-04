@@ -59,12 +59,14 @@ loadDraggable = function () {
             var new_note_1 = $(noteDrag).clone();
             var new_note_2 = $(noteDrop).clone();
 
-            new_note_1.removeAttr('style');
-            new_note_2.removeAttr('style');
             new_note_1.removeClass('note--droppable');
             new_note_2.removeClass('note--droppable');
             new_note_1.css('position', 'relative');
             new_note_2.css('position', 'relative');
+            new_note_1.css('top', '0');
+            new_note_1.css('left', '0');
+            new_note_2.css('top', '0');
+            new_note_2.css('left', '0');
 
             // Removes the current notes from DOM
             $(noteDrag).fadeOut("fast", function () {
@@ -188,7 +190,7 @@ $("#note-add").draggable({
                 '<a class="editable-click editable" data-type="textarea" data-pk="" data-url="'+ url.update_items +'" data-type-text="note-text" style="display: inline;">'+ msg.note_default_text +'</a>' +
               '</div>' +
               '<div class="note-footer"></div>' +
-           '</li>'
+           '</li>';
 
     var new_note_container = $(".notes-container").prepend(html);
     var new_note = new_note_container.find(".new_note:first").css({"top": ui.position.top, "left": ui.position.left})[0];
