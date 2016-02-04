@@ -1130,6 +1130,32 @@ def _remove_group():
     return dict(status=status)
 
 
+def _update_color_note():
+    """
+    Function that updates the color of a note
+    Receives one parameter : note_id and new_color
+
+    It is called via ajax . More info see file static/js/brainstorm.js
+    """
+    note_id = request.vars.note_id
+    new_color = request.vars.new_color
+
+    if not note_id or not new_color:
+        return dict(status=False)
+
+    note = db(BrainstormNotes.id==note_id).select().first()
+    note_old_color = note.color
+
+    try:
+        db(BrainstormNotes.id==note_id).update(color=new_color)
+
+        status = True
+        return dict(status=status)
+    except:
+        status = False
+        return dict(status=status, note_old_color=note_old_color)
+
+
 @auth.requires_login()
 def burndown_chart_test(story_project_id, definition_ready_story, definition_was_concluded=False):
     from datetime import datetime

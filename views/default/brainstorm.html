@@ -12,7 +12,7 @@
       remove_notes_from_group: '{{=URL("_remove_notes_from_group.json")}}',
       remaining_notes: '{{=URL("_remaining_notes.json")}}',
       remove_group: '{{=URL("_remove_group.json")}}',
-
+      update_color_note: '{{=URL("_update_color_note.json")}}',
       current: '{{=URL("brainstorm")}}'
     },
     msg = {
@@ -34,13 +34,14 @@
                 {{for i in notes:}}
                     {{ if i.position_: }}
                       {{ position = json.loads(i.position_) }}
-                      <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel note--droppable' data-id="{{=i.id}}" data-type="note" style="left: {{=position['left']}}px; top: {{=position['top']}}px;">
+                      <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel note--droppable' data-id="{{=i.id}}" data-type="note" style="background-color: {{=i.color}}; left: {{=position['left']}}px; top: {{=position['top']}}px;">
                     {{ else: }}
-                      <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note' data-id="{{=i.id}}" data-type="note">
+                      <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel note--droppable' data-id="{{=i.id}}" data-type="note" style="background-color: {{=i.color}}">
                     {{ pass }}
                       <div class="note-header">
                         {{ if user_has_permission_for_delete_note(i.created_by): }}
                           <i class="icon-note-header icon-note-header--delete icon-trash" data-pk="{{=i.id}}"></i>
+                          <i class="icon-note-header icon-note-header--color icon-tint" data-pk="{{=i.id}}"></i>
                         {{ pass }}
                         <div class="clearfix"></div>
                       </div>
@@ -51,7 +52,15 @@
                       <div class="note-footer">
                         {{=i.created_at.strftime('%d/%m/%Y')}} - {{=i.created_by.name}}
                       </div>
+                      <div class="color-palette animated bounceIn">
+                        <span class="thumb-color" data-color="#FFD180"></span>
+                        <span class="thumb-color" data-color="#FF8A80"></span>
+                        <span class="thumb-color" data-color="#FFFF8D"></span>
+                        <span class="thumb-color" data-color="#80D8FF"></span>
+                        <span class="thumb-color" data-color="#CCFF90"></span>
+                      </div>
                     </li>
+
                 {{pass}}
                 </ul>
             {{pass}}
@@ -65,10 +74,12 @@
 
                     </h3>
                     {{ for note in i.notes: }}
-                        <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel' data-id="{{=note.note_id}}" data-type='note' style="position:relative">
+                        <li class='{{=g_current_page("default/brainstorm/%s" %i.id,"active")}} note note--panel' data-id="{{=note.note_id}}" data-type='note' style="background-color: {{=note.note_id.color}}; position:relative">
                         <div class="note-header">
                           {{ if user_has_permission_for_delete_note(note.note_id.created_by): }}
                             <i class="icon-note-header icon-note-header--delete icon-trash" data-pk="{{=note.note_id.id}}"></i>
+                            <i class="icon-note-header icon-note-header--color icon-tint" data-pk="{{=i.id}}"></i>
+
                           {{ pass }}
                           <div class="clearfix"></div>
                         </div>
@@ -78,6 +89,13 @@
                         </div>
                         <div class="note-footer">
                           {{=note.note_id.created_at.strftime('%d/%m/%Y')}} - {{=note.note_id.created_by.name}}
+                        </div>
+                        <div class="color-palette animated bounceIn">
+                          <span class="thumb-color" data-color="#FFD180"></span>
+                          <span class="thumb-color" data-color="#FF8A80"></span>
+                          <span class="thumb-color" data-color="#FFFF8D"></span>
+                          <span class="thumb-color" data-color="#80D8FF"></span>
+                          <span class="thumb-color" data-color="#CCFF90"></span>
                         </div>
                       </li>
                     {{ pass }}
