@@ -165,8 +165,6 @@ loadDraggable = function () {
 };
 
 
-
-
 // Add new note
 $("#note-add").draggable({
   containment: "#area-brainstorm",
@@ -251,9 +249,31 @@ function removeNote(element) {
 
 };
 
+// Changes color notes //
 $(document).on("click", ".icon-note-header--color", function() {
   $(this).parent().parent().find('.color-palette').toggle();
 });
+
+$(document).on("click", ".thumb-color", function() {
+  //$(this).parent().parent().find('.color-palette').toggle();
+  var note = $(this).closest(".note")[0];
+  var noteId = note.dataset.id;
+  var newColor = this.dataset.color;
+  $(note).css('background-color', newColor);
+
+  $.ajax({
+    method: "POST",
+    url: url.update_color_note +'.json',
+    data: { note_id: noteId, new_color: newColor }
+  })
+  .success(function(data) {
+    if (data.status==false) {
+      $(note).css('background-color', data.note_old_color);
+    };
+  });
+
+});
+
 
 var _addNotesInGroup = function (listNotes, groupId) {
   /*

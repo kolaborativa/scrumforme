@@ -144,7 +144,9 @@
     margin: 3px;
     width: 25px;
     height: 25px;
+    cursor: pointer;
 }
+
 
 .thumb-color:hover {
     background-color: #00A0B1;
