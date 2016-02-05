@@ -945,6 +945,29 @@ def _save_position():
     return dict(status=status)
 
 
+def _save_position_group():
+    """
+    Function that saves the position of the note when it is dragged (drag n drop)
+    This position is used to display the notes in the position in which the User chose
+
+    It is called via ajax . More info see file static/js/brainstorm.js
+    """
+    position = request.vars.position
+    group_id = request.vars.group_id
+
+    if not position or not group_id:
+        return dict(status=False)
+
+    try:
+        db(BrainstormGroups.id==group_id).update(position_=position)
+        status = True
+    except:
+        status = False
+
+    return dict(status=status)
+
+
+
 @auth.requires_login()
 @service.json
 def _update_items():

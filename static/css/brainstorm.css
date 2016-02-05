@@ -1,3 +1,7 @@
+.container-fluid-brainstorm {
+    padding: .8em;
+}
+
 #area-brainstorm {
     min-height: 500px;
 }
@@ -79,15 +83,15 @@
 }
 
 .group-notes {
-    display: inline-block;
-    float: left;
+    /*display: inline-block;*/
+    /*float: left;*/
+    cursor: move;
+    margin: 0;
     width: 500px;
     padding: 10px;
     background-color: #ecf0f1;
+    position: absolute;
 
-}
-.grupo-boladao {
-    background-color: red;
 }
 
 /* Plugin Editable HACK */

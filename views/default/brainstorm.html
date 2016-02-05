@@ -5,6 +5,7 @@
     var url = {
       create_note : '{{=URL("_create_note")}}',
       savePosition: '{{=URL("_save_position")}}',
+      savePositionGroup: '{{=URL("_save_position_group")}}',
       update_items : '{{=URL("_update_items.json")}}',
       remove_note: '{{=URL("_remove_note.json")}}',
       createGroup: '{{=URL("_create_group.json")}}',
@@ -26,7 +27,7 @@
     }
 </script>
 {{ import json }}
-<div  class="container-fluid">
+<div  class="container-fluid container-fluid-brainstorm">
     <div class="row-fluid">
         <div id="area-brainstorm" class="span12">
             {{if 'notes' in globals():}}
@@ -68,7 +69,12 @@
             <!-- Notes with Group -->
             {{if 'groups_notes' in globals():}}
                 {{for i in groups_notes:}}
-                  <ul class="notes-container group-notes" data-type="group-notes" data-groupId="{{=i.id}}">
+                  {{ if i.position_: }}
+                      {{ position = json.loads(i.position_) }}
+                      <ul class="notes-container group-notes" data-type="group-notes" data-groupId="{{=i.id}}" style="left: {{=position['left']}}px; top: {{=position['top']}}px;">
+                  {{ else: }}
+                      <ul class="notes-container group-notes" data-type="group-notes" data-groupId="{{=i.id}}">
+                  {{ pass }}
                     <h3 class="editable-click editable title-group" data-type="textarea" data-pk="{{=i.id}}" data-url="{{=URL('_update_items.json')}}" data-type-text="group-title">
                       {{=i.title}}
 

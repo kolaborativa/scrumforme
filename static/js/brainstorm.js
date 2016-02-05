@@ -160,7 +160,29 @@ loadDraggable = function () {
     } // drop
   });
 
-};
+  // draggable groups
+  $(".group-notes").draggable({
+    containment: "#area-brainstorm",
+    stack: ".note--panel",
+    cursor: "move",
+    stop: function (event, ui) {
+      var groupId = this.dataset.groupid;
+      var position = ui.position;
+
+      // save position of the note
+      $.ajax({
+        method: "POST",
+        url: url.savePositionGroup + '.json',
+        data: {group_id: groupId, position: JSON.stringify(position)}
+      }).success(function (data) {
+        console.log(data.status);
+      })// ajax
+    }
+  });
+
+
+
+}; // loadDraggable()
 
 
 // Add new note
