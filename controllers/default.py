@@ -1118,7 +1118,7 @@ def _add_notes_in_group():
     except:
         status = False
 
-        return dict(status=status)
+    return dict(status=status)
 
 
 @auth.requires_login()

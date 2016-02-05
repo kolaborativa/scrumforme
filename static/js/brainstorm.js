@@ -97,7 +97,12 @@ loadDraggable = function () {
         var notesIds = [noteDrag.dataset.id];
         var groupId = groupDrop.dataset.groupid;
 
-        status = _addNotesInGroup(notesIds, groupId);
+        // add notes in group
+        _addNotesInGroup(notesIds, groupId);
+
+        // redirect for the refresh
+        window.location = url.current + '/' + info.project_id;
+
       } else {
         status = false;
       } // if / else dataset.type == 'note'
@@ -149,7 +154,6 @@ loadDraggable = function () {
                 url: url.update_last_note_position + '.json',
                 data: {group_id: groupId, position: JSON.stringify(groupPosition)}
               }).success(function (data) {
-                console.log('atualiza a ultima nota', data.status);
                 if (data.status == true) {
                   // redirect for the refresh
                   window.location = url.current + '/' + info.project_id;
@@ -166,7 +170,7 @@ loadDraggable = function () {
                 console.log('remove the group with 1 note', data.status);
                 if (data.status == true) {
                   // redirect for the refresh
-                  //window.location = url.current + '/' + info.project_id; // AQUIIIIIII
+                  window.location = url.current + '/' + info.project_id; // AQUIIIIIII
                 }
               });// ajax remove group
             } // if count notes
@@ -334,7 +338,8 @@ var _addNotesInGroup = function (listNotes, groupId) {
     data: { list_notes: JSON.stringify(listNotes), group_id: groupId, project_id: info.project_id }
   })
   .success(function(data) {
-    return data.status;
+    status = data.status;
+
   });
 };
 
