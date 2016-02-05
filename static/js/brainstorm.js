@@ -61,12 +61,8 @@ loadDraggable = function () {
 
             new_note_1.removeClass('note--droppable');
             new_note_2.removeClass('note--droppable');
-            new_note_1.css('position', 'relative');
-            new_note_2.css('position', 'relative');
-            new_note_1.css('top', '0');
-            new_note_1.css('left', '0');
-            new_note_2.css('top', '0');
-            new_note_2.css('left', '0');
+            new_note_1.css({position: 'relative', top: '0', left: '0'});
+            new_note_2.css({position: 'relative', top: '0', left: '0'});
 
             // Removes the current notes from DOM
             $(noteDrag).fadeOut("fast", function () {
