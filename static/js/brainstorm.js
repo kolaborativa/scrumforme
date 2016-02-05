@@ -61,12 +61,8 @@ loadDraggable = function () {
 
             new_note_1.removeClass('note--droppable');
             new_note_2.removeClass('note--droppable');
-            new_note_1.css('position', 'relative');
-            new_note_2.css('position', 'relative');
-            new_note_1.css('top', '0');
-            new_note_1.css('left', '0');
-            new_note_2.css('top', '0');
-            new_note_2.css('left', '0');
+            new_note_1.css({position: 'relative', top: '0', left: '0'});
+            new_note_2.css({position: 'relative', top: '0', left: '0'});
 
             // Removes the current notes from DOM
             $(noteDrag).fadeOut("fast", function () {
@@ -101,7 +97,12 @@ loadDraggable = function () {
         var notesIds = [noteDrag.dataset.id];
         var groupId = groupDrop.dataset.groupid;
 
-        status = _addNotesInGroup(notesIds, groupId);
+        // add notes in group
+        _addNotesInGroup(notesIds, groupId);
+
+        // redirect for the refresh
+        window.location = url.current + '/' + info.project_id;
+
       } else {
         status = false;
       } // if / else dataset.type == 'note'
@@ -116,7 +117,10 @@ loadDraggable = function () {
       var group = $(noteDrag).parent()[0];
       var noteId = noteDrag.dataset.id;
       var groupId = group.dataset.groupid;
-      var position = $(noteDrag).position();
+      var position = $(noteDrag).offset();
+      var groupPosition = $(group).offset();
+
+      console.log(groupPosition.left += 120);
 
       // if the notes are part of the same group , do not let create another
       if (group.dataset.type == 'group-notes') {
@@ -144,6 +148,19 @@ loadDraggable = function () {
             var count_notes = data.count;
 
             if (count_notes == 1) {
+              // updates the position of the last note to stay in the group area
+              $.ajax({
+                method: "POST",
+                url: url.update_last_note_position + '.json',
+                data: {group_id: groupId, position: JSON.stringify(groupPosition)}
+              }).success(function (data) {
+                if (data.status == true) {
+                  // redirect for the refresh
+                  window.location = url.current + '/' + info.project_id;
+                }
+              });// ajax remove group
+
+
               //remove the group with 1 note
               $.ajax({
                 method: "POST",
@@ -153,7 +170,7 @@ loadDraggable = function () {
                 console.log('remove the group with 1 note', data.status);
                 if (data.status == true) {
                   // redirect for the refresh
-                  window.location = url.current + '/' + info.project_id;
+                  window.location = url.current + '/' + info.project_id; // AQUIIIIIII
                 }
               });// ajax remove group
             } // if count notes
@@ -164,7 +181,29 @@ loadDraggable = function () {
     } // drop
   });
 
-};
+  // draggable groups
+  $(".group-notes").draggable({
+    containment: "#area-brainstorm",
+    stack: ".note--panel",
+    cursor: "move",
+    stop: function (event, ui) {
+      var groupId = this.dataset.groupid;
+      var position = ui.position;
+
+      // save position of the note
+      $.ajax({
+        method: "POST",
+        url: url.savePositionGroup + '.json',
+        data: {group_id: groupId, position: JSON.stringify(position)}
+      }).success(function (data) {
+        console.log(data.status);
+      })// ajax
+    }
+  });
+
+
+
+}; // loadDraggable()
 
 
 // Add new note
@@ -262,6 +301,8 @@ $(document).on("click", ".thumb-color", function() {
   var noteId = note.dataset.id;
   var newColor = this.dataset.color;
   $(note).css('background-color', newColor);
+  $(note).find('.icon-pallete-ok').remove();
+  $(this).append('<i class="icon-pallete-ok icon-ok"></i>');
 
   $.ajax({
     method: "POST",
@@ -269,9 +310,17 @@ $(document).on("click", ".thumb-color", function() {
     data: { note_id: noteId, new_color: newColor }
   })
   .success(function(data) {
-    if (data.status==false) {
+    if (data.status==true) {
+      console.log('upa');
+      // excluir icone de OK atual
+
+      // incluir icone de OK no clicado
+
+    } else {
       $(note).css('background-color', data.note_old_color);
     };
+
+
   });
 
 });
@@ -289,7 +338,8 @@ var _addNotesInGroup = function (listNotes, groupId) {
     data: { list_notes: JSON.stringify(listNotes), group_id: groupId, project_id: info.project_id }
   })
   .success(function(data) {
-    return data.status;
+    status = data.status;
+
   });
 };
 

@@ -945,6 +945,29 @@ def _save_position():
     return dict(status=status)
 
 
+def _save_position_group():
+    """
+    Function that saves the position of the note when it is dragged (drag n drop)
+    This position is used to display the notes in the position in which the User chose
+
+    It is called via ajax . More info see file static/js/brainstorm.js
+    """
+    position = request.vars.position
+    group_id = request.vars.group_id
+
+    if not position or not group_id:
+        return dict(status=False)
+
+    try:
+        db(BrainstormGroups.id==group_id).update(position_=position)
+        status = True
+    except:
+        status = False
+
+    return dict(status=status)
+
+
+
 @auth.requires_login()
 @service.json
 def _update_items():
@@ -985,6 +1008,35 @@ def _update_items():
             status = False
 
         return dict(status=status)
+
+
+@auth.requires_login()
+@service.json
+def _update_last_note_position():
+    """
+    Function that updates the position of the last note to stay in the group area
+    Receives one parameter : group_id and position
+
+    It is called via ajax . More info see file static/js/brainstorm.js
+    """
+    position = request.vars.position
+    group_id = request.vars.group_id
+
+    if not position or not group_id:
+        return dict(status=False)
+
+    try:
+        row = db(BrainstormRelationsNotesGroups.group_id==group_id).select().first()
+        note_id = row.note_id
+
+        db(BrainstormNotes.id==note_id).update(position_=position)
+        status = True
+    except:
+        status = False
+
+    return dict(status=status)
+
+
 
 
 @auth.requires_login()
@@ -1066,7 +1118,7 @@ def _add_notes_in_group():
     except:
         status = False
 
-        return dict(status=status)
+    return dict(status=status)
 
 
 @auth.requires_login()
@@ -1095,6 +1147,8 @@ def _remove_notes_from_group():
     return dict(status=status)
 
 
+@auth.requires_login()
+@service.json
 def _remaining_notes():
     """
     Function that returns the amount of notes that remain of a group
@@ -1108,6 +1162,8 @@ def _remaining_notes():
     return dict(count=count_)
 
 
+@auth.requires_login()
+@service.json
 def _remove_group():
     """
     Function that removes a group
@@ -1130,6 +1186,8 @@ def _remove_group():
     return dict(status=status)
 
 
+@auth.requires_login()
+@service.json
 def _update_color_note():
     """
     Function that updates the color of a note
