@@ -1014,7 +1014,7 @@ def _update_items():
 @service.json
 def _update_last_note_position():
     """
-    Funcao que atualiza a posição da ultima nota para que ela permaneca na area apos remover o grupo
+    Function that updates the position of the last note to stay in the group area
     Receives one parameter : group_id and position
 
     It is called via ajax . More info see file static/js/brainstorm.js
@@ -1033,8 +1033,6 @@ def _update_last_note_position():
         status = True
     except:
         status = False
-    print 'bacanao'
-    status = True
 
     return dict(status=status)
 

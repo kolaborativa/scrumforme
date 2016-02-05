@@ -143,8 +143,7 @@ loadDraggable = function () {
             var count_notes = data.count;
 
             if (count_notes == 1) {
-              // atualiza a posicao da ultima nota do grupo, para ficar na mesma área do grupo
-              //groupPosition
+              // updates the position of the last note to stay in the group area
               $.ajax({
                 method: "POST",
                 url: url.update_last_note_position + '.json',
