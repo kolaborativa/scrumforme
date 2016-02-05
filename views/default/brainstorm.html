@@ -96,12 +96,13 @@
                         <div class="note-footer">
                           {{=note.note_id.created_at.strftime('%d/%m/%Y')}} - {{=note.note_id.created_by.name}}
                         </div>
-                        <div class="color-palette animated bounceIn">
-                          <span class="thumb-color" data-color="#FFD180"></span>
-                          <span class="thumb-color" data-color="#FF8A80"></span>
-                          <span class="thumb-color" data-color="#FFFF8D"></span>
-                          <span class="thumb-color" data-color="#80D8FF"></span>
-                          <span class="thumb-color" data-color="#CCFF90"></span>
+                          <div class="color-palette animated bounceIn">
+                            <!-- note.color -->
+                          <span class="thumb-color" data-color="#FFD180">{{if note.note_id.color == '#FFD180':}}<i class="icon-pallete-ok icon-ok"></i>{{pass}}</span>
+                          <span class="thumb-color" data-color="#FF8A80">{{if note.note_id.color == '#FF8A80':}}<i class="icon-pallete-ok icon-ok"></i>{{pass}}</span>
+                          <span class="thumb-color" data-color="#FFFF8D">{{if note.note_id.color == '#FFFF8D':}}<i class="icon-pallete-ok icon-ok"></i>{{pass}}</span>
+                          <span class="thumb-color" data-color="#80D8FF">{{if note.note_id.color == '#80D8FF':}}<i class="icon-pallete-ok icon-ok"></i>{{pass}}</span>
+                          <span class="thumb-color" data-color="#CCFF90">{{if note.note_id.color == '#CCFF90':}}<i class="icon-pallete-ok icon-ok"></i>{{pass}}</span>
                         </div>
                       </li>
                     {{ pass }}
