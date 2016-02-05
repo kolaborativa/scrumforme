@@ -112,7 +112,10 @@ loadDraggable = function () {
       var group = $(noteDrag).parent()[0];
       var noteId = noteDrag.dataset.id;
       var groupId = group.dataset.groupid;
-      var position = $(noteDrag).position();
+      var position = $(noteDrag).offset();
+      var groupPosition = $(group).offset();
+
+      console.log(groupPosition.left += 120);
 
       // if the notes are part of the same group , do not let create another
       if (group.dataset.type == 'group-notes') {
@@ -140,6 +143,21 @@ loadDraggable = function () {
             var count_notes = data.count;
 
             if (count_notes == 1) {
+              // atualiza a posicao da ultima nota do grupo, para ficar na mesma área do grupo
+              //groupPosition
+              $.ajax({
+                method: "POST",
+                url: url.update_last_note_position + '.json',
+                data: {group_id: groupId, position: JSON.stringify(groupPosition)}
+              }).success(function (data) {
+                console.log('atualiza a ultima nota', data.status);
+                if (data.status == true) {
+                  // redirect for the refresh
+                  window.location = url.current + '/' + info.project_id;
+                }
+              });// ajax remove group
+
+
               //remove the group with 1 note
               $.ajax({
                 method: "POST",
@@ -149,7 +167,7 @@ loadDraggable = function () {
                 console.log('remove the group with 1 note', data.status);
                 if (data.status == true) {
                   // redirect for the refresh
-                  window.location = url.current + '/' + info.project_id;
+                  //window.location = url.current + '/' + info.project_id; // AQUIIIIIII
                 }
               });// ajax remove group
             } // if count notes

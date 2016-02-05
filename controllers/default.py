@@ -1012,6 +1012,37 @@ def _update_items():
 
 @auth.requires_login()
 @service.json
+def _update_last_note_position():
+    """
+    Funcao que atualiza a posição da ultima nota para que ela permaneca na area apos remover o grupo
+    Receives one parameter : group_id and position
+
+    It is called via ajax . More info see file static/js/brainstorm.js
+    """
+    position = request.vars.position
+    group_id = request.vars.group_id
+
+    if not position or not group_id:
+        return dict(status=False)
+
+    try:
+        row = db(BrainstormRelationsNotesGroups.group_id==group_id).select().first()
+        note_id = row.note_id
+
+        db(BrainstormNotes.id==note_id).update(position_=position)
+        status = True
+    except:
+        status = False
+    print 'bacanao'
+    status = True
+
+    return dict(status=status)
+
+
+
+
+@auth.requires_login()
+@service.json
 def _remove_note():
     """
     Function that removes a note
@@ -1118,6 +1149,8 @@ def _remove_notes_from_group():
     return dict(status=status)
 
 
+@auth.requires_login()
+@service.json
 def _remaining_notes():
     """
     Function that returns the amount of notes that remain of a group
@@ -1131,6 +1164,8 @@ def _remaining_notes():
     return dict(count=count_)
 
 
+@auth.requires_login()
+@service.json
 def _remove_group():
     """
     Function that removes a group
@@ -1153,6 +1188,8 @@ def _remove_group():
     return dict(status=status)
 
 
+@auth.requires_login()
+@service.json
 def _update_color_note():
     """
     Function that updates the color of a note
