@@ -280,6 +280,8 @@ $(document).on("click", ".thumb-color", function() {
   var noteId = note.dataset.id;
   var newColor = this.dataset.color;
   $(note).css('background-color', newColor);
+  $(note).find('.icon-pallete-ok').remove();
+  $(this).append('<i class="icon-pallete-ok icon-ok"></i>');
 
   $.ajax({
     method: "POST",
@@ -287,9 +289,17 @@ $(document).on("click", ".thumb-color", function() {
     data: { note_id: noteId, new_color: newColor }
   })
   .success(function(data) {
-    if (data.status==false) {
+    if (data.status==true) {
+      console.log('upa');
+      // excluir icone de OK atual
+
+      // incluir icone de OK no clicado
+
+    } else {
       $(note).css('background-color', data.note_old_color);
     };
+
+
   });
 
 });

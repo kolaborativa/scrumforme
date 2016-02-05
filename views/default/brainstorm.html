@@ -54,11 +54,11 @@
                         {{=i.created_at.strftime('%d/%m/%Y')}} - {{=i.created_by.name}}
                       </div>
                       <div class="color-palette animated bounceIn">
-                        <span class="thumb-color" data-color="#FFD180"></span>
-                        <span class="thumb-color" data-color="#FF8A80"></span>
-                        <span class="thumb-color" data-color="#FFFF8D"></span>
-                        <span class="thumb-color" data-color="#80D8FF"></span>
-                        <span class="thumb-color" data-color="#CCFF90"></span>
+                        <span class="thumb-color" data-color="#FFD180">{{if i.color == '#FFD180':}}<i class="icon-pallete-ok icon-ok"></i>{{pass}}</span>
+                        <span class="thumb-color" data-color="#FF8A80">{{if i.color == '#FF8A80':}}<i class="icon-pallete-ok icon-ok"></i>{{pass}}</span>
+                        <span class="thumb-color" data-color="#FFFF8D">{{if i.color == '#FFFF8D':}}<i class="icon-pallete-ok icon-ok"></i>{{pass}}</span>
+                        <span class="thumb-color" data-color="#80D8FF">{{if i.color == '#80D8FF':}}<i class="icon-pallete-ok icon-ok"></i>{{pass}}</span>
+                        <span class="thumb-color" data-color="#CCFF90">{{if i.color == '#CCFF90':}}<i class="icon-pallete-ok icon-ok"></i>{{pass}}</span>
                       </div>
                     </li>
 

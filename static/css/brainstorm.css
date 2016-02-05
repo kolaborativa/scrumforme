@@ -133,6 +133,7 @@
     margin-left: 5%;
 }
 
+/* Color Pallete */
 .color-palette {
     display: none;
     background-color: #ccc;
@@ -143,6 +144,12 @@
     right: -40px;
 }
 
+.icon-pallete-ok {
+    margin-left: 0.4em;
+    line-height: 2em;
+
+}
+
 .thumb-color {
     display: block;
     margin: 3px;
@@ -150,7 +157,6 @@
     height: 25px;
     cursor: pointer;
 }
-
 
 .thumb-color:hover {
     background-color: #00A0B1;
