@@ -264,9 +264,10 @@ $("#note-add").draggable({
 
 /// Remove note
 $(document).on("click", ".icon-note-header--delete", function() {
-    if (confirm(msg.confirm)) {
-        removeNote(this);
-    }
+  var this_ = this;
+  alertify.confirm(msg.confirm).setHeader(msg.alert)
+    .set('defaultFocus', 'cancel')
+    .set('onok', function() { removeNote(this_); alertify.success(msg.note_removed);} );
 });
 
 function removeNote(element) {

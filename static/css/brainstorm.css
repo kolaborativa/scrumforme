@@ -191,3 +191,10 @@ h3.title-group {
 .thumb-color[data-color="#CCFF90"] {
     background-color: #CCFF90;
 }
+
+/* Plugin Alertify HACK */
+.alertify-notifier .ajs-message.ajs-success{
+    background-color: #323232!important;
+    text-align: left;
+    text-transform: uppercase;
+}
