@@ -92,6 +92,7 @@ loadDraggable = function () {
     drop: function (event, ui) {
       var noteDrag = ui.draggable[0];
       var groupDrop = $(this)[0];
+      console.log('noteDrag', noteDrag );
 
       if (noteDrag.dataset.type == 'note') {
         var notesIds = [noteDrag.dataset.id];
@@ -204,6 +205,54 @@ loadDraggable = function () {
 
 
 }; // loadDraggable()
+
+
+// Add new note FAB
+$(document).on("click", "#note-add-FAB", function() {
+  positionFAB = $(this).offset();
+  html = '<li class="animated bounceIn note note--panel note--panel new_note ui-draggable ui-draggable-handle" data-id="" data-type="note" style="position: absolute; top:'+positionFAB.top+'; right:70px">' +
+              '<div class="note-header">' +
+                '<i class="icon-note-header icon-note-header--delete icon-trash" data-pk=""></i>' +
+                '<div class="clearfix"></div>' +
+              '</div>' +
+              '<div class="note-content">' +
+                '<a class="editable-click editable" data-type="textarea" data-pk="" data-url="'+ url.update_items +'" data-type-text="note-text" style="display: inline;">'+ msg.note_default_text +'</a>' +
+              '</div>' +
+              '<div class="note-footer"></div>' +
+           '</li>';
+  var new_note_container = $(".no-group-notes-container").prepend(html);
+  positionFAB = $(this).offset();
+  var new_note = new_note_container.find(".new_note:first")[0];
+  loadDraggable();
+
+  $.ajax({
+      method: "POST",
+      url: url.create_note +'.json',
+      data: { project_id: info.project_id, person_id: info.person_id, position: JSON.stringify({"top": positionFAB.top, "left": (positionFAB.left.toString()-250)}) }
+    })
+    .success(function( data ) {
+      if (data.status == false) {
+
+        alert(msg.create_note_error);
+        // remove the note from the DOM
+        $(new_note).fadeOut("fast", function() {
+          $(this).remove();
+        });
+      } else {
+        var btnDelete = $(new_note).find(".icon-note-header--delete")[0];
+        var link_content_note = $(new_note).find(".editable-click")[0];
+        var footer_note = $(new_note).find(".note-footer")[0];
+
+        new_note.dataset.id = data.note_id;
+        btnDelete.dataset.pk = data.note_id;
+        link_content_note.dataset.pk = data.note_id;
+        footer_note.innerHTML = data.created_at + ' - ' + data.person_name;
+      }// endif data.status
+    }); // ajax success create
+
+
+});
+
 
 
 // Add new note

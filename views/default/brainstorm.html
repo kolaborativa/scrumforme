@@ -32,7 +32,7 @@
 {{ import json }}
 <div  class="container-fluid container-fluid-brainstorm">
     <div class="fab-fixed-sfm">
-      <a class="fab-sfm">
+      <a id="note-add-FAB" class="fab-sfm">
         <i class="icon-plus"></i>
       </a>
     </div>
@@ -40,7 +40,7 @@
     <div class="row-fluid">
         <div id="area-brainstorm" class="span12">
             {{if 'notes' in globals():}}
-                <ul class="notes-container" data-type="no-group-notes">
+                <ul class="notes-container no-group-notes-container" data-type="no-group-notes">
                 {{for i in notes:}}
                     {{ if i.position_: }}
                       {{ position = json.loads(i.position_) }}
