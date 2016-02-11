@@ -208,6 +208,7 @@ loadDraggable = function () {
 // Add new note FAB
 $(document).on("click", "#note-add-FAB", function() {
   positionFAB = $(this).offset();
+  console.log('positionFAB', positionFAB);
   html = '<li class="animated bounceIn note note--panel note--panel new_note ui-draggable ui-draggable-handle" data-id="" data-type="note" style="position: absolute; top:'+positionFAB.top+'; right:70px">' +
               '<div class="note-header">' +
                 '<i class="icon-note-header icon-note-header--delete icon-trash" data-pk=""></i>' +
@@ -220,7 +221,7 @@ $(document).on("click", "#note-add-FAB", function() {
            '</li>';
   var new_note_container = $(".no-group-notes-container").prepend(html);
   positionFAB = $(this).offset();
-  var new_note = new_note_container.find(".new_note:first")[0];
+  var new_note = new_note_container.find(".new_note:first").css({"top": positionFAB.top, "right": "70px"})[0];
   loadDraggable();
 
   $.ajax({
