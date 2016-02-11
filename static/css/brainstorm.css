@@ -53,16 +53,27 @@
 .note-header {
     width: 100%;
     margin-bottom: .7em;
+    background-color: #ccc;
+    opacity: 0.3;
+    padding: 5px 10px;
+    margin-left: -10px;
+    margin-top: -10px;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
 }
 
 .icon-note-header--delete {
-    color: #e74c3c;
+    color: #000;
     float: right;
     cursor: pointer;
 }
 
 .icon-note-header--color {
-    color: cornflowerblue;
+    color: #000;
     float: right;
     cursor: pointer;
 }
