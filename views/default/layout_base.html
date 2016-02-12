@@ -113,7 +113,7 @@
                         <li class='{{=g_current_page("default/sprints/%s" %request.args(0),"active")}}'><a href='{{=URL(f="sprints",args=[request.args(0)])}}' alt="{{=T('Sprints')}}" title="{{=T('Sprints')}}"><i class="icon-sprints"></i> <span>{{=T('Sprints')}}</span></a></li>
                         <li class='{{=g_current_page("default/team/%s" %request.args(0),"active")}}'><a href='{{=URL(f="team",args=[request.args(0)])}}' alt="{{=T('Team')}}" title="{{=T('Team')}}"><i class="icon-team"></i> <span>{{=T('Team')}}</span></a></li>
                         <li class='{{=g_current_page("default/statistics/%s" %request.args(0),"active")}}'><a href='{{=URL(f="statistics",args=[request.args(0)])}}' alt="{{=T('Statistics')}}" title="{{=T('Statistics')}}"><i class="icon-statistics"></i> <span>{{=T('Statistics')}}</span></a></li>
-                        <li class='{{=g_current_page("default/brainstorm/%s" %request.args(0),"active")}}'><a href='{{=URL(f="brainstorm",args=[request.args(0)])}}' alt="{{=T('Brainstorm')}}" title="{{=T('Brainstorm')}}"><i class="icon-backlog"></i> <span>{{=T('Brainstorm')}}</span></a></li>
+                        <li class='{{=g_current_page("default/brainstorm/%s" %request.args(0),"active")}}'><a href='{{=URL(f="brainstorm",args=[request.args(0)])}}' alt="{{=T('Brainstorm')}}" title="{{=T('Brainstorm')}}"><i class="icon-brainstorm"></i> <span>{{=T('Brainstorm')}}</span></a></li>
                     {{pass}}
                 {{else:}}
                     <li><a href='{{=URL(f="user", args="login")}}' alt='{{=T("Login")}}' title='{{=T("Login")}}'><i class="icon-smiley-alt"></i> <span>{{=T('Login')}}</span></a></li>
