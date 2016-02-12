@@ -36,7 +36,7 @@
 'Administrative Interface': 'Administrative Interface',
 'Ajax Recipes': 'Ajax Recipes',
 'Alert!': 'Alerta!',
-'All Projects': 'All Projects',
+'All Projects': 'Todos os Projetos',
 'An error occured, please %s the page': 'An error occured, please %s the page',
 'and those with whom you decide to share, through the functionality to add users to the project': 'e com aqueles com quem você decidir compartilhar, através da funcionalidade de adicionar usuários ao projeto',
 'Aplicar mudanças': 'Aplicar mudanças',
