@@ -3,16 +3,24 @@
 {{ person = g_project.projects() }}
 
 <div id="header">
-    <a href="{{=URL('index')}}" id="logo" alt='Scrumforme Logo' title='Scrumforme Logo'><h1><span class="color-logo">Scrumfor</span>.me</h1></a>
+    <a href="{{=URL('index')}}" id="logo" alt='Scrumforme Logo' title='Scrumforme Logo'>
+      <h1><img src="{{=URL('static', 'img/scrumfor-me.png')}}" alt=""></h1>
+
+    </a>
+    <span class="separador"></span>
     {{ if auth.is_logged_in(): }}
         <ul id="projects">
 
             <div class="navbar pull-left">
               <ul class="nav">
                 <li>
-                    <a href="#" id="new_project" class="dropdown_new_project dropdown-toggle btn btn-primary pull-left" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'>
-                            {{=T("New Project")}}
-                    </a>
+                    <div class="new_project_section">
+                      <a id="new_project" class="fab-sfm dropdown_new_project dropdown-toggle pull-left" alt='{{=T("New Project")}}' title='{{=T("New Project")}}'>
+                        <i class="icon-plus"></i>
+                      </a>
+                      <p>{{=T("New Project")}}</p>
+                    </div>
+
 
                     <div class="dropdown-menu">
                         {{=new_project.custom.begin}}
@@ -57,37 +65,29 @@
             </li>
             {{pass}}
         {{pass}}
-
         </ul>
+
+        <div class="all-projects">
+          <a href="#">
+            <img src="{{=URL('static', 'img/all-projects.png')}}" alt="All Projects" title="All Projects">
+          </a>
+          <p>All Projects</p>
+        </div>
+
+        <span class="separador"></span>
+
         <div id="user-nav" class="navbar navbar-inverse">
             <ul class="nav">
-                <li id="multilanguage">
-                    <!-- support for multiple language -->
-                    {{if hasattr(T,'get_possible_languages'):}}
-                        <span class="pull-right">
-                            <select name="siteLanguage" style="width:70px;margin-left:10px;" onchange="var date = new Date();cookieDate=date.setTime(date.getTime()+(100*24*60*60*1000));document.cookie='siteLanguage='+this.options[this.selectedIndex].value+'; expires='+cookieDate+'; path=/';window.location.reload()">
-                                {{for language in T.get_possible_languages():}}
-                                    <option {{=T.accepted_language==language and 'selected' or ''}} >{{=language}}</option>
-                                {{pass}}
-                            </select>
-                       </span>
-                     {{pass}}
-                </li>
-                <li>
-                    <form action="">
-                        <div id="search">
-                            <input type="text" placeholder='{{=T("Search here")}}'/><button type="submit" class="tip-right" alt='{{=T("Search")}}' title='{{=T("Search")}}'><i class="icon-search-custom"></i></button>
-                        </div>
-                    </form>
-                </li>
+                <li><a href='#' alt='{{=T("Search")}}' title='{{=T("Search")}}'><i class="icon-header icon-search"></i></a></li>
+
                 {{if request.args(0):}}
                     {{args = request.args(0) }}
                     {{args = "%s/%s" %(request.function, request.args(0)) }}
                 {{else:}}
                     {{args = request.function}}
                 {{pass}}
-                <li><a href='{{=URL(f="user",args="profile",vars={"_next":args})}}' alt='{{=T("Profile")}}' title='{{=T("Profile")}}'><i class="icon-user"></i></a></li>
-                <li><a href='{{=URL(f="user",args="logout")}}' alt='{{=T("Logout")}}' title='{{=T("Logout")}}'><i class="icon-logout-custom"></i></a></li>
+                <li><a href='{{=URL(f="user",args="profile",vars={"_next":args})}}' alt='{{=T("Profile")}}' title='{{=T("Profile")}}'><i class="icon-header icon-settings"></i></a></li>
+                <li><a href='{{=URL(f="user",args="logout")}}' alt='{{=T("Logout")}}' title='{{=T("Logout")}}'><i class="icon-header icon-logout"></i></a></li>
             </ul>
         </div>
     {{ pass }}

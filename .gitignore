@@ -22,5 +22,8 @@ static/uploads/*.jpg
 static/uploads/*.gif
 static/uploads/*.txt
 
+# mac
+._*
+
 # ide files
 .idea

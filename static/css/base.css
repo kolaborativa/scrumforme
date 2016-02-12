@@ -11,16 +11,16 @@ a:hover {
 	text-decoration: none;
 }
 
-@font-face {
-    font-family: 'Playball';
-    src: url('../fonts/playball.eot?#iefix');
-    src: url('../fonts/playball.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/playball.woff') format('woff'),
-         url('../fonts/playball.ttf')  format('truetype'),
-         url('../fonts/playball.svg#playball') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
+/*@font-face {*/
+    /*font-family: 'Playball';*/
+    /*src: url('../fonts/playball.eot?#iefix');*/
+    /*src: url('../fonts/playball.eot?#iefix') format('embedded-opentype'),*/
+         /*url('../fonts/playball.woff') format('woff'),*/
+         /*url('../fonts/playball.ttf')  format('truetype'),*/
+         /*url('../fonts/playball.svg#playball') format('svg');*/
+    /*font-weight: normal;*/
+    /*font-style: normal;*/
+/*}*/
 
 /* Header */
 #header {
@@ -28,26 +28,97 @@ a:hover {
     /*width: 100%;*/
     /*z-index: -9;*/
 	width: 100%;
-	/*position: absolute;*/
-	background-color: #444444;
+	position: fixed;
+	background-color: #00abbd;
 	/*z-index: 1000;*/
 }
 
-#header h1 {
-    font-family: 'Playball', cursive;
-    color: #F1F1F1;
-    text-shadow: 0px 1px 1px #4d4d4d;
-    position: relative;
-    top: 5px;
-    left: 10px;
-    font-size: 30px;
-    float: left;
+.separador {
+	margin: 10px 10px 10px 50px;
+	float: left;
+	height: 70%;
+	border-left: 2px solid #007b8b;
 }
 
-#header h1 a {
-    /*display: block;*/
+#header h1 {
+    /*position: relative;*/
+    /*left: 30px;*/
+    /*float: left;*/
+	line-height: 0;
+}
+
+#header .all-projects {
+	float: left;
+	margin-left: 6em;
+	line-height: 55px;
+}
+
+#header .all-projects p{
+	display: inline-block;
+	margin-left: 1em;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
+	color: #007b8b;
+}
+
+#header .all-projects img{
+	width: 25%;
+}
+
+.new_project_section p{
+	display: inline-block;
+	line-height: 40px;
+	margin-left: .6em;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
+	color: #007b8b;
+}
+
+.fab-sfm {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    line-height: 37px;
+    padding: 0;
+    background-color: #009788;
+    border-radius: 50%;
+    transition: .3s;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    text-decoration: none;
+}
+
+.fab-sfm:hover {
+    color: #fff;
+	background-color: #009788;
+    box-shadow: 0 4px 7px 0 rgba(0,0,0,0.16),0 5px 13px 0 rgba(0,0,0,0.12);
+}
+
+.fab-sfm i {
+    line-height: 25px;
+    font-size: 1.2rem;
+    width: inherit;
+    display: inline-block;
+    text-align: center;
     color: #fff;
 }
+
+.icon-header {
+	padding: 0 15px;
+	font-size: 15px;
+	color: #007c8d;
+	line-height: 20px;
+}
+
 div.flash {
 	font-weight: bold;
 	display: none;
@@ -190,7 +261,7 @@ div.flash #closeflash {
 
 #sidebar > ul {
 	list-style: none;
-	margin: 0px 0 0;
+	margin: 57px 0 0;
 	padding: 0;
 	position: absolute;
 	width: 220px;
@@ -255,8 +326,7 @@ div.flash #closeflash {
     background: none repeat scroll 0 0 #fff;
     margin-left: 220px;
     margin-right: 0;
-    /*padding-bottom: 25px;*/
-    position: relative;
+    padding-top: 57px;
     min-height: 500px;
     width: auto;
     background-clip: padding-box;
@@ -1595,8 +1665,8 @@ html, body, .container, .content {
 #projects {
     margin: 14px 0px 0px 20px!important;
     float: left;
-    position: relative;
-    left: 220px;
+    /*position: relative;*/
+    /*left: 220px;*/
 }
 
 #projects li {
@@ -1626,16 +1696,17 @@ html, body, .container, .content {
 }
 
 #new_project {
-    font-size: 13px;
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;
+    /*font-size: 13px;*/
+    /*color: #ffffff;*/
+    /*text-decoration: none;*/
+    /*font-weight: bold;*/
 }
 
 #projects .navbar {
     position: relative;
     bottom: 17px;
     margin-bottom: 0px;
+	margin-right: 3em;
 }
 
 #projects .nav a {
@@ -1670,10 +1741,6 @@ html, body, .container, .content {
 
 #all_projects {
     width: 800px;
-}
-
-.color-logo{
-    color: #00A0B1;
 }
 
 .btn_file {
@@ -1727,9 +1794,12 @@ html, body, .container, .content {
 }
 
 #logo {
-    position: absolute;
-    left: 0;
-    z-index: 99;
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*z-index: 99;*/
+	width: 15%;
+	float: left;
+	margin-left: 3em;
 }
 
 #multilanguage {
@@ -1738,9 +1808,8 @@ html, body, .container, .content {
 }
 
 .sidebar-fixed {
-    background-color: #444444;
+    background-color: #262628;
 	position: fixed!important;
-    padding-top: 90px!important;
     top: 0;
     left: 0;
 }
