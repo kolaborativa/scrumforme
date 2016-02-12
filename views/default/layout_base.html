@@ -91,7 +91,8 @@
 
     </head>
 
-    <body class='{{=g_current_page("default/board/%s" %request.args(0),"close_sidebar") or g_current_page("default/brainstorm/%s" %request.args(0),"close_sidebar")}}'>
+    <!-- <body class='{{=g_current_page("default/board/%s" %request.args(0),"close_sidebar") or g_current_page("default/brainstorm/%s" %request.args(0),"close_sidebar")}}'> -->
+    <body class="close_sidebar">
         <div class="flash">{{=response.flash or ''}}</div>
         <div class="loading_item">
             <h4>
@@ -105,19 +106,15 @@
         <div id="sidebar" class="close_sidebar">
             <a href="#" class="visible-phone"><i class="icon-th-list"></i> {{=T('Menu')}}</a>
             <ul class="sidebar-fixed">
-                <!-- <li class='{{=g_current_page("default/index","active")}}'><a href='{{=URL("index")}}'><i class="icon-home"></i> <span>Dashboard</span></a></li> -->
                 {{ if auth.is_logged_in(): }}
-                    <li class='{{=g_current_page("default/projects","active")}}'><a href='{{=URL("projects")}}' class="tip-right" alt="{{=T('My Projects')}}" title="{{=T('My Projects')}}"><i class="icon-dashboard"></i> <span>{{=T('My Projects')}}</span></a></li>
                     {{if not request.function == "projects":}}
-                        <li class='{{=g_current_page("default/board/%s" %request.args(0),"active")}}'><a href='{{=URL(f="board",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Board')}}" title="{{=T('Board')}}"><i class="icon-list-alt"></i> <span>{{=T('Board')}}</span></a></li>
-                        <li class='{{=g_current_page("default/product_backlog/%s" %request.args(0),"active")}}'><a href='{{=URL(f="product_backlog",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Backlog')}}" title="{{=T('Backlog')}}"><i class="icon-tasks"></i> <span>{{=T('Backlog')}}</span></a></li>
-                        <li class='{{=g_current_page("default/sprints/%s" %request.args(0),"active")}}'><a href='{{=URL(f="sprints",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Sprints')}}" title="{{=T('Sprints')}}"><i class="icon-credit-card"></i> <span>{{=T('Sprints')}}</span></a></li>
-                        <li><a href="#" class="tip-right" alt="{{=T('Archives')}}" title="{{=T('Archives')}}"><i class="icon-file"></i> <span>{{=T('Archives')}}</span></a></li>
-                        <li class='{{=g_current_page("default/team/%s" %request.args(0),"active")}}'><a href='{{=URL(f="team",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Team')}}" title="{{=T('Team')}}"><i class="icon-group"></i> <span>{{=T('Team')}}</span></a></li>
-                        <li class='{{=g_current_page("default/statistics/%s" %request.args(0),"active")}}'><a href='{{=URL(f="statistics",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Statistics')}}" title="{{=T('Statistics')}}"><i class="icon-graph "></i> <span>{{=T('Statistics')}}</span></a></li>
-                        <li class='{{=g_current_page("default/statistics/%s" %request.args(0),"active")}}'><a href='{{=URL(f="brainstorm",args=[request.args(0)])}}' class="tip-right" alt="{{=T('Brainstorm')}}" title="{{=T('Brainstorm')}}"><i class="icon-idea "></i> <span>{{=T('Brainstorm')}}</span></a></li>
+                        <li class='{{=g_current_page("default/board/%s" %request.args(0),"active")}}'><a href='{{=URL(f="board",args=[request.args(0)])}}' alt="{{=T('Board')}}" title="{{=T('Board')}}"><i class="icon-board"></i> <span>{{=T('Board')}}</span></a></li>
+                        <li class='{{=g_current_page("default/product_backlog/%s" %request.args(0),"active")}}'><a href='{{=URL(f="product_backlog",args=[request.args(0)])}}' alt="{{=T('Backlog')}}" title="{{=T('Backlog')}}"><i class="icon-backlog"></i> <span>{{=T('Backlog')}}</span></a></li>
+                        <li class='{{=g_current_page("default/sprints/%s" %request.args(0),"active")}}'><a href='{{=URL(f="sprints",args=[request.args(0)])}}' alt="{{=T('Sprints')}}" title="{{=T('Sprints')}}"><i class="icon-sprints"></i> <span>{{=T('Sprints')}}</span></a></li>
+                        <li class='{{=g_current_page("default/team/%s" %request.args(0),"active")}}'><a href='{{=URL(f="team",args=[request.args(0)])}}' alt="{{=T('Team')}}" title="{{=T('Team')}}"><i class="icon-team"></i> <span>{{=T('Team')}}</span></a></li>
+                        <li class='{{=g_current_page("default/statistics/%s" %request.args(0),"active")}}'><a href='{{=URL(f="statistics",args=[request.args(0)])}}' alt="{{=T('Statistics')}}" title="{{=T('Statistics')}}"><i class="icon-statistics"></i> <span>{{=T('Statistics')}}</span></a></li>
+                        <li class='{{=g_current_page("default/brainstorm/%s" %request.args(0),"active")}}'><a href='{{=URL(f="brainstorm",args=[request.args(0)])}}' alt="{{=T('Brainstorm')}}" title="{{=T('Brainstorm')}}"><i class="icon-backlog"></i> <span>{{=T('Brainstorm')}}</span></a></li>
                     {{pass}}
-                    <li><button id="toogle_sidebar" class="tip-right" alt="{{=T('Expand / Collapse Menu')}}" title="{{=T('Expand / Collapse Menu')}}"><i class='{{=g_if_in_current_page("default/board/%s" %request.args(0),"icon-chevron-right", "icon-chevron-left")}} icon-white'></i> <span>{{=T('Collapse Menu')}}</span></button></li>
                 {{else:}}
                     <li><a href='{{=URL(f="user", args="login")}}' alt='{{=T("Login")}}' title='{{=T("Login")}}'><i class="icon-smiley-alt"></i> <span>{{=T('Login')}}</span></a></li>
                     <li><a href='{{=URL(f="user", args="register")}}' alt='{{=T("Sign up")}}' title='{{=T("Sign up")}}'><i class="icon-plus-sign"></i> <span>{{=T('Sign up')}}</span></a></li>

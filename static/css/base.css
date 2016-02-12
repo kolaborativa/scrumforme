@@ -74,7 +74,7 @@ a:hover {
 	color: #007b8b;
 }
 
-.fab-sfm {
+#header .fab-sfm {
     width: 25px;
     height: 25px;
     display: inline-block;
@@ -97,14 +97,14 @@ a:hover {
     text-decoration: none;
 }
 
-.fab-sfm:hover {
+#header .fab-sfm:hover {
     color: #fff;
 	background-color: #009788;
     box-shadow: 0 4px 7px 0 rgba(0,0,0,0.16),0 5px 13px 0 rgba(0,0,0,0.12);
 }
 
-.fab-sfm i {
-    line-height: 25px;
+#header .fab-sfm i {
+    line-height: 20px!important;
     font-size: 1.2rem;
     width: inherit;
     display: inline-block;
@@ -117,6 +117,13 @@ a:hover {
 	font-size: 15px;
 	color: #007c8d;
 	line-height: 20px;
+}
+
+#sidebar [class^="icon-"] + span {
+	display: block;
+	font-size: 10px;
+	text-transform: uppercase;
+	color: #cecccc;
 }
 
 div.flash {
@@ -227,6 +234,7 @@ div.flash #closeflash {
 	/*background-image: url('../img/glyphicons-halflings-white.png');*/
 	/*opacity: .5;*/
 	margin-top: 2px;
+	font-size: 20px;
 }
 #user-nav > ul > li > a:hover > i, #user-nav > ul > li.open > a > i {
 	opacity: 1;
@@ -272,25 +280,25 @@ div.flash #closeflash {
 }
 
 #sidebar > ul > li.active {
-	box-shadow: 0 2px 4px rgba(0,0,0,0.2) inset;
+	border-bottom: 4px solid #00a0af;
+
 }
 
 #sidebar > ul > li > a, #sidebar > ul > li > button {
-	padding: 10px 0 10px 10px;
+	padding: 20px 0;
 	display: block;
 	color: #AAAAAA;
 }
 
-#sidebar > ul > li > a > i, #sidebar > ul > li > button > i {
-	margin-right: 10px;
-	font-size: 20px;
-	position: relative;
-	top: 3px
-}
+/*#sidebar > ul > li > a > i, #sidebar > ul > li > button > i {*/
+	/*font-size: 20px;*/
+	/*position: relative;*/
+	/*top: 3px*/
+/*}*/
 
-#sidebar > ul > li.active > a {
-	background: url("../img/menu-active.png") no-repeat scroll right center transparent !important;
-}
+/*#sidebar > ul > li.active > a {*/
+	/*background: url("../img/menu-active.png") no-repeat scroll right center transparent !important;*/
+/*}*/
 
 #sidebar > ul > li > a > .label, #sidebar > ul > li > button > .label {
 	margin: 0 20px 0 0;
@@ -1840,7 +1848,8 @@ html, body, .container, .content {
 	width: 100%;
 }
 .close_sidebar #sidebar, .close_sidebar #sidebar > ul {
-    width: 43px;
+    width: 90px;
+	text-align: center;
 }
 .close_sidebar #sidebar > ul ul {
     display: none;
@@ -1852,11 +1861,11 @@ html, body, .container, .content {
     border-radius: 5px;
     list-style: none;
 }
-.close_sidebar #sidebar > ul > li > a > span, .close_sidebar #sidebar > ul > li > button > span {
-    display: none;
-}
+/*.close_sidebar #sidebar > ul > li > a > span, .close_sidebar #sidebar > ul > li > button > span {*/
+    /*display: none;*/
+/*}*/
 .close_sidebar #content {
-    margin-left: 43px;
+    margin-left: 90px;
 }
 
 .btn-nostyle,.btn-nostyle:hover,.btn-nostyle:focus,.btn-nostyle:active,.btn-nostyle.active,.btn-nostyle.disabled,.btn-nostyle[disabled] {
