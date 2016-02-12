@@ -34,7 +34,7 @@ a:hover {
 }
 
 .separador {
-	margin: 10px 10px 10px 50px;
+	margin: 10px 10px 10px 37px;
 	float: left;
 	height: 70%;
 	border-left: 2px solid #007b8b;
@@ -49,13 +49,13 @@ a:hover {
 
 #header .all-projects {
 	float: left;
-	margin-left: 6em;
+	margin-left: 5em;
 	line-height: 55px;
 }
 
 #header .all-projects p{
 	display: inline-block;
-	margin-left: 1em;
+	margin-left: .6em;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	text-transform: uppercase;
 	color: #007b8b;
