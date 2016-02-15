@@ -25,12 +25,10 @@ a:hover {
 /* Header */
 #header {
     height: 57px;
-    /*width: 100%;*/
-    /*z-index: -9;*/
 	width: 100%;
 	position: fixed;
 	background-color: #00abbd;
-	/*z-index: 1000;*/
+	z-index: 1000;
 }
 
 .separador {
