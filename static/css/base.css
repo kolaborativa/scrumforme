@@ -119,6 +119,10 @@ a:hover {
 	line-height: 20px;
 }
 
+.modal-backdrop {
+	position: relative;
+}
+
 #sidebar [class^="icon-"] + span {
 	display: block;
 	font-size: 10px;

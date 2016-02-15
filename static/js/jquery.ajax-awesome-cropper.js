@@ -244,6 +244,10 @@
     });
     return $applyButton.click(function() {
       saveCrop();
+      setTimeout(function() {
+          window.location = url.current + '/' + info.project_id;
+      }, 500);
+
       return $imagesContainer.modal('hide');
     });
   };
