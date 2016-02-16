@@ -1975,7 +1975,7 @@ html, body, .container, .content {
 }
 
 .modal-body .span5 canvas{
-	width: 50%;
+	width: 8em;
 }
 
 .modal-footer {
