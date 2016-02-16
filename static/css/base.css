@@ -200,6 +200,24 @@ a:hover {
 	font-family: 'Roboto', sans-serif;
 }
 
+.modal--all-projects-search {
+	position: absolute;
+	top: 4.5em;
+	right: 1em;
+	text-align: right;
+}
+
+.modal--all-projects-search input[type="text"] {
+	margin-right: .5em;
+	width: 70%;
+}
+
+.modal--all-projects-search .icon{
+	font-size: 1.5em;
+	color: #777777;
+}
+
+
 .modal--all-projects .modal-body {
 	max-height: 500px;
 }
