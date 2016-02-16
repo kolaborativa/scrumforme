@@ -6,8 +6,6 @@
 
 /*Modal hack*/
 #card_modal {
-    /*remove static position*/
-    position: absolute;
     /* new custom width */
     /*min-width: 750px;*/
     /* must be half of the width, minus scrollbar on the left (30px) */

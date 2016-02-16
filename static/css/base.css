@@ -117,9 +117,9 @@ a:hover {
 	line-height: 20px;
 }
 
-.modal-backdrop {
-	position: relative;
-}
+/*.modal-backdrop {*/
+	/*position: relative;*/
+/*}*/
 
 .dropdown-menu {
 	border: 0;
@@ -1832,6 +1832,10 @@ html, body, .container, .content {
     width: 800px;
 }
 
+#all_projects a{
+    text-decoration: none;
+}
+
 .btn_file {
     margin: 0 auto;
 }
@@ -1958,6 +1962,7 @@ html, body, .container, .content {
 /*PLUGIN HACKS*/
 
 .modal {
+	opacity: 1;
 	border: 0;
 	border-radius: 0;
 	-webkit-box-shadow: 6px 9px 10px 0px rgba(0,0,0,0.3);
