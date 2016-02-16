@@ -50,12 +50,12 @@
     $resultIm = image();
     // $container.append($resultIm);
     $sourceIm = image();
-    $applyButton = a('OK').addClass('btn btn-primary');
-    $cancelButton = a('Cancel').addClass('btn').attr({
+    $applyButton = a('Upload').addClass('btn btn_modal_avatar_project').attr('id', 'btn-success-modal');
+    $cancelButton = a('Cancelar').addClass('btn btn-danger btn_modal_avatar_project').attr({
       'data-dismiss': "modal",
       'aria-hidden': "true"
     });
-    $imagesContainer = div().append(div().addClass('modal-body row-fluid').append(div().addClass('span7').append($sourceIm)).append(div().addClass('span5').append($cropSandbox)), div().addClass('modal-footer').append($cancelButton).append($applyButton)).append().addClass('modal hide fade').attr({
+    $imagesContainer = div().append(div().addClass('modal-body row-fluid').append(div().addClass('span7').append($sourceIm)).append(div().addClass('span5 upload-ajax').append($cropSandbox)), div().addClass('modal-footer').append($cancelButton).append($applyButton)).append().addClass('modal hide fade').attr({
       role: 'dialog'
     });
     $container.append($imagesContainer);

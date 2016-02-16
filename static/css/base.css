@@ -173,7 +173,7 @@ a:hover {
 }
 
 .btn-info:hover {
-	background-color: #00d19a;
+	background-color: #00d19a!important;
 }
 
 
@@ -1776,7 +1776,7 @@ html, body, .container, .content {
 }
 
 #projects .dropdown-menu .btn-danger {
-	background-color: #ff524f;
+	background-color: #ff524f!important;
 	float: right;
 }
 
@@ -1956,6 +1956,67 @@ html, body, .container, .content {
 }
 
 /*PLUGIN HACKS*/
+
+.modal {
+	border: 0;
+	border-radius: 0;
+	-webkit-box-shadow: 6px 9px 10px 0px rgba(0,0,0,0.3);
+	-moz-box-shadow: 6px 9px 10px 0px rgba(0,0,0,0.3);
+	box-shadow: 6px 9px 10px 0px rgba(0,0,0,0.3);
+}
+
+.modal-body .span5{
+	margin-top: 1.5em;
+	margin-left: 0;
+}
+
+.modal-body .span5.upload-ajax canvas{
+	margin-left: 4em;
+}
+
+.modal-body .span5 canvas{
+	width: 50%;
+}
+
+.modal-footer {
+	width: 35%;
+	position: relative;
+	top: -3.5em;
+	right: -25.3em;
+	padding: 0;
+	background: none!important;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+.btn_modal_avatar_project {
+	color: #fff;
+	width: 30%;
+	border: none;
+    background-image: none;
+	text-transform: uppercase;
+	font-size: 12px;
+	padding: 4px 12px!important;
+}
+
+.modal-footer a#btn-success-modal {
+	background-color: #00d19a!important;
+	float: left;
+}
+
+.modal-footer a#btn-success-modal:hover {
+	color: #fff;
+	background-color: #00d19a!important;
+}
+
+.title-preview {
+	font-family: 'Roboto', sans-serif;
+	font-size: 15px;
+    text-transform: uppercase;
+    margin-bottom: 1em;
+}
+
 .modal-backdrop {
     z-index: 999!important;
 }
@@ -2208,3 +2269,4 @@ html, body, .container, .content {
         margin-left: 0.8%;
     }
 }
+
