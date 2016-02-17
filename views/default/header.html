@@ -1,6 +1,7 @@
 {{ g_project = G_projects() }}
 {{ new_project = g_project.newProject() }}
 {{ person = g_project.projects() }}
+{{ all_projects =  g_project.all_projects()}}
 
 <div id="header">
     <a href="{{=URL('index')}}" id="logo" alt='Scrumforme Logo' title='Scrumforme Logo'>
@@ -68,7 +69,7 @@
         </ul>
 
         <div class="all-projects">
-          <a href="#">
+          <a href="#modalAllProjects" data-toggle="modal">
             <img src="{{=URL('static', 'img/all-projects.png')}}" alt="All Projects" title="All Projects">
           </a>
           <p>{{=T("All Projects")}}</p>
@@ -91,4 +92,36 @@
             </ul>
         </div>
     {{ pass }}
+
+    <!-- Modal All projects-->
+    <div id="modalAllProjects" class="modal modal--all-projects hide fade" tabindex="-1" role="dialog" aria-labelledby="modalAllProjectsLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="modalAllProjectsLabel">{{=T('All Projects')}}</h3>
+        
+      </div>
+      <div class="modal-body">
+        <ul>
+
+          {{for i in all_projects:}}
+            <li class="project-card">
+              <a href="{{=URL('product_backlog', args=i.project_id)}}">
+              <div class="project-card--header">
+                <i class="icon icon-trash icon-project-card-delete" data-pk="666"></i>
+              </div>
+              <div class="project-card--content">
+                <img src="{{=URL("static","uploads/%s" %i.project_id.thumbnail)}}" alt="">
+                <div class="project-card--content-title">
+                  <p class="trunc">{{=i.project_id.name}}</p>
+                </div>
+              </div>
+              <div class="clear"></div>
+              </a>
+            </li>
+          {{pass}}
+
+        </ul>
+      </div>
+    </div>
+
 </div>
