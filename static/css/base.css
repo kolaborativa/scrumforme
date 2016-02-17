@@ -2099,6 +2099,7 @@ html, body, .container, .content {
 .modal-footer a#btn-success-modal {
 	background-color: #00d19a!important;
 	float: left;
+	text-shadow: none;
 }
 
 .modal-footer a#btn-success-modal:hover {
@@ -2115,6 +2116,10 @@ html, body, .container, .content {
 
 .modal-backdrop {
     z-index: 999!important;
+}
+
+.awesome-cropper .modal-body{
+    min-height: 15em;
 }
 
 .awesome-cropper .preview {
