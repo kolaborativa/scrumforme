@@ -112,7 +112,11 @@
                 <i class="icon icon-trash icon-project-card-delete" data-pk="666"></i>
               </div>
               <div class="project-card--content">
-                <img src="{{=URL("static","uploads/%s" %i.project_id.thumbnail)}}" alt="">
+                {{ if i.project_id.thumbnail: }}
+                  <img src="{{=URL("static","uploads/%s" %i.project_id.thumbnail)}}" alt="{{=i.project_id.name}}">
+                {{ else: }}
+                  <img src="{{=URL("static","/img/no-image_project.jpg")}}" alt="{{=i.project_id.name}}">
+                {{ pass }}
                 <div class="project-card--content-title">
                   <p class="trunc">{{=i.project_id.name}}</p>
                 </div>
