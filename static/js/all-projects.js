@@ -32,11 +32,16 @@ function deleteProject(element) {
 
 };
 
+// Truncate title of the projects
 $.each($('.trunc'), function(index, value){
-  console.dir(value.textContent);
   if(value.textContent.length > 18) {
    value.textContent = value.textContent.substring(0, 18) + '...';
-    console.log('true');
   }
 });
 
+// Live Search
+var options = {
+  valueNames: [ 'project_name' ]
+};
+
+var userList = new List('modalAllProjects', options);
