@@ -31,3 +31,12 @@ function deleteProject(element) {
   console.log('project_id', projectId);
 
 };
+
+$.each($('.trunc'), function(index, value){
+  console.dir(value.textContent);
+  if(value.textContent.length > 18) {
+   value.textContent = value.textContent.substring(0, 18) + '...';
+    console.log('true');
+  }
+});
+

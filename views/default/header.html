@@ -1,6 +1,7 @@
 {{ g_project = G_projects() }}
 {{ new_project = g_project.newProject() }}
 {{ person = g_project.projects() }}
+{{ all_projects =  g_project.all_projects()}}
 
 <div id="header">
     <a href="{{=URL('index')}}" id="logo" alt='Scrumforme Logo' title='Scrumforme Logo'>
@@ -104,139 +105,22 @@
       <div class="modal-body">
         <ul>
 
-          <li class="project-card">
-            <div class="project-card--header">
-              <i class="icon icon-trash icon-project-card-delete" data-pk="666"></i>
-            </div>
-            <div class="project-card--content">
-              <img src=" http://placehold.it/64x64?text=Imagem Projeto" alt="">
-              <p class="project-card--content-title">Projeto Maneiro</p>
-            </div>
-            <div class="clear"></div>
-          </li>
-
-          <li class="project-card">
-            <div class="project-card--header">
-              <i class="icon-gear"></i>
-            </div>
-            <div class="project-card--content">
-              <img src=" http://placehold.it/64x64?text=Imagem Projeto" alt="">
-              <p class="project-card--content-title">Projeto Maneiro</p>
-            </div>
-            <div class="clear"></div>
-          </li>
-
-          <li class="project-card">
-            <div class="project-card--header">
-              <i class="icon-gear"></i>
-            </div>
-            <div class="project-card--content">
-              <img src=" http://placehold.it/64x64?text=Imagem Projeto" alt="">
-              <p class="project-card--content-title">Projeto Maneiro</p>
-            </div>
-            <div class="clear"></div>
-          </li>
-
-          <li class="project-card">
-            <div class="project-card--header">
-              <i class="icon-gear"></i>
-            </div>
-            <div class="project-card--content">
-              <img src=" http://placehold.it/64x64?text=Imagem Projeto" alt="">
-              <p class="project-card--content-title">Projeto Maneiro</p>
-            </div>
-            <div class="clear"></div>
-          </li>
-
-          <li class="project-card">
-            <div class="project-card--header">
-              <i class="icon-gear"></i>
-            </div>
-            <div class="project-card--content">
-              <img src=" http://placehold.it/64x64?text=Imagem Projeto" alt="">
-              <p class="project-card--content-title">Projeto Maneiro</p>
-            </div>
-            <div class="clear"></div>
-          </li>
-
-          <li class="project-card">
-            <div class="project-card--header">
-              <i class="icon-gear"></i>
-            </div>
-            <div class="project-card--content">
-              <img src=" http://placehold.it/64x64?text=Imagem Projeto" alt="">
-              <p class="project-card--content-title">Projeto Maneiro</p>
-            </div>
-            <div class="clear"></div>
-          </li>
-
-          <li class="project-card">
-            <div class="project-card--header">
-              <i class="icon-gear"></i>
-            </div>
-            <div class="project-card--content">
-              <img src=" http://placehold.it/64x64?text=Imagem Projeto" alt="">
-              <p class="project-card--content-title">Projeto Maneiro</p>
-            </div>
-            <div class="clear"></div>
-          </li>
-
-          <li class="project-card">
-            <div class="project-card--header">
-              <i class="icon-gear"></i>
-            </div>
-            <div class="project-card--content">
-              <img src=" http://placehold.it/64x64?text=Imagem Projeto" alt="">
-              <p class="project-card--content-title">Projeto Maneiro</p>
-            </div>
-            <div class="clear"></div>
-          </li>
-
-          <li class="project-card">
-            <div class="project-card--header">
-              <i class="icon-gear"></i>
-            </div>
-            <div class="project-card--content">
-              <img src=" http://placehold.it/64x64?text=Imagem Projeto" alt="">
-              <p class="project-card--content-title">Projeto Maneiro</p>
-            </div>
-            <div class="clear"></div>
-          </li>
-
-          <li class="project-card">
-            <div class="project-card--header">
-              <i class="icon-gear"></i>
-            </div>
-            <div class="project-card--content">
-              <img src=" http://placehold.it/64x64?text=Imagem Projeto" alt="">
-              <p class="project-card--content-title">Projeto Maneiro</p>
-            </div>
-            <div class="clear"></div>
-          </li>
-
-          <li class="project-card">
-            <div class="project-card--header">
-              <i class="icon-gear"></i>
-            </div>
-            <div class="project-card--content">
-              <img src=" http://placehold.it/64x64?text=Imagem Projeto" alt="">
-              <p class="project-card--content-title">Projeto Maneiro</p>
-            </div>
-            <div class="clear"></div>
-          </li>
-
-          <li class="project-card">
-            <div class="project-card--header">
-              <i class="icon-gear"></i>
-            </div>
-            <div class="project-card--content">
-              <img src=" http://placehold.it/64x64?text=Imagem Projeto" alt="">
-              <p class="project-card--content-title">Projeto Maneiro</p>
-            </div>
-            <div class="clear"></div>
-          </li>
-
-
+          {{for i in all_projects:}}
+            <li class="project-card">
+              <a href="{{=URL('product_backlog', args=i.project_id)}}">
+              <div class="project-card--header">
+                <i class="icon icon-trash icon-project-card-delete" data-pk="666"></i>
+              </div>
+              <div class="project-card--content">
+                <img src="{{=URL("static","uploads/%s" %i.project_id.thumbnail)}}" alt="">
+                <div class="project-card--content-title">
+                  <p class="trunc">{{=i.project_id.name}}</p>
+                </div>
+              </div>
+              <div class="clear"></div>
+              </a>
+            </li>
+          {{pass}}
 
         </ul>
       </div>

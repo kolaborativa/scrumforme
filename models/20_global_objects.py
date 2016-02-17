@@ -186,6 +186,21 @@ class G_projects(object):
         else:
             return False
 
+    def all_projects(self):
+
+        user_relationship = db(db.user_relationship.auth_user_id==auth.user.id).select().first()
+        person_id = user_relationship.person_id
+
+        own_projects = db(Project.created_by==person_id).select()
+        # own_projects = db(Project.created_by==person_id).select(orderby=Project.position_dom)
+        all_person_shared = db(Sharing.person_id==person_id).select()
+
+        id_own_projects = [i.id for i in own_projects]
+        all_projects = [i for i in all_person_shared]
+
+        return all_projects
+
+
     def projects(self):
         import json
 

@@ -227,32 +227,44 @@ a:hover {
 	float: left;
 	padding: 10px;
 	margin: 10px;
-	width: 29.2%;
+	width: 29%;
 	height: 78px;
 	-webkit-box-shadow: 5px 5px 8px -3px rgba(0,0,0,0.4);
 	-moz-box-shadow: 5px 5px 8px -3px rgba(0,0,0,0.4);
 	box-shadow: 5px 5px 8px -3px rgba(0,0,0,0.4);
 }
 
+.project-card a {
+	text-decoration: none;
+	color: #000;
+}
+
+.project-card a:hover {
+	text-decoration: none;
+	color: #000;
+}
+
+
 .project-card--header .icon {
 	float: right;
 	color: #777777;
 	font-size: 1.5em;
-
+	cursor: pointer;
 }
 
 .project-card--content img{
+	width: 64px;
 	border-radius: 50%;
 	float: left;
 	white-space: nowrap;
 	margin-top: .5em;
 }
 
-.project-card--content p{
+.project-card--content .project-card--content-title {
 	float: left;
 	font-family: 'Roboto', sans-serif;
-	font-size: 20px;
-	margin-left: 1.5em;
+	font-size: 18px;
+	margin-left: 0.5em;
 	line-height: 4em;
 }
 
