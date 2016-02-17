@@ -2117,6 +2117,10 @@ html, body, .container, .content {
     z-index: 999!important;
 }
 
+.awesome-cropper .modal-body{
+    min-height: 15em;
+}
+
 .awesome-cropper .preview {
     width: 80px;
     background-color: #fff;
