@@ -117,9 +117,9 @@ a:hover {
 	line-height: 20px;
 }
 
-.modal-backdrop {
-	position: relative;
-}
+/*.modal-backdrop {*/
+	/*position: relative;*/
+/*}*/
 
 .dropdown-menu {
 	border: 0;
@@ -176,6 +176,97 @@ a:hover {
 	background-color: #00d19a!important;
 }
 
+/* Modal All Projects */
+.clear {
+	clear: both;
+}
+
+.modal--all-projects {
+	width: 71.5em;
+	left: 32%
+}
+
+.modal--all-projects .modal-header {
+	background-color: #00abbd;
+	height: 84px;
+}
+
+#modalAllProjectsLabel {
+	color: #fff;
+	text-transform: uppercase;
+	text-align: center;
+    line-height: 2em;
+    font-size: 42px;
+	font-family: 'Roboto', sans-serif;
+}
+
+.modal--all-projects-search {
+	position: absolute;
+	top: 4.5em;
+	right: 1em;
+	text-align: right;
+}
+
+.modal--all-projects-search input[type="text"] {
+	margin-right: .5em;
+	width: 70%;
+}
+
+.modal--all-projects-search .icon{
+	font-size: 1.5em;
+	color: #777777;
+}
+
+
+.modal--all-projects .modal-body {
+	max-height: 500px;
+}
+
+.project-card {
+	list-style: none;
+	float: left;
+	padding: 10px;
+	margin: 10px;
+	width: 29%;
+	height: 78px;
+	-webkit-box-shadow: 5px 5px 8px -3px rgba(0,0,0,0.4);
+	-moz-box-shadow: 5px 5px 8px -3px rgba(0,0,0,0.4);
+	box-shadow: 5px 5px 8px -3px rgba(0,0,0,0.4);
+}
+
+.project-card a {
+	text-decoration: none;
+	color: #000;
+}
+
+.project-card a:hover {
+	text-decoration: none;
+	color: #000;
+}
+
+
+.project-card--header .icon {
+	float: right;
+	color: #777777;
+	font-size: 1.5em;
+	cursor: pointer;
+}
+
+.project-card--content img{
+	width: 64px;
+	border-radius: 50%;
+	float: left;
+	white-space: nowrap;
+	margin-top: .5em;
+}
+
+.project-card--content .project-card--content-title {
+	float: left;
+	font-family: 'Roboto', sans-serif;
+	font-size: 18px;
+	margin-left: 0.5em;
+	line-height: 4em;
+}
 
 #sidebar [class^="icon-"] + span {
 	display: block;
@@ -1832,6 +1923,10 @@ html, body, .container, .content {
     width: 800px;
 }
 
+#all_projects a{
+    text-decoration: none;
+}
+
 .btn_file {
     margin: 0 auto;
 }
@@ -1958,6 +2053,7 @@ html, body, .container, .content {
 /*PLUGIN HACKS*/
 
 .modal {
+	opacity: 1;
 	border: 0;
 	border-radius: 0;
 	-webkit-box-shadow: 6px 9px 10px 0px rgba(0,0,0,0.3);
