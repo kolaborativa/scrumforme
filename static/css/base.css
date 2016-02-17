@@ -2099,6 +2099,7 @@ html, body, .container, .content {
 .modal-footer a#btn-success-modal {
 	background-color: #00d19a!important;
 	float: left;
+	text-shadow: none;
 }
 
 .modal-footer a#btn-success-modal:hover {
