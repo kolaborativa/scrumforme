@@ -69,10 +69,14 @@
         </ul>
 
         <div class="all-projects">
+          {{ if not request.function == 'projects': }}
           <a href="#modalAllProjects" data-toggle="modal">
+          {{ pass }}
             <img src="{{=URL('static', 'img/all-projects.png')}}" alt="{{=T('All Projects')}}" title="{{=T('All Projects')}}">
             <p>{{=T("All Projects")}}</p>
+          {{ if not request.function == 'projects': }}
           </a>
+          {{ pass }}
 
         </div>
 

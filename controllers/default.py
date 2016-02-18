@@ -69,13 +69,8 @@ def _get_person(project_id=''):
 
 @auth.requires_login()
 def projects():
-    """This function receives the data used in the global class G_projects in
-    this header on all pages
-    """
-    person = _get_person()
-    own_projects = person["own_projects"]
-    all_shared_with = person["all_shared_with"]
-    return dict(own_projects=own_projects,all_shared_with=all_shared_with)
+
+    return dict()
 
 
 def delete_project():

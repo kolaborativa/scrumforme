@@ -8,32 +8,3 @@
         confirmRemove: '{{=T("Are you sure you want to delete this project?")}}',
     }
 </script>
-
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span5">
-            {{if own_projects:}}
-                <h3>{{=T('My Projects')}} <span class="label">{{=len(own_projects)}}</span></a></h3>
-                <ul>
-                {{for i in own_projects:}}
-                    <li class='{{=g_current_page("default/product_backlog/%s" %i.id,"active")}}'>
-                        <a href='{{=URL(c="default",f="product_backlog",args=[i.id])}}'>{{=i.name}}</a>
-                        <button data-project="{{=i.id}}" class="delete_project btn btn-danger btn-mini">{{=T("delete")}}</button>
-                    </li>
-                {{pass}}
-                </ul>
-            {{pass}}
-        </div>
-        <div class="span5">
-            {{if all_shared_with:}}
-                <h3>{{=T('Projects that I am part')}} <span class="label">{{=len(all_shared_with)}}</span></a></h3>
-                <ul>
-                {{for i in all_shared_with:}}
-                    <li class='{{=g_current_page("default/product_backlog/%s" %i.project_id,"active")}}'><a href='{{=URL(c="default",f="product_backlog",args=[i.project_id])}}'>{{=i.project_id.name}}</a></li>
-                {{pass}}
-                </ul>
-            {{pass}}
-        </div>
-    </div><!--/row-->
-</div><!--/container-fluid-->
-
