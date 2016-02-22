@@ -124,7 +124,9 @@
             <li class="project-card">
 
               <div class="project-card--header">
-                <i class="icon icon-trash icon-project-card-delete" data-pk={{=i.project_id}}></i>
+                {{ if user_has_permission_for_delete_project(i.project_id.created_by): }}
+                  <i class="icon icon-trash icon-project-card-delete" data-pk={{=i.project_id}}></i>
+                {{ pass }}
               </div>
               <a href="{{=URL('product_backlog', args=i.project_id)}}">
                 <div class="project-card--content">

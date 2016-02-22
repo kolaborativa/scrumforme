@@ -119,6 +119,24 @@ def user_has_permission_for_delete_note(person_note_id):
     return resp
 
 
+def user_has_permission_for_delete_project(person_project_id):
+    """
+    Function that checks whether the logged user has permission to delete a project
+    Return boolean.
+    This function is used to display or not in the trash icon
+
+    More info see file views/default/brainstorm.html
+
+    """
+    user_project_id = _get_user(person_project_id)
+    resp = False
+
+    if user_project_id == auth.user.id:
+        resp = True
+
+    return resp
+
+
 class G_projects(object):
     """header projects"""
 
