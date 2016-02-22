@@ -2,7 +2,7 @@
 // Delete Project
 $(document).on("click", ".icon-project-card-delete", function() {
   var this_ = this;
-  if (window.confirm('Você tem certeza que deseja continuar?')) {
+  if (window.confirm(headerMsg.confirmRemove)) {
     deleteProject(this_);
   }
 
@@ -17,7 +17,7 @@ function deleteProject(element) {
 
   $.ajax({
     method: "POST",
-    url: url.delete_project +'.json',
+    url: headerUrl.delete_project +'.json',
     data: { project_id: projectId }
   })
   .success(function(data) {
