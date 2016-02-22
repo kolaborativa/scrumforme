@@ -94,8 +94,6 @@
 
         <div id="user-nav" class="navbar navbar-inverse">
             <ul class="nav">
-                <li><a href='#' alt='{{=T("Search")}}' title='{{=T("Search")}}'><i class="icon-header icon-search"></i></a></li>
-
                 {{if request.args(0):}}
                     {{args = request.args(0) }}
                     {{args = "%s/%s" %(request.function, request.args(0)) }}
