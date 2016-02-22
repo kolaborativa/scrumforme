@@ -244,11 +244,19 @@ a:hover {
 	color: #000;
 }
 
+.project-card--header{
+	float: right;
+	color: #777777;
+	font-size: 1.5em;
+	cursor: pointer;
+	height: 2rem;
+}
+
 
 .project-card--header .icon {
 	float: right;
 	color: #777777;
-	font-size: 1.5em;
+	font-size: 1em;
 	cursor: pointer;
 }
 

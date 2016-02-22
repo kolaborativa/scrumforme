@@ -14,23 +14,20 @@ function deleteProject(element) {
   */
   var project = $(element).closest(".project-card")[0],
       projectId = element.dataset.pk;
-  //
-  //$.ajax({
-  //  method: "POST",
-  //  url: url.remove_note +'.json',
-  //  data: { note_id: noteId }
-  //})
-  //.success(function(data) {
-  //  // remove the note from the DOM
-  //  $(note).fadeOut("fast", function() {
-  //    $(this).remove();
-  //  });
-  //});
-  alert('deletando o projeto');
-  console.log(project);
-  console.log('project_id', projectId);
 
-};
+  $.ajax({
+    method: "POST",
+    url: url.delete_project +'.json',
+    data: { project_id: projectId }
+  })
+  .success(function(data) {
+    // remove the note from the DOM
+    $(project).fadeOut("fast", function() {
+      $(this).remove();
+    });
+  });
+
+}
 
 // Truncate title of the projects
 $.each($('.trunc'), function(index, value){
