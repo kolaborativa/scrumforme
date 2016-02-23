@@ -34,6 +34,12 @@ $(document).ready(function(){
 
 	$('.dropdown_new_project').on("click", function() {
 		$(".dropdown-menu").toggle();
+
+		if (info.currentPage == 'projects'){
+			$('#modalAllProjects').toggle();
+		} else {
+			$('#modalAllProjects').modal('hide');
+		}
 		// event.preventDefault();
 	});
 
