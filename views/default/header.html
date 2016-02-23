@@ -3,6 +3,16 @@
 {{ person = g_project.projects() }}
 {{ all_projects =  g_project.all_projects()}}
 
+<script>
+    // global variables
+    var headerUrl = {
+        delete_project : '{{=URL("delete_project")}}'
+    },
+    headerMsg = {
+        confirmRemove: '{{=T("Are you sure you want to delete this project?")}}'
+    }
+</script>
+
 <div id="header">
     <a href="{{=URL('index')}}" id="logo" alt='Scrumforme Logo' title='Scrumforme Logo'>
       <h1><img src="{{=URL('static', 'img/scrumfor-me.png')}}" alt=""></h1>
@@ -84,8 +94,6 @@
 
         <div id="user-nav" class="navbar navbar-inverse">
             <ul class="nav">
-                <li><a href='#' alt='{{=T("Search")}}' title='{{=T("Search")}}'><i class="icon-header icon-search"></i></a></li>
-
                 {{if request.args(0):}}
                     {{args = request.args(0) }}
                     {{args = "%s/%s" %(request.function, request.args(0)) }}
@@ -112,21 +120,24 @@
 
           {{for i in all_projects:}}
             <li class="project-card">
-              <a href="{{=URL('product_backlog', args=i.project_id)}}">
+
               <div class="project-card--header">
-                <i class="icon icon-trash icon-project-card-delete" data-pk="666"></i>
-              </div>
-              <div class="project-card--content">
-                {{ if i.project_id.thumbnail: }}
-                  <img src="{{=URL("static","uploads/%s" %i.project_id.thumbnail)}}" alt="{{=i.project_id.name}}">
-                {{ else: }}
-                  <img src="{{=URL("static","/img/no-image_project.jpg")}}" alt="{{=i.project_id.name}}">
+                {{ if user_has_permission_for_delete_project(i.project_id.created_by): }}
+                  <i class="icon icon-trash icon-project-card-delete" data-pk={{=i.project_id}}></i>
                 {{ pass }}
-                <div class="project-card--content-title">
-                  <p class="project_name trunc">{{=i.project_id.name}}</p>
-                </div>
               </div>
-              <div class="clear"></div>
+              <a href="{{=URL('product_backlog', args=i.project_id)}}">
+                <div class="project-card--content">
+                  {{ if i.project_id.thumbnail: }}
+                    <img src="{{=URL("static","uploads/%s" %i.project_id.thumbnail)}}" alt="{{=i.project_id.name}}">
+                  {{ else: }}
+                    <img src="{{=URL("static","/img/no-image_project.jpg")}}" alt="{{=i.project_id.name}}">
+                  {{ pass }}
+                  <div class="project-card--content-title">
+                    <p class="project_name trunc">{{=i.project_id.name}}</p>
+                  </div>
+                </div>
+                <div class="clear"></div>
               </a>
             </li>
           {{pass}}

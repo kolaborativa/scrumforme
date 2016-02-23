@@ -73,6 +73,8 @@ def projects():
     return dict()
 
 
+@auth.requires_login()
+@service.json
 def delete_project():
     """Function that delete a project
     """
@@ -89,7 +91,7 @@ def delete_project():
             db(Project.id==project.id).delete()
             # Delete a image of project
             subprocess.call('rm %s/%s' % (upload_folder, project.thumbnail), shell=True)
-    redirect(URL('projects'))
+    return dict(status=True)
 
 
 # ======================
