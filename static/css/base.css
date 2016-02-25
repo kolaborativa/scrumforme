@@ -188,7 +188,7 @@ a:hover {
 
 .modal--all-projects .modal-header {
 	background-color: #00abbd;
-	height: 84px;
+	height: 40px;
 }
 
 #modalAllProjectsLabel {
@@ -196,13 +196,13 @@ a:hover {
 	text-transform: uppercase;
 	text-align: center;
     line-height: 2em;
-    font-size: 42px;
+    font-size: 20px;
 	font-family: 'Roboto', sans-serif;
 }
 
 .modal--all-projects-search {
 	position: absolute;
-	top: 4.5em;
+	top: 1.5em;
 	right: 1em;
 	text-align: right;
 }
@@ -219,7 +219,7 @@ a:hover {
 
 
 .modal--all-projects .modal-body {
-	max-height: 500px;
+	max-height: 30rem;
 }
 
 .project-card {
