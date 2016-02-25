@@ -191,6 +191,10 @@ a:hover {
 	height: 40px;
 }
 
+.modal--all-projects .modal-header .close{
+	margin-top: -.5em;
+}
+
 #modalAllProjectsLabel {
 	color: #fff;
 	text-transform: uppercase;
