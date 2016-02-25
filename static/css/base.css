@@ -176,6 +176,11 @@ a:hover {
 	background-color: #00d19a!important;
 }
 
+#header .tooltip {
+	z-index: 9999;
+}
+
+
 /* Modal All Projects */
 .clear {
 	clear: both;
