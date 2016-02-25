@@ -219,7 +219,7 @@ a:hover {
 
 
 .modal--all-projects .modal-body {
-	max-height: 500px;
+	max-height: 30rem;
 }
 
 .project-card {
